@@ -1,0 +1,36 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.word-keep {
+    word-break: keep-all;
+}
+
+.mt-80 {
+    margin-top: 80px;
+}
+
+.pt-62 {
+    padding-top: 62px;
+}
+
+.bi {
+    font-size: 16px;
+}
+
+.icon {
+    font-size: 24px;
+}
+
+.list-style-none {
+    list-style: none;
+}
+
+.font-gamja-flower {
+    font-family: 'Gamja Flower', cursive;
+    font-size: 2rem;
+}

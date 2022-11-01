@@ -1,0 +1,25 @@
+package com.my.date.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.my.date.dao.UserDao;
+import com.my.date.domain.User;
+
+@Service
+public class UserServiceImpl implements UserService {
+	@Autowired private UserDao userDao;
+	
+	@Override
+	public User loginValidate(User loginUser) {
+		if(loginUser.getId().equals("") || loginUser.getPassword().equals(""))
+			return null;
+		
+		User user = userDao.selectUser(loginUser);
+		
+		if(loginUser.getId().equals(user.getId()) && loginUser.getPassword().equals(user.getPassword())) {
+			return user;
+		}
+		return null;
+	}
+}
