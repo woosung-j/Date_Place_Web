@@ -70,4 +70,12 @@ public class UserController {
 		
 		return mv;
 	}
+
+	@GetMapping("signup")
+	public ModelAndView signup(ModelAndView mv) {
+		mv.setViewName("user/signUp");
+
+		return mv;
+	}
+
 }

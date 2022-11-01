@@ -15,7 +15,7 @@
         }
     </style>
     <script>
-    	function 
+    	function
     </script>
 </head>
 <body>
@@ -52,7 +52,7 @@
         <div class="row pb-5 mb-3">
             <div class="col text-center overflow-auto word-keep mt-3">
                 <a href="./03.html">아이디 찾기</a> | <a href="./05.html">비밀번호 찾기</a> |
-                <a href="./01.html">회원가입</a>
+                <a href="signup">회원가입</a>
             </div>
         </div>
         <div class="navbar">
