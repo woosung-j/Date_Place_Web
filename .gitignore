@@ -10,6 +10,9 @@ pom.properties
 .classpath
 MANIFEST.MF
 
+### IntelliJ ###
+.idea
+
 ### Eclipse ###
 .metadata
 bin/
