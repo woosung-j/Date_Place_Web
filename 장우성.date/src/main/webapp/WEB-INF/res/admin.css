@@ -1,0 +1,29 @@
+header {
+    padding: 1.7rem;
+}
+
+hr {
+    padding: 0;
+    margin: 0;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #7882A4;
+}
+
+li a {
+    display: block;
+    color: #D6E5FA;
+    margin: 0 1rem;
+    padding: 1.5rem 1.5rem;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #D6E5FA;
+    color: #7882A4;
+    margin: 0;
+}
