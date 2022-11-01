@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.my.date.dao.map.ReviewMap'>
+	<select id='selectReviews' resultType='review'>
+		select * from reviews
+		order by review_id
+	</select>
+
+	<select id='detailReviews' resultType='review'>
+		select * from reviews
+		where review_id = #{reviewId}
+	</select>
+	
+	<select id='selectAdminReviews' resultType='review'>
+		select * from reviews
+		order by review_id
+	</select>
+	
+	<select id='detailAdminReviews' resultType='review'>
+		select * from reviews
+		where review_id = #{reviewId}
+	</select>
+		
+	<insert id='insertReview'>
+		insert into reviews(review_id, place_id, user_id, content, star_rating, created_at)
+		values(reviews_id_seq.nextval, #{palceId}, #{userId}, #{content}, #{starRating}, sysdate)
+	</insert>
+	
+	<delete id='deleteReview'>
+	   delete reviews
+	   where review_id = #{reviewId}
+	</delete>
+	
+	<delete id='deleteAdminReview'>
+		delete reviews
+		where review_Id = #{reviewId}
+	</delete>
+</mapper>
