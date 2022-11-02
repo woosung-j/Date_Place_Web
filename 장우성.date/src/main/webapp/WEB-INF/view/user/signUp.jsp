@@ -23,7 +23,7 @@
         }
     </style>
     <script>
-        const auth = { isId: true, isEmail: false, isEmailAuth: false };
+        const auth = { isId: false, isEmail: false, isEmailAuth: false };
         function isValidate() {
             let isGood = false;
             let errMsg = '';
@@ -37,8 +37,8 @@
             else if (!$('#phoneNumber').val()) errMsg = '전화번호를 입력하세요.';
             else if (!$('#birthday').val()) errMsg = '생년월일을 입력하세요.';
             else if (auth.isId == false) errMsg = '아이디 중복 확인이 완료되지 않았습니다.';
-            else if (auth.isEmail == false) errMsg = '이메일 인증이 완료되지 않았습니다.';
-            else if (auth.isEmailAuth == false) errMsg = '인증번호 입력이 완료되지 않았습니다.';
+            // else if (auth.isEmail == false) errMsg = '이메일 인증이 완료되지 않았습니다.';
+            // else if (auth.isEmailAuth == false) errMsg = '인증번호 입력이 완료되지 않았습니다.';
             else isGood = true;
 
             if(!isGood) showModal(errMsg, 'red')
@@ -46,15 +46,21 @@
             return isGood;
         }
 
-        function showModal(msg, color) {
-            $('#modalMsg').text(msg).css('color', color ? color : 'black');
-            $('#modal').modal();
+        function showModal(msg, color, href) {
+            $('#modalMsg').text(msg).css('color', color ? color : 'black')
+            if(href == null) {
+                $('#modalBtn')[0].dataset.dismiss = 'modal'
+            } else {
+                $('#modalBtn')[0].dataset.dismiss = null
+                $('#modalBtn')[0].href = href
+            }
+            $('#modal').modal()
         }
 
         function signup() {
             if (isValidate()) {
                 $.ajax({
-                    url: 'user/signup',
+                    url: 'signup',
                     method: 'post',
                     contentType: 'application/json',
                     data: JSON.stringify({
@@ -66,74 +72,77 @@
                         nickname: $('#nickname').val(),
                         phoneNumber: $('#phoneNumber').val(),
                         birthday: $('#birthday').val()
-                    })
+                    }),
+                    success: (data) => {
+                        if(data == 0) showModal('회원가입을 실패했습니다.', 'red')
+                        else {
+                            showModal('회원가입이 완료되었습니다.', null, 'login')
+                        }
+                    }
                 })
             }
         }
 
         function idCheck() {
-            console.log(auth.isId)
-            // let val = $('#id').val();
-            // if (val != '') {
-            //     $.ajax({
-            //         url: 'user/idCheck',
-            //         method: 'post',
-            //         contentType: 'application/json',
-            //         data: JSON.stringify({
-            //             id: val,
-            //         }),
-            //         success: (data) => {
-            //             if(data.error) showModal(data.errMsg, 'red')
-            //             else {
-            //                 showModal('사용 가능한 아이디입니다.')
-            //                 auth.isId = true
-            //             }
-            //         },
-            //     });
-            // }
-        }
-
-        function emailCheck() {
-            let val = $('#email').val();
+            let val = $('#id').val();
             if (val != '') {
                 $.ajax({
-                    url: 'user/emailCheck',
-                    method: 'post',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        email: val,
-                    }),
+                    url: `idCheck/` + val,
+                    method: 'get',
+                    contentType: 'application/text',
                     success: (data) => {
-                        if(data.error) showModal(data.errMsg, 'red')
+                        console.log(data);
+                        if(data == 0) showModal('이미 사용중인 아이디입니다.', 'red')
                         else {
-                            showModal('인증번호를 전송했습니다.')
-                            auth.isEmail = true
+                            showModal('사용 가능한 아이디입니다.')
+                            auth.isId = true
                         }
                     },
                 });
             }
         }
-
-        function emailAuthCheck() {
-            let val = $('#auth').val();
-            if (val != '') {
-                $.ajax({
-                    url: 'user/emailAuthCheck',
-                    method: 'post',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        auth: val,
-                    }),
-                    success: (data) => {
-                        if(data.error) showModal(data.errMsg, 'red')
-                        else {
-                            showModal('인증이 완료되었습니다.')
-                            auth.isEmailAuth = true
-                        }
-                    },
-                });
-            }
-        }
+        //
+        // function emailCheck() {
+        //     let val = $('#email').val();
+        //     if (val != '') {
+        //         $.ajax({
+        //             url: 'emailCheck',
+        //             method: 'post',
+        //             contentType: 'application/json',
+        //             data: JSON.stringify({
+        //                 email: val,
+        //             }),
+        //             success: (data) => {
+        //                 if(data.error) showModal(data.errMsg, 'red')
+        //                 else {
+        //                     showModal('인증번호를 전송했습니다.')
+        //                     auth.isEmail = true
+        //                 }
+        //             },
+        //         });
+        //     }
+        // }
+        //
+        // function emailAuthCheck() {
+        //     let val = $('#auth').val();
+        //     if (val != '') {
+        //         $.ajax({
+        //             url: 'emailAuthCheck',
+        //             method: 'post',
+        //             contentType: 'application/json',
+        //             data: JSON.stringify({
+        //                 auth: val,
+        //             }),
+        //             success: (data) => {
+        //                 if(data.error) showModal(data.errMsg, 'red')
+        //                 else {
+        //                     showModal('인증이 완료되었습니다.')
+        //                     auth.isEmailAuth = true
+        //                 }
+        //             },
+        //         });
+        //     }
+        // }
 
         function init() {
             // 회원가입 버튼
@@ -146,19 +155,27 @@
                 idCheck()
             });
 
-            // 인증 버튼
-            $('#emailCheckBtn').click((e) => {
-                emailCheck()
-            });
-
-            // 인증확인 버튼
-            $('#authBtn').click((e) => {
-                emailAuthCheck()
-            });
+            // // 인증 버튼
+            // $('#emailCheckBtn').click((e) => {
+            //     emailCheck()
+            // });
+            //
+            // // 인증확인 버튼
+            // $('#authBtn').click((e) => {
+            //     emailAuthCheck()
+            // });
 
             $('#id').change((e) => {
                 auth.isId = false
             })
+
+            // $('#email').change((e) => {
+            //     auth.isEmail = false
+            // })
+            //
+            // $('#auth').change((e) => {
+            //     auth.isEmailAuth = false
+            // })
         }
 
         $(() => {
@@ -219,17 +236,17 @@
                 </a>
             </li>
             <li>
-                <a href="../community/01.html" class="btn w-auto" type="button">
+                <a href="../community" class="btn w-auto" type="button">
                     <i class="icon main bi-file-earmark-text fa-3x"></i>
                 </a>
             </li>
             <li>
-                <a href="../place/05.html" class="btn w-auto" type="button">
+                <a href="../place/around" class="btn w-auto" type="button">
                     <i class="icon main bi-map fa-3x"></i>
                 </a>
             </li>
             <li>
-                <a href="../place/06.html" class="btn w-auto" type="button">
+                <a href="../place/myplace" class="btn w-auto" type="button">
                     <i class="icon main bi-heart fa-3x"></i>
                 </a>
             </li>
@@ -246,7 +263,7 @@
         <div class="modal-content mx-5">
             <div class="modal-body text-center py-3">
                 <p id="modalMsg">인증번호를 이메일로 전송했습니다. <br />이메일을 확인해 주세요.</p>
-                <a href="#" id="modalBtn" class="btn btn-primary" data-dismiss="modal"> 확인 </a>
+                <a href="#" id="modalBtn" class="btn btn-primary"> 확인 </a>
             </div>
         </div>
     </div>
