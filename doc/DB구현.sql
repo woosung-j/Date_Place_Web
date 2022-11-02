@@ -155,6 +155,7 @@ create table date2.feeds(
 create table date2.comments(
 	comment_id number(10) constraint comment_id_pk primary key,
 	feed_id number(10) constraint comment_feedid_fk references date2.feeds(feed_id) on delete cascade,
+    user_id number(10) constraint comment_userid_fk references date2.users(user_id),
 	content varchar2(1500) constraint comment_content_nn not null,
 	created_at date
 );
