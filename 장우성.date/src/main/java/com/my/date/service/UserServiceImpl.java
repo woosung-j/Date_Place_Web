@@ -22,4 +22,16 @@ public class UserServiceImpl implements UserService {
 		}
 		return null;
 	}
+
+	@Override
+	public User idCheck(String id) {
+		return userDao.selectUser(id);
+	}
+
+	@Override
+	public int signUp(User user) {
+		if(idCheck(user.getId()) != null)
+			return 0;
+		return userDao.insertUser(user);
+	}
 }

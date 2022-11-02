@@ -4,16 +4,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.my.date.domain.User;
 import com.my.date.service.UserService;
 
-@Controller
+@RestController
 @RequestMapping("user")
 public class UserController {
 	@Autowired private UserService userService;
@@ -21,7 +18,7 @@ public class UserController {
 	@GetMapping("login")
 	public ModelAndView login(HttpServletRequest request, ModelAndView mv) {
 		HttpSession session = request.getSession(false);
-		
+
 		if(session.getAttribute("userId") != null)
 			mv.setViewName("redirect:mypage");
 		else
@@ -60,14 +57,36 @@ public class UserController {
 	public ModelAndView logout(HttpSession session, ModelAndView mv) {
 		session.invalidate();
 		mv.setViewName("redirect:/");
-		
+
 		return mv;
 	}
 	
 	@GetMapping("mypage")
-	public ModelAndView mypage(HttpSession session, ModelAndView mv) {
+	public ModelAndView myPage(HttpSession session, ModelAndView mv) {
 		mv.setViewName("user/mypage");
 		
 		return mv;
 	}
+
+	@GetMapping("signup")
+	public ModelAndView signUp(ModelAndView mv) {
+		mv.setViewName("user/signUp");
+
+		return mv;
+	}
+//
+
+	@GetMapping("idCheck/{id}")
+	public int idCheck(@PathVariable String id) {
+		if(userService.idCheck(id) != null) {
+			return 0;
+		}
+		return 1;
+	}
+	@PostMapping("signup")
+	public int signUp(@RequestBody User user) {
+		return userService.signUp(user);
+	}
+
+
 }

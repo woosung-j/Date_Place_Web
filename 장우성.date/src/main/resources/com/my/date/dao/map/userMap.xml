@@ -7,4 +7,8 @@
 		from users
 		where id = #{id}
 	</select>
+
+	<insert id="insertUser">
+		insert into users values(users_id_seq.nextval, #{id}, #{email}, #{password}, #{userName}, #{phoneNumber}, #{nickname}, #{birthday}, sysdate, sysdate)
+	</insert>
 </mapper>
