@@ -114,7 +114,7 @@ create table date2.declarations(
     place_id number(10) constraint declarations_placeid_fk references date2.places(place_id),
     user_id number(10) constraint declarations_userid_fk references date2.users(user_id),
 	content varchar2(1000) constraint declarations_content_nn not null,
-	confirm varchar2(9)constraint declarations_confirm_nn not null,
+	confirm number(1) constraint declarations_confirm_nn not null,
     created_at date
 );
 
