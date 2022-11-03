@@ -16,7 +16,4 @@ public class Declaration {
     private String content;
     private String confirm;
     private LocalDate createdAt;
-    private User user;
-    private Place place;
-    private Detail detail;
 }

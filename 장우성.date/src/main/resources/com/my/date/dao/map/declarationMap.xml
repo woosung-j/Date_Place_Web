@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
 	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 <mapper namespace='com.my.date.dao.map.DeclarationMap'>
-	<select id='selectDeclarations' resultMap="declarationsMap">
+	<select id='selectDeclarations' resultMap="declarationAdmin">
 		select d.declare_id, d.place_id, d.user_id, d.content, d.confirm, d.created_at, u.id, p.place_name, details.address
 		from declarations d, users u, places p, details
 		where d.user_id = u.user_id and d.place_id = p.place_id and d.place_id = details.place_id
@@ -15,27 +15,27 @@
 		where declare_id = #{declareId}
 	</update>
 
-	<resultMap id="declarationsMap" type="declaration">
-		<id property="declareId" column="declare_id"/>
-		<result property="placeId" column="place_id"/>
-		<result property="userId" column="user_id"/>
-		<result property="content" column="content"/>
-		<result property="confirm" column="confirm"/>
-		<result property="createdAt" column="created_at"/>
-		<collection property="user" resultMap="userMap"/>
-		<collection property="place" resultMap="placeMap"/>
-		<collection property="detail" resultMap="detailMap"/>
+	<resultMap id="declarationAdmin" type="declarationAdminDto">
+		<association property="declaration" resultMap="declarationMap" />
+		<association property="user" resultMap="userMap"/>
+		<association property="place" resultMap="placeMap"/>
+		<association property="detail" resultMap="detailMap"/>
 	</resultMap>
-
+	<resultMap id="declarationMap" type="declaration">
+		<id column="declare_id" property="declareId"/>
+		<result column="place_id" property="placeId"/>
+		<result column="user_id" property="userId"/>
+		<result column="content" property="content"/>
+		<result column="confirm" property="confirm"/>
+		<result column="created_at" property="createdAt"/>
+	</resultMap>
 	<resultMap id="userMap" type="user">
-		<result property="id" column="id"/>
+		<result column="id" property="id"/>
 	</resultMap>
-
 	<resultMap id="placeMap" type="place">
-		<result property="placeName" column="place_name"/>
+		<result column="place_name" property="placeName"/>
 	</resultMap>
-
 	<resultMap id="detailMap" type="detail">
-		<result property="address" column="address"/>
+		<result column="address" property="address"/>
 	</resultMap>
 </mapper>
