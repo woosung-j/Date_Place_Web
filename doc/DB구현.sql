@@ -42,6 +42,7 @@ create table date2.users(
     user_name varchar2(40) constraint users_username_nn not null,
     phone_number varchar2(12) constraint users_phonenumber_nn not null,
     nickname varchar2(18) constraint users_nickname_nn not null,
+    profile_image varchar2(30),
     birthday date,
     created_at date,
     updated_at date
@@ -312,19 +313,19 @@ create sequence date2.commentlikes_id_seq
 
 -- insert --
 -- users
-insert into date2.users values(date2.users_id_seq.nextval, 'user', 'a@b.com', 'user', 'ÃÖÇÑ¼®', '01075463543', 'ÇÑ¼®', '1998-01-02', sysdate, sysdate);
-insert into date2.users values(date2.users_id_seq.nextval, 'user2', 'a@c.com', 'user2', 'ÇÑ¾Æ¸§', '01042345342', '¾Æ¸§', '1999-04-03', sysdate, sysdate);
-insert into date2.users values(date2.users_id_seq.nextval, 'user3', 'a@d.com', 'user3', '±è¼±¿ì', '01025545242', '¼±¿ì', '1989-03-04', sysdate, sysdate);
-insert into date2.users values(date2.users_id_seq.nextval, 'user4', 'a@e.com', 'user4', '±è½ÂÀÏ', '01025545242', '½ÂÀÏ', '1989-03-04', sysdate, sysdate);
-insert into date2.users values(date2.users_id_seq.nextval, 'user5', 'a@f.com', 'user5', 'ÀÌ½Â¿ø', '01025545242', '½Â¿ø', '1989-03-04', sysdate, sysdate);
+insert into date2.users values(date2.users_id_seq.nextval, 'user', 'a@b.com', 'user', 'ÃÖÇÑ¼®', '01075463543', 'ÇÑ¼®', 'img1.jpg', '1998-01-02', sysdate, sysdate);
+insert into date2.users values(date2.users_id_seq.nextval, 'user2', 'a@c.com', 'user2', 'ÇÑ¾Æ¸§', '01042345342', '¾Æ¸§', 'img2.jpg', '1999-04-03', sysdate, sysdate);
+insert into date2.users values(date2.users_id_seq.nextval, 'user3', 'a@d.com', 'user3', '±è¼±¿ì', '01025545242', '¼±¿ì', 'img3.jpg', '1989-03-04', sysdate, sysdate);
+insert into date2.users values(date2.users_id_seq.nextval, 'user4', 'a@e.com', 'user4', '±è½ÂÀÏ', '01025545242', '½ÂÀÏ', 'img4.jpg', '1989-03-04', sysdate, sysdate);
+insert into date2.users values(date2.users_id_seq.nextval, 'user5', 'a@f.com', 'user5', 'ÀÌ½Â¿ø', '01025545242', '½Â¿ø', 'img5.jpg', '1989-03-04', sysdate, sysdate);
 
 -- admins
 insert all
-    into date2.users values(date2.users_id_seq.nextval, 'admin', 'a@g.com', 'admin', '°æ¼­', '01036457459', 'adm1', '1997-08-05', sysdate, sysdate)
+    into date2.users values(date2.users_id_seq.nextval, 'admin', 'a@g.com', 'admin', '°æ¼­', '01036457459', 'adm1', 'img5.jpg', '1997-08-05', sysdate, sysdate)
     into date2.admins values(date2.users_id_seq.currval)
     select * from dual;
 insert all
-    into date2.users values(date2.users_id_seq.nextval, 'admin2', 'a@h.com', 'admin2', '±èÇö¼º', '01047543534', 'adm2', '1996-02-04', sysdate, sysdate)
+    into date2.users values(date2.users_id_seq.nextval, 'admin2', 'a@h.com', 'admin2', '±èÇö¼º', '01047543534', 'adm2', 'img7.jpg', '1996-02-04', sysdate, sysdate)
     into date2.admins values(date2.users_id_seq.currval)
     select * from dual;
 
