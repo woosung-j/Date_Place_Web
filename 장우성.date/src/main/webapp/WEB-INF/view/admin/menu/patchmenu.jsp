@@ -4,29 +4,6 @@
 		<link rel="stylesheet" href="../../../res/admin.css"/>
 		
 		<script>
-	    	function tableCreate() {
-	    		var html = " ";
-	    		
-	    		var name = $("#name").val();
-	    		var price = $("#price").val();
-	    		var remove = $("remove").val();
-	    		
-	    		html += '<tr>';
-	    		html += '<td></td>'
-	    		html += '<td><input type="text" class="form-control" id="name" name="name" placeholder="메뉴를 입력해주세요"/></td>';
-	            html += '<td><input type="text" class="form-control" id="price" name="price" placeholder="가격을 입력해주세요"/></td>';
-	            html += '<td><button type="button" class="btn btn-danger" onclick="tableDelete(this)" id="remove">삭제</button></td>';
-	            html += '</tr>';
-	            
-	            $("#menus").append(html);
-	    	}
-	    	
-	    	function tableDelete(obj) {
-	    		var tr = $(obj).parent().parent();
-	    		
-	    		tr.remove();
-	    	}
-	    	
 	    	function menuList() {
 	            $.ajax({
 	                url: 'menu/getMenus',
@@ -86,7 +63,7 @@
                                 <button type="button" class="btn btn-info mr-2" data-toggle="modal" data-target="#addMenuOkModal">
                                     <span class="label">완료</span>
                                 </button>
-                                <button type="button" class="btn btn-info mr-2" onclick="tableCreate()">
+                                <button type="button" class="btn btn-info mr-2">
                                     <span class="label">추가</span>
                                 </button>
                             </nav>
