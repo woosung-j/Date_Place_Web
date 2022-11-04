@@ -4,31 +4,43 @@
 <mapper namespace='com.my.date.dao.map.DetailMap'>
 	<select id='selectDetails' resultType='detail'>
 		select * form details
-		order by detail_id
-	</select>
-	<select id='detailDetails' resultType='detail'>
-		select * from details
 		where detail_id = #{detailId}
 	</select>
+	
 	<select id='selectDetail' resultType='detail'>
-		select * from details
+		select detail_id, place_id, tel, openingHours, closingHours, dayoff, contact, parking, createdAt, updatedAt
+		from details
 		where detail_id = #{detailId}
 	</select>
-	<insert id='insertDetail'>
-		insert into details(detail_id, place_id, tel, openingHours, closingHours, dayoff, contact, parking, createdAt, updatedAt)
-		values(DETAILS_DETAILID_SEQ.nextval, #{tel},, #{openingHours}, #{closingHours}, #{dayoff}, #{contact}, #{parking},)
+	
+	<insert id ='insertDetail'>
+		update details
+		set tel = #{tel},
+			openingHours = #{openingHours},
+			closingHours = #{closingHours},
+			dayoff = #{dayoff},
+			contact = #{contact},
+			parking = #{parking},
+		where detail_id = #{detailId}
 	</insert>
 	
 	<update id ='updateDetail'>
 		update details
 		set tel = #{tel},
-			openingHours = #{openinghours},
-			closingHouts = #{closingHours},
+			openingHours = #{openingHours},
+			closingHours = #{closingHours},
 			dayoff = #{dayoff},
 			contact = #{contact},
 			parking = #{parking},
 		where detail_id = #{detailId}
 	</update>
+	
+	<insert id='insertAddress'>
+		update details
+		set address = #{address}
+		where detail_id = #{detailId}
+	</insert>
+	
 	<delete id='deleteDetail'>
 		delete details
 		where detail_id = #{detailId}

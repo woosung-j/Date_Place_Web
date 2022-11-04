@@ -13,8 +13,8 @@ public class DetailServiceImpl implements DetailService{
 	@Autowired private DetailDao detailDao;
 	
 	@Override
-	public List<Detail> selectDetails(int detailId) {
-		return detailDao.selectDetails(detailId);
+	public List<Detail> selectDetails() {
+		return detailDao.selectDetails();
 	}
 	
 	@Override
@@ -35,5 +35,10 @@ public class DetailServiceImpl implements DetailService{
 	@Override
 	public void deleteDetail(int detailId) {
 		detailDao.deleteDetail(detailId);
+	}
+
+	@Override
+	public int insertAddress(int detailId, String postcode, String address, String detailAddress) {
+		return detailDao.insertAddress(detailId, postcode, address, detailAddress);
 	}
 }

@@ -3,8 +3,11 @@ package com.my.date.domain;
 import java.time.LocalDate;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class Detail {
 	private int detailId;
 	private int placeId;

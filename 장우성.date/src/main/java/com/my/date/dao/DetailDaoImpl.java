@@ -13,13 +13,18 @@ public class DetailDaoImpl implements DetailDao{
 	@Autowired private DetailMap detailMap;
 	
 	@Override 
-	public List<Detail> selectDetails(int detailId) {
+	public List<Detail> selectDetails() {
 		return detailMap.selectDetails();
 	}
 	
 	@Override
 	public Detail selectDetail(int placeId) {
 		return detailMap.selectDetail(placeId);
+	}
+	
+	@Override
+	public int insertAddress(int detailId, String postcode, String address, String detailAddress) {
+		return detailMap.insertAddress(detailId, postcode, address, detailAddress);
 	}
 	
 	@Override
@@ -36,4 +41,5 @@ public class DetailDaoImpl implements DetailDao{
 	public void deleteDetail(int detailId) {
 		detailMap.deleteDetail(detailId);
 	}
+	
 }
