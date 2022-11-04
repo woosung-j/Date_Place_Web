@@ -231,27 +231,27 @@
     <div class="navbar">
         <ul class="navbar nav-item bg-light fixed-bottom mb-0 list-style-none">
             <li>
-                <a href="/" class="btn w-auto" type="button">
+                <a href="<%=request.getContextPath()%>/" class="btn w-auto" type="button">
                     <i class="icon main bi-house-door-fill fa-3x"></i>
                 </a>
             </li>
             <li>
-                <a href="../community" class="btn w-auto" type="button">
+                <a href="<%=request.getContextPath()%>/community" class="btn w-auto" type="button">
                     <i class="icon main bi-file-earmark-text fa-3x"></i>
                 </a>
             </li>
             <li>
-                <a href="../place/around" class="btn w-auto" type="button">
+                <a href="<%=request.getContextPath()%>/place/around" class="btn w-auto" type="button">
                     <i class="icon main bi-map fa-3x"></i>
                 </a>
             </li>
             <li>
-                <a href="../place/myplace" class="btn w-auto" type="button">
+                <a href="<%=request.getContextPath()%>/place/myplace" class="btn w-auto" type="button">
                     <i class="icon main bi-heart fa-3x"></i>
                 </a>
             </li>
             <li>
-                <a href="login" class="btn w-auto" type="button">
+                <a href="<%=request.getContextPath()%>/login" class="btn w-auto" type="button">
                     <i class="icon main bi-person-fill fa-3x"></i>
                 </a>
             </li>

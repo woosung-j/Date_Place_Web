@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
 	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 <mapper namespace='com.my.date.dao.map.UserMap'>
+	<select id='selectUsers' resultType='user'>
+		select user_id, id, password, user_name, phone_number,
+				nickname, birthday, created_at, updated_at
+		from users
+		where order by user_id
+	</select>
+	
 	<select id='selectUser' resultType='user'>
 		select user_id, id, password, nickname
 		from users
@@ -11,4 +18,10 @@
 	<insert id="insertUser">
 		insert into users values(users_id_seq.nextval, #{id}, #{email}, #{password}, #{userName}, #{phoneNumber}, #{nickname}, #{birthday}, sysdate, sysdate)
 	</insert>
+	
+	<select id='selectId' resultType='user'>
+		select id
+		from users
+		where user_name = #{userName} and phone_number = #{phoneNumber}
+	</select>
 </mapper>
