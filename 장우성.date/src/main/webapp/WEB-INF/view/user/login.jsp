@@ -1,4 +1,4 @@
-<%@ page language='java' contentType='text/html; charset=UTF-8' pageEncoding='UTF-8'%> 
+<%@ page language='java' contentType='text/html; charset=UTF-8' pageEncoding='UTF-8'%>
 <head>
     <jsp:include page="../include/head.jsp"></jsp:include>
     <link rel="stylesheet" href="../../res/mobile.css" />
@@ -14,32 +14,29 @@
             padding: 5px;
         }
     </style>
-    <script>
-    	
-    </script>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <nav class="row navbar bg-light text-center align-middle fixed-top">
-                <a href="javascript:window.history.back();" class="col btn">
-                    <i class="bi bi-chevron-left"></i>
-                </a>
-                <p class="col"></p>
-                <h3 class="col-6 font-gamja-flower">로그인</h3>
-                <p class="col"></p>
-                <p class="col"></p>
-            </nav>
-        </header>
-        <div class="row pt-62">
-            <form action="login" method="post" class="d-grid col-11 mx-auto">
-                <div class="input-group">
+<div class="container">
+    <header>
+        <nav class="row navbar bg-light text-center align-middle fixed-top">
+            <a href="javascript:window.history.back();" class="col btn">
+                <i class="bi bi-chevron-left"></i>
+            </a>
+            <p class="col"></p>
+            <h3 class="col-6 font-gamja-flower">로그인</h3>
+            <p class="col"></p>
+            <p class="col"></p>
+        </nav>
+    </header>
+    <div class="row pt-62">
+        <form action="login" method="post" class="d-grid col-11 mx-auto">
+            <div class="input-group">
                     <span class="input-group-text">
                         <i class="bi bi-person-fill"></i>
                     </span>
-                    <input type="text" name="id" class="form-control" placeholder="id" aria-label="id" aria-describedby="addon-wrapping" />
-                </div>
-                <div class="input-group mt-3">
+                <input type="text" name="id" class="form-control" placeholder="id" aria-label="id" aria-describedby="addon-wrapping" />
+            </div>
+            <div class="input-group mt-3">
                     <span class="input-group-text">
                         <i class="bi bi-key-fill"></i>
                     </span>
@@ -54,8 +51,17 @@
                 <a href="../user/findid">아이디 찾기</a> | <a href="./05.html">비밀번호 찾기</a> |
                 <a href="signup">회원가입</a>
             </div>
+            <input type="checkbox" class="mt-3" />아이디 저장 <span class="pl-5 text-danger">${errMsg}</span>
+            <button type="submit" class="btn btn-primary btn-lg col-12 mt-3">로그인</button>
+        </form>
+    </div>
+    <div class="row pb-5 mb-3">
+        <div class="col text-center overflow-auto word-keep mt-3">
+            <a href="findid">아이디 찾기</a> | <a href="findpw">비밀번호 찾기</a> |
+            <a href="signup">회원가입</a>
         </div>
-        <div class="navbar">
+    </div>
+    <div class="navbar">
             <ul class="navbar nav-item bg-light fixed-bottom mb-0 list-style-none">
                 <li>
                     <a href="<%=request.getContextPath()%>/" class="btn w-auto" type="button">
@@ -84,5 +90,5 @@
                 </li>
             </ul>
         </div>
-    </div>
+</div>
 </body>
