@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.my.date.dao.map.MenuMap'>
+	<select id='selectMenus' resultMap="menuMap">
+		select menu_id, menu_name, price
+		from menus
+		order by menu_id desc 
+	</select>
+
+	<resultMap id="menuMap" type="menu">
+		<id column="menu_id" property="menuId"/>
+		<result column="place_id" property="placeId"/>
+		<result column="menu_name" property="menuName"/>
+		<result column="price" property="price"/>
+	</resultMap>
+</mapper>
