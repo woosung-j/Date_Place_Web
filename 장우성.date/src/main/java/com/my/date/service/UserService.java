@@ -10,5 +10,4 @@ public interface UserService {
 	User idCheck(String id);
 	int signUp(User user);
 	User findId(User user);
-	//String findId(String userName, String phoneNumber);
 }

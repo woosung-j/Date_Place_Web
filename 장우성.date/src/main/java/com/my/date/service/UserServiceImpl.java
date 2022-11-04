@@ -44,6 +44,6 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User findId(User user) {
-		return userDao.findId(user);
+		return userDao.selectId(user);
 	}
 }

@@ -19,7 +19,7 @@
 		insert into users values(users_id_seq.nextval, #{id}, #{email}, #{password}, #{userName}, #{phoneNumber}, #{nickname}, #{birthday}, sysdate, sysdate)
 	</insert>
 	
-	<select id='findId' resultType='user'>
+	<select id='selectId' resultType='user'>
 		select id
 		from users
 		where user_name = #{userName} and phone_number = #{phoneNumber}

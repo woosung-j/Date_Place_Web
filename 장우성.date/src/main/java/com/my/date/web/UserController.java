@@ -1,12 +1,9 @@
 package com.my.date.web;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -82,7 +79,6 @@ public class UserController {
 
 		return mv;
 	}
-//
 
 	@GetMapping("idCheck/{id}")
 	public int idCheck(@PathVariable String id) {
@@ -112,7 +108,7 @@ public class UserController {
 	}
 
 	@PostMapping("findidresult")
-	public ModelAndView findIdResult(User findId,  ModelAndView mv) {
+	public ModelAndView findIdResult(User findId, ModelAndView mv) {
 		User id = userService.findId(findId);
 			
 		if(id != null) {
@@ -121,9 +117,9 @@ public class UserController {
 			mv.addObject("infoMsg2", "입니다.");
 			mv.setViewName("user/findIdResult");		
 		} else					
-			mv.addObject("errMsg1", "등록된 이름이나 전화번호가 없습니다.");
+			mv.addObject("errMsg1", "등록된 회원이 없습니다.");
 			mv.setViewName("user/findIdResult");
-	
+			
 		return mv;
 	}
 }
