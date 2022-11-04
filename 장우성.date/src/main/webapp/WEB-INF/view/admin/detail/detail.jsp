@@ -1,4 +1,15 @@
 <%@ page language='java' contentType='text/html; charset=UTF-8' pageEncoding='UTF-8'%>
+
+<!DOCTYPE html>
+<title>장우성.date</title>
+
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
+
+<%@ include file ='../../include/head.jsp'%>
+
+<script>
+
+</script>
 <head>
     <jsp:include page="../../include/head.jsp"></jsp:include>
     <link rel="stylesheet" href="../../res/admin.css" />

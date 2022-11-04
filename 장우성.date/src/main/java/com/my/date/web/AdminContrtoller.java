@@ -5,47 +5,49 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.my.date.domain.Detail;
 import com.my.date.service.DetailService;
 
-@Controller
-@RequestMapping("/detail")
-public class DetailContrtoller {
+@RestController
+@RequestMapping("admin")
+public class AdminContrtoller {
 	@Autowired private DetailService detailService;
 	
-	@RequestMapping("/listDetail")
-	public String listDetail() {
-		return "detail/listdetail";
+	@GetMapping("/detail")
+	public ModelAndView listDetail(ModelAndView mv) {
+		mv.setViewName("admin/detail/detail");
+		return mv;
 	}
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-	@RequestMapping(value= "/detail", method=RequestMethod.GET)
-	public String detailDetail(Model model, @RequestParam("detailId") int detailId, HttpSession session) {
-		List<Detail> detailList = detailService.selectDetails();
-		model.addAttribute("detailList", detailList);
-		return "detail";
+//	@GetMapping("/detail")
+//	public ModelAndView selectDetail(ModelAndView mv, @RequestParam("detailId") int detailId, HttpSession session) {
+//		List<Detail> detailList = detailService.selectDetails();
+//		mv.addObject("detailList", detailList);
+//		mv.setViewName("");
+//		return mv;
+//	}
+	
+	@PostMapping("/insertDetail")
+	public String insertDetail() {
+		return "detail/insertDetail";
 	}
 	
-	@RequestMapping("/addDetail")
-	public String addDetail() {
-		return "detail/addDetail";
+	@PutMapping("/updateDetail")
+	public String updateDetail() {
+		return "detail/updateDetail";
 	}
 	
-	@RequestMapping("/fixDetail")
-	public String fixDetail() {
-		return "detail/fixDetail";
-	}
-	
-	@ResponseBody
 	@DeleteMapping("del/{detailId}")
 	public void delDetail(@PathVariable int detailId) {
 		detailService.deleteDetail(detailId);
