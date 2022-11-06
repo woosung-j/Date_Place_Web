@@ -31,25 +31,25 @@
                     if (data.length) {
                         $.each(data, (i, item) => {
                             list.unshift(
-                                `<div type="button" class="row accordion text-center border-bottom mx-1 py-3" style="font-size: 14px" id="acco\${item.declaration?.declareId}" data-toggle="collapse" data-target="#coll\${item.declaration?.declareId}" aria-expanded="true" aria-controls="coll\${item.declaration?.declareId}">
-                                    <div class="col">\${item.declaration?.declareId}</div>
-                                    <div class="col">\${item.place?.placeName}</div>
-                                    <div class="col">\${item.declaration?.confirm == 1 ? "완료" : "미완료"}</div>
+                                `<div type="button" class="row accordion text-center border-bottom mx-1 py-3" style="font-size: 14px" id="acco\${item.declareId}" data-toggle="collapse" data-target="#coll\${item.declareId}" aria-expanded="true" aria-controls="coll\${item.declareId}">
+                                    <div class="col">\${item.declareId}</div>
+                                    <div class="col">\${item.placeName}</div>
+                                    <div class="col">\${item.confirm == 1 ? "완료" : "미완료"}</div>
                                 </div>
-                                <div id="coll\${item.declaration?.declareId}" class="collapse" aria-labelledby="hea\${item.declaration?.declareId}" data-parent="#acco\${item.declaration?.declareId}">
+                                <div id="coll\${item.declareId}" class="collapse" aria-labelledby="hea\${item.declareId}" data-parent="#acco\${item.declareId}">
                                     <div class="row">
                                         <div class="col mx-1">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <h5 class="card-title">\${item.place?.placeName}</h5>
-                                                    <p class="card-text">주소 : \${item.detail?.address}</p>
-                                                    <p class="card-text">신고자 아이디: \${item.user?.id}</p>
-                                                    <p class="card-text">날짜 : \${item.declaration?.createdAt}</p>
+                                                    <h5 class="card-title">\${item.placeName}</h5>
+                                                    <p class="card-text">주소 : \${item.address}</p>
+                                                    <p class="card-text">신고자 아이디: \${item.id}</p>
+                                                    <p class="card-text">날짜 : \${item.createdAt}</p>
                                                     <br />
                                                     <p class="card-text">
-                                                        \${item.declaration?.content}
+                                                        \${item.content}
                                                     </p>
-                                                    <button id="confirmBtn" onClick="toggleConfirm(\${item.declaration?.declareId}, \${item.declaration?.confirm})" class="btn btn-primary">\${item.declaration?.confirm == 1 ? "완료" : "미완료"}</button>
+                                                    <button id="confirmBtn" onClick="toggleConfirm(\${item.declareId}, \${item.confirm})" class="btn btn-primary">\${item.confirm == 1 ? "완료" : "미완료"}</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -78,11 +78,11 @@
     <div class="row">
         <div class="col-2">
             <ul class="text-center">
-                <li><a href="../">회원 조회</a></li>
-                <li><a href="declare">신고 조회</a></li>
-                <li><a href="../review">리뷰 조회</a></li>
-                <li><a href="../place">장소 조회</a></li>
-                <li><a href="../logo">로고 추가</a></li>
+                <li><a href="<%=request.getContextPath()%>/">회원 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/declare">신고 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/review">리뷰 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/place">장소 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/logo">로고 추가</a></li>
             </ul>
         </div>
         <div class="col mt-4">
