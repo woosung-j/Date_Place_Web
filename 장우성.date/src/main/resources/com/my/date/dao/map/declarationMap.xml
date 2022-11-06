@@ -9,11 +9,22 @@
 		order by created_at desc
 	</select>
 
+	<select id='selectDeclarationsByUserId' resultType="myDeclarationDto">
+		select d.declare_id, d.place_id, d.user_id, d.content, d.confirm, d.created_at, p.place_name
+		from declarations d, places p
+		where d.place_id = p.place_id and d.user_id = #{userId}
+	</select>
+
 	<update id="updateConfirm">
 		update declarations
 		set confirm = #{confirm}
 		where declare_id = #{declareId}
 	</update>
+
+	<delete id="deleteDeclarationByDeclareIdAndUserId">
+		delete from declarations
+		where declare_id = #{declareId} and user_id = #{userId}
+	</delete>
 
 	<resultMap id="declarationAdmin" type="declarationAdminDto">
 		<association property="declaration" resultMap="declarationMap" />
