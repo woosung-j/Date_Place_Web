@@ -12,8 +12,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeclarationAdminDto {
-    private Declaration declaration;
-    private Place place;
-    private Detail detail;
-    private User user;
+    private int declareId;
+    private int placeId;
+    private int userId;
+    private String content;
+    private String confirm;
+    private LocalDate createdAt;
+    private String placeName;
+    private String address;
+    private String id;
 }
