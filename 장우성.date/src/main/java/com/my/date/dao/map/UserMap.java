@@ -9,5 +9,8 @@ public interface UserMap {
 	User selectUser(User user);
 	User selectUser(String id);
 	int insertUser(User user);
+	void updateUser(User user);
+	User selectEmail_nickname(User user);
 	User selectId(User user);
+	User selectPw(User user);
 }
