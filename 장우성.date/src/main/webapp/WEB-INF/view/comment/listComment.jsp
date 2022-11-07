@@ -98,21 +98,22 @@
                         $.each(commentList, (i, comment) => {
                             list.unshift(
                                 `<div class="card" id="card1">
-                     <div class="card-body row-11">
-                        <div class="row"><span class="col-5"><i class="fa-solid fa-circle-user fa-2x"></i>
-                           \${comment.feedId}</span>
-                           <span class="col-5">\${comment.createdAt}</span>
-                           <div class="btn-group"><button type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>
-                              <div class="dropdown-menu"><a href="#" class="dropdown-item">수정</a>
-                                 <hr/>
-                                 <button type="button" class="dropdown-item" data-toggle="modal" data-target="#delModal" id="delBtn">삭제</button>
-                              </div>
-                           </div>
-                        </div>
-                        <p class="card=text mt-3">\${comment.content}</p>
-                     </div>   
-                  </div>
-               </div>`
+                                    <div class="card-body row-11">
+                                        <div class="row">
+                                            <span class="col-5"><i class="fa-solid fa-circle-user fa-2x"></i>\${comment.feedId}</span>
+                                            <span class="col-5">\${comment.createdAt}</span>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>
+                                                <div class="dropdown-menu">
+                                                    <a href="#" class="dropdown-item">수정</a>
+                                                    <hr/>
+                                                    <button type="button" class="dropdown-item" data-toggle="modal" data-target="#delModal" id="delBtn">삭제</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="card=text mt-3">\${comment.content}</p>
+                                    </div>   
+                                </div>`
                             );
                         });
                         $('#list').append(list.join(''));
