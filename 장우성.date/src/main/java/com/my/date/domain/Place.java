@@ -2,9 +2,13 @@ package com.my.date.domain;
 
 import java.time.LocalDate;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Place {
 	private int placeId;
 	private String placeName;

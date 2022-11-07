@@ -31,6 +31,4 @@
 		delete places
 		where place_id = #{placeId}
 	</delete>
-	
-	
 </mapper>
