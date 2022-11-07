@@ -142,7 +142,7 @@
                 </a>
             </li>
             <li>
-                <a href="<%=request.getContextPath()%>/login" class="btn w-auto" type="button">
+                <a href="<%=request.getContextPath()%>/user/login" class="btn w-auto" type="button">
                     <i class="icon main bi-person-fill fa-3x"></i>
                 </a>
             </li>

@@ -31,6 +31,11 @@ public class UserDaoImpl implements UserDao {
 	public int insertUser(User user) {
 		return userMap.insertUser(user);
 	}
+	
+	@Override
+	public void updateUser(User user) {
+		userMap.updateUser(user);
+	}
 
 	@Override
 	public User selectId(User user) {

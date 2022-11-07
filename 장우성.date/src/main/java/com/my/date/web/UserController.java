@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,6 +53,7 @@ public class UserController {
 				session.setAttribute("userId", user.getUserId());
 				session.setAttribute("id", user.getId());
 				session.setAttribute("nickname", user.getNickname());
+				session.setAttribute("email", user.getEmail());
 				session.setMaxInactiveInterval(86400);
 			}
 			mv.setViewName("redirect:/");
@@ -72,7 +74,7 @@ public class UserController {
 	}
 	
 	@GetMapping("mypage")
-	public ModelAndView myPage(HttpSession session, ModelAndView mv) {
+	public ModelAndView myPage(ModelAndView mv) {
 		mv.setViewName("user/mypage");
 		
 		return mv;
@@ -126,5 +128,31 @@ public class UserController {
 			mv.setViewName("user/findIdResult");
 			
 		return mv;
+	}
+
+	@GetMapping("fixuser")
+	public ModelAndView fixUser(ModelAndView mv) {
+		mv.setViewName("user/fixUser");
+	
+		return mv; 
+	}
+	
+	@PutMapping("fixuser")
+	public String fixUser(HttpServletRequest request,@RequestBody User updateUser, HttpSession session) {
+		HttpSession sessionCheck = request.getSession(false);
+        
+		if(sessionCheck == null || sessionCheck.getAttribute("userId") == null) {
+            return null;            
+        }
+        
+        int userId = (int) sessionCheck.getAttribute("userId");
+        updateUser.setUserId(userId);
+        
+        if(userId > 0) {
+        	userService.fixUser(updateUser);
+        	session.invalidate();
+		}
+        
+        return "/";
 	}
 }

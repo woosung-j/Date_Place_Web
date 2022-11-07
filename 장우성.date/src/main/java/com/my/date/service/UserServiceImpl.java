@@ -43,6 +43,11 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public void fixUser(User user) {
+		userDao.updateUser(user);
+	}
+	
+	@Override
 	public User findId(User user) {
 		return userDao.selectId(user);
 	}

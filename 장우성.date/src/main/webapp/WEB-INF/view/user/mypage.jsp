@@ -22,6 +22,13 @@
             font-size: 48px;
         }
     </style>
+    <script>
+    	$(() => {
+    		$('#fixUserBtn').click(() => {
+    			location.href="user/fixUser";
+    		})
+    	})
+    </script>
 </head>
 <body>
     <div class="container">
@@ -34,15 +41,14 @@
             <div class="col-1">
                 <div class="circle-icon">
                     <i class="bi bi-image"></i>
-                    <p class="img-font mt-4">홍길동</p>
+                    <p class="img-font mt-4">${nickname}</p>
                 </div>
             </div>
             <div class="col-10 text-right">
-                <div class="userEmail">ws@naver.com</div>
+                <div class="userEmail">${email}</div>
                 <button type="button" class="btn btn-secondary btn-sm col-6 mt-3 ml-0" data-target="#fileUpload" data-toggle="modal">프로필 사진 업로드</button>
-                <a href="../User/07.html">
-                    <button type="button" class="btn btn-secondary btn-sm col-6 mt-3">회원 프로필 수정</button>
-                </a>
+                <a id='fixUserBtn' href="fixuser" type="button" class="btn btn-secondary btn-sm col-6 mt-3">회원 프로필 수정</a>
+               
             </div>
         </div>
         <hr class="mt-4" />
@@ -89,7 +95,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<%=request.getContextPath()%>/login" class="btn w-auto" type="button">
+                    <a href="<%=request.getContextPath()%>/user/login" class="btn w-auto" type="button">
                         <i class="icon main bi-person-fill fa-3x"></i>
                     </a>
                 </li>

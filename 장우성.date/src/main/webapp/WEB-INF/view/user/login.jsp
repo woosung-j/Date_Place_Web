@@ -47,20 +47,12 @@
             </form>
         </div>
         <div class="row pb-5 mb-3">
-            <div class="col text-center overflow-auto word-keep mt-3">
-                <a href="../user/findid">아이디 찾기</a> | <a href="./05.html">비밀번호 찾기</a> |
-                <a href="signup">회원가입</a>
-            </div>
-            <input type="checkbox" class="mt-3" />아이디 저장 <span class="pl-5 text-danger">${errMsg}</span>
-            <button type="submit" class="btn btn-primary btn-lg col-12 mt-3">로그인</button>
-        </form>
-    </div>
-    <div class="row pb-5 mb-3">
-        <div class="col text-center overflow-auto word-keep mt-3">
-            <a href="findid">아이디 찾기</a> | <a href="findpw">비밀번호 찾기</a> |
-            <a href="signup">회원가입</a>
-        </div>
-    </div>
+	        <div class="col text-center overflow-auto word-keep mt-3">
+	            <a href="findid">아이디 찾기</a> | <a href="findpw">비밀번호 찾기</a> |
+	            <a href="signup">회원가입</a>
+	        </div>
+    	</div>        
+    </div>    
     <div class="navbar">
             <ul class="navbar nav-item bg-light fixed-bottom mb-0 list-style-none">
                 <li>
@@ -84,7 +76,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<%=request.getContextPath()%>/login" class="btn w-auto" type="button">
+                    <a href="<%=request.getContextPath()%>/user/login" class="btn w-auto" type="button">
                         <i class="icon main bi-person-fill fa-3x"></i>
                     </a>
                 </li>

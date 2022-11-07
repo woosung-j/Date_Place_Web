@@ -9,5 +9,6 @@ public interface UserService {
 	User loginValidate(User loginUser);
 	User idCheck(String id);
 	int signUp(User user);
+	void fixUser(User user);
 	User findId(User user);
 }
