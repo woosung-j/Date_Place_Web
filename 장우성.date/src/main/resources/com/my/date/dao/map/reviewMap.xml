@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.my.date.dao.map.ReviewMap'>
+	<select id='selectReviewsByPlaceId' resultMap='reviewsMap'>
+		select r.review_id, r.place_id, r.user_id, u.nickname, r.content, p.place_name,
+		r.star_rating, r.created_at, i.file_name, u.profile_image, i.reviewimages_id
+		from reviews r, users u, review_images i, places p
+		where r.place_id = #{placeId}
+		and r.user_id = u.user_id
+		and r.review_id = i.review_id
+		and r.place_id = p.place_id
+		order by review_id
+	</select>
+
+	<select id='selectReviewAvg' resultType='string'>
+		select avg(star_rating)
+		from reviews
+		where place_id = #{placeId}
+		group by place_id
+	</select>
+	
+	<resultMap id='reviewsMap' type='ReviewDto'>
+		<id property='reviewId' column='review_id' />
+		<result property='placeId' column='place_id' />
+		<result property='userId' column='user_id' />
+		<result property='content' column='content' />
+		<result property='starRating' column='star_rating' />
+		<result property='createdAt' column='created_at' />
+		<result property='nickname' column='nickname' />
+		<result property='profileImage' column='profile_image'/>
+		<result property='placeName' column='place_name' />
+		<collection property='reviewImages' resultMap='reviewImageMap' />
+	</resultMap>
+	
+	<resultMap id='reviewImageMap' type='com.my.date.domain.ReviewImage'>
+		<id property='reviewImagesId' column='reviewimages_id'/>
+		<result property='fileName' column='file_name'/>
+	</resultMap>
+</mapper>
+
+		
