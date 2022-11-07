@@ -7,5 +7,4 @@ import com.my.date.domain.Hashtag;
 
 public interface FeedDao {
 	List<Feed> selectFeeds();
-	List<Hashtag> selectTags();
 }

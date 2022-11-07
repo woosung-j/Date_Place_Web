@@ -18,9 +18,4 @@ public class FeedServiceImpl implements FeedService {
 		public List<Feed> getFeeds() { 
 		return feedDao.selectFeeds(); 
 	}
-	  
-	@Override
-	public List<Hashtag> getTags() {
-		return feedDao.selectTags();
-	}
 }

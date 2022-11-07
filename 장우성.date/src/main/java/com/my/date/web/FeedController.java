@@ -30,9 +30,4 @@ public class FeedController {
 	public List<Feed> getFeeds() {
 		return feedService.getFeeds();
 	}
-	
-	@GetMapping("getTags")
-	public List<Hashtag> getTags() {
-		return feedService.getTags();
-	}
 }

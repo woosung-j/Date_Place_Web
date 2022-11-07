@@ -7,5 +7,4 @@ import com.my.date.domain.Hashtag;
 
 public interface FeedService {
 	List<Feed> getFeeds();
-	List<Hashtag> getTags();
 }

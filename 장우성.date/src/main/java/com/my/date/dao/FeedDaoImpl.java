@@ -17,9 +17,4 @@ public class FeedDaoImpl implements FeedDao{
 	public List<Feed> selectFeeds() {
 		return feedMap.selectFeeds();
 	}
-	
-	@Override
-	public List<Hashtag> selectTags() {
-		return feedMap.selectTags();
-	}
 }

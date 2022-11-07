@@ -7,5 +7,4 @@ import com.my.date.domain.Hashtag;
 
 public interface FeedMap {
 	List<Feed> selectFeeds();
-	List<Hashtag> selectTags();
 }
