@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import com.my.date.domain.Declaration;
+import com.my.date.domain.Menu;
 import com.my.date.service.DeclarationService;
 import com.my.date.service.MenuService;
 import com.my.date.service.PlaceService;
