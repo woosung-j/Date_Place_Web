@@ -9,8 +9,8 @@ public class Place {
 	private int placeId;
 	private String placeName;
 	private String placeInfo;
-	private int si;
-	private int gu;
+	private int siId;
+	private int guId;
 	private int views;
 	private int placeGroupId;
 	private LocalDate createdAt;

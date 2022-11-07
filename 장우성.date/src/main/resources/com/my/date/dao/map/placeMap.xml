@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.my.date.dao.map.PlaceMap'>
+	<select id='selectPlaces' resultType='place'>
+		select place_id, place_name, si_id, gu_id, placegroup_id, introduction
+		from places
+		order by place_id
+	</select>
+	
+	<select id='selectPlace' resultType='place'>
+		select place_id, place_name
+		from places
+		where place_id = #{placeId}
+	</select>
+	
+	<insert id='insertPlace'>
+		insert into places values(places_id_seq.nextval, #{placeName}, #{placeInfo}
+			#{si_id}, #{gu_id}, #{placeGroupId}, createAt_now, sysdate)
+	</insert>
+	
+	<update id='updatePlace'>
+		update places
+		set place_name = #{placeName}, introduction = #{placeInfo},
+			si_id = #{siId}, gu_id = #{guId}, placegroup_id = #{placeGroupId},
+			sysdate, updateAt_now
+		where place_id = #{placeId}
+	</update>
+	
+	<delete id='deletePlace'>
+		delete places
+		where place_id = #{placeId}
+	</delete>
+	
+	
+</mapper>
