@@ -7,45 +7,4 @@
 		from details
 		order by detail_id
 	</select>
-	
-	<insert id ='insertDetail'>
-		insert details
-		set tel = #{tel},
-			openingHours = #{openingHours},
-			closingHours = #{closingHours},
-			dayoff = #{dayoff},
-			contact = #{contact},
-			parking = #{parking},
-		where detail_id = #{detailId}
-	</insert>
-	
-	<update id ='updateDetail'>
-		update details
-		set tel = #{tel},
-			openingHours = #{openingHours},
-			closingHours = #{closingHours},
-			dayoff = #{dayoff},
-			contact = #{contact},
-			parking = #{parking},
-		where detail_id = #{detailId}
-	</update>
-	
-	<delete id='deleteDetail'>
-		delete details
-		where detail_id = #{detailId}
-	</delete>
-	
-	<resultMap id='detailMap' type='detail'>
-		<id property='detailId' column='detail_Id'/>
-		<result property='address' column='address'/>
-		<result property='tel' column='tel'/>
-		<result property='openingHours' column='opening_hours'/>
-		<result property='closingHours' column='closing_hours'/>
-		<result property='dayoff' column='dayoff'/>
-		<result property='contact' column='contact'/>
-		<result property='parking' column='parking'/>
-		<result property='createdAt' column='created_at'/>
-		<result property='updatedAt' column='updated_at'/>
-	</resultMap>
 </mapper>
-	

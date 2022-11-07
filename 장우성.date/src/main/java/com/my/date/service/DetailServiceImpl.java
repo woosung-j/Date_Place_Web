@@ -16,24 +16,4 @@ public class DetailServiceImpl implements DetailService{
 	public List<Detail> getDetails() {
 		return detailDao.selectDetails();
 	}
-	
-	@Override
-	public Detail getDetail(int placeId) {
-		return detailDao.selectDetail(placeId);
-	}
-	
-	@Override
-	public void addDetail(Detail detail) {
-		detailDao.insertDetail(detail);
-	}
-	
-	@Override
-	public void fixDetail(Detail detail) {
-		detailDao.updateDetail(detail);
-	}
-	
-	@Override
-	public void delDetail(int detailId) {
-		detailDao.deleteDetail(detailId);
-	}
 }

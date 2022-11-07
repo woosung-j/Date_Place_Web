@@ -9,7 +9,7 @@
 			url:'detail/getDetails',
 			method: 'get',
 			contentType: 'application/json'
-			succes: (data) => {
+			success: (data) => {
 				const list = [];
 				
 				if (data.length) {
