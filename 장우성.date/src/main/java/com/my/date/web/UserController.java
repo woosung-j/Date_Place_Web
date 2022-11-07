@@ -1,5 +1,7 @@
 package com.my.date.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -12,13 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.my.date.domain.Place;
 import com.my.date.domain.User;
+import com.my.date.service.PlaceService;
 import com.my.date.service.UserService;
 
 @RestController
 @RequestMapping("user")
 public class UserController {
 	@Autowired private UserService userService;
+	@Autowired private PlaceService placeService;
 	
 	@GetMapping("login")
 	public ModelAndView login(HttpServletRequest request, ModelAndView mv) {
