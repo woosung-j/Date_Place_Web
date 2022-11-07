@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.my.date.dao.map.DetailMap'>
+	<select id='selectDetails' resultType='detail'>
+		select detail_id, place_id, tel, openingHours, closingHours, dayoff, contact, parking, createdAt, updatedAt
+		from details
+		order by detail_id
+	</select>
+	
+	<insert id ='insertDetail'>
+		insert details
+		set tel = #{tel},
+			openingHours = #{openingHours},
+			closingHours = #{closingHours},
+			dayoff = #{dayoff},
+			contact = #{contact},
+			parking = #{parking},
+		where detail_id = #{detailId}
+	</insert>
+	
+	<update id ='updateDetail'>
+		update details
+		set tel = #{tel},
+			openingHours = #{openingHours},
+			closingHours = #{closingHours},
+			dayoff = #{dayoff},
+			contact = #{contact},
+			parking = #{parking},
+		where detail_id = #{detailId}
+	</update>
+	
+	<delete id='deleteDetail'>
+		delete details
+		where detail_id = #{detailId}
+	</delete>
+	
+	<resultMap id='detailMap' type='detail'>
+		<id property='detailId' column='detail_Id'/>
+		<result property='address' column='address'/>
+		<result property='tel' column='tel'/>
+		<result property='openingHours' column='opening_hours'/>
+		<result property='closingHours' column='closing_hours'/>
+		<result property='dayoff' column='dayoff'/>
+		<result property='contact' column='contact'/>
+		<result property='parking' column='parking'/>
+		<result property='createdAt' column='created_at'/>
+		<result property='updatedAt' column='updated_at'/>
+	</resultMap>
+</mapper>
+	
