@@ -10,7 +10,5 @@ public interface UserService {
 	User idCheck(String id);
 	int signUp(User user);
 	void fixUser(User user);
-	User showEmail_nickname(User user);
 	User findId(User user);
-	User findPw(User user);
 }

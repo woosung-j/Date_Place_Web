@@ -41,14 +41,4 @@ public class UserDaoImpl implements UserDao {
 	public User selectId(User user) {
 		return userMap.selectId(user);
 	}
-	
-	@Override
-	public User selectPw(User user) {
-		return userMap.selectId(user);
-	}
-	
-	@Override
-	public User selectEmail_nickname(User user) {
-		return userMap.selectEmail_nickname(user);
-	}
 }

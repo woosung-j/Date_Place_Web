@@ -69,23 +69,9 @@ public class UserController {
 	}
 	
 	@GetMapping("mypage")
-	public ModelAndView myPage(HttpSession session, ModelAndView mv) {
+	public ModelAndView myPage(ModelAndView mv) {
 		mv.setViewName("user/mypage");
 		
-		return mv;
-	}
-	
-	@PostMapping("mypage")
-	public ModelAndView myPage(ModelAndView mv, User myInfo) {
-		User showInfo = userService.showEmail_nickname(myInfo);
-		
-		if(showInfo != null){					
-			mv.addObject("nickname", showInfo.getNickname());
-			mv.addObject("email", showInfo.getUserName());	
-			mv.setViewName("user/mypage");
-		} else
-			mv.setViewName("user/login");
-			
 		return mv;
 	}
 
@@ -147,19 +133,21 @@ public class UserController {
 	}
 	
 	@PutMapping("fixuser")
-	public String fixUser(HttpServletRequest request,@RequestBody User updateUser) {
-		HttpSession session = request.getSession(false);
-        if(session == null || session.getAttribute("userId") == null) {
-            return null;
+	public String fixUser(HttpServletRequest request,@RequestBody User updateUser, HttpSession session) {
+		HttpSession sessionCheck = request.getSession(false);
+        
+		if(sessionCheck == null || sessionCheck.getAttribute("userId") == null) {
+            return null;            
         }
         
-        int userId = (int) session.getAttribute("userId");
+        int userId = (int) sessionCheck.getAttribute("userId");
         updateUser.setUserId(userId);
         
         if(userId > 0) {
         	userService.fixUser(updateUser);
+        	session.invalidate();
 		}
         
-        return "user/fixUser";
+        return "/";
 	}
 }

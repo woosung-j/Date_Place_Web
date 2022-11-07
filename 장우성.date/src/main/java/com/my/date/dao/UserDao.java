@@ -9,8 +9,6 @@ public interface UserDao {
 	User selectUser(User user);
 	User selectUser(String id);
 	int insertUser(User user);
-	User selectEmail_nickname(User user);
 	void updateUser(User user);
 	User selectId(User user);
-	User selectPw(User user);
 }

@@ -12,5 +12,4 @@ public interface UserMap {
 	void updateUser(User user);
 	User selectEmail_nickname(User user);
 	User selectId(User user);
-	User selectPw(User user);
 }

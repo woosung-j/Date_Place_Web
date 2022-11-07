@@ -51,14 +51,4 @@ public class UserServiceImpl implements UserService {
 	public User findId(User user) {
 		return userDao.selectId(user);
 	}
-	
-	@Override
-	public User findPw(User user) {
-		return userDao.selectPw(user);
-	}
-	
-	@Override
-	public User showEmail_nickname(User user) {
-		return userDao.selectEmail_nickname(user);
-	}
 }
