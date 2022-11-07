@@ -22,7 +22,6 @@ import com.my.date.service.CommentService;
 @RestController
 @RequestMapping("comment")
 public class CommentController {
-	
 	@Autowired
 	private CommentService commentService;
 	
@@ -38,5 +37,4 @@ public class CommentController {
 	public List<Comment> getComments(@PathVariable int feedId) {
 		return commentService.getComments(feedId);
 	}
-	
 }

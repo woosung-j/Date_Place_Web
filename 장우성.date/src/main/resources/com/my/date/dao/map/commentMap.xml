@@ -18,5 +18,4 @@
 		<result property='createdAt' column='created_at' />
 		<result property='nickname' column='nickname' />
 	</resultMap>
-	
 </mapper>		
