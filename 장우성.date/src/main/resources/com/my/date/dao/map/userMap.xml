@@ -36,10 +36,4 @@
 		from users
 		where email = #{email}
 	</select>
-	
-	<select id='selectEmail_nickname' resultType='user'>
-		select email, nickname
-		from users
-		where id = #{id}
-	</select>
 </mapper>
