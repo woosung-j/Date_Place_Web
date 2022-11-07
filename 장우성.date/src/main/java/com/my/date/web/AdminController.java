@@ -1,6 +1,5 @@
 package com.my.date.web;
 
-import java.awt.Menu;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.my.date.domain.Declaration;
+import com.my.date.domain.Menu;
 import com.my.date.service.DeclarationService;
 import com.my.date.service.MenuService;
 

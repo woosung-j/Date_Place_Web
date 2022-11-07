@@ -1,6 +1,6 @@
 package com.my.date.dao;
 
-import java.awt.Menu;
+import com.my.date.domain.Menu;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
