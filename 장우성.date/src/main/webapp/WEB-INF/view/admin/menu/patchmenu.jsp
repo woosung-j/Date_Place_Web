@@ -1,117 +1,115 @@
 <%@ page language='java' contentType='text/html; charset=UTF-8' pageEncoding='UTF-8'%>
 <head>
-<jsp:include page="../../include/head.jsp"></jsp:include>
-<link rel="stylesheet" href="../../../res/admin.css"/>
-<script>
-	function tableCreate() {
-		var html = " ";
-		
-		var menuName = $("#menuName").val();
-		var price = $("#price").val();
-		var remove = $("remove").val();
-		
-		html += '<tr>';
-		html += '<td><input type="hidden" id="placeId" name="placeId" value="${placeId}" /></td>'
-		html += '<td><input type="text" class="form-control" id="menuName" name="menuName" placeholder="메뉴를 입력해주세요"/></td>';
-	    html += '<td><input type="text" class="form-control" id="price" name="price" placeholder="가격을 입력해주세요"/></td>';
-	    html += '<td><button type="button" class="btn btn-danger" onclick="tableDelete(this)" id="remove">삭제</button></td>';
-	    html += '</tr>';
-	    
-	    $("#menus").append(html);
-	}
-	
-	function tableDelete(obj) {
-		var tr = $(obj).parent().parent();
-		
-		tr.remove();
-	}
-	
-	function isVal(field) {
-		let isGood = false
-		let errMsg
-		
-		if(!field.length) errMsg = 'test'
-		else {
-			if(!field.val()) errMsg = field.attr('placeholder')
-			else isGood = true
-		}
-		
-		if(!isGood) {
-			$('#modalMsg').text(errMsg).css('color', 'red')
-			$('#modalBtn').hide()
-			$('#modal').modal()
-		} else {
-			$('#modalMsg').text('수정이 완료 되었습니다.')
-			$('#modalBtn').hide()
-			$('#modal').modal()
-		}
-		
-		return isGood
-	}
+    <jsp:include page="../../include/head.jsp"></jsp:include>
+    <link rel="stylesheet" href="../../../res/admin.css" />
+    <script>
+        function tableCreate() {
+            var html = ' ';
 
-	function menuList() {
-        $.ajax({
-            url: 'menu/getMenus',
-            method: 'get',
-            contentType: 'application/json',
-            success: menus => {
-                const menuArr = [];
+            var menuName = $('#menuName').val();
+            var price = $('#price').val();
+            var remove = $('remove').val();
 
-                if (menus.length) {
-                    $.each(menus, (i, menu) => {
-                        menuArr.unshift(
-                        	`<tr>
-	  							<td>\${menu.menuId}</td>
-	  							<td><input type='text' class='form-control' value='\${menu.menuName}'/></td>
-	  							<td><input type='text' class='form-control' value='\${menu.price}'/></td>
-	  							<td><button type='button' class='btn btn-danger' onclick='tableDelete(this)' id='remove'>삭제</button></td>
-	  						</tr>`
-                    	);
-                	});
-                }
-                $('#menus').empty();
-            	$('#menus').append(menuArr.join(''));
-        	},
-    	});
-    }
-	
-	function addMenu() {
-		const arr = []
-		let length = $('input[name=menuName]').length
-		
-		for(let i = 0; i < length; i++) {
-			arr.push({placeId: $('#placeId').val(), 
-					menuName: $('input[name=menuName]').eq(i).val(),
-					price: $('input[name=price]').eq(i).val()})
-		}
-		
-		$.ajax({
-			url: 'addMenu',
-			method: 'post',
-			contentType: 'application/json',
-			data: JSON.stringify(arr),
-			success: (data) => {
-				if(data == arr.length) {
-					menuList();
-				} else {
-					console.log("fail")
-				}
-			}
-		})
-		console.log(arr);
-	}
-	
-	function init() {
-		$('#addMenuBtn').click(() => {
-			addMenu()
-		})
-	}
-	
-	$(() => {
-		init()
-		menuList();
-	})
-</script>
+            html += '<tr>';
+            html += '<td><input type="hidden" id="placeId" name="placeId" value="${placeId}" /></td>';
+            html += '<td><input type="text" class="form-control" id="menuName" name="menuName" placeholder="메뉴를 입력해주세요"/></td>';
+            html += '<td><input type="text" class="form-control" id="price" name="price" placeholder="가격을 입력해주세요"/></td>';
+            html += '<td><button type="button" class="btn btn-danger" onclick="tableDelete(this)" id="remove">삭제</button></td>';
+            html += '</tr>';
+
+            $('#menus').append(html);
+        }
+
+        function tableDelete(obj) {
+            var tr = $(obj).parent().parent();
+
+            tr.remove();
+        }
+
+        function isVal(field) {
+            let isGood = false;
+            let errMsg;
+
+            if (!field.length) errMsg = 'test';
+            else {
+                if (!field.val()) errMsg = field.attr('placeholder');
+                else isGood = true;
+            }
+
+            if (!isGood) {
+                $('#modalMsg').text(errMsg).css('color', 'red');
+                $('#modalBtn').hide();
+                $('#modal').modal();
+            } else {
+                $('#modalMsg').text('수정이 완료 되었습니다.');
+                $('#modalBtn').hide();
+                $('#modal').modal();
+            }
+
+            return isGood;
+        }
+
+        function menuList() {
+            $.ajax({
+                url: 'menu/getMenus',
+                method: 'get',
+                contentType: 'application/json',
+                success: (menus) => {
+                    const menuArr = [];
+
+                    if (menus.length) {
+                        $.each(menus, (i, menu) => {
+                            menuArr.unshift(
+                                `<tr>
+                                    <td>\${menu.menuId}</td>
+                                    <td><input type='text' class='form-control' value='\${menu.menuName}'/></td>
+                                    <td><input type='text' class='form-control' value='\${menu.price}'/></td>
+                                    <td><button type='button' class='btn btn-danger' onclick='tableDelete(this)' id='remove'>삭제</button></td>
+                                </tr>`
+                            );
+                        });
+                    }
+                    $('#menus').empty();
+                    $('#menus').append(menuArr.join(''));
+                },
+            });
+        }
+
+        function addMenu() {
+            const arr = [];
+            let length = $('input[name=menuName]').length;
+
+            for (let i = 0; i < length; i++) {
+                arr.push({ placeId: $('#placeId').val(), menuName: $('input[name=menuName]').eq(i).val(), price: $('input[name=price]').eq(i).val() });
+            }
+
+            $.ajax({
+                url: 'addMenu',
+                method: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify(arr),
+                success: (data) => {
+                    if (data == arr.length) {
+                        menuList();
+                    } else {
+                        console.log('fail');
+                    }
+                },
+            });
+            console.log(arr);
+        }
+
+        function init() {
+            $('#addMenuBtn').click(() => {
+                addMenu();
+            });
+        }
+
+        $(() => {
+            init();
+            menuList();
+        });
+    </script>
 </head>
 
 <body>
