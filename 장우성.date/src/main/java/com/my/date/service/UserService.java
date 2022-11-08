@@ -8,6 +8,7 @@ public interface UserService {
 	List<User> getUsers();
 	User loginValidate(User loginUser);
 	User idCheck(String id);
+	String checkEmail(String email);
 	int signUp(User user);
 	User findId(User user);
 }

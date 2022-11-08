@@ -37,24 +37,26 @@
             else if (!$('#phoneNumber').val()) errMsg = '전화번호를 입력하세요.';
             else if (!$('#birthday').val()) errMsg = '생년월일을 입력하세요.';
             else if (auth.isId == false) errMsg = '아이디 중복 확인이 완료되지 않았습니다.';
-            // else if (auth.isEmail == false) errMsg = '이메일 인증이 완료되지 않았습니다.';
-            // else if (auth.isEmailAuth == false) errMsg = '인증번호 입력이 완료되지 않았습니다.';
+            else if (auth.isEmail == false) errMsg = '이메일 인증이 완료되지 않았습니다.';
+            else if (auth.isEmailAuth == false) errMsg = '인증번호 입력이 완료되지 않았습니다.';
             else isGood = true;
 
-            if(!isGood) showModal(errMsg, 'red')
+            if (!isGood) showModal(errMsg, 'red');
 
             return isGood;
         }
 
         function showModal(msg, color, href) {
-            $('#modalMsg').text(msg).css('color', color ? color : 'black')
-            if(href == null) {
-                $('#modalBtn')[0].dataset.dismiss = 'modal'
+            $('#modalMsg')
+                .text(msg)
+                .css('color', color ? color : 'black');
+            if (href == null) {
+                $('#modalBtn')[0].dataset.dismiss = 'modal';
             } else {
-                $('#modalBtn')[0].dataset.dismiss = null
-                $('#modalBtn')[0].href = href
+                $('#modalBtn')[0].dataset.dismiss = null;
+                $('#modalBtn')[0].href = href;
             }
-            $('#modal').modal()
+            $('#modal').modal();
         }
 
         function signup() {
@@ -70,16 +72,17 @@
                         password: $('#password').val(),
                         userName: $('#userName').val(),
                         nickname: $('#nickname').val(),
+                        profileImage: '',
                         phoneNumber: $('#phoneNumber').val(),
-                        birthday: $('#birthday').val()
+                        birthday: $('#birthday').val(),
                     }),
                     success: (data) => {
-                        if(data == 0) showModal('회원가입을 실패했습니다.', 'red')
+                        if (data == 0) showModal('회원가입을 실패했습니다.', 'red');
                         else {
-                            showModal('회원가입이 완료되었습니다.', null, 'login')
+                            showModal('회원가입이 완료되었습니다.', null, 'login');
                         }
-                    }
-                })
+                    },
+                });
             }
         }
 
@@ -92,90 +95,88 @@
                     contentType: 'application/text',
                     success: (data) => {
                         console.log(data);
-                        if(data == 0) showModal('이미 사용중인 아이디입니다.', 'red')
+                        if (data == 0) showModal('이미 사용중인 아이디입니다.', 'red');
                         else {
-                            showModal('사용 가능한 아이디입니다.')
-                            auth.isId = true
+                            showModal('사용 가능한 아이디입니다.');
+                            auth.isId = true;
                         }
                     },
                 });
             }
         }
-        //
-        // function emailCheck() {
-        //     let val = $('#email').val();
-        //     if (val != '') {
-        //         $.ajax({
-        //             url: 'emailCheck',
-        //             method: 'post',
-        //             contentType: 'application/json',
-        //             data: JSON.stringify({
-        //                 email: val,
-        //             }),
-        //             success: (data) => {
-        //                 if(data.error) showModal(data.errMsg, 'red')
-        //                 else {
-        //                     showModal('인증번호를 전송했습니다.')
-        //                     auth.isEmail = true
-        //                 }
-        //             },
-        //         });
-        //     }
-        // }
-        //
-        // function emailAuthCheck() {
-        //     let val = $('#auth').val();
-        //     if (val != '') {
-        //         $.ajax({
-        //             url: 'emailAuthCheck',
-        //             method: 'post',
-        //             contentType: 'application/json',
-        //             data: JSON.stringify({
-        //                 auth: val,
-        //             }),
-        //             success: (data) => {
-        //                 if(data.error) showModal(data.errMsg, 'red')
-        //                 else {
-        //                     showModal('인증이 완료되었습니다.')
-        //                     auth.isEmailAuth = true
-        //                 }
-        //             },
-        //         });
-        //     }
-        // }
+
+        function emailCheck() {
+            let email = $('#email').val();
+            if (email != '') {
+                $.ajax({
+                    url: 'emailCheck/' + email,
+                    method: 'get',
+                    success: (data) => {
+                        if (data != '') showModal('이미 사용중인 이메일입니다.', 'red');
+                        else {
+                            emailAuth(email);
+                        }
+                    },
+                });
+            }
+        }
+
+        function emailAuth(email) {
+            showModal('인증번호를 전송했습니다.');
+            $.ajax({
+                url: 'emailAuthCheck/' + email,
+                method: 'get',
+                success: (data) => {
+                    console.log(data);
+                    code = data;
+                    auth.isEmail = true;
+                },
+            });
+        }
+
+        function emailAuthCheck() {
+            const inputAuthCode = $('#auth').val();
+
+            if (inputAuthCode == code) {
+                auth.isEmailAuth = true;
+                showModal('인증이 완료되었습니다.');
+            } else {
+                showModal('인증번호가 일치하지 않습니다. 다시 확인해주세요.');
+            }
+        }
 
         function init() {
             // 회원가입 버튼
             $('#signupBtn').click((e) => {
-                signup()
+                signup();
             });
 
             // 아이디 중복확인 버튼
             $('#idCheckBtn').click((e) => {
-                idCheck()
+                idCheck();
             });
 
             // // 인증 버튼
-            // $('#emailCheckBtn').click((e) => {
-            //     emailCheck()
-            // });
-            //
-            // // 인증확인 버튼
-            // $('#authBtn').click((e) => {
-            //     emailAuthCheck()
-            // });
+            $('#emailCheckBtn').click((e) => {
+                emailCheck();
+            });
+
+            // 인증확인 버튼
+            $('#authBtn').click((e) => {
+                emailAuthCheck();
+            });
 
             $('#id').change((e) => {
-                auth.isId = false
-            })
+                auth.isId = false;
+            });
 
-            // $('#email').change((e) => {
-            //     auth.isEmail = false
-            // })
-            //
-            // $('#auth').change((e) => {
-            //     auth.isEmailAuth = false
-            // })
+            $('#email').change((e) => {
+                auth.isEmail = false;
+            });
+
+            $('#auth').change((e) => {
+                auth.isEmailAuth = false;
+            });
         }
 
         $(() => {
@@ -203,7 +204,7 @@
                 <button type="button" id="idCheckBtn" class="col-4 border-0 rounded" data-toggle="modal" data-target="#checkModal">중복확인</button>
             </div>
             <div class="input-group mb-2">
-                <input type="email" id="email" class="col form-control mr-2 rounded" placeholder="이메일" aria-label="email" aria-describedby="addon-wrapping" autofocus />
+                <input type="email" id="email" name="email" class="col form-control mr-2 rounded" placeholder="이메일" aria-label="email" aria-describedby="addon-wrapping" autofocus />
                 <button type="button" id="emailCheckBtn" class="col-4 border-0 rounded" data-toggle="modal" data-target="#checkModal">인증하기</button>
             </div>
             <div class="input-group mb-2">
@@ -220,7 +221,15 @@
                 <input type="text" id="nickname" class="form-control" placeholder="닉네임" aria-label="nickname" aria-describedby="addon-wrapping" />
             </div>
             <div class="input-group mb-2">
-                <input type="tel" id="phoneNumber" class="form-control userCellNum" placeholder="전화번호(&#39;-&#39;&nbsp;제외)" aria-label="phone" aria-describedby="addon-wrapping" />
+                <input
+                        type="tel"
+                        id="phoneNumber"
+                        class="form-control userCellNum"
+                        placeholder="전화번호(&#39;-&#39;&nbsp;제외)"
+                        maxlength="11"
+                        aria-label="phone"
+                        aria-describedby="addon-wrapping"
+                />
             </div>
             <div class="input-group mb-2">
                 <input type="date" id="birthday" max="9999-12-31" class="form-control date" placeholder="날짜 선택" aria-label="birth" aria-required="true" aria-describedby="addon-wrapping" />
@@ -251,7 +260,7 @@
                 </a>
             </li>
             <li>
-                <a href="<%=request.getContextPath()%>/login" class="btn w-auto" type="button">
+                <a href="<%=request.getContextPath()%>/user/login" class="btn w-auto" type="button">
                     <i class="icon main bi-person-fill fa-3x"></i>
                 </a>
             </li>

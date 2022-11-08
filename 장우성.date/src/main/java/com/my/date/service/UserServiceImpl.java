@@ -36,9 +36,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public String checkEmail(String email) {
+		return userDao.selectEmail(email);
+	}
+
+	@Override
 	public int signUp(User user) {
 		if(idCheck(user.getId()) != null)
 			return 0;
+
 		return userDao.insertUser(user);
 	}
 	
