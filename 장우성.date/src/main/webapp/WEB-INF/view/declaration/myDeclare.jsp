@@ -45,6 +45,8 @@
                 success: (data) => {
                     const list = [];
 
+                    $('#list').empty();
+
                     if (data.length) {
                         $.each(data, (i, item) => {
                             list.unshift(
@@ -71,11 +73,21 @@
                                 </div>`
                             );
                         });
+                        $('#list').append(list.join(''));
+                    } else {
+                        const html =
+                            `<div id="declare" class="col-12 w-auto">
+                                <div class="card mb-3">
+                                    <div class="card-header row-12 px-0">
+                                        <span class="col overflow-hidden">
+                                            신고 내역이 없습니다.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>`;
+
+                        $('#list').append(html);
                     }
-
-                    $('#list').empty();
-                    $('#list').append(list.join(''));
-
                     init();
                 },
             });

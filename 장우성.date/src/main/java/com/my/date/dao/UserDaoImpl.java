@@ -23,8 +23,13 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User selectUser(String id) {
-		return userMap.selectUser(id);
+	public User selectUserById(String id) {
+		return userMap.selectUserById(id);
+	}
+
+	@Override
+	public String selectEmail(String email) {
+		return userMap.selectEmail(email);
 	}
 
 	@Override

@@ -23,4 +23,9 @@ public class ReviewServiceImpl implements ReviewService{
 			return 0;
 		return Double.parseDouble(reviewDao.selectReviewAvg(placeId));
 	}
+	
+	@Override
+	public int addReview(Review review) {
+		return reviewDao.insertReview(review);
+	}
 }

@@ -3,22 +3,35 @@
 	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 <mapper namespace='com.my.date.dao.map.UserMap'>
 	<select id='selectUsers' resultType='user'>
-		select user_id, id, email, password, user_name, phone_number,
-				nickname, birthday, created_at, updated_at
+		select user_id, id, password, user_name, phone_number,
+				nickname, user_profile, birthday, created_at, updated_at
 		from users
 		where order by user_id
 	</select>
 	
 	<select id='selectUser' resultType='user'>
+		select u.user_id, u.id, u.password, u.nickname, u.email
+		from users u left outer join delete_users d
+		on u.user_id = d.user_id
+		where u.id = #{id} and d.user_id is null
+	</select>
+
+	<select id="selectUserById" resultType="user">
 		select user_id, id, password, nickname, email
 		from users
 		where id = #{id}
 	</select>
 
+	<select id='selectEmail' resultType="string">
+		select email
+		from users
+		where email = #{email}
+	</select>
+
 	<insert id="insertUser">
-		insert into users values(users_id_seq.nextval, #{id}, #{email}, #{password}, #{userName}, #{phoneNumber}, #{nickname}, #{birthday}, sysdate, sysdate)
-	</insert>	
-	
+		insert into users values(users_id_seq.nextval, #{id}, #{email}, #{password}, #{userName}, #{phoneNumber}, #{nickname}, #{profileImage}, #{birthday}, sysdate, sysdate)
+	</insert>
+  
 	<update id='updateUser'>
 		update users
 		set password = #{password,jdbcType=VARCHAR}, nickname = #{nickname,jdbcType=VARCHAR}, phone_number = #{phoneNumber,jdbcType=VARCHAR}, birthday = #{birthday,jdbcType=VARCHAR}
