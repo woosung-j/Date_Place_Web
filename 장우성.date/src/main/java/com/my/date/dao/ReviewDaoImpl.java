@@ -22,4 +22,9 @@ public class ReviewDaoImpl implements ReviewDao{
 	public String selectReviewAvg(@Param("placeId") int placeId) {
 		return reviewMap.selectReviewAvg(placeId);
 	};
+	
+	@Override
+	public int insertReview(Review review) {
+		return reviewMap.insertReview(review);
+	};
 }

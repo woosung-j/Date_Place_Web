@@ -35,22 +35,24 @@
     <script>
         function setStarRating(starRating) {
             const starArr = [];
+
             for (i = 0; i < starRating; i++) {
                 starArr.push(`<i class="fa fa-star fill mt-2"></i>`);
             }
             for (i = 0; i < 5 - starRating; i++) {
                 starArr.push(`<i class="fa fa-star"></i>`);
             }
+
             return starArr.join('');
         }
 
         function listReviews() {
             $('#reviews').empty();
+
             $.ajax({
                 url: 'list/' + $('#placeId').val(),
                 method: 'get',
                 success: (reviews) => {
-                    console.log(reviews);
                     if (reviews.length) {
                         const reviewArr = [];
 
@@ -63,32 +65,32 @@
 
                             reviewArr.unshift(
                                 `<tr>
-                          <td style='border:none;'>
-                             <div class="row-1 border rounded mb-2">
-                                <div class="col pt-2">
-                                   <div class="row text-start ml-1 mr-1">
-                                      <img class="profile" src="attach/user/\${review.profileImage}'/>"/>
-                                      <p class="mt-1 ml-1">\${review.nickname}</p>
-                                      <p class="mt-1 ml-1 star-rating">
-                                            <div class="stars">
-                                                   \${setStarRating(review.starRating)}
-                                               </div>
-                                      </p>
-                                      <p class="mt-1 ml-1">\${review.createdAt}</p>
-                                   </div>
-                                   <a href="<%=request.getContextPath()%>/detailView"
-                                      style="color: inherit; text-decoration: none">
-                                      <div class="row reviewImg mb-2">
-                                         \${reviewImgArr.join('')} 
-                                      </div>
-                                      <div class="row text-start ml-1 mr-1" style="font-size: 14px">
-                                         <p>\${review.content}</p>
-                                      </div>
-                                   </a>
-                                </div>
-                             </div>
-                          </td>
-                       </tr>`
+                                    <td style='border:none;'>
+                                        <div class="row-1 border rounded mb-2">
+                                            <div class="col pt-2">
+                                            <div class="row text-start ml-1 mr-1">
+                                                <img class="profile" src="attach/user/\${review.profileImage}'/>"/>
+                                                <p class="mt-1 ml-1">\${review.nickname}</p>
+                                                <p class="mt-1 ml-1 star-rating">
+                                                        <div class="stars">
+                                                            \${setStarRating(review.starRating)}
+                                                        </div>
+                                                </p>
+                                                <p class="mt-1 ml-1">\${review.createdAt}</p>
+                                            </div>
+                                            <a href="<%=request.getContextPath()%>/detailView"
+                                                style="color: inherit; text-decoration: none">
+                                                <div class="row reviewImg mb-2">
+                                                    \${reviewImgArr.join('')} 
+                                                </div>
+                                                <div class="row text-start ml-1 mr-1" style="font-size: 14px">
+                                                    <p>\${review.content}</p>
+                                                </div>
+                                            </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>`
                             );
                         });
 
