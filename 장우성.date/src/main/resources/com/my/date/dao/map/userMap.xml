@@ -10,6 +10,13 @@
 	</select>
 	
 	<select id='selectUser' resultType='user'>
+		select u.user_id, u.id, u.password, u.nickname, u.email
+		from users u left outer join delete_users d
+		on u.user_id = d.user_id
+		where u.id = #{id} and d.user_id is null
+	</select>
+
+	<select id="selectUserById" resultType="user">
 		select user_id, id, password, nickname, email
 		from users
 		where id = #{id}

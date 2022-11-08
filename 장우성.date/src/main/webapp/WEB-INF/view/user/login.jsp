@@ -43,7 +43,7 @@
                 <input type="password" name="password" class="form-control" placeholder="password" aria-label="password" aria-describedby="addon-wrapping" />
             </div>
             <input type="checkbox" class="mt-3" />아이디 저장
-            <span class="pl-5 text-danger">${errMsg}</span>
+            <div class=" text-danger">${errMsg}</div>
             <button type="submit" class="btn btn-primary btn-lg col-12 mt-3">로그인</button>
         </form>
     </div>

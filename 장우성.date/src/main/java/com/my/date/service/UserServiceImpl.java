@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 		
 		User user = userDao.selectUser(loginUser);
 		
-		if(loginUser.getId().equals(user.getId()) && loginUser.getPassword().equals(user.getPassword())) {
+		if(user != null && loginUser.getId().equals(user.getId()) && loginUser.getPassword().equals(user.getPassword())) {
 			return user;
 		}
 		return null;
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User idCheck(String id) {
-		return userDao.selectUser(id);
+		return userDao.selectUserById(id);
 	}
 
 	@Override
