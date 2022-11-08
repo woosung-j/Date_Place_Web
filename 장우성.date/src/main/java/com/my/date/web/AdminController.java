@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,9 +28,9 @@ public class AdminController {
     @Autowired private DeclarationService declarationService;
     @Autowired private MenuService menuService;
     @Autowired private PlaceService placeService;
-	@Autowired private DetailService detailService;
+	  @Autowired private DetailService detailService;
 	
-	@GetMapping("place")
+	  @GetMapping("place")
     public ModelAndView main(ModelAndView mv) {
         mv.setViewName("place/placelist");
         return mv;
@@ -57,6 +60,7 @@ public class AdminController {
 
     @GetMapping("menu")
     public ModelAndView menu(ModelAndView mv) {
+    	mv.addObject("placeId", 3);
         mv.setViewName("admin/menu/patchmenu");
         return mv;
     }
@@ -65,15 +69,20 @@ public class AdminController {
     public List<Menu> getMenus() {
         return menuService.getMenus();
     }
+    
+    @PostMapping("addMenu")
+    public int addMenu(@RequestBody List<Menu> menu) {
+    	return menuService.addMenu(menu);
+    }
 
-	@GetMapping("detail")
-	public ModelAndView detail(ModelAndView mv) {
-		mv.setViewName("admin/detail/patchdetail");
-		return mv;
-	}
+    @GetMapping("detail")
+    public ModelAndView detail(ModelAndView mv) {
+      mv.setViewName("admin/detail/patchdetail");
+      return mv;
+    }
 
-	@GetMapping("detail/getDetails")
-	public List<Detail> getDetails() {
-		return detailService.getDetails();
-	}
+    @GetMapping("detail/getDetails")
+    public List<Detail> getDetails() {
+      return detailService.getDetails();
+    }
 }

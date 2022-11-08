@@ -16,4 +16,14 @@ public class MenuServiceImpl implements MenuService {
 	public List<Menu> getMenus() {
 		return menuDao.selectMenus();
 	}
+	
+	@Override
+	public int addMenu(List<Menu> menu) {
+		int addCount = 0;
+		
+		for(int i = 0; i < menu.size(); i++) {
+			addCount += menuDao.insertMenu(menu.get(i));
+		}
+		return addCount;
+	}
 }
