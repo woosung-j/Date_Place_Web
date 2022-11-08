@@ -40,47 +40,47 @@
                     <span class="input-group-text">
                         <i class="bi bi-key-fill"></i>
                     </span>
-                    <input type="password" name="password" class="form-control" placeholder="password" aria-label="password" aria-describedby="addon-wrapping" />
-                </div>
-                <input type="checkbox" class="mt-3" />아이디 저장
-                <button type="submit" class="btn btn-primary btn-lg col-12 mt-3">로그인</button>
-            </form>
+                <input type="password" name="password" class="form-control" placeholder="password" aria-label="password" aria-describedby="addon-wrapping" />
+            </div>
+            <input type="checkbox" class="mt-3" />아이디 저장
+            <span class="pl-5 text-danger">${errMsg}</span>
+            <button type="submit" class="btn btn-primary btn-lg col-12 mt-3">로그인</button>
+        </form>
+    </div>
+    <div class="row pb-5 mb-3">
+        <div class="col text-center overflow-auto word-keep mt-3">
+            <a href="findid">아이디 찾기</a> | <a href="findpw">비밀번호 찾기</a> |
+            <a href="signup">회원가입</a>
         </div>
-        <div class="row pb-5 mb-3">
-	        <div class="col text-center overflow-auto word-keep mt-3">
-	            <a href="findid">아이디 찾기</a> | <a href="findpw">비밀번호 찾기</a> |
-	            <a href="signup">회원가입</a>
-	        </div>
-    	</div>        
-    </div>    
-    <div class="navbar">
-            <ul class="navbar nav-item bg-light fixed-bottom mb-0 list-style-none">
-                <li>
-                    <a href="<%=request.getContextPath()%>/" class="btn w-auto" type="button">
-                        <i class="icon main bi-house-door-fill fa-3x"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="<%=request.getContextPath()%>/community" class="btn w-auto" type="button">
-                        <i class="icon main bi-file-earmark-text fa-3x"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="<%=request.getContextPath()%>/place/around" class="btn w-auto" type="button">
-                        <i class="icon main bi-map fa-3x"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="<%=request.getContextPath()%>/place/myplace" class="btn w-auto" type="button">
-                        <i class="icon main bi-heart fa-3x"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="<%=request.getContextPath()%>/user/login" class="btn w-auto" type="button">
-                        <i class="icon main bi-person-fill fa-3x"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
+    </div>
+</div>
+<div class="navbar">
+    <ul class="navbar nav-item bg-light fixed-bottom mb-0 list-style-none">
+        <li>
+            <a href="<%=request.getContextPath()%>/" class="btn w-auto" type="button">
+                <i class="icon main bi-house-door-fill fa-3x"></i>
+            </a>
+        </li>
+        <li>
+            <a href="<%=request.getContextPath()%>/community" class="btn w-auto" type="button">
+                <i class="icon main bi-file-earmark-text fa-3x"></i>
+            </a>
+        </li>
+        <li>
+            <a href="<%=request.getContextPath()%>/place/around" class="btn w-auto" type="button">
+                <i class="icon main bi-map fa-3x"></i>
+            </a>
+        </li>
+        <li>
+            <a href="<%=request.getContextPath()%>/place/myplace" class="btn w-auto" type="button">
+                <i class="icon main bi-heart fa-3x"></i>
+            </a>
+        </li>
+        <li>
+            <a href="<%=request.getContextPath()%>/user/login" class="btn w-auto" type="button">
+                <i class="icon main bi-person-fill fa-3x"></i>
+            </a>
+        </li>
+    </ul>
 </div>
 </body>

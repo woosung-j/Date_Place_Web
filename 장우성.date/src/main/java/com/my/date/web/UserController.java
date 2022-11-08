@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.my.date.service.MailSendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +25,7 @@ import com.my.date.service.UserService;
 @RequestMapping("user")
 public class UserController {
 	@Autowired private UserService userService;
-	@Autowired private PlaceService placeService;
+	@Autowired private MailSendService mailSendService;
 	
 	@GetMapping("login")
 	public ModelAndView login(HttpServletRequest request, ModelAndView mv) {
@@ -72,7 +73,17 @@ public class UserController {
 
 		return mv;
 	}
-	
+
+	@GetMapping("emailCheck/{email}")
+	public String emailCheck(@PathVariable String email) {
+		return userService.checkEmail(email);
+	}
+
+	@GetMapping("emailAuthCheck/{email}")
+	public String emailAuthCheck(@PathVariable String email) {
+		return mailSendService.emailWrite(email);
+	}
+
 	@GetMapping("mypage")
 	public ModelAndView myPage(ModelAndView mv) {
 		mv.setViewName("user/mypage");
