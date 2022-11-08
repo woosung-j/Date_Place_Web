@@ -51,6 +51,7 @@
                     <li><a href="<%=request.getContextPath()%>/review">리뷰 조회</a></li>
                     <li><a href="<%=request.getContextPath()%>/place">장소 조회</a></li>
                     <li><a href="<%=request.getContextPath()%>/logo">로고 추가</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/logout">로그아웃</a></li>
                 </ul>
             </div>
             <div class="col mt-4">

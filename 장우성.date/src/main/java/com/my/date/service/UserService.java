@@ -7,6 +7,7 @@ import com.my.date.domain.User;
 public interface UserService {
 	List<User> getUsers();
 	User loginValidate(User loginUser);
+	User adminLoginValidate(User loginUser);
 	User idCheck(String id);
 	String checkEmail(String email);
 	int signUp(User user);
