@@ -23,17 +23,32 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User selectUser(String id) {
-		return userMap.selectUser(id);
+	public User selectUserById(String id) {
+		return userMap.selectUserById(id);
+	}
+
+	@Override
+	public String selectEmail(String email) {
+		return userMap.selectEmail(email);
 	}
 
 	@Override
 	public int insertUser(User user) {
 		return userMap.insertUser(user);
 	}
+	
+	@Override
+	public void updateUser(User user) {
+		userMap.updateUser(user);
+	}
 
 	@Override
 	public User selectId(User user) {
 		return userMap.selectId(user);
+	}
+	
+	@Override
+	public void deleteUser(int userId) {
+		userMap.deleteUser(userId);
 	}
 }
