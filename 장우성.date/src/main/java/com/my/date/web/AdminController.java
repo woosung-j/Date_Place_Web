@@ -34,7 +34,7 @@ public class AdminController {
         if(isAdmin(request) == true) {
             mv.setViewName("admin/main");
         } else {
-            mv.setViewName("admin/user/login");
+            mv.setViewName("redirect:/admin/login");
         }
 
         return mv;
@@ -97,7 +97,7 @@ public class AdminController {
         if(isAdmin(request) == true) {
             mv.setViewName("admin/declaration/declareList");
         } else {
-            mv.setViewName("admin/user/login");
+            mv.setViewName("redirect:/admin/login");
         }
         return mv;
     }
