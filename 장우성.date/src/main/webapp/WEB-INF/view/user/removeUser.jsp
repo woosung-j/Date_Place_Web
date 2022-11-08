@@ -2,16 +2,6 @@
 <head>
     <jsp:include page="../include/head.jsp"></jsp:include>
     <link rel="stylesheet" href="../../res/mobile.css" />
-    <style>
-        header {
-            margin-bottom: 40px;
-        }
-
-        form {
-            height: 5;
-            width: 5;
-        }
-    </style>
     <script>
         function isVal(field) {
             let isGood = false;
