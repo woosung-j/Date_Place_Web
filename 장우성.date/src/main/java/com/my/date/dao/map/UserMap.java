@@ -10,5 +10,6 @@ public interface UserMap {
 	User selectUser(String id);
 	String selectEmail(String email);
 	int insertUser(User user);
+	void updateUser(User user);
 	User selectId(User user);
 }

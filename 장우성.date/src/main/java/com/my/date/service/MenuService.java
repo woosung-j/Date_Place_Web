@@ -1,6 +1,6 @@
 package com.my.date.service;
 
-import java.awt.Menu;
+import com.my.date.domain.Menu;
 import java.util.List;
 
 public interface MenuService {

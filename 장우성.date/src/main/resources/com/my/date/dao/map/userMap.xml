@@ -10,7 +10,7 @@
 	</select>
 	
 	<select id='selectUser' resultType='user'>
-		select user_id, id, password, nickname
+		select user_id, id, password, nickname, email
 		from users
 		where id = #{id}
 	</select>
@@ -24,10 +24,22 @@
 	<insert id="insertUser">
 		insert into users values(users_id_seq.nextval, #{id}, #{email}, #{password}, #{userName}, #{phoneNumber}, #{nickname}, #{profileImage}, #{birthday}, sysdate, sysdate)
 	</insert>
+  
+	<update id='updateUser'>
+		update users
+		set password = #{password,jdbcType=VARCHAR}, nickname = #{nickname,jdbcType=VARCHAR}, phone_number = #{phoneNumber,jdbcType=VARCHAR}, birthday = #{birthday,jdbcType=VARCHAR}
+		where user_id = #{userId,jdbcType=NUMERIC}
+	</update>
 	
 	<select id='selectId' resultType='user'>
 		select id
 		from users
 		where user_name = #{userName} and phone_number = #{phoneNumber}
+	</select>
+	
+	<select id='selectPw' resultType='user'>
+		select password
+		from users
+		where email = #{email}
 	</select>
 </mapper>

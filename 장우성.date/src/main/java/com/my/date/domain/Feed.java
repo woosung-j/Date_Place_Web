@@ -9,14 +9,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Place {
-	private int placeId;
-	private String placeName;
-	private String placeInfo;
-	private int siId;
-	private int guId;
-	private int views;
-	private int placeGroupId;
+public class Feed {
+	private int feedId;
+	private int userId;
+	private String title;
+	private String content;
 	private LocalDate createdAt;
-	private LocalDate updatedAt;
 }
