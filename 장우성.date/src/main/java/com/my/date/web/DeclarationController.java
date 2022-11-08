@@ -18,8 +18,13 @@ public class DeclarationController {
     DeclarationService declarationService;
 
     @GetMapping("")
-    public ModelAndView myDeclare(ModelAndView mv) {
-        mv.setViewName("declaration/myDeclare");
+    public ModelAndView myDeclare(HttpServletRequest request, ModelAndView mv) {
+        HttpSession session = request.getSession(false);
+        if(session == null || session.getAttribute("userId") == null) {
+            mv.setViewName("redirect:/user/login");
+        } else {
+            mv.setViewName("declaration/myDeclare");
+        }
 
         return mv;
     }
