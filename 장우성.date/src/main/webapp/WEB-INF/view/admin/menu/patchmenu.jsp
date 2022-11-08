@@ -3,35 +3,114 @@
 <jsp:include page="../../include/head.jsp"></jsp:include>
 <link rel="stylesheet" href="../../../res/admin.css"/>
 <script>
+	function tableCreate() {
+		var html = " ";
+		
+		var menuName = $("#menuName").val();
+		var price = $("#price").val();
+		var remove = $("remove").val();
+		
+		html += '<tr>';
+		html += '<td><input type="hidden" id="placeId" name="placeId" value="${placeId}" /></td>'
+		html += '<td><input type="text" class="form-control" id="menuName" name="menuName" placeholder="메뉴를 입력해주세요"/></td>';
+	    html += '<td><input type="text" class="form-control" id="price" name="price" placeholder="가격을 입력해주세요"/></td>';
+	    html += '<td><button type="button" class="btn btn-danger" onclick="tableDelete(this)" id="remove">삭제</button></td>';
+	    html += '</tr>';
+	    
+	    $("#menus").append(html);
+	}
+	
+	function tableDelete(obj) {
+		var tr = $(obj).parent().parent();
+		
+		tr.remove();
+	}
+	
+	function isVal(field) {
+		let isGood = false
+		let errMsg
+		
+		if(!field.length) errMsg = 'test'
+		else {
+			if(!field.val()) errMsg = field.attr('placeholder')
+			else isGood = true
+		}
+		
+		if(!isGood) {
+			$('#modalMsg').text(errMsg).css('color', 'red')
+			$('#modalBtn').hide()
+			$('#modal').modal()
+		} else {
+			$('#modalMsg').text('수정이 완료 되었습니다.')
+			$('#modalBtn').hide()
+			$('#modal').modal()
+		}
+		
+		return isGood
+	}
+
 	function menuList() {
         $.ajax({
             url: 'menu/getMenus',
             method: 'get',
             contentType: 'application/json',
-            success: (data) => {
-                const list = [];
+            success: menus => {
+                const menuArr = [];
 
-                if (data.length) {
-                    $.each(data, (i, item) => {
-                        list.unshift(
+                if (menus.length) {
+                    $.each(menus, (i, menu) => {
+                        menuArr.unshift(
                         	`<tr>
-	  							<td>\${item.menuId}</td>
-	  							<td><input type='text' class='form-control' id='name' name='name' value='\${item.menuName}'/></td>
-	  							<td><input type='text' class='form-control' id='price' name='price' value='\${item.price}원'/></td>
+	  							<td>\${menu.menuId}</td>
+	  							<td><input type='text' class='form-control' value='\${menu.menuName}'/></td>
+	  							<td><input type='text' class='form-control' value='\${menu.price}'/></td>
 	  							<td><button type='button' class='btn btn-danger' onclick='tableDelete(this)' id='remove'>삭제</button></td>
 	  						</tr>`
                     	);
                 	});
                 }
                 $('#menus').empty();
-            	$('#menus').append(list.join(''));
+            	$('#menus').append(menuArr.join(''));
         	},
     	});
     }
-
+	
+	function addMenu() {
+		const arr = []
+		let length = $('input[name=menuName]').length
+		
+		for(let i = 0; i < length; i++) {
+			arr.push({placeId: $('#placeId').val(), 
+					menuName: $('input[name=menuName]').eq(i).val(),
+					price: $('input[name=price]').eq(i).val()})
+		}
+		
+		$.ajax({
+			url: 'addMenu',
+			method: 'post',
+			contentType: 'application/json',
+			data: JSON.stringify(arr),
+			success: (data) => {
+				if(data == arr.length) {
+					menuList();
+				} else {
+					console.log("fail")
+				}
+			}
+		})
+		console.log(arr);
+	}
+	
+	function init() {
+		$('#addMenuBtn').click(() => {
+			addMenu()
+		})
+	}
+	
 	$(() => {
-        menuList();
-    });
+		init()
+		menuList();
+	})
 </script>
 </head>
 
@@ -58,10 +137,10 @@
                     </div>
                     <div class="col mb-3">
                         <nav class="d-flex justify-content-end mt-4">
-                            <button type="button" class="btn btn-info mr-2" data-toggle="modal" data-target="#addMenuOkModal">
+                            <button type="button" class="btn btn-info mr-2" id="addMenuBtn" data-toggle="modal" data-target="#addMenuOkModal">
                                 <span class="label">완료</span>
                             </button>
-                            <button type="button" class="btn btn-info mr-2">
+                            <button type="button" class="btn btn-info mr-2" onclick="tableCreate()">
                                 <span class="label">추가</span>
                             </button>
                         </nav>
@@ -78,22 +157,23 @@
                     </thead>
                     <tbody id="menus"></tbody>
                 </table>
+                <input type="hidden" id="placeId" name="placeId" value="${placeId}" />
             </div>
         </div>
     </div>
-    <div class="modal" tabindex="-1" id="addMenuOkModal">
+    <div class="modal" tabindex="-1" id="modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <a href="../place/02.html" class="close text-black">
+                    <a href="./menu" class="close text-black">
                         <span>&times;</span>
                     </a>
                 </div>
                 <div class="modal-body text-center py-3">
-                    <p>수정이 완료 되었습니다.</p>
+                    <p id="modalMsg"></p>
                 </div>
                 <div class="modal-footer">
-                    <a href="../place/02.html" class="btn btn-primary btn-lg col-12">확인</a>
+                    <a href="./menu" class="btn btn-primary btn-lg col-12">확인</a>
                 </div>
             </div>
         </div>
