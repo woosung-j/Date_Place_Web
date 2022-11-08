@@ -44,9 +44,13 @@
 		where user_name = #{userName} and phone_number = #{phoneNumber}
 	</select>
 	
-	<select id='selectPw' resultType='user'>
+	<select id='selectPassword' resultType='user'>
 		select password
 		from users
 		where email = #{email}
 	</select>
+	
+	<insert id='deleteUser'>
+		insert into delete_users values(#{userId})	
+	</insert>
 </mapper>

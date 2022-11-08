@@ -46,4 +46,9 @@ public class UserDaoImpl implements UserDao {
 	public User selectId(User user) {
 		return userMap.selectId(user);
 	}
+	
+	@Override
+	public void deleteUser(int userId) {
+		userMap.deleteUser(userId);
+	}
 }
