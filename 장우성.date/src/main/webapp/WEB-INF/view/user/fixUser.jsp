@@ -29,7 +29,7 @@
     <script>
         function isVal(field) {
             let isGood = false;
-            let errMsg = '';
+            let errMsg
 
             if (!field.length) {
                 errMsg = '빈칸 없이 입력해주세요.';
@@ -65,7 +65,9 @@
                         method: 'put',
                         contentType: 'application/json',
                         data: JSON.stringify(data),
-                        success: $('.modal').modal(),
+                        success: function(data) {
+                        	$('.modal').modal('show')
+                        }
                     });
                 }
             });
@@ -112,9 +114,9 @@
                 </div>
                 <button type="button" id="fixUserBtn" class="btn btn-primary btn-lg col-12 mt-3">수정하기</button>
             </form>
-            <form action="outusercheck" class="d-grid col-11 mx-auto mt-0">
-                <a href="userout" type="button" class="btn btn-danger btn-lg col-12 mt-3 mx-auto"> 탈퇴하기 </a>
-            </form>
+            <div class="d-grid col-11 mx-auto mt-0">
+                <a href="removeuser" type="button" class="btn btn-danger btn-lg col-12 mt-3 mx-auto"> 탈퇴하기 </a>
+            </div>
         </div>
         <div class="navbar">
             <ul class="navbar nav-item bg-light fixed-bottom mb-0 list-style-none">
@@ -146,7 +148,7 @@
             </ul>
         </div>
     </div>
-    <div class="modal" id="fixModal" tabindex="-1">
+	<div class="modal" id="fixModal" tabindex="-1" aria-hidden="true" style="display: none;">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content mx-5">
                 <div id="modalMsg" class="modal-body text-center py-3">

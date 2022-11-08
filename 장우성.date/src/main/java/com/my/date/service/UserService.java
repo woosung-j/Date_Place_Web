@@ -10,5 +10,6 @@ public interface UserService {
 	User idCheck(String id);
 	int signUp(User user);
 	void fixUser(User user);
+	void delUser(int userId);
 	User findId(User user);
 }
