@@ -14,17 +14,27 @@ public class ReviewDaoImpl implements ReviewDao{
 	@Autowired private ReviewMap reviewMap;
 	
 	@Override
+	public List<Review> selectReviews() {
+		return reviewMap.selectReviews();
+	}
+	
+	@Override
 	public List<Review> selectReviewsByPlaceId(int placeId) {
 		return reviewMap.selectReviewsByPlaceId(placeId);
-	};
+	}
 	
 	@Override
 	public String selectReviewAvg(@Param("placeId") int placeId) {
 		return reviewMap.selectReviewAvg(placeId);
-	};
+	}
 	
 	@Override
 	public int insertReview(Review review) {
 		return reviewMap.insertReview(review);
-	};
+	}
+	
+	@Override
+	public int deleteAdminReview(int reviewId) {
+		return reviewMap.deleteAdminReview(reviewId);
+	}
 }
