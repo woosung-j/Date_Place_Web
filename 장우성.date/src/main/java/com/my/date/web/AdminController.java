@@ -61,7 +61,7 @@ public class AdminController {
     @GetMapping("menu")
     public ModelAndView menu(ModelAndView mv) {
     	mv.addObject("placeId", 3);
-        mv.setViewName("admin/menu/patchmenu");
+        mv.setViewName("admin/menu/patchMenu");
         return mv;
     }
 
@@ -73,6 +73,11 @@ public class AdminController {
     @PostMapping("addMenu")
     public int addMenu(@RequestBody List<Menu> menu) {
     	return menuService.addMenu(menu);
+    }
+    
+    @PatchMapping("fixMenu")
+    public int fixMenu(@RequestBody List<Menu> menu) {
+    	return menuService.fixMenu(menu);
     }
 
     @GetMapping("detail")
