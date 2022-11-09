@@ -139,11 +139,12 @@
         <div class="row">
             <div class="col-2">
                 <ul class="text-center">
-                    <li><a href="../main.html">회원 조회</a></li>
-                    <li><a href="../declaration/01.html">신고 조회</a></li>
-                    <li><a href="../review/01.html">리뷰 조회</a></li>
-                    <li><a href="../place/01.html">장소 조회</a></li>
-                    <li><a href="../logo/01.html">로고 추가</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/">회원 조회</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/declare">신고 조회</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/review">리뷰 조회</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/place">장소 조회</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/logo">로고 추가</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/logout">로그아웃</a></li>
                 </ul>
             </div>
             <div class="col mt-4">

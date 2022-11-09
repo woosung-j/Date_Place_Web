@@ -46,11 +46,12 @@
         <div class="row">
             <div class="col-2">
                 <ul class="text-center">
-                    <li><a href="<%=request.getContextPath()%>/">회원 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/declare">신고 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/review">리뷰 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/place">장소 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/logo">로고 추가</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/">회원 조회</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/declare">신고 조회</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/review">리뷰 조회</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/place">장소 조회</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/logo">로고 추가</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/logout">로그아웃</a></li>
                 </ul>
             </div>
             <div class="col mt-4">

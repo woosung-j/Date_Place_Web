@@ -175,7 +175,6 @@
                     ></textarea>
                     <p class="text-right textCount" id="count" style="font-size: 13px">(0/500)</p>
                 </div>
-
                 <div class="star-rating">
                     <div class="stars">
                         <i class="fa fa-star active"></i>

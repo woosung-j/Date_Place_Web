@@ -13,6 +13,11 @@ public class ReviewServiceImpl implements ReviewService{
 	@Autowired private ReviewDao reviewDao;
 	
 	@Override
+	public List<Review> getReviews() {
+		return reviewDao.selectReviews();
+	};
+	
+	@Override
 	public List<Review> getReviewsByPlaceId(int placeId) {
 		return reviewDao.selectReviewsByPlaceId(placeId);
 	};
@@ -27,5 +32,10 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public int addReview(Review review) {
 		return reviewDao.insertReview(review);
+	}
+	
+	@Override
+	public int delAdminReview(int reviewId) {
+		return reviewDao.deleteAdminReview(reviewId);
 	}
 }
