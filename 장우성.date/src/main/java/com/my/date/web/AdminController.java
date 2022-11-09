@@ -144,6 +144,11 @@ public class AdminController {
     public int addMenu(@RequestBody List<Menu> menu) {
     	return menuService.addMenu(menu);
     }
+    
+    @PatchMapping("fixMenu")
+    public int fixMenu(@RequestBody List<Menu> menu) {
+    	return menuService.fixMenu(menu);
+    }
 
     @GetMapping("detail")
     public ModelAndView detail(ModelAndView mv) {
