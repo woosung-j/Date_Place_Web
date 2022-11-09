@@ -2,6 +2,70 @@
 <head>
     <jsp:include page="./include/head.jsp"></jsp:include>
     <link rel="stylesheet" href="../res/mobile.css" />
+    <script>
+        const sigu = [
+            [
+                {"si": "서울특별시", "gu": ["강남구", "서초구", "송파구", "강동구"]},
+                {"si": "경기", "gu": ["수원시", "안양시", "용인시", "고양시"]}
+            ],
+            [
+                {"si": "인천", "gu": ["계양구", "남동구"]},
+                {null: null}
+            ]
+        ]
+
+        function setDropdown() {
+            let dropdown = [];
+
+            sigu.forEach((row) => {
+                dropdown.push(`<div class="row text-left">`)
+                row.forEach((col) => {
+                    console.log(col);
+
+                    if(col.gu == null) {
+                        dropdown.push(`
+                            <div class="col d-inline-block word-keep">
+                                <p>타지역 준비중</p>
+                            </div>
+                        `)
+                    } else {
+                        dropdown.push(`
+                            <div class="dropdown col d-inline-block">
+                                <a href="#" class="dropdown-toggle text-dark" data-toggle="dropdown">
+                                    <span class="caret">\${col.si}</span>
+                                </a>
+                                <div class="dropdown-menu">
+                        `)
+                        col.gu?.forEach((gu) => {
+                            if(col.si == "경기") {
+                                dropdown.push(`
+                                    <a href="<%=request.getContextPath()%>/place/\${gu}/없음" class="dropdown-item">\${gu}</a>
+                                `)
+                            } else {
+                                dropdown.push(`
+                                    <a href="<%=request.getContextPath()%>/place/\${col.si}/\${gu}" class="dropdown-item">\${gu}</a>
+                                `)
+                            }
+
+                        })
+                        dropdown.push(`</div></div>`)
+                    }
+                })
+                dropdown.push('</div>')
+            })
+
+            $('#dropdown-div').append(dropdown.join(''))
+        }
+
+        function init() {
+            setDropdown()
+        }
+
+        $(() => {
+            init()
+
+        })
+    </script>
 </head>
 <body>
 <div class="container">
@@ -17,42 +81,7 @@
                 <h5 class="font-weight-bold">지역선택</h5>
                 <hr />
             </div>
-            <div class="row text-left">
-                <div class="dropdown col d-inline-block">
-                    <a href="#" class="dropdown-toggle text-dark" data-toggle="dropdown">
-                        <span class="caret">서울</span>
-                    </a>
-                    <div class="dropdown-menu">
-                        <a href="./place/01.html" class="dropdown-item">강남,서초</a>
-                        <a href="./place/01.html" class="dropdown-item">송파,강동</a>
-                        <a href="./place/01.html" class="dropdown-item">광진,성동</a>
-                    </div>
-                </div>
-                <div class="dropdown col d-inline-block">
-                    <a href="#" class="dropdown-toggle text-dark" data-toggle="dropdown">
-                        <span class="caret">경기</span>
-                    </a>
-                    <div class="dropdown-menu">
-                        <a href="./place/01.html" class="dropdown-item">수원</a>
-                        <a href="./place/01.html" class="dropdown-item">남양주</a>
-                        <a href="./place/01.html" class="dropdown-item">시흥</a>
-                    </div>
-                </div>
-            </div>
-            <div class="row text-left">
-                <div class="dropdown col d-inline-block">
-                    <a href="#" class="dropdown-toggle text-dark" data-toggle="dropdown">
-                        <span class="caret">인천</span>
-                    </a>
-                    <div class="dropdown-menu">
-                        <a href="./place/01.html" class="dropdown-item">계양</a>
-                        <a href="./place/01.html" class="dropdown-item">남동</a>
-                    </div>
-                </div>
-                <div class="col d-inline-block word-keep">
-                    <p>타지역 준비중</p>
-                </div>
-            </div>
+            <div id="dropdown-div"></div>
         </div>
     </div>
     <div class="row-1">
