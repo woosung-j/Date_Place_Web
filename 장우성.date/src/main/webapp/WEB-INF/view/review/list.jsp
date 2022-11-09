@@ -145,9 +145,15 @@
         <input type="hidden" id="placeId" value="${placeId}" />
         <footer style="padding-top: 100px">
             <nav class="row navbar fixed-bottom text-center justify-content-center bg-light">
+                <% int userId = 0; if(session.getAttribute("userId") != null) userId = (int) session.getAttribute("userId"); if(userId > 0) { %>
                 <a type="button" class="col-12 btn w-100 font-gamja-flower" href="<%=request.getContextPath()%>/review/add" style="display: block">
                     다녀온 리뷰 쓰기 <i class="bi bi-pencil-square"></i>
                 </a>
+                <% } else { %>
+                <a type="button" class="col-12 btn w-100 font-gamja-flower" href="<%=request.getContextPath()%>/user/login" style="display: block">
+                    로그인 <i class="bi bi-door-open" style="font-size: 20px"></i>
+                </a>
+                <% } %>
             </nav>
         </footer>
     </div>

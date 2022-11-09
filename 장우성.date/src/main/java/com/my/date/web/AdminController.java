@@ -172,7 +172,7 @@ public class AdminController {
     }
     
     @GetMapping("review/list")
-    public List<Review> getReviews(HttpServletRequest request) {
+    public List<ReviewDto> getReviews(HttpServletRequest request) {
         if(isAdmin(request) == true) {
             return reviewService.getReviews();
         } else {
