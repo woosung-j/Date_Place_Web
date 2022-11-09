@@ -29,13 +29,13 @@
             let isGood = false;
             let errMsg;
 
-            if(!field.length) errMsg = 'fail';
+            if (!field.length) errMsg = 'fail';
             else {
                 if (!field.val()) errMsg = '빈칸을 입력하세요.';
                 else isGood = true;
             }
 
-            if(!isGood) {
+            if (!isGood) {
                 $('#modalMsg').text(errMsg).css('color', 'red');
                 $('#modalBtn').hide();
                 $('#modal').modal();
@@ -56,7 +56,7 @@
                 success: (menus) => {
                     const menuArr = [];
 
-                    if(menus.length) {
+                    if (menus.length) {
                         $.each(menus, (i, menu) => {
                             menuArr.unshift(
                                 `<tr>
@@ -78,8 +78,8 @@
             const arr = [];
             let length = $('input[name=menuName]').length;
 
-            for(let i = 0; i < length; i++) {
-                arr.push({placeId: $('#placeId').val(), menuName: $('input[name=menuName]').eq(i).val(), price: $('input[name=price]').eq(i).val()});
+            for (let i = 0; i < length; i++) {
+                arr.push({ placeId: $('#placeId').val(), menuName: $('input[name=menuName]').eq(i).val(), price: $('input[name=price]').eq(i).val() });
             }
 
             $.ajax({
@@ -97,35 +97,35 @@
             });
             console.log(arr);
         }
-        
+
         function fixMenu() {
-	   		const arr = [];
-	        let length = $('input[name=menuId]').length;
-	
-	        for(let i = 0; i < length; i++) {
-	            arr.push({menuId: $('input[name=menuId]').eq(i).val(), menuName: $('input[name=fixMenuName]').eq(i).val(), price: $('input[name=fixPrice]').eq(i).val()});
-	        }
-	
-	        $.ajax({
-	            url: 'fixMenu',
-	            method: 'patch',
-	            contentType: 'application/json',
-	            data: JSON.stringify(arr),
-	            success: menuList()
-	        });
-	        console.log(arr);
+            const arr = [];
+            let length = $('input[name=menuId]').length;
+
+            for (let i = 0; i < length; i++) {
+                arr.push({ menuId: $('input[name=menuId]').eq(i).val(), menuName: $('input[name=fixMenuName]').eq(i).val(), price: $('input[name=fixPrice]').eq(i).val() });
+            }
+
+            $.ajax({
+                url: 'fixMenu',
+                method: 'patch',
+                contentType: 'application/json',
+                data: JSON.stringify(arr),
+                success: menuList(),
+            });
+            console.log(arr);
         }
-        	
+
         function init() {
             $('#okMenuBtn').click(() => {
                 addMenu();
-            	fixMenu();
+                fixMenu();
             });
         }
 
         $(() => {
             menuList();
-        	init(); 
+            init();
         });
     </script>
 </head>
