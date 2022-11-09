@@ -96,7 +96,17 @@
                         starRating: $('.active').length,
                         placeId: 1,
                     }),
-                    success: addReview(),
+                    success: (data) => {
+                    	// 여기서 데이터가 1이면 추가가 된거거든요?? 그러면 추가가되어ㅣㅆ다 하면 되고
+                    			// 데이터가 0이면 추가가 실패한거에요 근데 만약에 로그인상태도 알고싶다면
+                    			// 유저 아이디가 없을 땐 -1을 리턴해줘요 그러면 -1일땐 로그인도 안된상태이고
+                    			// 0 일때는 로그인은 된 상태지만 리뷰 추가가 실패한거에요 로그인이 되면 리뷰추가가 실패할 일이 없는데요
+                    			// 그건 서버 상태에 따라 다르죠
+                    			// 아무튼 음 리뷰를 쓰기 전에 원하시는건가여 아니면 쓰고나서말하시는건가여 뭐가 더 쉬워요?
+                    					// 비슷한거같아요 다 안하고싶어졌어요
+                    					// 
+                    	addReview()
+                    },
                 });
             });
         }
@@ -164,7 +174,6 @@
                     <label for="imgFile" style="cursor: pointer; font-size: 14px"> <i class="bi bi-camera" style="font-size: 18px"></i><br />사진업로드 </label>
                     <input type="file" id="imgFile" class="pb-5 form-control" accept="image/*" />
                 </div>
-
                 <div class="row-1 text-center border mx-3 mb-3 bg-light" style="height: 14rem">
                     <textarea
                         class="form-control bg-light"
@@ -194,7 +203,7 @@
             <input type="hidden" id="placeId" value="${placeId}" />
             <footer style="padding-top: 100px">
                 <nav class="row navbar fixed-bottom text-center justify-content-center bg-light">
-                    <button type="button" id="addReviewBtn" class="btn col-12 btn w-100 font-gamja-flower" id="successBtn" style="color: #ff5858" data-toggle="modal" data-target="#infoModal">
+                    <button type="button" id="addReviewBtn" class="btn col-12 btn w-100 font-gamja-flower" id="successBtn" data-toggle="modal" data-target="#infoModal">
                         작성완료
                     </button>
                 </nav>
