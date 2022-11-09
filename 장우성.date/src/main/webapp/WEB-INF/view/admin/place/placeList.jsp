@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <head>
-<jsp:include page="../include/head.jsp"></jsp:include>
-<link rel="stylesheet" href="../res/admin.css" />
+<jsp:include page="../../include/head.jsp"></jsp:include>
+<link rel="stylesheet" href="../../../res/admin.css" />
 <script>
 function isVal(field) {
 	let isGood = false

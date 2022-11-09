@@ -26,4 +26,14 @@ public class MenuServiceImpl implements MenuService {
 		}
 		return addCount;
 	}
+	
+	@Override
+	public int fixMenu(List<Menu> menu) {
+		int fixCount = 0;
+		
+		for(int i = 0; i < menu.size(); i ++) {
+			fixCount += menuDao.updateMenu(menu.get(i));
+		}
+		return fixCount;
+	}
 }
