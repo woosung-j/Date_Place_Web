@@ -5,25 +5,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.my.date.domain.*;
+import com.my.date.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.my.date.domain.Declaration;
-import com.my.date.domain.Detail;
-import com.my.date.domain.Menu;
-import com.my.date.domain.Place;
-import com.my.date.domain.Review;
-import com.my.date.service.DeclarationService;
-import com.my.date.service.DetailService;
-import com.my.date.service.MenuService;
-import com.my.date.service.PlaceService;
-import com.my.date.service.ReviewService;
 
 @RestController
 @RequestMapping("admin")
