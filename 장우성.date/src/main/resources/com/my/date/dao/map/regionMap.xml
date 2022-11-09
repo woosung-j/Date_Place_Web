@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.my.date.dao.map.RegionMap'>
+	<select id="selectRegions" resultType="regionDto">
+		select r.my_region_id, r.user_id, r.si_id, r.gu_id, si.si_name, gu.gu_name
+		from my_regions r, si, gu
+		where r.si_id = si.si_id and r.gu_id = gu.gu_id and user_id = #{userId}
+	</select>
+</mapper>
