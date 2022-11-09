@@ -11,28 +11,40 @@ import com.my.date.domain.User;
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired private UserDao userDao;
-	
+
 	@Override
 	public List<User> getUsers() {
 		return userDao.selectUsers();
 	}
-	
+
 	@Override
 	public User loginValidate(User loginUser) {
 		if(loginUser.getId().equals("") || loginUser.getPassword().equals(""))
 			return null;
-		
+
 		User user = userDao.selectUser(loginUser);
-		
-		if(loginUser.getId().equals(user.getId()) && loginUser.getPassword().equals(user.getPassword())) {
+
+		if(user != null && loginUser.getId().equals(user.getId()) && loginUser.getPassword().equals(user.getPassword())) {
 			return user;
 		}
 		return null;
 	}
 
 	@Override
+	public User adminLoginValidate(User loginUser) {
+		if (loginUser.getId().equals("") || loginUser.getPassword().equals(""))
+			return null;
+
+		User user = userDao.selectAdminUser(loginUser);
+
+		if(user != null && loginUser.getId().equals(user.getId()) && loginUser.getPassword().equals(user.getPassword())) {
+			return user;
+		}
+		return null;
+	}
+	@Override
 	public User idCheck(String id) {
-		return userDao.selectUser(id);
+		return userDao.selectUserById(id);
 	}
 
 	@Override
@@ -47,14 +59,19 @@ public class UserServiceImpl implements UserService {
 
 		return userDao.insertUser(user);
 	}
-	
+
 	@Override
 	public void fixUser(User user) {
 		userDao.updateUser(user);
 	}
-	
+
 	@Override
 	public User findId(User user) {
 		return userDao.selectId(user);
+	}
+
+	@Override
+	public void delUser(int userId) {
+		userDao.deleteUser(userId);
 	}
 }

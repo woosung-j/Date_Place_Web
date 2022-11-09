@@ -7,4 +7,9 @@
 		from menus
 		order by menu_id desc 
 	</select>
+	
+	<insert id='insertMenu'>
+		insert into menus(menu_id, place_id, menu_name, price)
+		values(menus_id_seq.nextval, #{placeId}, #{menuName}, #{price})
+	</insert>
 </mapper>

@@ -33,6 +33,7 @@ public class AdminController {
     @Autowired private PlaceService placeService;
     @Autowired private DetailService detailService;
     @Autowired private ReviewService reviewService;
+    @Autowired private UserService userService;
     
     private boolean isAdmin(HttpServletRequest request) {
         HttpSession sessionCheck = request.getSession(false);
@@ -43,8 +44,59 @@ public class AdminController {
         return (boolean) sessionCheck.getAttribute("isAdmin");
     }
     
+    @GetMapping("")
+    public ModelAndView main(HttpServletRequest request, ModelAndView mv) {
+        if(isAdmin(request) == true) {
+            mv.setViewName("admin/main");
+        } else {
+            mv.setViewName("redirect:/admin/login");
+        }
+        return mv;
+    }
+
+    @GetMapping("login")
+    public ModelAndView login(ModelAndView mv) {
+        mv.setViewName("admin/user/login");
+        return mv;
+    }
+
+    @PostMapping("login")
+    public ModelAndView login(User loginUser, HttpServletRequest request, ModelAndView mv) {
+        User user = userService.adminLoginValidate(loginUser);
+
+        if(user != null) {
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                session.invalidate();
+            }
+
+            session = request.getSession();
+            if (user != null) {
+                session.setAttribute("userId", user.getUserId());
+                session.setAttribute("id", user.getId());
+                session.setAttribute("nickname", user.getNickname());
+                session.setAttribute("email", user.getEmail());
+                session.setAttribute("isAdmin", true);
+                session.setMaxInactiveInterval(86400);
+            }
+            mv.setViewName("redirect:/admin");
+        } else {
+            mv.addObject("errMsg", "아이디 또는 비밀번호가 틀렸습니다.");
+            mv.setViewName("admin/user/login");
+        }
+
+        return mv;
+    }
+
+    @GetMapping("logout")
+    public ModelAndView logout(HttpSession session, ModelAndView mv) {
+        session.invalidate();
+        mv.setViewName("redirect:/admin/login");
+        return mv;
+    }
+
     @GetMapping("place")
-    public ModelAndView main(ModelAndView mv) {
+    public ModelAndView placeList(ModelAndView mv) {
         mv.setViewName("place/placelist");
         return mv;
     }
@@ -55,8 +107,12 @@ public class AdminController {
     }
     
     @GetMapping("declare")
-    public ModelAndView declare(ModelAndView mv) {
-        mv.setViewName("admin/declaration/declareList");
+    public ModelAndView declare(HttpServletRequest request, ModelAndView mv) {
+        if(isAdmin(request) == true) {
+            mv.setViewName("admin/declaration/declareList");
+        } else {
+            mv.setViewName("redirect:/admin/login");
+        }
         return mv;
     }
 
@@ -72,6 +128,7 @@ public class AdminController {
 
     @GetMapping("menu")
     public ModelAndView menu(ModelAndView mv) {
+    	mv.addObject("placeId", 3);
         mv.setViewName("admin/menu/patchmenu");
         return mv;
     }
@@ -79,6 +136,11 @@ public class AdminController {
     @GetMapping("menu/getMenus")
     public List<Menu> getMenus() {
         return menuService.getMenus();
+    }
+    
+    @PostMapping("addMenu")
+    public int addMenu(@RequestBody List<Menu> menu) {
+    	return menuService.addMenu(menu);
     }
 
     @GetMapping("detail")

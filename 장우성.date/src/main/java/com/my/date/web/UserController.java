@@ -1,7 +1,5 @@
 package com.my.date.web;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -16,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.my.date.domain.Place;
 import com.my.date.domain.User;
-import com.my.date.service.PlaceService;
 import com.my.date.service.UserService;
 
 @RestController
@@ -26,7 +22,7 @@ import com.my.date.service.UserService;
 public class UserController {
 	@Autowired private UserService userService;
 	@Autowired private MailSendService mailSendService;
-	
+
 	@GetMapping("login")
 	public ModelAndView login(HttpServletRequest request, ModelAndView mv) {
 		HttpSession session = request.getSession(false);
@@ -165,5 +161,24 @@ public class UserController {
 		}
         
         return "/";
+	}
+	
+	@GetMapping("removeuser")
+	public ModelAndView removeUser(ModelAndView mv) {
+		mv.setViewName("user/removeUser");
+		
+		return mv;
+	}
+	
+	@PostMapping("removeuser/{userId}")
+	public ModelAndView removeUser(@PathVariable int userId, ModelAndView mv, HttpSession session) {
+		if(userId > 0) {
+        	userService.delUser(userId);
+        	session.invalidate();
+		} 
+		
+		mv.setViewName("redirect:/");
+		
+		return mv;
 	}
 }
