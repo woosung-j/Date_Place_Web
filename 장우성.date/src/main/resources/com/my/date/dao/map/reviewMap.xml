@@ -2,6 +2,16 @@
 <!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
 	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 <mapper namespace='com.my.date.dao.map.ReviewMap'>
+	<select id='selectReviews' resultMap='reviewsMap'>
+		select  r.review_id, r.place_id, p.place_name, r.user_id, u.profile_image, u.nickname, 
+                r.content, r.star_rating, i.file_name, i.reviewimages_id, r.created_at
+		from reviews r
+		left join review_images i on i.review_id = r.review_id
+        left join users u on r.user_id = u.user_id
+        left join places p on r.place_id = p.place_id
+		order by review_id
+	</select>
+	
 	<select id='selectReviewsByPlaceId' resultMap='reviewsMap'>
 		select  r.review_id, r.place_id, p.place_name, r.user_id, u.profile_image, u.nickname, 
                 r.content, r.star_rating, i.file_name, i.reviewimages_id, r.created_at
@@ -23,6 +33,11 @@
 	<insert id='insertReview'>
 		insert into reviews values(REVIEWS_id_SEQ.nextval, #{placeId}, #{userId}, #{content}, #{starRating}, sysdate)
 	</insert>
+	
+	<delete id='deleteAdminReview'>
+		delete from reviews
+		where review_id = #{reviewId}
+	</delete>
 	
 	<resultMap id='reviewsMap' type='ReviewDto'>
 		<id property='reviewId' column='review_id' />
