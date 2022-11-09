@@ -64,7 +64,7 @@
         <a href="../community/06.html">
             <button type="button" class="btn btn-primary btn-lg col-12 mt-3">피드 내역</button>
         </a>
-        <a href="../declaration/01.html">
+        <a href="<%=request.getContextPath()%>/declaration">
             <button type="button" class="btn btn-primary btn-lg col-12 mt-3">신고 내역</button>
         </a>
         <a href="logout">
