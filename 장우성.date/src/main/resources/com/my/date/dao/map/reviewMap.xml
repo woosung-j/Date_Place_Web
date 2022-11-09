@@ -17,8 +17,8 @@
                 r.content, r.star_rating, i.file_name, i.reviewimages_id, r.created_at
 		from reviews r
 		left join review_images i on i.review_id = r.review_id
-        left join users u on r.user_id = u.user_id
-        left join places p on r.place_id = p.place_id
+		left join users u on r.user_id = u.user_id
+		left join places p on r.place_id = p.place_id
 		where r.place_id = #{placeId}
 		order by review_id
 	</select>

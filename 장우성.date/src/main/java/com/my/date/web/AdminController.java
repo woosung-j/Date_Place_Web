@@ -2,6 +2,9 @@ package com.my.date.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,10 +31,19 @@ public class AdminController {
     @Autowired private DeclarationService declarationService;
     @Autowired private MenuService menuService;
     @Autowired private PlaceService placeService;
-	@Autowired private DetailService detailService;
-	@Autowired private ReviewService reviewService;
-	
-	@GetMapping("place")
+    @Autowired private DetailService detailService;
+    @Autowired private ReviewService reviewService;
+    
+    private boolean isAdmin(HttpServletRequest request) {
+        HttpSession sessionCheck = request.getSession(false);
+        if(sessionCheck == null || sessionCheck.getAttribute("isAdmin") == null) {
+            return false;
+        }
+
+        return (boolean) sessionCheck.getAttribute("isAdmin");
+    }
+    
+    @GetMapping("place")
     public ModelAndView main(ModelAndView mv) {
         mv.setViewName("place/placelist");
         return mv;
@@ -45,7 +57,6 @@ public class AdminController {
     @GetMapping("declare")
     public ModelAndView declare(ModelAndView mv) {
         mv.setViewName("admin/declaration/declareList");
-
         return mv;
     }
 
@@ -70,31 +81,42 @@ public class AdminController {
         return menuService.getMenus();
     }
 
-	@GetMapping("detail")
-	public ModelAndView detail(ModelAndView mv) {
-		mv.setViewName("admin/detail/patchdetail");
-		return mv;
-	}
+    @GetMapping("detail")
+    public ModelAndView detail(ModelAndView mv) {
+        mv.setViewName("admin/detail/patchdetail");
+        return mv;
+    }
 
-	@GetMapping("detail/getDetails")
-	public List<Detail> getDetails() {
-		return detailService.getDetails();
-	}
-	
+    @GetMapping("detail/getDetails")
+    public List<Detail> getDetails() {
+        return detailService.getDetails();
+    }
+    
     @GetMapping("review")
-    public ModelAndView review(ModelAndView mv) {
-        mv.setViewName("admin/review/reviewList");
-
+    public ModelAndView review(HttpServletRequest request, ModelAndView mv) {
+        if(isAdmin(request) == true) {
+            mv.setViewName("admin/review/reviewList");
+        } else {
+            mv.setViewName("redirect:/admin/login");
+        }
         return mv;
     }
     
     @GetMapping("review/list")
-    public List<Review> getReviews() {
-        return reviewService.getReviews();
+    public List<Review> getReviews(HttpServletRequest request) {
+        if(isAdmin(request) == true) {
+            return reviewService.getReviews();
+        } else {
+            return null;
+        }
     }
     
     @DeleteMapping("del/{reviewId}")
-    public int delAdminReview(@PathVariable int reviewId) {
-    	return reviewService.delAdminReview(reviewId);
+    public int delAdminReview(HttpServletRequest request, @PathVariable int reviewId) {
+        if(isAdmin(request) == true) {
+            return reviewService.delAdminReview(reviewId);
+        } else {
+            return 0;
+        }
     }
 }
