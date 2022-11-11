@@ -87,6 +87,11 @@
             });
 
             $('#addReviewBtn').click(() => {
+				if ($('#textBox').val() == null || $('#textBox').val() == '') {
+					$('#textBox').val(' ');
+					
+				}
+   
                 $.ajax({
                     url: '<%=request.getContextPath()%>/review/add/' + $('#placeId').val(),
                     method: 'post',
@@ -96,6 +101,8 @@
                         content: $('#textBox').val(),
                         starRating: $('.active').length,
                         placeId: $('#placeId').val(),
+                        
+                        
                     }),
                     success: (data) => {
                         addReview();

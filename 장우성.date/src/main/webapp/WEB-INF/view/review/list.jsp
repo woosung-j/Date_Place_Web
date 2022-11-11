@@ -58,11 +58,12 @@
 
                         $.each(reviews, (i, review) => {
                             const reviewImgArr = [];
-
+                            const delDiv = [];
+                            
                             $.each(review.reviewImages, (i, reviewImage) => {
                                 reviewImgArr.push(`<img class="reImg ml-3" src="attach/review/\${reviewImage.fileName}'/>"/>`);
                             });
-
+                            
                             reviewArr.unshift(
                             	`<tr>
                                 	<td style='border:none;'>
@@ -82,8 +83,8 @@
 												<div class="row reviewImg mb-2">
 													\${reviewImgArr.join('')}
 												</div>
-	                                            <div class="row text-start ml-1 mr-1"  font-size: 14px">
-													<p>\${review.content}</p>
+	                                            <div class="row dell text-start ml-1 mr-1"  font-size: 14px">
+	                                            <p class="content" id="content">\${review.content}</p>
 	                                            </div>
 	                                            </a>
 											</div>
@@ -92,7 +93,6 @@
 								</tr>`
 							);
 	                    });
-
                         $.ajax({
                             url: '<%=request.getContextPath()%>/review/avg/' + $('#placeId').val(),
                             method: 'get',
