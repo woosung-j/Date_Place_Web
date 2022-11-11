@@ -9,9 +9,11 @@ import com.my.date.domain.ReviewDto;
 
 public interface ReviewMap {
 	List<ReviewDto> selectReviews();
-	List<ReviewDto> selectReviewsByPlaceId(@Param("placeId") int placeId);
+	List<ReviewDto> selectReviewsByPlaceId(int placeId);
 	List<ReviewDto> selectReviewsByUserId(int userId);
-	String selectReviewAvg(@Param("placeId") int placeId);
+	List<ReviewDto> selectDetailReviewByReviewId(int reviewId);
+	String selectReviewAvg(int placeId);
 	int insertReview(Review review);
 	int deleteAdminReview(int reviewId);
+	int deleteDetailReviewByReviewIdAndUserId(@Param("reviewId") int reviewId, @Param("userId") int userId);
 }

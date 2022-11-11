@@ -92,7 +92,7 @@
                                     <tbody>
                                         <tr>
                                             <td class="row-1 mt-5 border rounded mb-3">
-                                                <a href="./03.html" class="btn btn-outline-secondary btn-sm bg-light" style="float: right">상세보기</a>
+                                                <a href="<%=request.getContextPath()%>/review/detailview/\${review.reviewId}" class="btn btn-outline-secondary btn-sm bg-light" style="float: right">상세보기</a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -129,7 +129,7 @@
         </header>
         <div class="pb-5 mb-3" id="myReviews"></div>
         <div class="navbar">
-            <ul class="navbar nav-item bg-light fixed-bottom mb-0 list-style-none">
+           <ul class="navbar nav-item bg-light fixed-bottom mb-0 list-style-none">
                 <li>
                     <a href="<%=request.getContextPath()%>/" class="btn w-auto" type="button">
                         <i class="icon main bi-house-door-fill fa-3x"></i>

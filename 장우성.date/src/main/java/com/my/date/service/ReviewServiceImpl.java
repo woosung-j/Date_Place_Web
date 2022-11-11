@@ -16,16 +16,21 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public List<ReviewDto> getReviews() {
 		return reviewDao.selectReviews();
-	};
+	}
 	
 	@Override
 	public List<ReviewDto> getReviewsByPlaceId(int placeId) {
 		return reviewDao.selectReviewsByPlaceId(placeId);
-	};
+	}
 	
 	@Override
 	public List<ReviewDto> getReviewsByUserId(int userId) {
 		return reviewDao.selectReviewsByUserId(userId);
+	}
+	
+	@Override
+	public List<ReviewDto> getDetailReviewByReviewId(int reviewId) {
+		return reviewDao.selectDetailReviewByReviewId(reviewId);
 	}
 	
 	@Override
@@ -43,5 +48,10 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public int delAdminReview(int reviewId) {
 		return reviewDao.deleteAdminReview(reviewId);
+	}
+	
+	@Override
+	public int delDetailReview(int reviewId, int userId) {
+		return reviewDao.deleteDetailReviewByReviewIdAndUserId(reviewId, userId);
 	}
 }
