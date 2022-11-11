@@ -37,6 +37,17 @@
 			order by review_id desc
 		)
 		where rownum = 1
+  </select>
+  
+	<select id='selectReviewsByUserId' resultMap='reviewsMap'>
+		select  r.review_id, r.place_id, p.place_name, r.user_id, u.profile_image, u.nickname, 
+                r.content, r.star_rating, i.file_name, i.review_images_id, r.created_at
+		from reviews r
+		left join review_images i on i.review_id = r.review_id
+		left join users u on r.user_id = u.user_id
+		left join places p on r.place_id = p.place_id
+		where r.user_id = #{userId}
+		order by review_id
 	</select>
 
 	<select id='selectReviewAvg' resultType='string'>

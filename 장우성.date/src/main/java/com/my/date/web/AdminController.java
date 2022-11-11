@@ -144,6 +144,11 @@ public class AdminController {
     public int addMenu(@RequestBody List<Menu> menu) {
     	return menuService.addMenu(menu);
     }
+    
+    @PatchMapping("fixMenu")
+    public int fixMenu(@RequestBody List<Menu> menu) {
+    	return menuService.fixMenu(menu);
+    }
 
     @GetMapping("detail")
     public ModelAndView detail(ModelAndView mv) {
@@ -167,7 +172,7 @@ public class AdminController {
     }
     
     @GetMapping("review/list")
-    public List<Review> getReviews(HttpServletRequest request) {
+    public List<ReviewDto> getReviews(HttpServletRequest request) {
         if(isAdmin(request) == true) {
             return reviewService.getReviews();
         } else {

@@ -124,30 +124,36 @@
     </script>
 </head>
 <body>
-<div class="container">
-    <header style="padding-top: 80px">
-        <nav class="row navbar bg-light text-center align-middle fixed-top">
-            <a href="javascript:window.history.back();" class="col btn"><i class="bi bi-chevron-left"></i></a>
-            <p class="col"></p>
-            <h3 class="col-6 font-gamja-flower">리뷰보기</h3>
-            <p class="col"></p>
-            <p class="col"></p>
-        </nav>
-    </header>
-    <div class="row-1 mx-3"></div>
-    <table class="table">
-        <thead>
-        <tr id="reviewInfo"></tr>
-        </thead>
-        <tbody id="reviews"></tbody>
-    </table>
-    <input type="hidden" id="placeId" value="${placeId}" />
-    <footer style="padding-top: 100px">
-        <nav class="row navbar fixed-bottom text-center justify-content-center bg-light">
-            <a type="button" class="col-12 btn w-100 font-gamja-flower" href="<%=request.getContextPath()%>/review/add" style="display: block">
-                다녀온 리뷰 쓰기 <i class="bi bi-pencil-square"></i>
-            </a>
-        </nav>
-    </footer>
-</div>
+    <div class="container">
+        <header style="padding-top: 80px">
+            <nav class="row navbar bg-light text-center align-middle fixed-top">
+                <a href="javascript:window.history.back();" class="col btn"><i class="bi bi-chevron-left"></i></a>
+                <p class="col"></p>
+                <h3 class="col-6 font-gamja-flower">리뷰보기</h3>
+                <p class="col"></p>
+                <p class="col"></p>
+            </nav>
+        </header>
+        <div class="row-1 mx-3"></div>
+        <table class="table">
+            <thead>
+                <tr id="reviewInfo"></tr>
+            </thead>
+            <tbody id="reviews"></tbody>
+        </table>
+        <input type="hidden" id="placeId" value="${placeId}" />
+        <footer style="padding-top: 100px">
+            <nav class="row navbar fixed-bottom text-center justify-content-center bg-light">
+                <% int userId = 0; if(session.getAttribute("userId") != null) userId = (int) session.getAttribute("userId"); if(userId > 0) { %>
+                <a type="button" class="col-12 btn w-100 font-gamja-flower" href="<%=request.getContextPath()%>/review/add" style="display: block">
+                    다녀온 리뷰 쓰기 <i class="bi bi-pencil-square"></i>
+                </a>
+                <% } else { %>
+                <a type="button" class="col-12 btn w-100 font-gamja-flower" href="<%=request.getContextPath()%>/user/login" style="display: block">
+                    로그인 <i class="bi bi-door-open" style="font-size: 20px"></i>
+                </a>
+                <% } %>
+            </nav>
+        </footer>
+    </div>
 </body>

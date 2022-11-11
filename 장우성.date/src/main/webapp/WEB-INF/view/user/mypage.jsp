@@ -18,8 +18,8 @@
             font-size: 40px;
         }
 
-        .fixed-bottom .bi {
-            font-size: 48px;
+        .icon.main:hover {
+            color: #ff5858;
         }
     </style>
     <script>
@@ -58,7 +58,7 @@
         <a href="<%=request.getContextPath()%>/region/myregion">
             <button type="button" class="btn btn-primary btn-lg col-12 mt-3">관심 지역</button>
         </a>
-        <a href="../review/04.html">
+        <a href="<%=request.getContextPath()%>/review/myreview">
             <button type="button" class="btn btn-primary btn-lg col-12 mt-3">리뷰 내역</button>
         </a>
         <a href="../community/06.html">

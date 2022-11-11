@@ -8,18 +8,19 @@ import org.springframework.stereotype.Service;
 
 import com.my.date.dao.ReviewDao;
 import com.my.date.domain.Review;
+import com.my.date.domain.ReviewDto;
 
 @Service
 public class ReviewServiceImpl implements ReviewService{
 	@Autowired private ReviewDao reviewDao;
 	
 	@Override
-	public List<Review> getReviews() {
+	public List<ReviewDto> getReviews() {
 		return reviewDao.selectReviews();
 	};
 	
 	@Override
-	public List<Review> getReviewsByPlaceId(int placeId) {
+	public List<ReviewDto> getReviewsByPlaceId(int placeId) {
 		return reviewDao.selectReviewsByPlaceId(placeId);
 	}
 
@@ -28,6 +29,11 @@ public class ReviewServiceImpl implements ReviewService{
 		return reviewDao.selectLatestReviewByPlaceId(placeId);
 	}
 
+	@Override
+	public List<ReviewDto> getReviewsByUserId(int userId) {
+		return reviewDao.selectReviewsByUserId(userId);
+	}
+	
 	@Override
 	public double getReviewAvg(int placeId) {
 		if(reviewDao.selectReviewAvg(placeId) == null)

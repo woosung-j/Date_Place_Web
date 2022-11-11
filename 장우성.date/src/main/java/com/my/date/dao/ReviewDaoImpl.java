@@ -9,18 +9,19 @@ import org.springframework.stereotype.Repository;
 
 import com.my.date.dao.map.ReviewMap;
 import com.my.date.domain.Review;
+import com.my.date.domain.ReviewDto;
 
 @Repository
 public class ReviewDaoImpl implements ReviewDao{
 	@Autowired private ReviewMap reviewMap;
 	
 	@Override
-	public List<Review> selectReviews() {
+	public List<ReviewDto> selectReviews() {
 		return reviewMap.selectReviews();
 	}
 	
 	@Override
-	public List<Review> selectReviewsByPlaceId(int placeId) {
+	public List<ReviewDto> selectReviewsByPlaceId(int placeId) {
 		return reviewMap.selectReviewsByPlaceId(placeId);
 	}
 
@@ -29,6 +30,11 @@ public class ReviewDaoImpl implements ReviewDao{
 		return reviewMap.selectLatestReviewByPlaceId(placeId);
 	}
 
+	@Override
+	public List<ReviewDto> selectReviewsByUserId(int userId) {
+		return reviewMap.selectReviewsByUserId(userId);
+	}
+	
 	@Override
 	public String selectReviewAvg(@Param("placeId") int placeId) {
 		return reviewMap.selectReviewAvg(placeId);

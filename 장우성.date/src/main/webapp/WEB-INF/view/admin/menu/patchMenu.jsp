@@ -5,7 +5,6 @@
     <script>
         function tableCreate() {
             var html = ' ';
-
             var menuName = $('#menuName').val();
             var price = $('#price').val();
             var remove = $('remove').val();
@@ -30,9 +29,9 @@
             let isGood = false;
             let errMsg;
 
-            if (!field.length) errMsg = 'test';
+            if (!field.length) errMsg = 'fail';
             else {
-                if (!field.val()) errMsg = field.attr('placeholder');
+                if (!field.val()) errMsg = '빈칸을 입력하세요.';
                 else isGood = true;
             }
 
@@ -61,9 +60,9 @@
                         $.each(menus, (i, menu) => {
                             menuArr.unshift(
                                 `<tr>
-                                    <td>\${menu.menuId}</td>
-                                    <td><input type='text' class='form-control' value='\${menu.menuName}'/></td>
-                                    <td><input type='text' class='form-control' value='\${menu.price}'/></td>
+                                    <td><input type='hidden' id='menuId' name='menuId' value='\${menu.menuId}'/>\${menu.menuId}</td>
+                                    <td><input type='text' class='form-control' id='fixMenuName' name='fixMenuName' value='\${menu.menuName}'/></td>
+                                    <td><input type='text' class='form-control' id='fixPrice' name='fixPrice' value='\${menu.price}'/></td>
                                     <td><button type='button' class='btn btn-danger' onclick='tableDelete(this)' id='remove'>삭제</button></td>
                                 </tr>`
                             );
@@ -99,15 +98,34 @@
             console.log(arr);
         }
 
+        function fixMenu() {
+            const arr = [];
+            let length = $('input[name=menuId]').length;
+
+            for (let i = 0; i < length; i++) {
+                arr.push({ menuId: $('input[name=menuId]').eq(i).val(), menuName: $('input[name=fixMenuName]').eq(i).val(), price: $('input[name=fixPrice]').eq(i).val() });
+            }
+
+            $.ajax({
+                url: 'fixMenu',
+                method: 'patch',
+                contentType: 'application/json',
+                data: JSON.stringify(arr),
+                success: menuList(),
+            });
+            console.log(arr);
+        }
+
         function init() {
-            $('#addMenuBtn').click(() => {
+            $('#okMenuBtn').click(() => {
                 addMenu();
+                fixMenu();
             });
         }
 
         $(() => {
-            init();
             menuList();
+            init();
         });
     </script>
 </head>
@@ -136,7 +154,7 @@
                     </div>
                     <div class="col mb-3">
                         <nav class="d-flex justify-content-end mt-4">
-                            <button type="button" class="btn btn-info mr-2" id="addMenuBtn" data-toggle="modal" data-target="#addMenuOkModal">
+                            <button type="button" class="btn btn-info mr-2" id="okMenuBtn" data-toggle="modal" data-target="#addMenuOkModal">
                                 <span class="label">완료</span>
                             </button>
                             <button type="button" class="btn btn-info mr-2" onclick="tableCreate()">

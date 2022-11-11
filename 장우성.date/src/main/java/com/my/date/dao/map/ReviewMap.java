@@ -4,11 +4,14 @@ import java.util.List;
 
 import com.my.date.domain.ReviewDto;
 import org.apache.ibatis.annotations.Param;
+
 import com.my.date.domain.Review;
+import com.my.date.domain.ReviewDto;
 
 public interface ReviewMap {
-	List<Review> selectReviews();
-	List<Review> selectReviewsByPlaceId(@Param("placeId") int placeId);
+	List<ReviewDto> selectReviews();
+	List<ReviewDto> selectReviewsByPlaceId(@Param("placeId") int placeId);
+	List<ReviewDto> selectReviewsByUserId(int userId);
 	ReviewDto selectLatestReviewByPlaceId(int placeId);
 	String selectReviewAvg(@Param("placeId") int placeId);
 	int insertReview(Review review);

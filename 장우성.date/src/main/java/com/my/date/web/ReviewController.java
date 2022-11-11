@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.my.date.domain.Review;
+import com.my.date.domain.ReviewDto;
 import com.my.date.service.ReviewService;
 
 
@@ -45,6 +46,7 @@ public class ReviewController {
     public ModelAndView add(ModelAndView mv) {
     	mv.addObject("placeId", 1);
     	mv.setViewName("review/add");
+    	
         return mv;
     }
     
@@ -52,10 +54,35 @@ public class ReviewController {
     public int addReview(HttpServletRequest request, @RequestBody Review review) {
     	HttpSession session = request.getSession(false);
         if(session == null || session.getAttribute("userId") == null) {
-            return 0;
+            return -1;
         }
         int userId = (int) session.getAttribute("userId");
         review.setUserId(userId);
+        
         return reviewService.addReview(review);
+    }
+    
+    @GetMapping("myreview")
+    public ModelAndView myReview(HttpServletRequest request, ModelAndView mv) {
+        HttpSession session = request.getSession(false);
+        if(session == null || session.getAttribute("userId") == null) {
+            mv.setViewName("redirect:/user/login");
+        } else {
+            mv.setViewName("review/myReview");
+        }
+        return mv;
+    }
+    
+    @GetMapping("review/myReview")
+    public List<ReviewDto> getReviewsUserId(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if(session == null || session.getAttribute("userId") == null) {
+            return null;
+        }
+        int userId = (int) session.getAttribute("userId");
+
+        List<ReviewDto> dto = reviewService.getReviewsByUserId(userId);
+
+        return dto;
     }
 }

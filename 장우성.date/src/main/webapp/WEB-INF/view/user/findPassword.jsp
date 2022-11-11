@@ -22,7 +22,42 @@
             color: #ff5858;
         }
     </style>
-    <script></script>
+    <script>
+        function emailCheck() {
+            var emailCheck = false;
+            var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+
+            $('#emailSendBtn').click(() => {
+                if (!getMail.test($('#email').val())) {
+                    $('#errMsg').text('이메일 형식으로 입력하세요.').css('color', 'red');
+                    $('#errMsg').show();
+                } else {
+                    $.ajax({
+                        url: 'findpasswordresult/' + $('#email').val(),
+                        method: 'post',
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            email: $('#email').val(),
+                        }),
+                        success: (data) => {
+                            if (data === 0) {
+                                $('#errMsg').text('등록된 이메일이 아닙니다.').css('color', 'red');
+                                $('#errMsg').show();
+
+                                return 0;
+                            } else {
+                                location.href = 'findpasswordresult';
+                            }
+                        },
+                    });
+                }
+            });
+        }
+
+        $(() => {
+            emailCheck();
+        });
+    </script>
 </head>
 <body>
     <div class="container">
@@ -32,27 +67,23 @@
                     <i class="bi bi-chevron-left"></i>
                 </a>
                 <p class="col"></p>
-                <h3 class="col-6 font-gamja-flower">아이디 찾기</h3>
+                <h4 class="col-6 font-gamja-flower">비밀번호 찾기</h4>
                 <p class="col"></p>
                 <p class="col"></p>
             </nav>
         </header>
-        <div class="row pt-62">
-            <form action="findidresult" method="post" class="d-grid col-11 mx-auto">
+        <div class="row pt-62 pb-5 mb-3">
+            <div class="d-grid col-11 mx-auto">
+                <h6 class="info mb-3">가입시 작성했던 이메일을 입력하세요.</h6>
+                <div class=""></div>
                 <div class="input-group">
-                    <span class="input-group-text">
-                        <i class="bi bi-person-fill"></i>
-                    </span>
-                    <input id="userName" type="text" class="form-control userName" placeholder="이름" aria-describedby="addon-wrapping" name="userName" />
+                    <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                    <input id="email" type="text" name="email" class="form-control" placeholder="이메일" aria-label="email" aria-describedby="addon-wrapping" />
                 </div>
-                <div class="input-group mt-3">
-                    <span class="input-group-text">
-                        <i class="bi bi-telephone-fill"></i>
-                    </span>
-                    <input id="userTel" type="tel" class="form-control userPhoneNum" placeholder="전화번호(&#39;-&#39;&nbsp;제외)" aria-describedby="addon-wrapping" name="phoneNumber" />
-                </div>
-                <button id="findIdBtn" type="submit" class="btn btn-primary btn-lg col-12 mt-3">아이디 찾기</button>
-            </form>
+                <div id="errMsg"></div>
+                <h6 class="info mt-4">이메일 전송으로 받기</h6>
+                <button id="emailSendBtn" type="button" class="btn btn-primary btn-lg col-12 mt-2">비밀번호 찾기</button>
+            </div>
         </div>
         <div class="navbar">
             <ul class="navbar nav-item bg-light fixed-bottom mb-0 list-style-none">
@@ -77,21 +108,11 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<%=request.getContextPath()%>/login" class="btn w-auto" type="button">
+                    <a href="<%=request.getContextPath()%>/user/login" class="btn w-auto" type="button">
                         <i class="icon main bi-person-fill fa-3x"></i>
                     </a>
                 </li>
             </ul>
-        </div>
-    </div>
-    <div class="modal" id="modal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content mx-5">
-                <div class="modal-body text-center py-3">
-                    <p id="modalMsg"></p>
-                    <a href="#" id="modalBtn" class="btn btn-primary" data-dismiss="modal"> 확인 </a>
-                </div>
-            </div>
         </div>
     </div>
 </body>
