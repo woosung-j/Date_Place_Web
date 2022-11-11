@@ -54,12 +54,13 @@
 
                     $.each(menus, (i, menu) => {
                         if (i == 0) {
+                            let placeId = $('#placeId').val()
                             menuArr.push(`
                                 <tr>
                                     <td class="col-7">\${menu.menuName}</td>
                                     <td class="col-2" id="address">\${menu.price}</td>
                                     <td class="col-3 align-middle" rowspan="\${menus.length}">
-                                        <a href="<%=request.getContextPath()%>/admin/menu" class="btn btn-secondary">수정</a>
+                                        <a href="<%=request.getContextPath()%>/admin/menu/${placeId}" class="btn btn-secondary">수정</a>
                                     </td>
                                 </tr>
                             `);
@@ -121,7 +122,7 @@
                     <td class="col-2">장소구분</td>
                     <td class="col-7" id="place_group"></td>
                     <td class="col-3 align-middle" rowspan="5">
-                        <a href="<%=request.getContextPath()%>/admin/place/patch" class="btn btn-secondary">수정</a>
+                        <a href="<%=request.getContextPath()%>/admin/place/patch/${placeId}" class="btn btn-secondary">수정</a>
                     </td>
                 </tr>
                 <tr>
@@ -153,9 +154,9 @@
                     <td class="col-2">주소</td>
                     <td class="col-7" id="address"></td>
                     <td class="col-3 align-middle" rowspan="6">
-                        <a href="<%=request.getContextPath()%>/admin/detail/add" class="btn btn-secondary">추가</a>
-                        <a href="<%=request.getContextPath()%>/admin/detail/patch" class="btn btn-secondary">수정</a>
-                        <a href="<%=request.getContextPath()%>/admin/detail/del" class="btn btn-secondary">삭제</a>
+                        <a href="<%=request.getContextPath()%>/admin/detail/add/${placeId}" class="btn btn-secondary">추가</a>
+                        <a href="<%=request.getContextPath()%>/admin/detail/patch/${placeId}" class="btn btn-secondary">수정</a>
+                        <a href="<%=request.getContextPath()%>/admin/detail/del/${placeId}" class="btn btn-secondary">삭제</a>
                     </td>
                 </tr>
                 <tr>
