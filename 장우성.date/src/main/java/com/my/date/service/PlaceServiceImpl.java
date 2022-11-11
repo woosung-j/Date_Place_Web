@@ -24,6 +24,11 @@ public class PlaceServiceImpl implements PlaceService {
 	}
 
 	@Override
+	public PlaceDetailDto getAdminPlaceByPlaceId(int placeId) {
+		return placeDao.selectAdminPlaceByPlaceId(placeId);
+	}
+
+	@Override
 	public void addPlace(Place place) {
 		placeDao.insertPlace(place);
 	}

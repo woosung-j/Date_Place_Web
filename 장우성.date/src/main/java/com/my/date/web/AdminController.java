@@ -2,12 +2,14 @@ package com.my.date.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.my.date.domain.*;
 import com.my.date.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -91,7 +93,7 @@ public class AdminController {
         return mv;
     }
 
-    @GetMapping("/placelist")
+    @GetMapping("/place/getPlaceList")
     public List<Place> getPlaces(HttpServletRequest request) {
         if(isAdmin(request) == true) {
             return placeService.getPlaces();
@@ -99,7 +101,27 @@ public class AdminController {
             return null;
         }
     }
-    
+
+    @GetMapping("/place/detail/{placeId}")
+    public ModelAndView place(HttpServletRequest request, ModelAndView mv, @PathVariable int placeId) {
+        if(isAdmin(request) == true) {
+            mv.addObject("placeId", placeId);
+            mv.setViewName("admin/place/place");
+        } else {
+            mv.setViewName("redirect:/admin/login");
+        }
+        return mv;
+    }
+
+    @GetMapping("/place/getDetail/{placeId}")
+    public PlaceDetailDto getPlaceDetail(HttpServletRequest request, @PathVariable int placeId) {
+        if(isAdmin(request) == true) {
+            return placeService.getAdminPlaceByPlaceId(placeId);
+        } else {
+            return null;
+        }
+    }
+
     @GetMapping("declare")
     public ModelAndView declare(HttpServletRequest request, ModelAndView mv) {
         if(isAdmin(request) == true) {
