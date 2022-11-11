@@ -2,7 +2,6 @@
 <head>
     <jsp:include page="../include/head.jsp"></jsp:include>
     <link rel="stylesheet" href="../../res/mobile.css" />
-
     <style>
         .reImg {
             height: 3rem;
@@ -99,14 +98,13 @@
                             success: (data) => {
                                 $('#reviewInfo').append(
                                     '<p class="text-center"><strong>' +
-                                        `\${reviews[0].placeName}` +
-                                        '<span style="color: #fb3959">★ ' +
-                                        `\${data}` +
-                                        '</span></strong><br/>' +
-                                        '<span style="color: #fb3959">' +
-                                        `\${reviews.length}` +
-                                        '</span> 개의 리뷰가 있어요.<br/>' +
-                                        '</p>'
+                                    `\${reviews[0].placeName}` +
+                                    '<span style="color: #fb3959">★ ' +
+                                    `\${data}` +
+                                    '</span></strong><br/>' +
+                                    '<span style="color: #fb3959">' +
+                                    `\${reviews.length}` +
+                                    '</span> 개의 리뷰가 있어요.<br /></p>'
                                 );
                             },
                         });

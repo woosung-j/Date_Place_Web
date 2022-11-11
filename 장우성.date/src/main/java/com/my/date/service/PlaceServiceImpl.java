@@ -2,6 +2,7 @@ package com.my.date.service;
 
 import java.util.List;
 
+import com.my.date.domain.PlaceDetailDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,11 @@ public class PlaceServiceImpl implements PlaceService {
 	@Override
 	public List<Place> getPlaces() {
 		return placeDao.selectPlaces();
+	}
+
+	@Override
+	public PlaceDetailDto getPlaceByPlaceId(int placeId, int userId) {
+		return placeDao.selectPlaceByPlaceId(placeId, userId);
 	}
 
 	@Override

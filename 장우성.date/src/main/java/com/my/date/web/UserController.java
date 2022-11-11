@@ -24,7 +24,7 @@ public class UserController {
 	@Autowired private MailSendService mailSendService;
 
 	@GetMapping("login")
-	public ModelAndView login(HttpServletRequest request, ModelAndView mv) {
+ 	public ModelAndView login(HttpServletRequest request, ModelAndView mv) {
 		HttpSession session = request.getSession(false);
 
 		if(session.getAttribute("userId") != null)
@@ -77,7 +77,7 @@ public class UserController {
 
 	@GetMapping("emailAuthCheck/{email}")
 	public String emailAuthCheck(@PathVariable String email) {
-		return mailSendService.emailWrite(email);
+		return mailSendService.AuthEmailWrite(email);
 	}
 
 	@GetMapping("mypage")
@@ -136,14 +136,35 @@ public class UserController {
 			
 		return mv;
 	}
+	
+	@GetMapping("findpassword")
+	public ModelAndView findPw(ModelAndView mv) {
+		mv.setViewName("user/findPassword");
+		
+		return mv;
+	}
+	
+	@PostMapping("findpasswordresult/{email}")
+	public int getPasswordResult(@PathVariable String email) {
+		String randomPassword = mailSendService.passwordEmailWrite(email);
 
+		return userService.fixPassword(email, randomPassword);	
+	}
+
+	@GetMapping("findpasswordresult")
+	public ModelAndView findPwResult(ModelAndView mv) {
+		mv.setViewName("user/findPasswordResult");
+		
+		return mv;
+	}
+	
 	@GetMapping("fixuser")
 	public ModelAndView fixUser(ModelAndView mv) {
 		mv.setViewName("user/fixUser");
 	
 		return mv; 
 	}
-	
+		
 	@PutMapping("fixuser")
 	public String fixUser(HttpServletRequest request,@RequestBody User updateUser, HttpSession session) {
 		HttpSession sessionCheck = request.getSession(false);

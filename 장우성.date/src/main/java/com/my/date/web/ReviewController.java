@@ -28,10 +28,10 @@ public class ReviewController {
 
 	@GetMapping("list/{placeId}")
 	public ModelAndView list(@PathVariable int placeId, HttpSession session, ModelAndView mv) {
-	   mv.addObject("placeId", placeId);
-	      mv.setViewName("review/list");
+	  mv.addObject("placeId", placeId);
+	  mv.setViewName("review/list");
 
-	      return mv;
+	  return mv;
 	}
    
 	@GetMapping("getReviewList/{placeId}")

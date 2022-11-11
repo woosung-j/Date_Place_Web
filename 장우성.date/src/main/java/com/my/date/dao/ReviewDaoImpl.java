@@ -2,6 +2,7 @@ package com.my.date.dao;
 
 import java.util.List;
 
+import com.my.date.domain.ReviewDto;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -23,7 +24,12 @@ public class ReviewDaoImpl implements ReviewDao{
 	public List<ReviewDto> selectReviewsByPlaceId(int placeId) {
 		return reviewMap.selectReviewsByPlaceId(placeId);
 	}
-	
+
+	@Override
+	public ReviewDto selectLatestReviewByPlaceId(int placeId) {
+		return reviewMap.selectLatestReviewByPlaceId(placeId);
+	}
+
 	@Override
 	public List<ReviewDto> selectReviewsByUserId(int userId) {
 		return reviewMap.selectReviewsByUserId(userId);

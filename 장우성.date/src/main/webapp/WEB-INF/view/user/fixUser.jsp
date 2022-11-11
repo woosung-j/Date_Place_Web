@@ -14,6 +14,25 @@
             padding: 5px;
         }
 
+        .circle-icon {
+            background: whitesmoke;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 2.5rem;
+            padding: 25px;
+            margin-left: 1.5rem;
+        }
+
+        .bi-image {
+            font-size: 40px;
+        }
+
+        .icon.main:hover {
+            color: #ff5858;
+        }
+
         input[type='date']::before {
             content: attr(data-placeholder);
             width: 100%;
@@ -27,54 +46,48 @@
         }
     </style>
     <script>
-        function isVal(field) {
+        function isValidate() {
             let isGood = false;
-            let errMsg
+            let msg = '';
 
-            if (!field.length) {
-                errMsg = '빈칸 없이 입력해주세요.';
-            } else {
-                if (!field.val()) {
-                    errMsg = field.attr('placeholder') + '입력하세요.';
-                } else {
-                    isGood = true;
-                }
-            }
+            if (!$('#pw').val()) msg = '비밀번호를 입력해주세요';
+            else if (!$('#nickname').val()) msg = '닉네임을 입력하세요';
+            else if (!$('#tel').val()) msg = '전화번호를 입력하세요';
+            else if (!$('#birth').val()) msg = '생년월일을 입력하세요';
+            else isGood = true;
 
-            if (!isGood) {
-                $('#modalMsg').text(errMsg).css('color', 'red');
-                $('#modalBtn').hide();
-                $('#modal').modal();
-            }
+            if (!isGood) $('#msg').text(msg).css('color', 'red');
 
             return isGood;
         }
 
         function fixUser() {
-            $('#fixUserBtn').click(() => {
-                if (isVal($('#pw')) && isVal($('#nickname')) && isVal($('#tel')) && isVal($('#birth'))) {
-                    let data = {
+            if (isValidate()) {
+                $.ajax({
+                    url: 'fixuser',
+                    method: 'put',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
                         password: $('#pw').val(),
                         nickname: $('#nickname').val(),
                         phoneNumber: $('#tel').val(),
                         birthday: $('#birth').val(),
-                    };
+                    }),
+                    success: function (data) {
+                        $('#fixModal').modal('show');
+                    },
+                });
+            }
+        }
 
-                    $.ajax({
-                        url: 'fixuser',
-                        method: 'put',
-                        contentType: 'application/json',
-                        data: JSON.stringify(data),
-                        success: function(data) {
-                        	$('.modal').modal('show')
-                        }
-                    });
-                }
+        function init() {
+            $('#fixUserBtn').click((e) => {
+                fixUser();
             });
         }
 
         $(() => {
-            fixUser();
+            init();
         });
     </script>
 </head>
@@ -92,9 +105,8 @@
             </nav>
         </header>
         <div class="row pt-62">
-            <form action="#" id="fixForm" class="d-grid col-11 mx-auto mt-4">
+            <div id="fixForm" class="d-grid col-11 mx-auto mt-4">
                 <div class="hidden" value="${userId}"></div>
-
                 <div class="input-group">
                     <div class="input-group-text"><i class="bi bi-key-fill"></i></div>
 
@@ -112,8 +124,9 @@
                     <div class="input-group-text"><i class="bi bi-calendar-date"></i></div>
                     <input id="birth" type="date" class="form-control birthday" data-placeholder="생년월일" aria-describedby="addon-wrapping" value="${birth}" required />
                 </div>
+                <div id="msg" style="color: red"></div>
                 <button type="button" id="fixUserBtn" class="btn btn-primary btn-lg col-12 mt-3">수정하기</button>
-            </form>
+            </div>
             <div class="d-grid col-11 mx-auto mt-0">
                 <a href="removeuser" type="button" class="btn btn-danger btn-lg col-12 mt-3 mx-auto"> 탈퇴하기 </a>
             </div>
@@ -148,14 +161,12 @@
             </ul>
         </div>
     </div>
-	<div class="modal" id="fixModal" tabindex="-1" aria-hidden="true" style="display: none;">
+    <div class="modal" id="fixModal" tabindex="-1" aria-hidden="true" style="display: none">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content mx-5">
                 <div id="modalMsg" class="modal-body text-center py-3">
                     <p>수정이 완료 되었습니다.</p>
-                </div>
-                <div id="modalBtn">
-                    <a href="/" class="btn btn-primary btn-lg col-12"> 확인 </a>
+                    <a href="/" class="btn btn-primary"> 확인 </a>
                 </div>
             </div>
         </div>
