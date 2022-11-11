@@ -7,4 +7,15 @@
 		from menus
 		order by menu_id desc 
 	</select>
+	
+	<insert id='insertMenu'>
+		insert into menus(menu_id, place_id, menu_name, price)
+		values(menus_id_seq.nextval, #{placeId}, #{menuName}, #{price})
+	</insert>
+	
+	<update id='updateMenu'>
+		update menus
+		set menu_name = #{menuName}, price = #{price}
+		where menu_id = #{menuId}
+	</update>
 </mapper>

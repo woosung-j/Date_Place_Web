@@ -16,4 +16,14 @@ public class MenuDaoImpl implements MenuDao {
 	public List<Menu> selectMenus() {
 		return menuMap.selectMenus();
 	}
+	
+	@Override
+	public int insertMenu(Menu menu) {
+		return menuMap.insertMenu(menu);
+	}
+	
+	@Override
+	public int updateMenu(Menu menu) {
+		return menuMap.updateMenu(menu);
+	}
 }

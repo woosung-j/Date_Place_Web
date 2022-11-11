@@ -96,7 +96,9 @@
                         starRating: $('.active').length,
                         placeId: 1,
                     }),
-                    success: addReview(),
+                    success: (data) => {
+                        addReview();
+                    },
                 });
             });
         }
@@ -164,7 +166,6 @@
                     <label for="imgFile" style="cursor: pointer; font-size: 14px"> <i class="bi bi-camera" style="font-size: 18px"></i><br />사진업로드 </label>
                     <input type="file" id="imgFile" class="pb-5 form-control" accept="image/*" />
                 </div>
-
                 <div class="row-1 text-center border mx-3 mb-3 bg-light" style="height: 14rem">
                     <textarea
                         class="form-control bg-light"
@@ -175,13 +176,9 @@
                     ></textarea>
                     <p class="text-right textCount" id="count" style="font-size: 13px">(0/500)</p>
                 </div>
-
                 <div class="star-rating">
                     <div class="stars">
-                        <i class="fa fa-star active"></i>
-                        <i class="fa fa-star active"></i>
-                        <i class="fa fa-star active"></i>
-                        <i class="fa fa-star active"></i>
+                        <i class="fa fa-star active"></i> <i class="fa fa-star active"></i> <i class="fa fa-star active"></i> <i class="fa fa-star active"></i>
                         <i class="fa fa-star active"></i>
                     </div>
                 </div>
@@ -195,9 +192,7 @@
             <input type="hidden" id="placeId" value="${placeId}" />
             <footer style="padding-top: 100px">
                 <nav class="row navbar fixed-bottom text-center justify-content-center bg-light">
-                    <button type="button" id="addReviewBtn" class="btn col-12 btn w-100 font-gamja-flower" id="successBtn" style="color: #ff5858" data-toggle="modal" data-target="#infoModal">
-                        작성완료
-                    </button>
+                    <button type="button" id="addReviewBtn" class="btn col-12 btn w-100 font-gamja-flower" id="successBtn" data-toggle="modal" data-target="#infoModal">작성완료</button>
                 </nav>
             </footer>
         </form>
