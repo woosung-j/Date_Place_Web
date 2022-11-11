@@ -36,7 +36,12 @@ public class ReviewDaoImpl implements ReviewDao{
 	}
 	
 	@Override
-	public String selectReviewAvg(@Param("placeId") int placeId) {
+	public 	List<ReviewDto> selectDetailReviewByReviewId(int reviewId) {
+		return reviewMap.selectDetailReviewByReviewId(reviewId);
+	}
+	
+	@Override
+	public String selectReviewAvg(int placeId) {
 		return reviewMap.selectReviewAvg(placeId);
 	}
 	
@@ -48,5 +53,10 @@ public class ReviewDaoImpl implements ReviewDao{
 	@Override
 	public int deleteAdminReview(int reviewId) {
 		return reviewMap.deleteAdminReview(reviewId);
+	}
+	
+	@Override
+	public int deleteDetailReviewByReviewIdAndUserId(int reviewId, int userId) {
+		return reviewMap.deleteDetailReviewByReviewIdAndUserId(reviewId, userId);
 	}
 }
