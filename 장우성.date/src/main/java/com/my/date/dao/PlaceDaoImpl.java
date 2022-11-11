@@ -24,6 +24,11 @@ public class PlaceDaoImpl implements PlaceDao {
 	}
 
 	@Override
+	public PlaceDetailDto selectAdminPlaceByPlaceId(int placeId) {
+		return placeMap.selectAdminPlaceByPlaceId(placeId);
+	}
+
+	@Override
 	public int insertPlace(Place place) {
 		return placeMap.insertPlace(place);
 	}
