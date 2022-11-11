@@ -1,33 +1,33 @@
-<%@ page language='java' contentType='text/html; charset=UTF-8' pageEncoding='UTF-8'%> 
+<%@ page language='java' contentType='text/html; charset=UTF-8' pageEncoding='UTF-8'%>
 <head>
     <jsp:include page="../include/head.jsp"></jsp:include>
     <link rel="stylesheet" href="../../res/mobile.css" />
     <style>
-		.circle-icon {
-		     background: whitesmoke;
-		     width: 100px;
-		     height: 100px;
-		     border-radius: 50%;
-		     text-align: center;
-		     line-height: 2.5rem;
-		     padding: 25px;
-		     margin-left: 1.5rem;
-		}
-		
-		 .bi-image {
-		     font-size: 40px;
-		}
-		
-		.icon.main:hover {
-		    color: #ff5858;
-		}
+        .circle-icon {
+            background: whitesmoke;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 2.5rem;
+            padding: 25px;
+            margin-left: 1.5rem;
+        }
+
+        .bi-image {
+            font-size: 40px;
+        }
+
+        .icon.main:hover {
+            color: #ff5858;
+        }
     </style>
     <script>
-    	$(() => {
-    		$('#fixUserBtn').click(() => {
-    			location.href="user/fixUser";
-    		})
-    	})
+        $(() => {
+            $('#fixUserBtn').click(() => {
+                location.href = 'user/fixUser';
+            });
+        });
     </script>
 </head>
 <body>
@@ -47,8 +47,7 @@
             <div class="col-10 text-right">
                 <div class="userEmail">${email}</div>
                 <button type="button" class="btn btn-secondary btn-sm col-6 mt-3 ml-0" data-target="#fileUpload" data-toggle="modal">프로필 사진 업로드</button>
-                <a id='fixUserBtn' href="fixuser" type="button" class="btn btn-secondary btn-sm col-6 mt-3">회원 프로필 수정</a>
-               
+                <a id="fixUserBtn" href="fixuser" type="button" class="btn btn-secondary btn-sm col-6 mt-3">회원 프로필 수정</a>
             </div>
         </div>
         <hr class="mt-4" />

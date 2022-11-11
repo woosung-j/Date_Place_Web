@@ -44,12 +44,6 @@
 		where user_name = #{userName} and phone_number = #{phoneNumber}
 	</select>
 	
-	<select id='selectPassword' resultType='string'>
-		select password
-		from users
-		where email = #{email}
-	</select>
-	
 	<insert id='deleteUser'>
 		insert into delete_users values(#{userId})	
 	</insert>

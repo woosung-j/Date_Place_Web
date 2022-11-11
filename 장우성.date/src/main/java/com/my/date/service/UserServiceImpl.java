@@ -59,11 +59,6 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public String getPassword(String email) {
-		return userDao.selectUserByPassword(email);
-	}
-	
-	@Override
 	public void delUser(int userId) {
 		userDao.deleteUser(userId);
 	}

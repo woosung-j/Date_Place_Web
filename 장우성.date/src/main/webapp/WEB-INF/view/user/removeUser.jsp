@@ -41,24 +41,24 @@
         });
     </script>
     <style>
-   		.circle-icon {
-		     background: whitesmoke;
-		     width: 100px;
-		     height: 100px;
-		     border-radius: 50%;
-		     text-align: center;
-		     line-height: 2.5rem;
-		     padding: 25px;
-		     margin-left: 1.5rem;
-		}
-		
-		 .bi-image {
-		     font-size: 40px;
-		}
-		
-		.icon.main:hover {
-		    color: #ff5858;
-		}
+        .circle-icon {
+            background: whitesmoke;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 2.5rem;
+            padding: 25px;
+            margin-left: 1.5rem;
+        }
+
+        .bi-image {
+            font-size: 40px;
+        }
+
+        .icon.main:hover {
+            color: #ff5858;
+        }
     </style>
 </head>
 <body>

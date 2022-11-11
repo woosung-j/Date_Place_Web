@@ -3,7 +3,6 @@ package com.my.date.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.my.date.service.MailSendServiceFindPassword;
 import com.my.date.service.MailSendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +22,6 @@ import com.my.date.service.UserService;
 public class UserController {
 	@Autowired private UserService userService;
 	@Autowired private MailSendService mailSendService;
-	@Autowired private MailSendServiceFindPassword findPasswordMailSendService;
 
 	@GetMapping("login")
  	public ModelAndView login(HttpServletRequest request, ModelAndView mv) {
@@ -80,7 +78,7 @@ public class UserController {
 
 	@GetMapping("emailAuthCheck/{email}")
 	public String emailAuthCheck(@PathVariable String email) {
-		return mailSendService.emailWrite(email);
+		return mailSendService.AuthEmailWrite(email);
 	}
 
 	@GetMapping("mypage")
@@ -149,7 +147,7 @@ public class UserController {
 	
 	@PostMapping("findpasswordresult/{email}")
 	public int getPasswordResult(@PathVariable String email) {
-		String randomPassword = findPasswordMailSendService.emailWrite(email);
+		String randomPassword = mailSendService.passwordEmailWrite(email);
 
 		return userService.fixPassword(email, randomPassword);	
 	}
