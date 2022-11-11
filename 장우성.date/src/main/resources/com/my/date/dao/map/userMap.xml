@@ -50,7 +50,7 @@
 		from users
 		where user_name = #{userName} and phone_number = #{phoneNumber}
 	</select>
-
+  
 	<select id='selectPassword' resultType='user'>
 		select password
 		from users
@@ -60,4 +60,10 @@
 	<insert id='deleteUser'>
 		insert into delete_users values(#{userId})
 	</insert>
+	
+	<update id='updatePassword'>
+		update users
+		set password = #{password}
+		where email = #{email}
+	</update>
 </mapper>

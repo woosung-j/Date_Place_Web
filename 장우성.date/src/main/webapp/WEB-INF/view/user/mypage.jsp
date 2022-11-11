@@ -18,8 +18,8 @@
             font-size: 40px;
         }
 
-        .fixed-bottom .bi {
-            font-size: 48px;
+        .icon.main:hover {
+            color: #ff5858;
         }
     </style>
     <script>

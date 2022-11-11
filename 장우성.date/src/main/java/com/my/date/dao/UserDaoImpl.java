@@ -56,4 +56,9 @@ public class UserDaoImpl implements UserDao {
 	public void deleteUser(int userId) {
 		userMap.deleteUser(userId);
 	}
+	
+	@Override
+	public int updatePassword(String email, String password) {
+		return userMap.updatePassword(email, password);
+	}
 }
