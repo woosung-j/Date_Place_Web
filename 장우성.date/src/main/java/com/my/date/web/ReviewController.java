@@ -33,7 +33,7 @@ public class ReviewController {
 	}
 	
 	@GetMapping("getReviewList/{placeId}")
-	public List<Review> getReviewsByPlaceId(@PathVariable int placeId) {
+	public List<ReviewDto> getReviewsByPlaceId(@PathVariable int placeId) {
 		return reviewService.getReviewsByPlaceId(placeId);
 	}
 	
