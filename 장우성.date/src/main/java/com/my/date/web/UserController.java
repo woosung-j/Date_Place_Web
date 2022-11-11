@@ -147,13 +147,6 @@ public class UserController {
 		return mv;
 	}
 	
-	// 1. 비밀번호 찾기 버튼을 누른다.
-	// 2. jsp 파일에서 url 주는 컨트롤러로 이동한다.
-	// 3. 그 이동한 컨트롤러 안에서
-	// 3-1. 이메일이 있는지 확인
-	// 3-2. 이메일이 없으면 이메일이 없다고 return\
-	// 3-3. 이메일이 있으면 임시비밀번호 전송 후 전송했다고 return
-	
 	@PostMapping("findpasswordresult/{email}")
 	public int getPasswordResult(@PathVariable String email) {
 		String randomPassword = findPasswordMailSendService.emailWrite(email);
@@ -168,12 +161,6 @@ public class UserController {
 		return mv;
 	}
 	
-//	@PostMapping("findpasswordresult/{email}")
-//	public String getPassword(@PathVariable String email) {		
-//		
-//		return userService.getPassword(email);
-//	}
-
 	@GetMapping("fixuser")
 	public ModelAndView fixUser(ModelAndView mv) {
 		mv.setViewName("user/fixUser");
