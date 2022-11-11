@@ -52,7 +52,6 @@ public class UserController {
 				session.setAttribute("nickname", user.getNickname());
 				session.setAttribute("email", user.getEmail());
 				session.setMaxInactiveInterval(86400);
-				
 			}
 			mv.setViewName("redirect:/");
 		} else {
