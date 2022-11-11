@@ -74,7 +74,7 @@
         }
     </style>
 
-    <script> 
+    <script>
         function addReview() {
             $(() => {
                 $('.stars .fa').click(function () {
@@ -87,22 +87,18 @@
             });
 
             $('#addReviewBtn').click(() => {
-				if ($('#textBox').val() == null || $('#textBox').val() == '') {
-					$('#textBox').val(' ');
-					
-				}
-   
+                if ($('#textBox').val() == null || $('#textBox').val() == '') {
+                    $('#textBox').val(' ');
+                }
+
                 $.ajax({
                     url: '<%=request.getContextPath()%>/review/add/' + $('#placeId').val(),
                     method: 'post',
                     contentType: 'application/json',
                     data: JSON.stringify({
-                    	
                         content: $('#textBox').val(),
                         starRating: $('.active').length,
                         placeId: $('#placeId').val(),
-                        
-                        
                     }),
                     success: (data) => {
                         addReview();
@@ -129,7 +125,6 @@
         });
     </script>
 </head>
-
 <body>
     <div class="container">
         <header style="padding-top: 80px">

@@ -26,18 +26,18 @@ public class ReviewController {
 	@Autowired
 	private ReviewService reviewService;
 
-   @GetMapping("list/{placeId}")
-	   public ModelAndView list(@PathVariable int placeId, HttpSession session, ModelAndView mv) {
-	      mv.addObject("placeId", placeId);
+	@GetMapping("list/{placeId}")
+	public ModelAndView list(@PathVariable int placeId, HttpSession session, ModelAndView mv) {
+	   mv.addObject("placeId", placeId);
 	      mv.setViewName("review/list");
-	      
+
 	      return mv;
-   }
+	}
    
-   @GetMapping("getReviewList/{placeId}")
-	   public List<ReviewDto> getReviewsByPlaceId(@PathVariable int placeId) {
-	      return reviewService.getReviewsByPlaceId(placeId);
-   }
+	@GetMapping("getReviewList/{placeId}")
+	public List<ReviewDto> getReviewsByPlaceId(@PathVariable int placeId) {
+		return reviewService.getReviewsByPlaceId(placeId);
+	}
 
 	@GetMapping("avg/{placeId}")
 	public double getReviewAvg(@PathVariable int placeId) {
