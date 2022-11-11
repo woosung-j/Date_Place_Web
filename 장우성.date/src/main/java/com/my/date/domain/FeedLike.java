@@ -1,6 +1,5 @@
 package com.my.date.domain;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

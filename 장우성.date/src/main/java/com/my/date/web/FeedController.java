@@ -39,9 +39,8 @@ public class FeedController {
 		return feedService.getFeeds(feedId);
 	}
 	
-	
-	 @GetMapping("getFeed/{feedId}") 
-	 public FeedDto getDetailFeed(@PathVariable int feedId) { 
-		 return feedService.getFeed(feedId); 
-		 }
+	@GetMapping("getFeed/{feedId}") 
+	public FeedDto getDetailFeed(@PathVariable int feedId) { 
+		return feedService.getFeed(feedId); 
+	}
 }
