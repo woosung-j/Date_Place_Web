@@ -2,6 +2,7 @@ package com.my.date.service;
 
 import java.util.List;
 
+import com.my.date.domain.ReviewDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,13 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public List<ReviewDto> getReviewsByPlaceId(int placeId) {
 		return reviewDao.selectReviewsByPlaceId(placeId);
-	};
-	
+	}
+
+	@Override
+	public ReviewDto getLatestReviewByPlaceId(int placeId) {
+		return reviewDao.selectLatestReviewByPlaceId(placeId);
+	}
+
 	@Override
 	public List<ReviewDto> getReviewsByUserId(int userId) {
 		return reviewDao.selectReviewsByUserId(userId);

@@ -9,6 +9,7 @@ public interface ReviewService {
 	List<ReviewDto> getReviews();
 	List<ReviewDto> getReviewsByPlaceId(int placeId);
 	List<ReviewDto> getReviewsByUserId(int userId);
+	ReviewDto getLatestReviewByPlaceId(int placeId);
 	double getReviewAvg(int placeId);
 	int addReview(Review review);
 	int delAdminReview(int reviewId);

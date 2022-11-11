@@ -13,10 +13,10 @@ public class Detail {
 	private int detailId;
 	private int placeId;
 	private String address;
-	private int tel;
-	private int openingHours;
-	private int closingHours;
-	private String dayoff;
+	private String tel;
+	private String openingHours;
+	private String closingHours;
+	private String dayOff;
 	private String contact;
 	private String parking;
 	private LocalDate createdAt;

@@ -4,7 +4,7 @@
 <mapper namespace='com.my.date.dao.map.ReviewMap'>
 	<select id='selectReviews' resultMap='reviewsMap'>
 		select  r.review_id, r.place_id, p.place_name, r.user_id, u.profile_image, u.nickname, 
-                r.content, r.star_rating, i.file_name, review_images_id, r.created_at
+                r.content, r.star_rating, i.file_name, i.review_images_id, r.created_at
 		from reviews r
 		left join review_images i on i.review_id = r.review_id
         left join users u on r.user_id = u.user_id
@@ -23,6 +23,22 @@
 		order by review_id
 	</select>
 
+	<select id="selectLatestReviewByPlaceId" resultType="reviewDto">
+		select *
+		from (
+			select r.review_id, r.place_id, r.user_id, r.content, r.star_rating, r.created_at, u.nickname, u.profile_image,
+				(select count(*) from reviews where place_id = #{placeId}) as review_count
+			from reviews r left join users u on r.user_id = u.user_id
+			where (review_id) in (
+				select review_id
+				from reviews
+				group by review_id
+			) and place_id = #{placeId}
+			order by review_id desc
+		)
+		where rownum = 1
+  </select>
+  
 	<select id='selectReviewsByUserId' resultMap='reviewsMap'>
 		select  r.review_id, r.place_id, p.place_name, r.user_id, u.profile_image, u.nickname, 
                 r.content, r.star_rating, i.file_name, i.review_images_id, r.created_at
@@ -49,7 +65,7 @@
 		delete from reviews
 		where review_id = #{reviewId}
 	</delete>
-	
+
 	<resultMap id='reviewsMap' type='ReviewDto'>
 		<id property='reviewId' column='review_id' />
 		<result property='placeId' column='place_id' />
@@ -60,6 +76,7 @@
 		<result property='nickname' column='nickname' />
 		<result property='profileImage' column='profile_image'/>
 		<result property='placeName' column='place_name' />
+		<result property='reviewCount' column='review_count'/>
 		<collection property='reviewImages' resultMap='reviewImageMap' />
 	</resultMap>
 	

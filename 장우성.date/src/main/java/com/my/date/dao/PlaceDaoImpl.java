@@ -2,6 +2,7 @@ package com.my.date.dao;
 
 import java.util.List;
 
+import com.my.date.domain.PlaceDetailDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +16,11 @@ public class PlaceDaoImpl implements PlaceDao {
 	@Override
 	public List<Place> selectPlaces() {
 		return placeMap.selectPlaces();
+	}
+
+	@Override
+	public PlaceDetailDto selectPlaceByPlaceId(int placeId, int userId) {
+		return placeMap.selectPlaceByPlaceId(placeId, userId);
 	}
 
 	@Override

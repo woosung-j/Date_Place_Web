@@ -24,21 +24,16 @@ import com.my.date.service.ReviewService;
 public class ReviewController {
 	@Autowired private ReviewService reviewService;	
 	
-	@GetMapping("list")
-	public ModelAndView list(HttpServletRequest request, ModelAndView mv) {
-    	HttpSession session = request.getSession(false);
-        if(session != null && session.getAttribute("userId") != null) {
-            int userId = (int) session.getAttribute("userId");
-        	mv.addObject("userId", userId);
-        }
-		mv.addObject("placeId", 1);
+	@GetMapping("list/{placeId}")
+	public ModelAndView list(@PathVariable int placeId, HttpSession session, ModelAndView mv) {
+		mv.addObject("placeId", placeId);
 		mv.setViewName("review/list");
 		
 		return mv;
 	}
 	
-	@GetMapping("list/{placeId}")
-	public List<ReviewDto> getReviewsByPlaceId(@PathVariable int placeId) {
+	@GetMapping("getReviewList/{placeId}")
+	public List<Review> getReviewsByPlaceId(@PathVariable int placeId) {
 		return reviewService.getReviewsByPlaceId(placeId);
 	}
 	
