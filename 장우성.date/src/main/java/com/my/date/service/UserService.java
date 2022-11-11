@@ -13,4 +13,7 @@ public interface UserService {
 	void fixUser(User user);
 	void delUser(int userId);
 	User findId(User user);
+	String getPassword(String email);
+	String getEmail(String email);
+	int fixPassword(String email, String password);
 }

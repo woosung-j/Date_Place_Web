@@ -26,6 +26,11 @@ public class UserDaoImpl implements UserDao {
 	public User selectUserById(String id) {
 		return userMap.selectUserById(id);
 	}
+	
+	@Override
+	public String selectUserByPassword(String email) {
+		return userMap.selectUserByPassword(email);
+	}
 
 	@Override
 	public String selectEmail(String email) {
@@ -50,5 +55,10 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void deleteUser(int userId) {
 		userMap.deleteUser(userId);
+	}
+	
+	@Override
+	public int updatePassword(String email, String password) {
+		return userMap.updatePassword(email, password);
 	}
 }

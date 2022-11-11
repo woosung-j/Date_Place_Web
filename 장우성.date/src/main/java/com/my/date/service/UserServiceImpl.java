@@ -59,7 +59,22 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public String getPassword(String email) {
+		return userDao.selectUserByPassword(email);
+	}
+	
+	@Override
 	public void delUser(int userId) {
 		userDao.deleteUser(userId);
+	}
+	
+	@Override
+	public int fixPassword(String email, String password) {
+		return userDao.updatePassword(email, password);
+	}
+	
+	@Override
+	public String getEmail(String email) {
+		return userDao.selectEmail(email);
 	}
 }

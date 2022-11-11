@@ -3,6 +3,7 @@ package com.my.date.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.my.date.service.MailSendServiceFindPassword;
 import com.my.date.service.MailSendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,9 +23,10 @@ import com.my.date.service.UserService;
 public class UserController {
 	@Autowired private UserService userService;
 	@Autowired private MailSendService mailSendService;
+	@Autowired private MailSendServiceFindPassword findPasswordMailSendService;
 
 	@GetMapping("login")
-	public ModelAndView login(HttpServletRequest request, ModelAndView mv) {
+ 	public ModelAndView login(HttpServletRequest request, ModelAndView mv) {
 		HttpSession session = request.getSession(false);
 
 		if(session.getAttribute("userId") != null)
@@ -52,6 +54,7 @@ public class UserController {
 				session.setAttribute("nickname", user.getNickname());
 				session.setAttribute("email", user.getEmail());
 				session.setMaxInactiveInterval(86400);
+				
 			}
 			mv.setViewName("redirect:/");
 		} else {
@@ -136,6 +139,40 @@ public class UserController {
 			
 		return mv;
 	}
+	
+	@GetMapping("findpassword")
+	public ModelAndView findPw(ModelAndView mv) {
+		mv.setViewName("user/findPassword");
+		
+		return mv;
+	}
+	
+	// 1. 비밀번호 찾기 버튼을 누른다.
+	// 2. jsp 파일에서 url 주는 컨트롤러로 이동한다.
+	// 3. 그 이동한 컨트롤러 안에서
+	// 3-1. 이메일이 있는지 확인
+	// 3-2. 이메일이 없으면 이메일이 없다고 return\
+	// 3-3. 이메일이 있으면 임시비밀번호 전송 후 전송했다고 return
+	
+	@PostMapping("findpasswordresult/{email}")
+	public int getPasswordResult(@PathVariable String email) {
+		String randomPassword = findPasswordMailSendService.emailWrite(email);
+
+		return userService.fixPassword(email, randomPassword);	
+	}
+
+	@GetMapping("findpasswordresult")
+	public ModelAndView findPwResult(ModelAndView mv) {
+		mv.setViewName("user/findPasswordResult");
+		
+		return mv;
+	}
+	
+//	@PostMapping("findpasswordresult/{email}")
+//	public String getPassword(@PathVariable String email) {		
+//		
+//		return userService.getPassword(email);
+//	}
 
 	@GetMapping("fixuser")
 	public ModelAndView fixUser(ModelAndView mv) {
@@ -143,7 +180,7 @@ public class UserController {
 	
 		return mv; 
 	}
-	
+		
 	@PutMapping("fixuser")
 	public String fixUser(HttpServletRequest request,@RequestBody User updateUser, HttpSession session) {
 		HttpSession sessionCheck = request.getSession(false);
