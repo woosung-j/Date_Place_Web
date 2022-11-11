@@ -1,0 +1,94 @@
+
+/* kakao map css */
+.wrap {
+    position: absolute;
+    top: -60px;
+    left: 0;
+    bottom: 15px;
+    width: 310px;
+    height: 132px;
+    margin-left: -140px;
+    text-align: left;
+    overflow: visible;
+    font-size: 16px;
+    font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+    line-height: 1;
+}
+
+.wrap * {
+    padding: 0;
+    margin: 0;
+}
+
+.wrap .info {
+    width: 280px;
+    height: 120px;
+    border-radius: 5px;
+    border-bottom: 0px solid #ccc;
+    border-right: 0px solid #ccc;
+    overflow: visible;
+    background: #fff;
+}
+
+.wrap .info:nth-child(1) {
+    border: 0;
+    box-shadow: 0px 1px 2px white;
+}
+
+.info .title {
+    padding: 30px 0 0 10px;
+    height: 30px;
+    background: white;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.info .body {
+    position: relative;
+    overflow: visible;
+}
+
+.info .desc {
+    position: relative;
+    margin: 13px 0 0 90px;
+    height: 75px;
+}
+
+.desc .ellipsis {
+    overflow: visible;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.desc .jibun {
+    font-size: 11px;
+    color: #888;
+    margin-top: -2px;
+}
+
+.info .img {
+    position: absolute;
+    top: 6px;
+    left: 5px;
+    width: 73px;
+    height: 71px;
+    border: 1px solid #ddd;
+    color: #888;
+    overflow: visible;
+}
+
+.info:after {
+    content: '';
+    position: absolute;
+    margin-left: -20px;
+    left: 50%;
+    bottom: 0;
+    width: 22px;
+    height: 12px;
+    background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png');
+}
+
+.info .link {
+    color: #5085bb;
+}

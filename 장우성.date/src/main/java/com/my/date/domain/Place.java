@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class Place {
 	private int placeId;
 	private String placeName;
-	private String placeInfo;
+	private String introduction;
 	private int siId;
 	private int guId;
 	private int views;
