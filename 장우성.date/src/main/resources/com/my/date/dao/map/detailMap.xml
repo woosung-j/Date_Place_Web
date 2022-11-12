@@ -2,9 +2,20 @@
 <!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
 	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 <mapper namespace='com.my.date.dao.map.DetailMap'>
-	<select id='selectDetails' resultType='detail'>
-		select detail_id, address, place_id, tel, opening_hours, closing_hours, dayoff, contact, parking, created_at, updated_at
+	<select id='selectDetail' resultType='detail'>
+		select detail_id, address, place_id, tel, opening_hours, closing_hours, day_off, contact, parking, created_at, updated_at
 		from details
-		order by detail_id
+		where detail_id = #{placeId}
 	</select>
+	
+	<insert id='insertDetail'>
+		insert into details(detail_id, address, place_id, tel, opening_hours, closing_hours, day_off, contact, parking, created_at, updated_at)
+		values(details_id_seq.nextval, #{placeId}, #{menuName}, #{price})
+	</insert>
+	
+	<update id='updateDetail' parameterType='detail'>
+		update details
+		set address = #{address}, tel = #{tel}, opening_hours = #{openingHours}, closing_hours = #{closingHours}, day_off = #{dayOff}, contact = #{contact}
+		where detail_id = #{placeId}
+	</update>
 </mapper>

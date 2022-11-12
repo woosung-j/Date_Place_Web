@@ -1,9 +1,11 @@
 package com.my.date.dao.map;
 
-import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 import com.my.date.domain.Detail;
 
 public interface DetailMap {
-	List<Detail> selectDetails();
+	Detail selectDetail(@Param("placeId") int placeId);
+	int insertDetail(Detail detail);
+	int updateDetail(Detail detail);
 }

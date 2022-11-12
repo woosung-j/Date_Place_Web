@@ -16,7 +16,7 @@ public class Detail {
 	private String tel;
 	private String openingHours;
 	private String closingHours;
-	private String dayoff;
+	private String dayOff;
 	private String contact;
 	private int parking;
 	private LocalDate createdAt;
