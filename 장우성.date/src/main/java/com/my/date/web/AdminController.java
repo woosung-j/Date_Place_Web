@@ -208,4 +208,9 @@ public class AdminController {
             return 0;
         }
     }
+    
+    @GetMapping("search/{keyword}")
+    public List<ReviewDto> search(@PathVariable String keyword) {
+        return reviewService.getSearchReviewByPlaceName(keyword);
+    }
 }

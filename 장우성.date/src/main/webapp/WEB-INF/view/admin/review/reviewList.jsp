@@ -60,7 +60,60 @@
 
             return starArr.join('');
         }
+        
+        function search() {
+		    $('#btn_search').click(() => {
+		    
+		    	console.log($('#word').val())
+		   	 $.ajax({
+		            url: '/admin/search/' + $('#word').val(),
+		            method: 'get',
+		            success: (reviews) => {
+	                    const list = [];
+	                    
+	                    if (reviews.length) {
+	                        $.each(reviews, (i, review) => {
+	                            const reviewImgArr = [];
+	                            console.log(review)
+	                            $.each(review.reviewImages, (i, reviewImage) => {
+	                                reviewImgArr.push(`<img class="reImg ml-3" src="attach/review/\${reviewImage.fileName}'/>"/>`);
+	                            });
 
+	                            list.unshift(
+	                                `<div class="card-body border mb-2">
+                                        <button type="button" id="deleteBtn" class="btn btn-danger deleteBtn" style="float: right" 
+                                        			data-toggle="modal" value="\${review.reviewId}">삭제</button>
+                                        <div class="row text-start ml-1 mr-1">
+                                           <img class="profile" src="attach/user/\${review.profileImage}'/>"/>
+                                           <p class="mt-1 ml-2">\${review.nickname}</p>
+                                           <p class="mt-1 ml-2" style="color: #fb3959">
+                                               <div class="stars">
+                                                   \${setStarRating(review.starRating)}
+                                               </div>
+                                           </p>
+                                           <p class="mt-2 ml-2" style="font-size: 13px">\${review.createdAt}</p>
+                                           <p class="mt-1 ml-4">장소: \${review.placeName}</p>
+                                        </div>
+                                        <div class="row reviewImg mb-2">
+                                        	\${reviewImgArr.join('')} 
+                                        </div>
+                                        <p class="col card-text mt-3">\${review.content}</p>
+                                     </div>
+                                  </div>`  
+	                            );
+	                        });
+	                    }
+	                    $('#searchReviews').empty();
+	                    $('#searchReviews').append(list.join(''));
+	                    init(); 
+		            },
+		        });
+		   })	
+		} 		 
+		$(() => {
+			search(); 
+		})
+		
         function showModal(msg, isOk, reviewId) {
             $('#cancelBtn').toggle(isOk);
             $('#okBtn').toggle(isOk);
@@ -180,15 +233,16 @@
                     </div>
                     <div class="col-7">
                         <nav class="d-flex justify-content-end mt-4 mb-3">
-                            <div class="col-5">
-                                <input type="text" class="form-control" placeholder="장소명" id="placeNmae" />
+                            <div class="d-flex col-5">
+								<input type="text" class="form-control mr-2" id="word" name="placeName" placeholder="장소명"/>
+								<button type="button" id="btn_search" class="btn btn-info col-3 mr-2 label text-center">
+                                	조회
+                            	</button>
                             </div>
-                            <button type="button" class="col-2 btn btn-info mr-2">
-                                <span class="label text-center">조회</span>
-                            </button>
                         </nav>
                     </div>
                 </div>
+                <div id='searchReviews'>
                 <table class="table mx-1">
                     <thead style="background-color: #7882a4; color: #d6e5fa">
                         <tr>
@@ -199,6 +253,7 @@
                     </thead>
                 </table>
                 <div id="reviews" class="mb-5 pb-5"></div>
+                </div>
             </div>
         </div>
     </div>

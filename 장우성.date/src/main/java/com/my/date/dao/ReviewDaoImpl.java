@@ -2,8 +2,6 @@ package com.my.date.dao;
 
 import java.util.List;
 
-import com.my.date.domain.ReviewDto;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -38,6 +36,11 @@ public class ReviewDaoImpl implements ReviewDao{
 	@Override
 	public 	List<ReviewDto> selectDetailReviewByReviewId(int reviewId) {
 		return reviewMap.selectDetailReviewByReviewId(reviewId);
+	}
+	
+	@Override
+	public List<ReviewDto> selectSearchReviewByPlaceName(String keyword){
+		return reviewMap.selectSearchReviewByPlaceName(keyword);
 	}
 	
 	@Override

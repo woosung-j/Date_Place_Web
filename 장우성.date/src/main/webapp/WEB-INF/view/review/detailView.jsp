@@ -23,7 +23,6 @@
             text-align: center;
             font-size: 18px;
             background: #fff;
-
             display: -webkit-box;
             display: -ms-flexbox;
             display: -webkit-flex;
@@ -66,14 +65,12 @@
 
     function setStarRating(starRating) {
         const starArr = [];
-
         for (i = 0; i < starRating; i++) {
             starArr.push(`<i class="fa fa-star fill"></i>`);
         }
         for (i = 0; i < 5 - starRating; i++) {
             starArr.push(`<i class="fa fa-star"></i>`);
         }
-
         return starArr.join('');
     }
 
@@ -112,7 +109,7 @@
             url: '/review/detailView/' + $('#reviewId').val(),
             method: 'get',
             success: (reviews) => {
-                if (reviews.length) {
+                if(reviews.length) {
                     const reviewArr = [];
                     $.each(reviews, (i, review) => {
                         const reviewImgArr = [];
@@ -122,10 +119,21 @@
                         });
 
                         const delbtn = [];
-                        if ($('#userId').val() == review.userId) {
+                        if($('#userId').val() == review.userId) {
                             delbtn.push(`<button class="delBtn mr-3" type="button" id="deleteBtn"  data-toggle="modal" data-target="#deleteModal" style="border:none; background:none;">삭제</button>`);
                         }
-
+						
+						reviewArr.push(
+            				`<header style="padding-top: 62px">
+				                <nav class="row navbar bg-light text-center align-middle fixed-top" id="delbtn">
+				                    <a href="javascript:window.history.back();" class="col btn"><i class="bi bi-chevron-left"></i> </a>
+				                    <p class="col"></p>
+				                    <h3 class="col-6 font-gamja-flower">리뷰상세</h3>
+				                    <p class="col"></p>
+				                    \${delbtn.join('')} 
+				                </nav>
+            				</header>
+            				
                         reviewArr.push(
                             `<div class="pb-5 mb-3">
                                 <div class="row-1 mt-5 border mx-3 rounded">
