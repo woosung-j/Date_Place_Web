@@ -198,7 +198,7 @@
 
         function getPlace() {
             $.ajax({
-                url: '<%=request.getContextPath()%>/place/1',
+                url: '<%=request.getContextPath()%>/place/get/' + $('#placeId').val(),
                 method: 'get',
                 success: (data) => {
                     console.log(data);

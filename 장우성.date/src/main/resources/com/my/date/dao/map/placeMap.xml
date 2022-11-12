@@ -7,6 +7,24 @@
 		from places
 		order by place_id
 	</select>
+
+	<select id='selectPlacesBySiNameAndGuName' resultMap='placeDtoMap'>
+		select p.place_id, p.place_name, p.si_id, p.gu_id, p.place_group_id, p.introduction, pi.place_image_id, pi.file_name,
+		    (select count(*) from my_places mp where mp.place_id = p.place_id) as like_count,
+			(select my_place_id from my_places m where m.place_id = p.place_id and m.user_id = #{userId}) as is_like
+		from si, gu, places p left join place_images pi on p.place_id = pi.place_id
+		where p.si_id = si.si_id and p.gu_id = gu.gu_id and si.si_name = #{siName} and gu.gu_name = #{guName}
+		order by place_id
+	</select>
+
+	<select id='selectPlacesBySiNameAndGuNameAndOrderBy' resultMap='placeDtoMap'>
+		select p.place_id, p.place_name, p.si_id, p.gu_id, p.place_group_id, p.introduction, pi.place_image_id, pi.file_name,
+			   (select count(*) from my_places mp where mp.place_id = p.place_id) as like_count,
+			   (select my_place_id from my_places m where m.place_id = p.place_id and m.user_id = #{userId}) as is_like
+		from si, gu, places p left join place_images pi on p.place_id = pi.place_id
+		where p.si_id = si.si_id and p.gu_id = gu.gu_id and si.si_name = #{siName} and gu.gu_name = #{guName} and p.place_group_id = #{orderBy}
+		order by place_id
+	</select>
 	
 	<select id='selectPlace' resultType='place'>
 		select place_id, place_name
@@ -56,6 +74,21 @@
 			left join place_images pi on p.place_id = pi.place_id
 		where p.place_id = #{placeId}
 	</select>
+
+	<resultMap id="placeDtoMap" type="placeDto">
+		<id property="placeId" column="place_id"/>
+		<result property="placeName" column="place_name"/>
+		<result property="introduction" column="introduction"/>
+		<result property="siId" column="si_id"/>
+		<result property="guId" column="gu_id"/>
+		<result property="views" column="views"/>
+		<result property="likeCount" column="like_count"/>
+		<result property="isLike" column="is_like"/>
+		<result property="placeGroupId" column="place_group_id"/>
+		<result property="createdAt" column="created_at"/>
+		<result property="updatedAt" column="updated_at"/>
+		<collection property="placeImage" resultMap="placeImageMap"/>
+	</resultMap>
 
 	<resultMap id="placeDetailMap" type="placeDetailDto">
 		<id property="placeId" column="place_id"/>
