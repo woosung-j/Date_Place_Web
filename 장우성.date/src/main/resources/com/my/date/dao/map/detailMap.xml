@@ -9,8 +9,7 @@
 	</select>
 	
 	<insert id='insertDetail'>
-		insert into details(detail_id, address, place_id, tel, opening_hours, closing_hours, day_off, contact, parking, created_at, updated_at)
-		values(details_id_seq.nextval, #{placeId}, #{menuName}, #{price})
+		insert into details values(details_id_seq.nextval, address = #{address}, tel = #{tel}, opening_hours = #{openingHours}, closing_hours = #{closingHours}, day_off = #{dayOff}, contact = #{contact}, created_at = #{createdAt}, updated_at = #{updatedAt} 
 	</insert>
 	
 	<update id='updateDetail' parameterType='detail'>

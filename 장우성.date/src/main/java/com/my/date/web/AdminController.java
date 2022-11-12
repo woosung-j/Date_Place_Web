@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -79,8 +80,13 @@ public class AdminController {
 		return detailService.getDetail(placeId);
 	}
 	
-	 @PatchMapping("detail/patch/{placeId}")
-	    public int updateDetail(@PathVariable int placeId, @RequestBody Detail detail) {
-	        return detailService.updateDetail(detail);
-	    }
+	@PostMapping("detail/add/{placeId}")
+	public int insertDetail(@PathVariable int placeId, @RequestBody Detail detail) {
+		return detailService.insertDetail(detail);
+	}
+	 
+	@PatchMapping("detail/patch/{placeId}")
+	public int updateDetail(@PathVariable int placeId, @RequestBody Detail detail) {
+		return detailService.updateDetail(detail);
+	}
 }
