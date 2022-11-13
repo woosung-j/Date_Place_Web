@@ -7,20 +7,21 @@
             $('#feedList').empty();
 
             $.ajax({
-                url: 'getFeeds/' + $('#feedId').val(),
+                url: '<%=request.getContextPath()%>/community/getFeeds',
                 method: 'get',
                 contentType: 'application/json',
                 success: (feeds) => {
-
                     if (feeds.length) {
-                        const feedList = []
+                        const feedList = [];
                         $.each(feeds, (i, item) => {
-                      const tagList = []
-                            const likeList = []
-                            if (!item.hashtag.length == 0) {
+                            const tagList = [];
+                            const likeList = [];
+
+                            console.log(item);
+                            if (item.hashtag.length != 0 && item.hashtag[0]?.tag != null) {
                                 $.each(item.hashtag, (i, item) => {
-                                    tagList.push(`<span class="badge badge-secondary badge-pill">\${item.tag}</span>`)
-                                })
+                                    tagList.push(`<span class="badge badge-secondary badge-pill">\${item.tag}</span>`);
+                                });
                             }
 
                             feedList.unshift(
@@ -45,12 +46,12 @@
                             </a>`
                             );
                         });
-                        $('#feedList').append(feedList.join(''))
+                        $('#feedList').append(feedList.join(''));
                     } else {
-                        $('#feedList').append('<p class="text-center">게시글이 없습니다.</p>')
+                        $('#feedList').append('<p class="text-center">게시글이 없습니다.</p>');
                     }
-                }
-            })
+                },
+            });
         }
 
         $(() => {
@@ -97,7 +98,7 @@
         </div>
         <input type="hidden" id="feedId" value="${feedId}" />
         <div class="write">
-            <a href="add" class="btn w-auto" type="button">
+            <a href="<%=request.getContextPath()%>/community/add" class="btn w-auto" type="button">
                 <i class="fas fa-pen-square fa-3x" style="color: #ff5858"></i>
             </a>
         </div>
@@ -106,27 +107,27 @@
     <div class="navbar">
         <ul class="navbar nav-item bg-light fixed-bottom mb-0 list-style-none">
             <li>
-                <a href="/" class="btn w-auto" type="button">
+                <a href="<%=request.getContextPath()%>/" class="btn w-auto" type="button">
                     <i class="icon main bi-house-door-fill fa-3x"></i>
                 </a>
             </li>
             <li>
-                <a href="/" class="btn w-auto" type="button">
+                <a href="<%=request.getContextPath()%>/community" class="btn w-auto" type="button">
                     <i class="icon main bi-file-earmark-text fa-3x"></i>
                 </a>
             </li>
             <li>
-                <a href="place/around" class="btn w-auto" type="button">
+                <a href="<%=request.getContextPath()%>/place/around" class="btn w-auto" type="button">
                     <i class="icon main bi-map fa-3x"></i>
                 </a>
             </li>
             <li>
-                <a href="place/myplace" class="btn w-auto" type="button">
+                <a href="<%=request.getContextPath()%>/place/myplace" class="btn w-auto" type="button">
                     <i class="icon main bi-heart fa-3x"></i>
                 </a>
             </li>
             <li>
-                <a href="user/login" class="btn w-auto" type="button">
+                <a href="<%=request.getContextPath()%>/user/login" class="btn w-auto" type="button">
                     <i class="icon main bi-person-fill fa-3x"></i>
                 </a>
             </li>
