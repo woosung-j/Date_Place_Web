@@ -18,7 +18,7 @@ public class Detail {
 	private String closingHours;
 	private String dayOff;
 	private String contact;
-	private String parking;
+	private int parking;
 	private LocalDate createdAt;
 	private LocalDate updatedAt;
 }
