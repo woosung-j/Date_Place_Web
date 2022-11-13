@@ -409,7 +409,7 @@
             <tbody>
             <tr>
                 <td class="mt-5 border mb-3">
-                    <a href="./03.html" class="btn">
+                    <a href="<%=request.getContextPath()%>/declaration/add/${placeId}" class="btn">
                         <i class="bi bi-exclamation-octagon mr-4"></i>
                         잘못된 장소 신고
                     </a>

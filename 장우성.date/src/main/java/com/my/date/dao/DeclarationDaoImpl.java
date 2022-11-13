@@ -21,6 +21,16 @@ public class DeclarationDaoImpl implements DeclarationDao {
     public List<MyDeclarationDto> selectDeclarationsByUserId(int userId) {
         return declarationMap.selectDeclarationsByUserId(userId);
     }
+    
+    @Override
+    public int insertDeclaration(Declaration declaration) {
+    	return declarationMap.insertDeclaration(declaration);
+    }
+    
+    @Override
+    public String selectPlaceName(int placeId) {
+    	return declarationMap.selectPlaceName(placeId);
+    }
 
     @Override
     public int updateConfirm(int declareId, int confirm) {
