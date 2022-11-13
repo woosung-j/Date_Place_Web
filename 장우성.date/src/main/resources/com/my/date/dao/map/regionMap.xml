@@ -7,4 +7,16 @@
 		from my_regions r, si, gu
 		where r.si_id = si.si_id and r.gu_id = gu.gu_id and user_id = #{userId}
 	</select>
+
+	<select id="selectSiId" resultType="int">
+		select si_id
+		from si
+		where si_name = #{siName}
+	</select>
+
+	<select id="selectGuId" resultType="int">
+		select gu_id
+		from gu
+		where gu_name = #{guName}
+	</select>
 </mapper>

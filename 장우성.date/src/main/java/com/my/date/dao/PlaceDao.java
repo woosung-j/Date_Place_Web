@@ -1,11 +1,10 @@
 package com.my.date.dao;
 
-import java.util.List;
-
 import com.my.date.domain.Place;
 import com.my.date.domain.PlaceDetailDto;
 import com.my.date.domain.PlaceDto;
-import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface PlaceDao {
 	List<Place> selectPlaces();
@@ -14,6 +13,7 @@ public interface PlaceDao {
 	PlaceDetailDto selectPlaceByPlaceId(int placeId, int userId);
 	PlaceDetailDto selectAdminPlaceByPlaceId(int placeId);
 	int insertPlace(Place place);
+	int insertPlaceImages(int placeId, List<String> fileNames);
 	int updatePlace(Place place);
 	int deletePlace(int place);
 }

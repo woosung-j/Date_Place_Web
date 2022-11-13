@@ -15,4 +15,14 @@ public class RegionServiceImpl implements RegionService {
     public List<RegionDto> getMyRegions(int userId) {
         return regionDao.selectRegions(userId);
     }
+
+    @Override
+    public int getSiId(String siName) {
+        return regionDao.selectSiId(siName);
+    }
+
+    @Override
+    public int getGuId(String guName) {
+        return regionDao.selectGuId(guName);
+    }
 }

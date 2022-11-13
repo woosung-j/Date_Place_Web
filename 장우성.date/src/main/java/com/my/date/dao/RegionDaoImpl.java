@@ -15,4 +15,14 @@ public class RegionDaoImpl implements RegionDao {
     public List<RegionDto> selectRegions(int userId) {
         return regionMap.selectRegions(userId);
     }
+
+    @Override
+    public int selectSiId(String siName) {
+        return regionMap.selectSiId(siName);
+    }
+
+    @Override
+    public int selectGuId(String guName) {
+        return regionMap.selectGuId(guName);
+    }
 }

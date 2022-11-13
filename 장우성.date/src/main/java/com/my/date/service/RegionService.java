@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface RegionService {
     List<RegionDto> getMyRegions(int userId);
+    int getSiId(String siName);
+    int getGuId(String guName);
 }
