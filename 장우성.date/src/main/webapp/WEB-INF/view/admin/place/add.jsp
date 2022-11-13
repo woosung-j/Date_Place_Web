@@ -53,9 +53,6 @@
                 placeGroupId: $('#placeGroupId').val(),
                 introduction: $('#introduction').val(),
             };
-            console.log($('#si'));
-            console.log($('#gu'));
-            console.log(data);
 
             const formData = new FormData($('#form')[0]);
             formData.append('files', $('#files'));
@@ -68,7 +65,6 @@
                 contentType: false,
                 data: formData,
                 success: (data) => {
-                    console.log(data);
                 },
             });
         }
