@@ -18,12 +18,10 @@
             height: 250px;
             border: 0.1rem solid;
         }
-
         .swiper-slide {
             text-align: center;
             font-size: 18px;
             background: #fff;
-
             display: -webkit-box;
             display: -ms-flexbox;
             display: -webkit-flex;
@@ -37,7 +35,6 @@
             -webkit-align-items: center;
             align-items: center;
         }
-
         .stars .fa {
             font-size: 13px;
             color: #555;
@@ -66,14 +63,12 @@
 
     function setStarRating(starRating) {
         const starArr = [];
-
         for (i = 0; i < starRating; i++) {
             starArr.push(`<i class="fa fa-star fill"></i>`);
         }
         for (i = 0; i < 5 - starRating; i++) {
             starArr.push(`<i class="fa fa-star"></i>`);
         }
-
         return starArr.join('');
     }
 
@@ -116,7 +111,6 @@
                     const reviewArr = [];
                     $.each(reviews, (i, review) => {
                         const reviewImgArr = [];
-
                         $.each(review.reviewImages, (i, reviewImage) => {
                             reviewImgArr.push(`<img class="swiper-slide reImg" src="attach/review/\${reviewImage.fileName}'/>"/>`);
                         });
@@ -127,7 +121,16 @@
                         }
 
                         reviewArr.push(
-                            `<div class="pb-5 mb-3">
+                            `<header style="padding-top: 62px">
+                            <nav class="row navbar bg-light text-center align-middle fixed-top" id="delbtn">
+                                <a href="javascript:window.history.back();" class="col btn"><i class="bi bi-chevron-left"></i> </a>
+                                <p class="col"></p>
+                                <h3 class="col-6 font-gamja-flower">리뷰상세</h3>
+                                <p class="col"></p>
+                                \${delbtn.join('')} 
+                            </nav>
+                        </header>
+                            <div class="pb-5 mb-3">
                                 <div class="row-1 mt-5 border mx-3 rounded">
                                     <div class="col pt-2">
                                         <div class="row text-start ml-1 mr-1">
@@ -159,15 +162,6 @@
         detailReview();
     });
 </script>
-<header style="padding-top: 62px">
-    <nav class="row navbar bg-light text-center align-middle fixed-top" id="delbtn">
-        <a href="javascript:window.history.back();" class="col btn"><i class="bi bi-chevron-left"></i> </a>
-        <p class="col"></p>
-        <h3 class="col-6 font-gamja-flower">리뷰상세</h3>
-        <p class="col"></p>
-        \${delbtn.join('')}
-    </nav>
-</header>
 <body>
     <input type="hidden" id="reviewId" value="${reviewId}" />
     <input type="hidden" id="userId" name="userId" value="${userId}" />

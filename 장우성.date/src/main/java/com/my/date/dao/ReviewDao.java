@@ -10,6 +10,7 @@ public interface ReviewDao {
 	List<ReviewDto> selectReviewsByPlaceId(int placeId);
 	List<ReviewDto> selectReviewsByUserId(int userId);
 	List<ReviewDto> selectDetailReviewByReviewId(int reviewId);
+	List<ReviewDto> selectSearchReviewByPlaceName(String keyword);
 	ReviewDto selectLatestReviewByPlaceId(int placeId);
 	String selectReviewAvg(int placeId);
 	int insertReview(Review review);

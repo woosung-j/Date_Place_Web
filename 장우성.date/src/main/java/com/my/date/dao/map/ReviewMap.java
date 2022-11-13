@@ -2,7 +2,6 @@ package com.my.date.dao.map;
 
 import java.util.List;
 
-import com.my.date.domain.ReviewDto;
 import org.apache.ibatis.annotations.Param;
 
 import com.my.date.domain.Review;
@@ -13,6 +12,7 @@ public interface ReviewMap {
 	List<ReviewDto> selectReviewsByPlaceId(int placeId);
 	List<ReviewDto> selectReviewsByUserId(int userId);
 	List<ReviewDto> selectDetailReviewByReviewId(int reviewId);
+	List<ReviewDto> selectSearchReviewByPlaceName(String keyword);
 	String selectReviewAvg(int placeId);
 	ReviewDto selectLatestReviewByPlaceId(int placeId);
 	int insertReview(Review review);
