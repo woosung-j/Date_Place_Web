@@ -22,6 +22,18 @@ public class DeclarationServiceImpl implements DeclarationService {
         return declarationDao.selectDeclarationsByUserId(userId);
     }
 
+    
+    @Override
+    public int addDeclaration(Declaration declaration) {
+    	return declarationDao.insertDeclaration(declaration);
+    }
+    
+    
+    @Override
+    public String getPlaceName(int placeId) {
+    	return declarationDao.selectPlaceName(placeId);
+    }
+    
     @Override
     public int fixConfirm(int declareId, int confirm) {
         if(confirm == 1) confirm = 0;
