@@ -2,11 +2,11 @@ package com.my.date.service;
 
 import java.util.List;
 
-import com.my.date.domain.CommentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.my.date.dao.CommentDao;
+import com.my.date.domain.Comment;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -14,7 +14,7 @@ public class CommentServiceImpl implements CommentService {
 	private CommentDao commentDao;
 	
 	@Override
-	public List<CommentDto> getComments(int feedId) {
+	public List<Comment> getComments(int feedId) {
 		return commentDao.selectComments(feedId); 
 	}
 }

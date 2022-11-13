@@ -20,6 +20,7 @@ public class AdminController {
     @Autowired private DetailService detailService;
     @Autowired private ReviewService reviewService;
     @Autowired private UserService userService;
+    @Autowired private AdminService adminService;
     
     private boolean isAdmin(HttpServletRequest request) {
         HttpSession sessionCheck = request.getSession(false);
@@ -80,7 +81,36 @@ public class AdminController {
         mv.setViewName("redirect:/admin/login");
         return mv;
     }
-
+    
+    @GetMapping("main")
+    public ModelAndView main(ModelAndView mv) {
+    	mv.setViewName("admin/main");
+    	
+    	return mv;
+    }
+    
+    @GetMapping("list")
+    public List<User> getUserList() {
+		return adminService.getUserList();
+	}
+    
+    @GetMapping("get/{userName}")
+    public User getUser(@PathVariable String userName) {    	
+    	return adminService.getAdminUser(userName);
+    }
+    
+    
+    @PutMapping("fix")
+	public void fixUser(@RequestBody User user) {
+		adminService.fixAdminUser(user);
+	}
+    
+    
+	@PutMapping("del/{userId}")
+	public void delUser(@PathVariable int userId) {
+		adminService.delAdminUser(userId);
+	}
+    
     @GetMapping("place")
     public ModelAndView placeList(HttpServletRequest request, ModelAndView mv) {
         if(isAdmin(request) == true) {
@@ -91,7 +121,7 @@ public class AdminController {
         return mv;
     }
 
-    @GetMapping("/place/getPlaceList")
+    @GetMapping("/placelist")
     public List<Place> getPlaces(HttpServletRequest request) {
         if(isAdmin(request) == true) {
             return placeService.getPlaces();
@@ -99,27 +129,7 @@ public class AdminController {
             return null;
         }
     }
-
-    @GetMapping("/place/detail/{placeId}")
-    public ModelAndView place(HttpServletRequest request, ModelAndView mv, @PathVariable int placeId) {
-        if(isAdmin(request) == true) {
-            mv.addObject("placeId", placeId);
-            mv.setViewName("admin/place/place");
-        } else {
-            mv.setViewName("redirect:/admin/login");
-        }
-        return mv;
-    }
-
-    @GetMapping("/place/getDetail/{placeId}")
-    public PlaceDetailDto getPlaceDetail(HttpServletRequest request, @PathVariable int placeId) {
-        if(isAdmin(request) == true) {
-            return placeService.getAdminPlaceByPlaceId(placeId);
-        } else {
-            return null;
-        }
-    }
-
+    
     @GetMapping("declare")
     public ModelAndView declare(HttpServletRequest request, ModelAndView mv) {
         if(isAdmin(request) == true) {

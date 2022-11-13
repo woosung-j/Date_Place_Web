@@ -2,8 +2,10 @@ package com.my.date.dao.map;
 
 import java.util.List;
 
-import com.my.date.domain.CommentDto;
+import org.apache.ibatis.annotations.Param;
+
+import com.my.date.domain.Comment;
 
 public interface CommentMap {
-	List<CommentDto> selectComments(int feedId);
+	List<Comment> selectComments(@Param("feedId")int feedId);
 }

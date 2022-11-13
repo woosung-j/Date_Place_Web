@@ -3,7 +3,6 @@ package com.my.date.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.my.date.service.MailSendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.my.date.domain.User;
+import com.my.date.service.MailSendService;
 import com.my.date.service.UserService;
 
 @RestController
@@ -124,7 +124,7 @@ public class UserController {
 	@PostMapping("findidresult")
 	public ModelAndView findIdResult(User findId, ModelAndView mv) {
 		User id = userService.findId(findId);
-			
+		
 		if(id != null) {
 			mv.addObject("id", id.getId());
 			mv.addObject("infoMsg1", "찾으시는 아이디는");

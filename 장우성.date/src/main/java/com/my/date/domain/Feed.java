@@ -1,7 +1,6 @@
 package com.my.date.domain;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

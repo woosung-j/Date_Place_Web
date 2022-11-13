@@ -87,18 +87,14 @@
             });
 
             $('#addReviewBtn').click(() => {
-                if ($('#textBox').val() == null || $('#textBox').val() == '') {
-                    $('#textBox').val(' ');
-                }
-
                 $.ajax({
-                    url: '<%=request.getContextPath()%>/review/add/' + $('#placeId').val(),
+                    url: 'add',
                     method: 'post',
                     contentType: 'application/json',
                     data: JSON.stringify({
                         content: $('#textBox').val(),
                         starRating: $('.active').length,
-                        placeId: $('#placeId').val(),
+                        placeId: 1,
                     }),
                     success: (data) => {
                         addReview();
@@ -125,6 +121,7 @@
         });
     </script>
 </head>
+
 <body>
     <div class="container">
         <header style="padding-top: 80px">
@@ -175,7 +172,6 @@
                         placeholder="&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;다른 분들에게 도움이 되도록 &#13;&#10; 솔직한 평가를 남겨주세요."
                         rows="3"
                         id="textBox"
-                        name="textBox"
                         style="font-size: 13px"
                     ></textarea>
                     <p class="text-right textCount" id="count" style="font-size: 13px">(0/500)</p>
@@ -186,7 +182,6 @@
                         <i class="fa fa-star active"></i>
                     </div>
                 </div>
-                <input type="hidden" id="placeId" value="${placeId}" />
             </div>
             <div>
                 <p class="col text-start text-black-50" style="font-size: 11px">
@@ -209,7 +204,7 @@
             <div class="modal-content mx-5">
                 <div class="modal-body text-center py-3">
                     <p>리뷰가 등록되었습니다.</p>
-                    <a href="<%=request.getContextPath()%>/review/list/${placeId}" class="btn btn-primary"> 확인 </a>
+                    <a href="<%=request.getContextPath()%>/review/list" class="btn btn-primary"> 확인 </a>
                 </div>
             </div>
         </div>

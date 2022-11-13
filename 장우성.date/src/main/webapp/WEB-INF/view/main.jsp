@@ -25,11 +25,11 @@
     <script>
         const sigu = [
             [
-                {"si": "서울", "siName": "서울시", "gu": ["강남구", "서초구", "송파구", "강동구"]},
+                {"si": "서울특별시", "gu": ["강남구", "서초구", "송파구", "강동구"]},
                 {"si": "경기", "gu": ["수원시", "안양시", "용인시", "고양시"]}
             ],
             [
-                {"si": "인천", "siName": "인천시", "gu": ["계양구", "남동구"]},
+                {"si": "인천", "gu": ["계양구", "남동구"]},
                 {null: null}
             ]
         ]
@@ -59,11 +59,11 @@
                         col.gu?.forEach((gu) => {
                             if(col.si == "경기") {
                                 dropdown.push(`
-                                    <a href="<%=request.getContextPath()%>/place/list?si=\${gu}&gu=없음" class="dropdown-item">\${gu}</a>
+                                    <a href="<%=request.getContextPath()%>/place/\${gu}/없음" class="dropdown-item">\${gu}</a>
                                 `)
                             } else {
                                 dropdown.push(`
-                                    <a href="<%=request.getContextPath()%>/place/list?si=\${col.siName}&gu=\${gu}" class="dropdown-item">\${gu}</a>
+                                    <a href="<%=request.getContextPath()%>/place/\${col.si}/\${gu}" class="dropdown-item">\${gu}</a>
                                 `)
                             }
 

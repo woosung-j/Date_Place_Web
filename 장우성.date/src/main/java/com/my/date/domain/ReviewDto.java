@@ -29,5 +29,4 @@ public class ReviewDto {
 	private String profileImage;
 	private List<ReviewImage> reviewImages;
 	private String placeName;
-	private int reviewCount;
 }

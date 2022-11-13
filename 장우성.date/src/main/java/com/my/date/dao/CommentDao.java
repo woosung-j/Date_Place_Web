@@ -2,8 +2,8 @@ package com.my.date.dao;
 
 import java.util.List;
 
-import com.my.date.domain.CommentDto;
+import com.my.date.domain.Comment;
 
 public interface CommentDao {
-	List<CommentDto> selectComments(int feedId);
+	List<Comment> selectComments(int feedId);
 }

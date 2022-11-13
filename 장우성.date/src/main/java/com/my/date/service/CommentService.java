@@ -2,8 +2,8 @@ package com.my.date.service;
 
 import java.util.List;
 
-import com.my.date.domain.CommentDto;
+import com.my.date.domain.Comment;
 
 public interface CommentService {
-	List<CommentDto> getComments(int feedId);
+	List<Comment> getComments(int feedId);
 }

@@ -7,52 +7,47 @@
             $('#feedList').empty();
 
             $.ajax({
-                url: 'getFeeds/' + $('#feedId').val(),
+                url: 'getFeeds',
                 method: 'get',
                 contentType: 'application/json',
                 success: (feeds) => {
-
                     if (feeds.length) {
-                        const feedList = []
+                        const feedList = [];
                         $.each(feeds, (i, item) => {
-                      const tagList = []
-                            const likeList = []
+                            const tagList = [];
+
                             if (!item.hashtag.length == 0) {
                                 $.each(item.hashtag, (i, item) => {
-                                    tagList.push(`<span class="badge badge-secondary badge-pill">\${item.tag}</span>`)
-                                })
+                                    tagList.push(`<span class="badge badge-secondary badge-pill">\${item.tag}</span>`);
+                                });
                             }
 
                             feedList.unshift(
-                                `<a href="detail/\${item.feedId}" style="color: inherit; text-decoration: none">
-                                    <div class="card mb-3">
-                                    <div class="card-header row-11">
-                                        <div class="text_output">
-                                            <div class="row">
-                                                <span class="col-8"><i class="fas fa-user-circle fa-2x"></i>&nbsp;\${item.nickname}</span>
-                                                <span class="col-4">\${item.createdAt}</span>
-                                            </div>
-                                            <h6 class="card-title"><br/>\${item.title}</h6>
-                                            <p class="card-text">\${item.content}</p>
-                                            \${tagList.join('')}
-                                        </div>
-                                        <hr/>
-                                        <div id="likeCnt">
-                                            <i class="fas fa-heart">&nbsp;\${item.likeCnt}</i>&nbsp;&nbsp;<i class="fas fa-comment">&nbsp;0</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>`
+                                `<div class="card mb-3">
+	    							<div class="card-header row-11">
+	                                <div class="text_output">
+	                                    <div class="row">
+	                                        <span class="col-8"><i class="fas fa-user-circle fa-2x"></i>&nbsp;\${item.nickname}</span>
+	                                        <span class="col-4">\${item.createdAt}</span>
+	                                    </div>
+	                                    <h6 class="card-title"><br/>\${item.title}</h6>
+	                                    <p class="card-text">\${item.content}</p>
+	                                    \${tagList.join('')}
+	                                </div>
+	                                <div class="card-footer">
+	                                    <p style="text-align: left"><i class="fas fa-heart">&nbsp;0</i>&nbsp;&nbsp;<i class="fas fa-comment">&nbsp;0</i></p>
+	                                </div>
+	                            </div>
+	                          </div>`
                             );
                         });
-                        $('#feedList').append(feedList.join(''))
+                        $('#feedList').append(feedList.join(''));
                     } else {
-                        $('#feedList').append('<p class="text-center">게시글이 없습니다.</p>')
+                        $('#feedList').append('<p class="text-center">게시글이 없습니다.</p>');
                     }
-                }
-            })
+                },
+            });
         }
-
         $(() => {
             feedList();
         });
@@ -88,14 +83,14 @@
                 <h4 class="text-center font-gamja-flower">커뮤니티</h4>
             </div>
         </header>
-        <div class="list" id="top">
-            <div class="commmunity row mt-4">
-                <div class="col w-auto" id="feedList">
-                    <div id="likeCnt"></div>
+        <a href="detailFeed" style="color: inherit; text-decoration: none">
+            <div class="list" id="top">
+                <div class="commmunity row mt-4">
+                    <div class="col w-auto" id="feedList"></div>
                 </div>
             </div>
-        </div>
-        <input type="hidden" id="feedId" value="${feedId}" />
+        </a>
+
         <div class="write">
             <a href="add" class="btn w-auto" type="button">
                 <i class="fas fa-pen-square fa-3x" style="color: #ff5858"></i>

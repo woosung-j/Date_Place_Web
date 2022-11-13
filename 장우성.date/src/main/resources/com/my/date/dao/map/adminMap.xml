@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+		'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.my.date.dao.map.AdminMap'>
+	<select id='selectUserList' resultType='user'>
+		select u.user_id, u.user_name, u.nickname, u.phone_number, u.email, u.birthday
+		from users u left outer join delete_users d
+										on u.user_id = d.user_id
+										where d.user_id is null
+										order by user_id
+	</select>
+
+	<select id='selectAdminUser' resultType='user'>
+		select u.user_id, u.user_name, u.nickname, u.phone_number, u.email, u.birthday
+		from users u left outer join delete_users d
+		                    on u.user_id = d.user_id
+							where u.user_name like #{userName} and d.user_id is null
+	</select>
+	
+	<update id='updateAdminUser'>
+		update users
+		set user_name = #{userName,jdbcType=VARCHAR}, nickname = #{nickname,jdbcType=VARCHAR},
+			 phone_number = #{phoneNumber,jdbcType=VARCHAR}, email = #{email,jdbcType=VARCHAR}, birthday = #{birthday,jdbcType=VARCHAR}
+		where user_id = #{userId,jdbcType=NUMERIC}
+	</update>
+	
+	<insert id='deleteAdminUser'>
+		insert into delete_users values(#{userId})
+	</insert>
+</mapper>
