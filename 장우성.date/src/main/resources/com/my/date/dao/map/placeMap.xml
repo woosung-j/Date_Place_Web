@@ -31,15 +31,26 @@
 		from places
 		where place_id = #{placeId}
 	</select>
-	
-	<insert id='insertPlace'>
-		insert into places values(places_id_seq.nextval, #{placeName}, #{placeInfo}
-			#{si_id}, #{gu_id}, #{placeGroupId}, createAt_now, sysdate)
+
+	<insert id='insertPlace' parameterType="place">
+		<selectKey keyProperty="placeId" resultType="int" order="AFTER">
+			select places_id_seq.currval from dual
+		</selectKey>
+		insert into places values(places_id_seq.nextval, #{siId}, #{guId}, #{placeGroupId}, #{placeName}, #{introduction}, #{views}, sysdate, sysdate)
+	</insert>
+
+	<insert id="insertPlaceImages">
+		insert into place_images(place_image_id, place_id, file_name)
+		select placeimages_id_seq.nextval, A.* from (
+		    <foreach collection="fileNames" item="item" separator="UNION ALL ">
+				select #{placeId} as place_id, #{item} as file_name
+				from dual
+			</foreach>) A
 	</insert>
 	
 	<update id='updatePlace'>
 		update places
-		set place_name = #{placeName}, introduction = #{placeInfo},
+		set place_name = #{placeName}, introduction = #{introduction},
 			si_id = #{siId}, gu_id = #{guId}, place_group_id = #{placeGroupId},
 			sysdate, updateAt_now
 		where place_id = #{placeId}

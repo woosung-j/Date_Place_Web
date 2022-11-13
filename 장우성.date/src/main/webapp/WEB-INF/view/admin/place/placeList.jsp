@@ -72,7 +72,7 @@
 		<div class="col mt-4">
 			<div class="row-1">
 				<nav class="d-flex mb-4" style="float: right">
-					<a href="./03.html" class="btn btn-primary mr-1"> <span class="label d-none d-sm-inline">장소추가</span> </a>
+					<a href="<%=request.getContextPath()%>/admin/place/add" class="btn btn-primary mr-1"> <span class="label d-none d-sm-inline">장소추가</span> </a>
 					<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delPlaceModal">
 						<span class="label d-none d-sm-inline">선택장소삭제</span>
 					</button>

@@ -1,15 +1,13 @@
 package com.my.date.dao;
 
-import java.util.List;
-
+import com.my.date.dao.map.PlaceMap;
+import com.my.date.domain.Place;
 import com.my.date.domain.PlaceDetailDto;
 import com.my.date.domain.PlaceDto;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.my.date.dao.map.PlaceMap;
-import com.my.date.domain.Place;
+import java.util.List;
 
 @Repository("PlaceDao")
 public class PlaceDaoImpl implements PlaceDao {
@@ -43,6 +41,11 @@ public class PlaceDaoImpl implements PlaceDao {
 	@Override
 	public int insertPlace(Place place) {
 		return placeMap.insertPlace(place);
+	}
+
+	@Override
+	public int insertPlaceImages(int placeId, List<String> fileNames) {
+		return placeMap.insertPlaceImages(placeId, fileNames);
 	}
 
 	@Override
