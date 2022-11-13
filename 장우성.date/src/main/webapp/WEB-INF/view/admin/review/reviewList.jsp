@@ -60,60 +60,59 @@
 
             return starArr.join('');
         }
-        
-        function search() {
-		    $('#btn_search').click(() => {
-		    
-		    	console.log($('#word').val())
-		   	 $.ajax({
-		            url: '/admin/search/' + $('#word').val(),
-		            method: 'get',
-		            success: (reviews) => {
-	                    const list = [];
-	                    
-	                    if (reviews.length) {
-	                        $.each(reviews, (i, review) => {
-	                            const reviewImgArr = [];
-	                            console.log(review)
-	                            $.each(review.reviewImages, (i, reviewImage) => {
-	                                reviewImgArr.push(`<img class="reImg ml-3" src="attach/review/\${reviewImage.fileName}'/>"/>`);
-	                            });
 
-	                            list.unshift(
-	                                `<div class="card-body border mb-2">
+        function search() {
+            $('#btn_search').click(() => {
+                console.log($('#word').val());
+                $.ajax({
+                    url: '/admin/search/' + $('#word').val(),
+                    method: 'get',
+                    success: (reviews) => {
+                        const list = [];
+
+                        if (reviews.length) {
+                            $.each(reviews, (i, review) => {
+                                const reviewImgArr = [];
+                                console.log(review);
+                                $.each(review.reviewImages, (i, reviewImage) => {
+                                    reviewImgArr.push(`<img class="reImg ml-3" src="attach/review/\${reviewImage.fileName}'/>"/>`);
+                                });
+
+                                list.unshift(
+                                    `<div class="card-body border mb-2">
                                         <button type="button" id="deleteBtn" class="btn btn-danger deleteBtn" style="float: right" 
-                                        			data-toggle="modal" value="\${review.reviewId}">삭제</button>
+                                                 data-toggle="modal" value="\${review.reviewId}">삭제</button>
                                         <div class="row text-start ml-1 mr-1">
-                                           <img class="profile" src="attach/user/\${review.profileImage}'/>"/>
-                                           <p class="mt-1 ml-2">\${review.nickname}</p>
-                                           <p class="mt-1 ml-2" style="color: #fb3959">
-                                               <div class="stars">
-                                                   \${setStarRating(review.starRating)}
-                                               </div>
-                                           </p>
-                                           <p class="mt-2 ml-2" style="font-size: 13px">\${review.createdAt}</p>
-                                           <p class="mt-1 ml-4">장소: \${review.placeName}</p>
+                                            <img class="profile" src="attach/user/\${review.profileImage}'/>"/>
+                                            <p class="mt-1 ml-2">\${review.nickname}</p>
+                                            <p class="mt-1 ml-2" style="color: #fb3959">
+                                                <div class="stars">
+                                                    \${setStarRating(review.starRating)}
+                                                </div>
+                                            </p>
+                                            <p class="mt-2 ml-2" style="font-size: 13px">\${review.createdAt}</p>
+                                            <p class="mt-1 ml-4">장소: \${review.placeName}</p>
+                                            </div>
+                                            <div class="row reviewImg mb-2">
+                                                \${reviewImgArr.join('')} 
+                                            </div>
+                                            <p class="col card-text mt-3">\${review.content}</p>
                                         </div>
-                                        <div class="row reviewImg mb-2">
-                                        	\${reviewImgArr.join('')} 
-                                        </div>
-                                        <p class="col card-text mt-3">\${review.content}</p>
-                                     </div>
-                                  </div>`  
-	                            );
-	                        });
-	                    }
-	                    $('#searchReviews').empty();
-	                    $('#searchReviews').append(list.join(''));
-	                    init(); 
-		            },
-		        });
-		   })	
-		} 		 
-		$(() => {
-			search(); 
-		})
-		
+                                    </div>`
+                                );
+                            });
+                        }
+                        $('#searchReviews').empty();
+                        $('#searchReviews').append(list.join(''));
+                        init();
+                    },
+                });
+            });
+        }
+        $(() => {
+            search();
+        });
+
         function showModal(msg, isOk, reviewId) {
             $('#cancelBtn').toggle(isOk);
             $('#okBtn').toggle(isOk);
@@ -156,39 +155,39 @@
 
                             list.unshift(
                                 `<div type="button" class="row accordion text-center border-bottom mx-1 py-3"
-	                                 style="font-size: 14px" id="acco\${review.reviewId}" data-toggle="collapse"
-	                                 data-target="#coll\${review.reviewId}" aria-expanded="true" aria-controls="coll\${review.reviewId}">
-	                                 <div class="col">\${review.reviewId}</div>
-	                                 <div class="col">\${review.placeName}</div>
-	                                 <div class="col">\${review.createdAt}</div>
-	                              </div>
-	                              <div id="coll\${review.reviewId}" class="collapse" aria-labelledby="hea\${review.reviewId}" data-parent="#acco\${review.reviewId}">
-	                                 <div class="row">
-	                                    <div class="col mx-1">
-	                                       <div class="card">
-	                                          <div class="card-body">
-	                                             <button type="button" id="deleteBtn" class="btn btn-danger deleteBtn" style="float: right" 
-	                                             			data-toggle="modal" value="\${review.reviewId}">삭제</button>
-	                                             <div class="row text-start ml-1 mr-1">
-	                                                <img class="profile" src="attach/user/\${review.profileImage}'/>"/>
-	                                                <p class="mt-1 ml-2">\${review.nickname}</p>
-	                                                <p class="mt-1 ml-2" style="color: #fb3959">
-	                                                    <div class="stars">
-	                                                        \${setStarRating(review.starRating)}
-	                                                    </div>
-	                                                </p>
-	                                                <p class="mt-2 ml-2" style="font-size: 13px">\${review.createdAt}</p>
-	                                                <p class="mt-1 ml-4">장소: \${review.placeName}</p>
-	                                             </div>
-	                                             <div class="row reviewImg mb-2">
-	                                             	\${reviewImgArr.join('')} 
-	                                             </div>
-	                                             <p class="col card-text mt-3">\${review.content}</p>
-	                                          </div>
-	                                       </div>
-	                                    </div>
-	                                 </div>
-	                              </div> `
+                                    style="font-size: 14px" id="acco\${review.reviewId}" data-toggle="collapse"
+                                    data-target="#coll\${review.reviewId}" aria-expanded="true" aria-controls="coll\${review.reviewId}">
+                                    <div class="col">\${review.reviewId}</div>
+                                    <div class="col">\${review.placeName}</div>
+                                    <div class="col">\${review.createdAt}</div>
+                                </div>
+                                <div id="coll\${review.reviewId}" class="collapse" aria-labelledby="hea\${review.reviewId}" data-parent="#acco\${review.reviewId}">
+                                    <div class="row">
+                                       <div class="col mx-1">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <button type="button" id="deleteBtn" class="btn btn-danger deleteBtn" style="float: right" 
+                                                        data-toggle="modal" value="\${review.reviewId}">삭제</button>
+                                                    <div class="row text-start ml-1 mr-1">
+                                                        <img class="profile" src="attach/user/\${review.profileImage}'/>"/>
+                                                        <p class="mt-1 ml-2">\${review.nickname}</p>
+                                                        <p class="mt-1 ml-2" style="color: #fb3959">
+                                                            <div class="stars">
+                                                                \${setStarRating(review.starRating)}
+                                                            </div>
+                                                        </p>
+                                                        <p class="mt-2 ml-2" style="font-size: 13px">\${review.createdAt}</p>
+                                                        <p class="mt-1 ml-4">장소: \${review.placeName}</p>
+                                                    </div>
+                                                    <div class="row reviewImg mb-2">
+                                                        \${reviewImgArr.join('')} 
+                                                    </div>
+                                                    <p class="col card-text mt-3">\${review.content}</p>
+                                                </div>
+                                            </div>
+                                       </div>
+                                    </div>
+                                </div> `
                             );
                         });
                     }
@@ -234,25 +233,23 @@
                     <div class="col-7">
                         <nav class="d-flex justify-content-end mt-4 mb-3">
                             <div class="d-flex col-5">
-								<input type="text" class="form-control mr-2" id="word" name="placeName" placeholder="장소명"/>
-								<button type="button" id="btn_search" class="btn btn-info col-3 mr-2 label text-center">
-                                	조회
-                            	</button>
+                                <input type="text" class="form-control mr-2" id="word" name="placeName" placeholder="장소명" />
+                                <button type="button" id="btn_search" class="btn btn-info col-3 mr-2 label text-center">조회</button>
                             </div>
                         </nav>
                     </div>
                 </div>
-                <div id='searchReviews'>
-                <table class="table mx-1">
-                    <thead style="background-color: #7882a4; color: #d6e5fa">
-                        <tr>
-                            <th class="col-4 text-center">No.</th>
-                            <th class="col-4 text-center">장소</th>
-                            <th class="col-4 text-center">등록일</th>
-                        </tr>
-                    </thead>
-                </table>
-                <div id="reviews" class="mb-5 pb-5"></div>
+                <div id="searchReviews">
+                    <table class="table mx-1">
+                        <thead style="background-color: #7882a4; color: #d6e5fa">
+                            <tr>
+                                <th class="col-4 text-center">No.</th>
+                                <th class="col-4 text-center">장소</th>
+                                <th class="col-4 text-center">등록일</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div id="reviews" class="mb-5 pb-5"></div>
                 </div>
             </div>
         </div>
