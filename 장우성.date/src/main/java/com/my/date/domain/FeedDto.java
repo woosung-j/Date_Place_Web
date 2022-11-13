@@ -4,12 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class FeedDto {
@@ -17,7 +15,9 @@ public class FeedDto {
 	private int userId;
 	private String title;
 	private String content;
-	private LocalDate createdAt;
 	private String nickname;
+	private LocalDate createdAt;
+	private int feedLikeId;
+	private int likeCnt;
 	private List<Hashtag> hashtag;
 }

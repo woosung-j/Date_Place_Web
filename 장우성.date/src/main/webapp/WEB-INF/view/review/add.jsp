@@ -87,16 +87,22 @@
             });
 
             $('#addReviewBtn').click(() => {
+                if ($('#textBox').val() == null || $('#textBox').val() == '') {
+                    $('#textBox').val(' ');
+                }
+
                 $.ajax({
-                    url: 'add',
+                    url: '<%=request.getContextPath()%>/review/add/' + $('#placeId').val(),
                     method: 'post',
                     contentType: 'application/json',
                     data: JSON.stringify({
                         content: $('#textBox').val(),
                         starRating: $('.active').length,
-                        placeId: 1,
+                        placeId: $('#placeId').val(),
                     }),
-                    success: addReview(),
+                    success: (data) => {
+                        addReview();
+                    },
                 });
             });
         }
@@ -119,7 +125,6 @@
         });
     </script>
 </head>
-
 <body>
     <div class="container">
         <header style="padding-top: 80px">
@@ -164,27 +169,24 @@
                     <label for="imgFile" style="cursor: pointer; font-size: 14px"> <i class="bi bi-camera" style="font-size: 18px"></i><br />사진업로드 </label>
                     <input type="file" id="imgFile" class="pb-5 form-control" accept="image/*" />
                 </div>
-
                 <div class="row-1 text-center border mx-3 mb-3 bg-light" style="height: 14rem">
                     <textarea
                         class="form-control bg-light"
                         placeholder="&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;다른 분들에게 도움이 되도록 &#13;&#10; 솔직한 평가를 남겨주세요."
                         rows="3"
                         id="textBox"
+                        name="textBox"
                         style="font-size: 13px"
                     ></textarea>
                     <p class="text-right textCount" id="count" style="font-size: 13px">(0/500)</p>
                 </div>
-
                 <div class="star-rating">
                     <div class="stars">
-                        <i class="fa fa-star active"></i>
-                        <i class="fa fa-star active"></i>
-                        <i class="fa fa-star active"></i>
-                        <i class="fa fa-star active"></i>
+                        <i class="fa fa-star active"></i> <i class="fa fa-star active"></i> <i class="fa fa-star active"></i> <i class="fa fa-star active"></i>
                         <i class="fa fa-star active"></i>
                     </div>
                 </div>
+                <input type="hidden" id="placeId" value="${placeId}" />
             </div>
             <div>
                 <p class="col text-start text-black-50" style="font-size: 11px">
@@ -195,9 +197,7 @@
             <input type="hidden" id="placeId" value="${placeId}" />
             <footer style="padding-top: 100px">
                 <nav class="row navbar fixed-bottom text-center justify-content-center bg-light">
-                    <button type="button" id="addReviewBtn" class="btn col-12 btn w-100 font-gamja-flower" id="successBtn" style="color: #ff5858" data-toggle="modal" data-target="#infoModal">
-                        작성완료
-                    </button>
+                    <button type="button" id="addReviewBtn" class="btn col-12 btn w-100 font-gamja-flower" id="successBtn" data-toggle="modal" data-target="#infoModal">작성완료</button>
                 </nav>
             </footer>
         </form>
@@ -209,7 +209,7 @@
             <div class="modal-content mx-5">
                 <div class="modal-body text-center py-3">
                     <p>리뷰가 등록되었습니다.</p>
-                    <a href="<%=request.getContextPath()%>/review/list" class="btn btn-primary"> 확인 </a>
+                    <a href="<%=request.getContextPath()%>/review/list/${placeId}" class="btn btn-primary"> 확인 </a>
                 </div>
             </div>
         </div>

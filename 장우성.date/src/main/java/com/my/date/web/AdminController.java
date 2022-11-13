@@ -1,42 +1,168 @@
 package com.my.date.web;
 
-import java.util.List;
-
+import com.my.date.domain.*;
+import com.my.date.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.my.date.domain.Declaration;
-import com.my.date.domain.Detail;
-import com.my.date.domain.Menu;
-import com.my.date.domain.Place;
-import com.my.date.service.DeclarationService;
-import com.my.date.service.DetailService;
-import com.my.date.service.MenuService;
-import com.my.date.service.PlaceService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("admin")
 public class AdminController {
+    @Value("${attachPath}") private String attachPath;
     @Autowired private DeclarationService declarationService;
+    @Autowired private RegionService regionService;
     @Autowired private MenuService menuService;
     @Autowired private PlaceService placeService;
-	@Autowired private DetailService detailService;
-	
-	@GetMapping("place")
-    public ModelAndView main(ModelAndView mv) {
-        mv.setViewName("place/placelist");
+    @Autowired private DetailService detailService;
+    @Autowired private ReviewService reviewService;
+    @Autowired private UserService userService;
+    
+    private boolean isAdmin(HttpServletRequest request) {
+        HttpSession sessionCheck = request.getSession(false);
+        if(sessionCheck == null || sessionCheck.getAttribute("isAdmin") == null) {
+            return false;
+        }
+
+        return (boolean) sessionCheck.getAttribute("isAdmin");
+    }
+    
+    @GetMapping("")
+    public ModelAndView main(HttpServletRequest request, ModelAndView mv) {
+        if(isAdmin(request) == true) {
+            mv.setViewName("admin/main");
+        } else {
+            mv.setViewName("redirect:/admin/login");
+        }
         return mv;
     }
 
-    @GetMapping("/placelist")
-    public List<Place> getPlaces() {
-        return placeService.getPlaces();
+    @GetMapping("login")
+    public ModelAndView login(ModelAndView mv) {
+        mv.setViewName("admin/user/login");
+        return mv;
+    }
+
+    @PostMapping("login")
+    public ModelAndView login(User loginUser, HttpServletRequest request, ModelAndView mv) {
+        User user = userService.adminLoginValidate(loginUser);
+
+        if(user != null) {
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                session.invalidate();
+            }
+
+            session = request.getSession();
+            if (user != null) {
+                session.setAttribute("userId", user.getUserId());
+                session.setAttribute("id", user.getId());
+                session.setAttribute("nickname", user.getNickname());
+                session.setAttribute("email", user.getEmail());
+                session.setAttribute("isAdmin", true);
+                session.setMaxInactiveInterval(86400);
+            }
+            mv.setViewName("redirect:/admin");
+        } else {
+            mv.addObject("errMsg", "아이디 또는 비밀번호가 틀렸습니다.");
+            mv.setViewName("admin/user/login");
+        }
+
+        return mv;
+    }
+
+    @GetMapping("logout")
+    public ModelAndView logout(HttpSession session, ModelAndView mv) {
+        session.invalidate();
+        mv.setViewName("redirect:/admin/login");
+        return mv;
+    }
+
+    @GetMapping("place")
+    public ModelAndView placeList(HttpServletRequest request, ModelAndView mv) {
+        if(isAdmin(request) == true) {
+            mv.setViewName("admin/place/placeList");
+        } else {
+            mv.setViewName("redirect:/admin/login");
+        }
+        return mv;
+    }
+
+    @GetMapping("place/add")
+    public ModelAndView placeAdd(ModelAndView mv) {
+        mv.setViewName("admin/place/add");
+        return mv;
+    }
+
+    @PostMapping("place/add/{si}/{gu}")
+    public int addPlace(@RequestPart(value = "files") List<MultipartFile> files, @RequestPart(value = "key") Place place, @PathVariable("si") String si, @PathVariable("gu") String gu) {
+        System.out.println(place);
+        List<String> fileNameList = new ArrayList<String>();
+
+        try {
+            for(MultipartFile file : files) {
+                String savedFileName = "";
+                String uploadPath = attachPath + "/placeImage/";
+                String originalFileName = file.getOriginalFilename();
+
+                UUID uuid = UUID.randomUUID();
+                savedFileName = uuid.toString() + "_" + originalFileName;
+
+                File file1 = new File(uploadPath + savedFileName);
+                file.transferTo(file1);
+
+                fileNameList.add(savedFileName);
+            }
+        } catch(Exception e) {
+            return -1;
+        }
+
+        place.setSiId(regionService.getSiId(si));
+        place.setGuId(regionService.getGuId(gu));
+        int isPlaceSuccess = placeService.addPlace(place);
+
+        if(place.getPlaceId() != 0 && isPlaceSuccess == 1 && files.size() > 0) {
+            return placeService.addPlaceImages(place.getPlaceId(), fileNameList);
+        }
+        return isPlaceSuccess;
+    }
+
+    @GetMapping("place/getPlaceList")
+    public List<Place> getPlaces(HttpServletRequest request) {
+        if(isAdmin(request) == true) {
+            return placeService.getPlaces();
+        } else {
+            return null;
+        }
+    }
+
+    @GetMapping("/place/detail/{placeId}")
+    public ModelAndView place(HttpServletRequest request, ModelAndView mv, @PathVariable int placeId) {
+        if(isAdmin(request) == true) {
+            mv.addObject("placeId", placeId);
+            mv.setViewName("admin/place/place");
+        } else {
+            mv.setViewName("redirect:/admin/login");
+        }
+        return mv;
+    }
+
+    @GetMapping("/place/getDetail/{placeId}")
+    public PlaceDetailDto getPlaceDetail(HttpServletRequest request, @PathVariable int placeId) {
+        if(isAdmin(request) == true) {
+            return placeService.getAdminPlaceByPlaceId(placeId);
+        } else {
+            return null;
+        }
     }
     
     @GetMapping("declare")
@@ -47,18 +173,27 @@ public class AdminController {
     }
 
     @GetMapping("declare/list")
-    public List<Declaration> declareList() {
-        return declarationService.getDeclareList();
+    public List<Declaration> declareList(HttpServletRequest request) {
+        if(isAdmin(request) == true) {
+            return declarationService.getDeclareList();
+        } else {
+            return null;
+        }
     }
 
     @PatchMapping("declare/toggleconfirm/{declareId}/{confirm}")
-    public int toggleConfirm(@PathVariable int declareId, @PathVariable int confirm) {
-        return declarationService.fixConfirm(declareId, confirm);
+    public int toggleConfirm(HttpServletRequest request, @PathVariable int declareId, @PathVariable int confirm) {
+        if(isAdmin(request) == true) {
+            return declarationService.fixConfirm(declareId, confirm);
+        } else {
+            return 0;
+        }
     }
 
     @GetMapping("menu")
     public ModelAndView menu(ModelAndView mv) {
-        mv.setViewName("admin/menu/patchmenu");
+        mv.addObject("placeId", 3);
+        mv.setViewName("admin/menu/patchMenu");
         return mv;
     }
 
@@ -66,24 +201,66 @@ public class AdminController {
     public List<Menu> getMenus() {
         return menuService.getMenus();
     }
+    
+    @PostMapping("addMenu")
+    public int addMenu(@RequestBody List<Menu> menu) {
+        return menuService.addMenu(menu);
+    }
+    
+    @PatchMapping("fixMenu")
+    public int fixMenu(@RequestBody List<Menu> menu) {
+        return menuService.fixMenu(menu);
+    }
+    
+    @GetMapping("review")
+    public ModelAndView review(HttpServletRequest request, ModelAndView mv) {
+        if(isAdmin(request) == true) {
+            mv.setViewName("admin/review/reviewList");
+        } else {
+            mv.setViewName("redirect:/admin/login");
+        }
+        return mv;
+    }
 
-	@GetMapping("detail/patch/{placeId}")
-	public ModelAndView detail(ModelAndView mv, @PathVariable int placeId) {
-		System.out.println(placeId);
-		mv.addObject("placeId", placeId);
-		mv.setViewName("admin/detail/patchDetail");
-		return mv;
-	}
+    @GetMapping("detail/patch/{placeId}")
+    public ModelAndView detail(ModelAndView mv, @PathVariable int placeId) {
+        mv.addObject("placeId", placeId);
+        mv.setViewName("admin/detail/patchDetail");
+        return mv;
+    }
 
-	@GetMapping("detail/getDetail/{placeId}")
-	public Detail getDetail(@PathVariable int placeId) {
-		return detailService.getDetail(placeId);
-	}
-	
-	@PatchMapping("detail/patch/{placeId}")
-	public int updateDetail(@PathVariable int placeId, @RequestBody Detail detail) {
-		System.out.println(detail);
-		detail.setPlaceId(placeId);
-		return detailService.fixDetail(detail);
-	}
+    @GetMapping("detail/getDetail/{placeId}")
+    public Detail getDetail(@PathVariable int placeId) {
+        return detailService.getDetail(placeId);
+    }
+
+    @PatchMapping("detail/patch/{placeId}")
+    public int updateDetail(@PathVariable int placeId, @RequestBody Detail detail) {
+        System.out.println(detail);
+        detail.setPlaceId(placeId);
+        return detailService.fixDetail(detail);
+    }
+    
+    @GetMapping("review/list")
+    public List<ReviewDto> getReviews(HttpServletRequest request) {
+        if(isAdmin(request) == true) {
+            return reviewService.getReviews();
+        } else {
+            return null;
+        }
+    }
+    
+    @DeleteMapping("del/{reviewId}")
+    public int delAdminReview(HttpServletRequest request, @PathVariable int reviewId) {
+        if(isAdmin(request) == true) {
+            return reviewService.delAdminReview(reviewId);
+        } else {
+            return 0;
+        }
+    }
+    
+    @GetMapping("search/{keyword}")
+    public List<ReviewDto> search(@PathVariable String keyword) {
+        return reviewService.getSearchReviewByPlaceName(keyword);
+    }
 }
