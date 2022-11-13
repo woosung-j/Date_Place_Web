@@ -15,11 +15,11 @@ public class DetailServiceImpl implements DetailService{
 		return detailDao.selectDetail(placeId);
 	}
 	@Override
-	public int insertDetail(Detail detail) {
+	public int addDetail(Detail detail) {
 		return detailDao.insertDetail(detail);
 	}
 	@Override
-	public int updateDetail(Detail detail) {
+	public int fixDetail(Detail detail) {
 		return detailDao.updateDetail(detail);
 	}
 }

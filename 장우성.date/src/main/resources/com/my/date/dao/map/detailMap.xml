@@ -8,13 +8,9 @@
 		where detail_id = #{placeId}
 	</select>
 	
-	<insert id='insertDetail'>
-		insert into details values(details_id_seq.nextval, address = #{address}, tel = #{tel}, opening_hours = #{openingHours}, closing_hours = #{closingHours}, day_off = #{dayOff}, contact = #{contact}, created_at = #{createdAt}, updated_at = #{updatedAt} 
-	</insert>
-	
-	<update id='updateDetail' parameterType='detail'>
+	<update id='updateDetail'>
 		update details
-		set address = #{address}, tel = #{tel}, opening_hours = #{openingHours}, closing_hours = #{closingHours}, day_off = #{dayOff}, contact = #{contact}
-		where detail_id = #{placeId}
+		set address = #{address}, tel = #{tel}, opening_hours = #{openingHours}, closing_hours = #{closingHours}, day_off = #{dayOff}, contact = #{contact}, parking = #{parking}, updated_at = sysdate 
+		where place_id = #{placeId}
 	</update>
 </mapper>
