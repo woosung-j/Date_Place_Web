@@ -25,7 +25,7 @@
                             }
 
                             feedList.unshift(
-                                `<a href="detail/\${item.feedId}" style="color: inherit; text-decoration: none">
+                                `<a href="<%=request.getContextPath()%>/community/detail/\${item.feedId}" style="color: inherit; text-decoration: none">
                                     <div class="card mb-3">
                                     <div class="card-header row-11">
                                         <div class="text_output">
