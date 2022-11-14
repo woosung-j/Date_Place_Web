@@ -1,6 +1,7 @@
 package com.my.date.dao;
 
 import com.my.date.dao.map.RegionMap;
+import com.my.date.domain.Region;
 import com.my.date.domain.RegionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,5 +25,20 @@ public class RegionDaoImpl implements RegionDao {
     @Override
     public int selectGuId(String guName) {
         return regionMap.selectGuId(guName);
+    }
+
+    @Override
+    public Region selectMyRegionByUserIdAndSiAndGu(int userId, String siName, String guName) {
+        return regionMap.selectMyRegionByUserIdAndSiAndGu(userId, siName, guName);
+    }
+
+    @Override
+    public int insertBookmark(RegionDto regionDto) {
+        return regionMap.insertBookmark(regionDto);
+    }
+
+    @Override
+    public int deleteBookmark(int bookmarkId) {
+        return regionMap.deleteBookmark(bookmarkId);
     }
 }

@@ -21,12 +21,30 @@
         .icon.main:hover {
             color: #ff5858;
         }
+        
+        #nickname {
+        	width: 100px;
+        	height: 50px;
+        }
     </style>
     <script>
         $(() => {
             $('#fixUserBtn').click(() => {
                 location.href = 'user/fixUser';
             });
+            
+            $('#uploadBtn').click(() => {
+            	$.ajax({
+            		url: 'profile',
+            		method: 'post',
+            		data: $('#uploadForm').val(),
+            		contentType: 'application/text',
+            		success: function(response){
+            			console.log('success')
+            			$('#profile').append('<img src="<c:url value="/attach/${profileImage}"/>"/><br>')
+            		}
+            	})
+            })
         });
     </script>
 </head>
@@ -39,9 +57,11 @@
     </header>
     <div class="row pt-62 mt-5">
         <div class="col-1">
-            <div class="circle-icon">
-                <i class="bi bi-image"></i>
-                <p class="img-font mt-4">${nickname}</p>
+            <div id='profile' class="circle-icon">
+                 ${profileImage}
+            </div>
+            <div class='mt-3 mx-5 text-center'>
+            	<p id='nickname' class="img-font d-flex">${nickname}</p>
             </div>
         </div>
         <div class="col-10 text-right">
@@ -50,7 +70,7 @@
             <a id="fixUserBtn" href="fixuser" type="button" class="btn btn-secondary btn-sm col-6 mt-3">회원 프로필 수정</a>
         </div>
     </div>
-    <hr class="mt-4" />
+    <hr class="mt-1" />
     <div class="row-1 pb-5 mb-3">
         <a href="../place/06.html">
             <button type="button" class="btn btn-primary btn-lg col-12 mt-3">찜</button>
@@ -61,7 +81,7 @@
         <a href="<%=request.getContextPath()%>/review/myreview">
             <button type="button" class="btn btn-primary btn-lg col-12 mt-3">리뷰 내역</button>
         </a>
-        <a href="../community/06.html">
+        <a href="<%=request.getContextPath()%>/community/myfeed">
             <button type="button" class="btn btn-primary btn-lg col-12 mt-3">피드 내역</button>
         </a>
         <a href="<%=request.getContextPath()%>/declaration">
@@ -105,12 +125,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body text-center py-5">
-                <form method="post" enctype="form-data">
+                <form method="post" id='uploadForm' enctype="multipart/form-data">
                     <label>
                         <input type="file" name="userFace" />
                     </label>
                     <br />
-                    <a href="#" type="submit" class="btn btn-info btn-lg col-12" data-dismiss="modal"> 확인 </a>
+                    <button id='uploadBtn' type="submit" class="btn btn-info btn-lg col-12" data-dismiss="modal"> 확인 </button>
                 </form>
             </div>
         </div>

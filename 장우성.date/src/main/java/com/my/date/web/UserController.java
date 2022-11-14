@@ -1,11 +1,14 @@
 package com.my.date.web;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.my.date.service.MailSendService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.my.date.domain.User;
+import com.my.date.service.MailSendService;
 import com.my.date.service.UserService;
 
 @RestController
@@ -24,19 +28,23 @@ public class UserController {
 	@Autowired private MailSendService mailSendService;
 
 	@GetMapping("login")
- 	public ModelAndView login(HttpServletRequest request, ModelAndView mv) {
+ 	public ModelAndView login(HttpServletRequest request, ModelAndView mv,
+ 				@CookieValue(required=false) String userId, @ModelAttribute("user") User user) {
 		HttpSession session = request.getSession(false);
 
-		if(session.getAttribute("userId") != null)
+		if(session.getAttribute("userId") != null) {
+			mv.addObject("id");			
 			mv.setViewName("redirect:mypage");
-		else
-			mv.setViewName("user/login");
-		
+		} else {
+			mv.setViewName("user/login");			
+		}
 		return mv;
-	}
-
+	}	
+ 
 	@PostMapping("login")
-	public ModelAndView login(User loginUser, HttpServletRequest request, ModelAndView mv) {
+	public ModelAndView login(User loginUser, HttpServletRequest request, ModelAndView mv, 
+								@ModelAttribute("user") User id, String rememberId, 
+								HttpSession sessionCookie, HttpServletResponse response) {
 		User user = userService.loginValidate(loginUser);
 
 		if(user != null) {
@@ -46,13 +54,22 @@ public class UserController {
 			}
 			
 			session = request.getSession();
-			if(user != null) {
-				session.setAttribute("userId", user.getUserId());
-				session.setAttribute("id", user.getId());
-				session.setAttribute("nickname", user.getNickname());
-				session.setAttribute("email", user.getEmail());
-				session.setMaxInactiveInterval(86400);
+			if(rememberId != null && rememberId.equals("on")) {
+				Cookie cookie = new Cookie("id", user.getId());
+				cookie.setMaxAge(60 * 60 * 24 * 10);
+				response.addCookie(cookie);
+
+				
+			
+				if(user != null) {
+					session.setAttribute("userId", user.getUserId());
+					session.setAttribute("id", user.getId());
+					session.setAttribute("nickname", user.getNickname());
+					session.setAttribute("email", user.getEmail());
+					session.setMaxInactiveInterval(86400);
+				}
 			}
+			
 			mv.setViewName("redirect:/");
 		} else {
 			mv.addObject("errMsg", "아이디 또는 비밀번호가 틀렸습니다.");

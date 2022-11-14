@@ -46,6 +46,26 @@ public class AdminController {
         return mv;
     }
 
+    @GetMapping("list")
+    public List<User> getUserList() {
+		return userService.getAdminUserList();
+	}
+    
+    @GetMapping("get/{userName}")
+    public User getUser(@PathVariable String userName) {    
+    	return userService.getUserByUserName(userName);
+    }
+     
+    @PutMapping("fix")
+	public void fixUser(@RequestBody User user) {
+    	userService.fixAdminUser(user);
+	}
+    
+	@PutMapping("del/{userId}")
+	public void delUser(@PathVariable int userId) {
+		userService.delUser(userId);
+	}
+    
     @GetMapping("login")
     public ModelAndView login(ModelAndView mv) {
         mv.setViewName("admin/user/login");
@@ -164,14 +184,11 @@ public class AdminController {
             return null;
         }
     }
-
+    
     @GetMapping("declare")
-    public ModelAndView declare(HttpServletRequest request, ModelAndView mv) {
-        if(isAdmin(request) == true) {
-            mv.setViewName("admin/declaration/declareList");
-        } else {
-            mv.setViewName("redirect:/admin/login");
-        }
+    public ModelAndView declare(ModelAndView mv) {
+        mv.setViewName("admin/declaration/declareList");
+
         return mv;
     }
 
@@ -195,35 +212,35 @@ public class AdminController {
 
     @GetMapping("menu")
     public ModelAndView menu(ModelAndView mv) {
-    	mv.addObject("placeId", 3);
+        mv.addObject("placeId", 3);
         mv.setViewName("admin/menu/patchMenu");
         return mv;
     }
 
-    @GetMapping("menu/getMenus")
+    @GetMapping("getMenus")
     public List<Menu> getMenus() {
         return menuService.getMenus();
     }
     
     @PostMapping("addMenu")
     public int addMenu(@RequestBody List<Menu> menu) {
-    	return menuService.addMenu(menu);
+        return menuService.addMenu(menu);
     }
     
     @PatchMapping("fixMenu")
     public int fixMenu(@RequestBody List<Menu> menu) {
     	return menuService.fixMenu(menu);
     }
+    
+    @DeleteMapping("delMenu/{menuId}")
+    public void delMenu(@PathVariable int menuId) {
+    	menuService.delMenu(menuId);
+    }
 
     @GetMapping("detail")
     public ModelAndView detail(ModelAndView mv) {
         mv.setViewName("admin/detail/patchDetail");
         return mv;
-    }
-
-    @GetMapping("detail/getDetails")
-    public List<Detail> getDetails() {
-        return detailService.getDetails();
     }
     
     @GetMapping("review")
@@ -234,6 +251,25 @@ public class AdminController {
             mv.setViewName("redirect:/admin/login");
         }
         return mv;
+    }
+
+    @GetMapping("detail/patch/{placeId}")
+    public ModelAndView detail(ModelAndView mv, @PathVariable int placeId) {
+        mv.addObject("placeId", placeId);
+        mv.setViewName("admin/detail/patchDetail");
+        return mv;
+    }
+
+    @GetMapping("detail/getDetail/{placeId}")
+    public Detail getDetail(@PathVariable int placeId) {
+        return detailService.getDetail(placeId);
+    }
+
+    @PatchMapping("detail/patch/{placeId}")
+    public int updateDetail(@PathVariable int placeId, @RequestBody Detail detail) {
+        System.out.println(detail);
+        detail.setPlaceId(placeId);
+        return detailService.fixDetail(detail);
     }
     
     @GetMapping("review/list")

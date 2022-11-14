@@ -1,7 +1,5 @@
 package com.my.date.dao;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +12,18 @@ public class DetailDaoImpl implements DetailDao {
 	DetailMap detailMap;
 
 	@Override
-	public List<Detail> selectDetails() {
-		return detailMap.selectDetails();
+	public Detail selectDetail(int placeId) {
+		return detailMap.selectDetail(placeId);
 	}
+	
+	@Override
+	public int insertDetail(Detail detail) {
+		return 0; //detailMap.insertDetail(detail);
+	}
+	
+	@Override
+	public int updateDetail(Detail detail) {
+		return detailMap.updateDetail(detail);
+	}
+	
 }

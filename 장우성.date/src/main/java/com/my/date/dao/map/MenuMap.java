@@ -11,4 +11,5 @@ public interface MenuMap {
 	List<Menu> selectMenus();
 	int insertMenu(Menu menu);
 	int updateMenu(Menu menu);
+	void deleteMenu(int menuId);
 }

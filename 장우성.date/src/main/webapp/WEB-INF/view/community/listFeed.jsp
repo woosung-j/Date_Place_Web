@@ -17,7 +17,6 @@
                             const tagList = [];
                             const likeList = [];
 
-                            console.log(item);
                             if (item.hashtag.length != 0 && item.hashtag[0]?.tag != null) {
                                 $.each(item.hashtag, (i, item) => {
                                     tagList.push(`<span class="badge badge-secondary badge-pill">\${item.tag}</span>`);
@@ -25,7 +24,7 @@
                             }
 
                             feedList.unshift(
-                                `<a href="detail/\${item.feedId}" style="color: inherit; text-decoration: none">
+                                `<a href="<%=request.getContextPath()%>/community/detail/\${item.feedId}" style="color: inherit; text-decoration: none">
                                     <div class="card mb-3">
                                     <div class="card-header row-11">
                                         <div class="text_output">

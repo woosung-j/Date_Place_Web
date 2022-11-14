@@ -31,7 +31,6 @@
 		from places
 		where place_id = #{placeId}
 	</select>
-
 	<insert id='insertPlace' parameterType="place">
 		<selectKey keyProperty="placeId" resultType="int" order="AFTER">
 			select places_id_seq.currval from dual

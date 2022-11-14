@@ -8,4 +8,5 @@ public interface MenuDao {
 	List<Menu> selectMenus();
 	int insertMenu(Menu menu);
 	int updateMenu(Menu menu);
+	void deleteMenu(int menuId);
 }

@@ -36,4 +36,9 @@ public class MenuServiceImpl implements MenuService {
 		}
 		return fixCount;
 	}
+	
+	@Override
+	public void delMenu(int menuId) { 
+		menuDao.deleteMenu(menuId);
+	}
 }
