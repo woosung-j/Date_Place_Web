@@ -27,7 +27,7 @@
 		<selectKey keyProperty="feedId" resultType="int" order="AFTER">
 			select feeds_id_seq.currval from dual
 		</selectKey>
-		insert into feeds values(feeds_id_seq.nextval, #{userId}, #{title}, #{content}, sysdate)
+			insert into feeds values(feeds_id_seq.nextval, #{userId}, #{title}, #{content}, sysdate)
 	</insert>
 	
 	<insert id="insertHashtags">
@@ -45,16 +45,16 @@
 	</delete>
 	
 	<insert id="updateFeed">
-			update feeds
-			set title = #{title}, content = #{content}
-			where feed_id = #{feedId}
+		update feeds
+		set title = #{title}, content = #{content}
+		where feed_id = #{feedId}
 	</insert>
 	
 	<update id="updateHashtags">
 		<foreach collection="tags" item="item" separator="UNION ALL ">
-				update hashtags
-				set tag = #{item}
-				where feed_id = #{feedId}
+			update hashtags
+			set tag = #{item}
+			where feed_id = #{feedId}
 		</foreach>
 	</update>
 	
