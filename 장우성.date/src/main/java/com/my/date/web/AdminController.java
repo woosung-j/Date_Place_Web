@@ -1,20 +1,26 @@
 package com.my.date.web;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import com.my.date.domain.*;
 import com.my.date.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("admin")
 public class AdminController {
+    @Value("${attachPath}") private String attachPath;
     @Autowired private DeclarationService declarationService;
+    @Autowired private RegionService regionService;
     @Autowired private MenuService menuService;
     @Autowired private PlaceService placeService;
     @Autowired private DetailService detailService;
@@ -40,6 +46,26 @@ public class AdminController {
         return mv;
     }
 
+    @GetMapping("list")
+    public List<User> getUserList() {
+		return userService.getAdminUserList();
+	}
+    
+    @GetMapping("get/{userName}")
+    public User getUser(@PathVariable String userName) {    
+    	return userService.getUserByUserName(userName);
+    }
+     
+    @PutMapping("fix")
+	public void fixUser(@RequestBody User user) {
+    	userService.fixAdminUser(user);
+	}
+    
+	@PutMapping("del/{userId}")
+	public void delUser(@PathVariable int userId) {
+		userService.delUser(userId);
+	}
+    
     @GetMapping("login")
     public ModelAndView login(ModelAndView mv) {
         mv.setViewName("admin/user/login");
@@ -91,7 +117,46 @@ public class AdminController {
         return mv;
     }
 
-    @GetMapping("/placelist")
+    @GetMapping("place/add")
+    public ModelAndView placeAdd(ModelAndView mv) {
+        mv.setViewName("admin/place/add");
+        return mv;
+    }
+
+    @PostMapping("place/add/{si}/{gu}")
+    public int addPlace(@RequestPart(value = "files") List<MultipartFile> files, @RequestPart(value = "key") Place place, @PathVariable("si") String si, @PathVariable("gu") String gu) {
+        System.out.println(place);
+        List<String> fileNameList = new ArrayList<String>();
+
+        try {
+            for(MultipartFile file : files) {
+                String savedFileName = "";
+                String uploadPath = attachPath + "/placeImage/";
+                String originalFileName = file.getOriginalFilename();
+
+                UUID uuid = UUID.randomUUID();
+                savedFileName = uuid.toString() + "_" + originalFileName;
+
+                File file1 = new File(uploadPath + savedFileName);
+                file.transferTo(file1);
+
+                fileNameList.add(savedFileName);
+            }
+        } catch(Exception e) {
+            return -1;
+        }
+
+        place.setSiId(regionService.getSiId(si));
+        place.setGuId(regionService.getGuId(gu));
+        int isPlaceSuccess = placeService.addPlace(place);
+
+        if(place.getPlaceId() != 0 && isPlaceSuccess == 1 && files.size() > 0) {
+            return placeService.addPlaceImages(place.getPlaceId(), fileNameList);
+        }
+        return isPlaceSuccess;
+    }
+
+    @GetMapping("place/getPlaceList")
     public List<Place> getPlaces(HttpServletRequest request) {
         if(isAdmin(request) == true) {
             return placeService.getPlaces();
@@ -99,14 +164,31 @@ public class AdminController {
             return null;
         }
     }
-    
-    @GetMapping("declare")
-    public ModelAndView declare(HttpServletRequest request, ModelAndView mv) {
+
+    @GetMapping("/place/detail/{placeId}")
+    public ModelAndView place(HttpServletRequest request, ModelAndView mv, @PathVariable int placeId) {
         if(isAdmin(request) == true) {
-            mv.setViewName("admin/declaration/declareList");
+            mv.addObject("placeId", placeId);
+            mv.setViewName("admin/place/place");
         } else {
             mv.setViewName("redirect:/admin/login");
         }
+        return mv;
+    }
+
+    @GetMapping("/place/getDetail/{placeId}")
+    public PlaceDetailDto getPlaceDetail(HttpServletRequest request, @PathVariable int placeId) {
+        if(isAdmin(request) == true) {
+            return placeService.getAdminPlaceByPlaceId(placeId);
+        } else {
+            return null;
+        }
+    }
+    
+    @GetMapping("declare")
+    public ModelAndView declare(ModelAndView mv) {
+        mv.setViewName("admin/declaration/declareList");
+
         return mv;
     }
 
@@ -130,7 +212,7 @@ public class AdminController {
 
     @GetMapping("menu")
     public ModelAndView menu(ModelAndView mv) {
-    	mv.addObject("placeId", 3);
+        mv.addObject("placeId", 3);
         mv.setViewName("admin/menu/patchMenu");
         return mv;
     }
@@ -142,7 +224,7 @@ public class AdminController {
     
     @PostMapping("addMenu")
     public int addMenu(@RequestBody List<Menu> menu) {
-    	return menuService.addMenu(menu);
+        return menuService.addMenu(menu);
     }
     
     @PatchMapping("fixMenu")
@@ -175,9 +257,28 @@ public class AdminController {
         }
         return mv;
     }
+
+    @GetMapping("detail/patch/{placeId}")
+    public ModelAndView detail(ModelAndView mv, @PathVariable int placeId) {
+        mv.addObject("placeId", placeId);
+        mv.setViewName("admin/detail/patchDetail");
+        return mv;
+    }
+
+    @GetMapping("detail/getDetail/{placeId}")
+    public Detail getDetail(@PathVariable int placeId) {
+        return detailService.getDetail(placeId);
+    }
+
+    @PatchMapping("detail/patch/{placeId}")
+    public int updateDetail(@PathVariable int placeId, @RequestBody Detail detail) {
+        System.out.println(detail);
+        detail.setPlaceId(placeId);
+        return detailService.fixDetail(detail);
+    }
     
     @GetMapping("review/list")
-    public List<Review> getReviews(HttpServletRequest request) {
+    public List<ReviewDto> getReviews(HttpServletRequest request) {
         if(isAdmin(request) == true) {
             return reviewService.getReviews();
         } else {
@@ -192,5 +293,10 @@ public class AdminController {
         } else {
             return 0;
         }
+    }
+    
+    @GetMapping("search/{keyword}")
+    public List<ReviewDto> search(@PathVariable String keyword) {
+        return reviewService.getSearchReviewByPlaceName(keyword);
     }
 }

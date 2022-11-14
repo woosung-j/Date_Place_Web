@@ -74,4 +74,29 @@ public class UserServiceImpl implements UserService {
 	public void delUser(int userId) {
 		userDao.deleteUser(userId);
 	}
+	
+	@Override
+	public int fixPassword(String email, String password) {
+		return userDao.updatePassword(email, password);
+	}
+	
+	@Override
+	public String getEmail(String email) {
+		return userDao.selectEmail(email);
+	}
+
+	@Override
+	public List<User> getAdminUserList() {
+		return userDao.selectAdminUserList();
+	}
+
+	@Override
+	public void fixAdminUser(User user) {
+		userDao.updateAdminUser(user);
+	}
+
+	@Override
+	public User getUserByUserName(String userName) {
+		return userDao.selectUserByUserName(userName);
+	}
 }

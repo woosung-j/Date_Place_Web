@@ -7,4 +7,34 @@
 		from my_regions r, si, gu
 		where r.si_id = si.si_id and r.gu_id = gu.gu_id and user_id = #{userId}
 	</select>
+
+	<select id="selectSiId" resultType="int">
+		select si_id
+		from si
+		where si_name = #{siName}
+	</select>
+
+	<select id="selectGuId" resultType="int">
+		select gu_id
+		from gu
+		where gu_name = #{guName}
+	</select>
+
+	<select id="selectMyRegionByUserIdAndSiAndGu" resultType="region">
+		select m.my_region_id
+		from my_regions m, si, gu
+		where m.si_id = si.si_id and m.gu_id = gu.gu_id and m.user_id = #{userId} and si.si_name = #{siName} and gu.gu_name = #{guName}
+	</select>
+
+	<insert id="insertBookmark" parameterType="regionDto">
+		<selectKey keyProperty="myRegionId" resultType="int" order="AFTER">
+			select myregions_id_seq.currval from dual
+		</selectKey>
+		insert into my_regions values(myregions_id_seq.nextval, #{userId}, #{siId}, #{guId})
+	</insert>
+
+	<delete id="deleteBookmark">
+		delete from my_regions
+		where my_region_id = #{bookmarkId}
+	</delete>
 </mapper>

@@ -56,4 +56,30 @@ public class UserDaoImpl implements UserDao {
 	public void deleteUser(int userId) {
 		userMap.deleteUser(userId);
 	}
+	
+	@Override
+	public int updatePassword(String email, String password) {
+		return userMap.updatePassword(email, password);
+	}
+
+	@Override
+	public List<User> selectAdminUserList() {		
+		return userMap.selectAdminUserList();
+	}
+
+	@Override
+	public void updateAdminUser(User user) {
+		userMap.updateAdminUser(user);
+		
+	}
+
+	@Override
+	public void deleteAdminUser(int userId) {
+		userMap.deleteAdminUser(userId);
+	}
+
+	@Override
+	public User selectUserByUserName(String userName) {
+		return userMap.selectUserByUserName(userName);
+	}
 }

@@ -1,12 +1,18 @@
 package com.my.date.service;
 
-import java.util.List;
-
 import com.my.date.domain.Place;
+import com.my.date.domain.PlaceDetailDto;
+import com.my.date.domain.PlaceDto;
+
+import java.util.List;
 
 public interface PlaceService {
 	List<Place> getPlaces();
-	void addPlace(Place place);
+	List<PlaceDto> getPlacesBySiNameAndGuName(String siName, String guName, int userId, int orderBy);
+	PlaceDetailDto getPlaceByPlaceId(int placeId, int userId);
+	PlaceDetailDto getAdminPlaceByPlaceId(int placeId);
+	int addPlace(Place place);
+	int addPlaceImages(int placeId, List<String> fileNames);
 	void fixPlace(Place place);
 	void delPlace(int placeId);
 }
