@@ -39,7 +39,6 @@
                 url: '<%=request.getContextPath()%>/declaration/add/getPlaceName/' + $('#placeId').val(),
                 method: 'get',
                 success: (data) => {
-                    console.log(data);
                     $('#placeName').text(`\${data}`);
                 },
             });

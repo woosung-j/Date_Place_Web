@@ -45,7 +45,6 @@
                 method: 'get',
                 contentType: 'application/json',
                 success: (feeds) => {
-                    console.log(feeds);
                     const myFeeds = [];
 
                     $('.myFeeds').empty();
@@ -54,13 +53,15 @@
                         $.each(feeds, (i, feed) => {
                             const hashtagArr = [];
 
-                            $.each(feed.hashtag, (i, item) => {
-                                hashtagArr.push(`<span class="badge badge-secondary badge-pill">\${item.tag}</span>`);
-                            });
+                            if (feed.hashtag.length != 0 && feed.hashtag[0]?.tag != null) {
+                                $.each(feed.hashtag, (i, item) => {
+                                	hashtagArr.push(`<span class="badge badge-secondary badge-pill">\${item.tag}</span>`);
+                                });
+                            }
 
                             myFeeds.unshift(
                                 `<div class="col w-auto">
-                                <div class="card mb-3">
+                                <div class="card mb-4">
                                     <div class="card-header row-11">
                                         <div class="text_output">
                                             <div class="row">
@@ -68,7 +69,7 @@
                                                <span class="col-5">\${feed.nickname}</span>
                                                <span class="col-5">\${feed.createdAt}</span>
                                             </div>
-                                            <a href="../community/02.html">
+                                            <a href="<%=request.getContextPath()%>/community/detail/\${feed.feedId}">
                                                 <h6 class="card-title"><br />\${feed.title}</h6>
                                                 <p class="card-text">\${feed.content}</p>
                                             </a>
@@ -102,7 +103,7 @@
                 <p class="col"></p>
             </nav>
         </header>
-        <div class="myFeeds row-1 mt-4 pt-62"></div>
+        <div class="myFeeds row-1 mt-4 pt-62 mx-2"></div>
     </div>
     <div class="pb-5 mb-3"></div>
     <div class="navbar">
