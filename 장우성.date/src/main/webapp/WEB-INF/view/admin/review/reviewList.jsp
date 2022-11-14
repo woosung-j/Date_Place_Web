@@ -11,7 +11,6 @@
         .reImg {
             height: 5rem;
             width: 5rem;
-            border: 0.1rem solid;
             text-align: center;
             display: flex;
             align-items: center;
@@ -30,7 +29,6 @@
         }
 
         .profile {
-            border: 0.1rem solid;
             border-radius: 50%;
             height: 2rem;
             width: 2rem;
@@ -63,17 +61,16 @@
 
         function search() {
             $('#btn_search').click(() => {
-                console.log($('#word').val());
                 $.ajax({
                     url: '/admin/search/' + $('#word').val(),
                     method: 'get',
                     success: (reviews) => {
+                        console.log(reviews);
                         const list = [];
 
                         if (reviews.length) {
                             $.each(reviews, (i, review) => {
                                 const reviewImgArr = [];
-                                console.log(review);
                                 $.each(review.reviewImages, (i, reviewImage) => {
                                     reviewImgArr.push(`<img class="reImg ml-3" src="attach/review/\${reviewImage.fileName}'/>"/>`);
                                 });
@@ -219,11 +216,11 @@
             <div class="col-2">
                 <ul class="text-center">
                     <li><a href="<%=request.getContextPath()%>/admin/">회원 조회</a></li>
-	                <li><a href="<%=request.getContextPath()%>/admin/declare">신고 조회</a></li>
-	                <li><a href="<%=request.getContextPath()%>/admin/review">리뷰 조회</a></li>
-	                <li><a href="<%=request.getContextPath()%>/admin/place">장소 조회</a></li>
-	                <li><a href="<%=request.getContextPath()%>/admin/logo">로고 추가</a></li>
-	                <li><a href="<%=request.getContextPath()%>/admin/logout">로그아웃</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/declare">신고 조회</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/review">리뷰 조회</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/place">장소 조회</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/logo">로고 추가</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/logout">로그아웃</a></li>
                 </ul>
             </div>
             <div class="col mt-2">

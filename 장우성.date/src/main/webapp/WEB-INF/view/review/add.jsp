@@ -6,7 +6,6 @@
         .exImg {
             height: 7rem;
             width: 7rem;
-            border: 0.1rem solid;
             text-align: center;
             display: flex;
             align-items: center;
@@ -17,7 +16,6 @@
         .reImg {
             height: 4rem;
             width: 4rem;
-            border: 0.1rem solid;
             text-align: center;
             display: flex;
             align-items: center;
@@ -73,7 +71,6 @@
             resize: none;
         }
     </style>
-
     <script>
         function addReview() {
             $(() => {
@@ -91,18 +88,23 @@
                     $('#textBox').val(' ');
                 }
 
+                const data = {
+                    content: $('#textBox').val(),
+                    starRating: $('.active').length,
+                    placeId: $('#placeId').val(),
+                };
+
+            	formData = new FormData($('#form')[0]);
+                formData.append('files', $('#files'));
+                formData.append('key', new Blob([JSON.stringify(data)], { type: 'application/json' }));
+	          
                 $.ajax({
                     url: '<%=request.getContextPath()%>/review/add/' + $('#placeId').val(),
                     method: 'post',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        content: $('#textBox').val(),
-                        starRating: $('.active').length,
-                        placeId: $('#placeId').val(),
-                    }),
-                    success: (data) => {
-                        addReview();
-                    },
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: (data) => {},
                 });
             });
         }
@@ -162,12 +164,12 @@
                 </tr>
             </thead>
         </table>
-        <form id="addReview" action="add" method="post">
+        <form enctype="multipart/form-data" id="form" action="add" method="post" action="<%=request.getContextPath()%>/review/add/${placeId}">
             <div class="row-1 border mx-3">
                 <p class="col"></p>
                 <div class="row-1 text-center border mx-3 mb-3 bg-light filebox">
-                    <label for="imgFile" style="cursor: pointer; font-size: 14px"> <i class="bi bi-camera" style="font-size: 18px"></i><br />사진업로드 </label>
-                    <input type="file" id="imgFile" class="pb-5 form-control" accept="image/*" />
+                    <label for="files" style="cursor: pointer; font-size: 14px"> <i class="bi bi-camera" style="font-size: 18px"></i><br />사진업로드 </label>
+                    <input type="file" id="files" name="files" class="pb-5 form-control" multiple />
                 </div>
                 <div class="row-1 text-center border mx-3 mb-3 bg-light" style="height: 14rem">
                     <textarea
@@ -203,7 +205,6 @@
         </form>
     </div>
 
-    <!-- 모달창 -->
     <div class="modal fade" id="infoModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content mx-5">
