@@ -125,22 +125,23 @@ public class AdminController {
 
     @PostMapping("place/add/{si}/{gu}")
     public int addPlace(@RequestPart(value = "files") List<MultipartFile> files, @RequestPart(value = "key") Place place, @PathVariable("si") String si, @PathVariable("gu") String gu) {
-        System.out.println(place);
         List<String> fileNameList = new ArrayList<String>();
 
         try {
             for(MultipartFile file : files) {
+                String originalFileName = file.getOriginalFilename();
                 String savedFileName = "";
                 String uploadPath = attachPath + "/placeImage/";
-                String originalFileName = file.getOriginalFilename();
 
-                UUID uuid = UUID.randomUUID();
-                savedFileName = uuid.toString() + "_" + originalFileName;
+                if(!originalFileName.equals("")) {
+                    UUID uuid = UUID.randomUUID();
+                    savedFileName = uuid.toString() + "_" + originalFileName;
 
-                File file1 = new File(uploadPath + savedFileName);
-                file.transferTo(file1);
+                    File file1 = new File(uploadPath + savedFileName);
+                    file.transferTo(file1);
 
-                fileNameList.add(savedFileName);
+                    fileNameList.add(savedFileName);
+                }
             }
         } catch(Exception e) {
             return -1;
@@ -150,7 +151,7 @@ public class AdminController {
         place.setGuId(regionService.getGuId(gu));
         int isPlaceSuccess = placeService.addPlace(place);
 
-        if(place.getPlaceId() != 0 && isPlaceSuccess == 1 && files.size() > 0) {
+        if(place.getPlaceId() != 0 && isPlaceSuccess == 1 && fileNameList.size() > 0) {
             return placeService.addPlaceImages(place.getPlaceId(), fileNameList);
         }
         return isPlaceSuccess;
