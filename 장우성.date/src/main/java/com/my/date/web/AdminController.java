@@ -242,11 +242,6 @@ public class AdminController {
         mv.setViewName("admin/detail/patchDetail");
         return mv;
     }
-
-    @GetMapping("detail/getDetails")
-    public List<Detail> getDetails() {
-        return detailService.getDetails();
-    }
     
     @GetMapping("review")
     public ModelAndView review(HttpServletRequest request, ModelAndView mv) {
