@@ -8,6 +8,7 @@ import com.my.date.domain.FeedTagDto;
 
 public interface FeedService {
 	List<Feed> getFeeds();
+	List<FeedDto> getMyFeeds(int feedId);
 	FeedDto getFeed(int feedId);
 	int addFeed(FeedTagDto feed);
 	int addHashtags(List<String> tags, int feedId);

@@ -22,6 +22,11 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
+	public List<FeedDto> getMyFeeds(int feedId) {
+		return feedDao.selectMyFeeds(feedId);
+	}
+	
+	@Override
 	public FeedDto getFeed(int feedId) {
 		return feedDao.selectFeed(feedId);
 	}
