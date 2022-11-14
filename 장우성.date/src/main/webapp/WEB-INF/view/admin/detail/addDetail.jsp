@@ -5,6 +5,15 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
+    
+    function PostCodeSearch() {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                document.getElementById('address').value = data.address;
+            },
+        }).open();
+    }
+    
     function addDetail() {
         $.ajax({
             url: '<%=request.getContextPath()%>/admin/detail/add/' + $('#placeId').val(),
@@ -24,15 +33,6 @@
                 const list = [];  
             }
         })
-            
-                
-        function PostCodeSearch() {
-            new daum.Postcode({
-                oncomplete: function (data) {
-                    document.getElementById('address').value = data.address;
-                },
-            }).open();
-        }
         
         $('#addBtn').click(() => {
             addDetail();
@@ -79,7 +79,7 @@
                                 <td>
                                     <label for="address" class="col-form-label">주&emsp;&emsp;소:</label>
                                 </td>
-                                <td><input type="text" id="address" class="form-control" style="width: 700px" /><br /></td>
+                                <td> <input type="text" class="form-control" id="address" name="address" onclick="PostCodeSearch()" style="width: 700px" /><br /></td>
                             </tr>
                             <tr>
                                 <td>
