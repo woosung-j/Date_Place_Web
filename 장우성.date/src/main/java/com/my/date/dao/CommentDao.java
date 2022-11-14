@@ -6,4 +6,6 @@ import com.my.date.domain.CommentDto;
 
 public interface CommentDao {
 	List<CommentDto> selectComments(int feedId);
+	int insertComment(Comment comment);
+	int updateComment(Comment comment);
 }

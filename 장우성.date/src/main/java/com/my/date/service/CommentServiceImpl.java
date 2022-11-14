@@ -5,6 +5,7 @@ import java.util.List;
 import com.my.date.domain.CommentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.my.date.dao.CommentDao;
 
@@ -16,5 +17,15 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public List<CommentDto> getComments(int feedId) {
 		return commentDao.selectComments(feedId); 
+	}
+	
+	@Override
+	public int addComment(Comment comment) {
+		return commentDao.insertComment(comment);
+	}
+	
+	@Override
+	public int fixComment(Comment comment) {
+		return commentDao.updateComment(comment);
 	}
 }

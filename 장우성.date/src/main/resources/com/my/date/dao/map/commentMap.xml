@@ -3,9 +3,30 @@
 	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 <mapper namespace='com.my.date.dao.map.CommentMap'>
 	<select id='selectComments' resultType='commentDto'>
-		select c.feed_id, c.comment_id, c.created_at, c.content, c.user_id  u.nickname
-		from comments c, users u
-		where c.user_id = u.user_id and c.feed_id = #{feedId}
-		order by comment_id
+		select f.feed_id, c.comment_id, c.created_at, c.content, c.feed_id, u.user_id, c.user_id, u.nickname
+		from comments c
+		left join users u on c.user_id = u.user_id 
+		left join feeds f on f.feed_id = c.feed_id
+		where c.feed_id = #{feedId}
+		order by comment_id ASC
 	</select>
-</mapper>
+	
+	<insert id='insertComment'>
+		insert into comments
+		values(comments_id_seq.nextVal, #{feedId}, #{userId}, #{content}, sysdate) 
+	</insert>
+	
+	<update id='updateComment'>
+		update comments set content = #{content}
+		where comment_id = #{commentId} and user_id = #{userId}
+	</update>
+		
+	<resultMap id='commentMap' type='CommentDto'>
+		<id property='commentId' column='comment_id' />
+		<result property='feedId' column='feed_id' />
+		<result property='userId' column='user_id' />
+		<result property='content' column='content' />
+		<result property='createdAt' column='created_at' />
+		<result property='nickname' column='nickname' />
+	</resultMap>
+</mapper>		
