@@ -26,4 +26,9 @@ public class CommentDaoImpl implements CommentDao {
 	public int updateComment(Comment comment) {
 		return commentMap.updateComment(comment);
 	}
+	
+	@Override
+	public int deleteComment(int commentId, int userId) {
+		return commentMap.deleteComment(commentId, userId);
+	}
 }

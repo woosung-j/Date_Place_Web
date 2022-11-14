@@ -20,6 +20,11 @@
 		update comments set content = #{content}
 		where comment_id = #{commentId} and user_id = #{userId}
 	</update>
+	
+	<delete id='deleteComment'>
+		delete from comments
+		where comment_id = #{commentId} and user_id = #{userId}
+	</delete>
 		
 	<resultMap id='commentMap' type='CommentDto'>
 		<id property='commentId' column='comment_id' />
