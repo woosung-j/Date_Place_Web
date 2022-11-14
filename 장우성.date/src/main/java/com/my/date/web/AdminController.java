@@ -123,8 +123,19 @@ public class AdminController {
         return mv;
     }
 
-    @PostMapping("place/add/{si}/{gu}")
-    public int addPlace(@RequestPart(value = "files") List<MultipartFile> files, @RequestPart(value = "key") Place place, @PathVariable("si") String si, @PathVariable("gu") String gu) {
+    @GetMapping("place/patch/{placeId}")
+    public ModelAndView placeFix(ModelAndView mv, @PathVariable int placeId) {
+        mv.addObject("placeId", placeId);
+        mv.setViewName("admin/place/fix");
+        return mv;
+    }
+
+    @GetMapping("place/fix/{placeId}")
+    public PlaceAdminDto getPlace(@PathVariable int placeId) {
+        return placeService.getAdminPlace(placeId);
+    }
+
+    private List<String> multiFileUpload(List<MultipartFile> files) {
         List<String> fileNameList = new ArrayList<String>();
 
         try {
@@ -144,14 +155,35 @@ public class AdminController {
                 }
             }
         } catch(Exception e) {
-            return -1;
+            return null;
         }
+        return fileNameList;
+    }
+
+    @PostMapping("place/add/{si}/{gu}")
+    public int addPlace(@RequestPart(value = "files") List<MultipartFile> files, @RequestPart(value = "key") Place place, @PathVariable("si") String si, @PathVariable("gu") String gu) {
+        List<String> fileNameList = multiFileUpload(files);
 
         place.setSiId(regionService.getSiId(si));
         place.setGuId(regionService.getGuId(gu));
         int isPlaceSuccess = placeService.addPlace(place);
 
         if(place.getPlaceId() != 0 && isPlaceSuccess == 1 && fileNameList.size() > 0) {
+            return placeService.addPlaceImages(place.getPlaceId(), fileNameList);
+        }
+        return isPlaceSuccess;
+    }
+
+    @PostMapping("place/fix/{si}/{gu}")
+    public int fixPlace(@RequestPart(value = "files") List<MultipartFile> files, @RequestPart(value = "key") Place place, @PathVariable("si") String si, @PathVariable("gu") String gu) {
+        List<String> fileNameList = multiFileUpload(files);
+
+        place.setSiId(regionService.getSiId(si));
+        place.setGuId(regionService.getGuId(gu));
+        int isPlaceSuccess = placeService.fixPlace(place);
+
+        if(place.getPlaceId() != 0 && isPlaceSuccess == 1 && fileNameList.size() > 0) {
+            placeService.delPlaceImage(place.getPlaceId());
             return placeService.addPlaceImages(place.getPlaceId(), fileNameList);
         }
         return isPlaceSuccess;

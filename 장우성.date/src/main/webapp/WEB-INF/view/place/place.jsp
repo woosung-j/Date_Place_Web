@@ -7,13 +7,6 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1ae0f4d8a7c4511de8de27cd0e165da0&libraries=services,clusterer,drawing"></script>
     <style>
-        .img-style {
-            border: 0.1rem;
-            border-style: solid;
-            width: 50rem;
-            height: 10rem;
-        }
-
         .border {
             margin-top: 13rem;
             top: 50%;
@@ -51,10 +44,16 @@
             font-size: 15px;
         }
 
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .swiper {
             width: auto;
             height: 250px;
-            border: 0.1rem solid;
         }
 
         .swiper-slide {
@@ -74,13 +73,6 @@
             align-items: center;
         }
 
-        .swiper-slide img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
         .fill {
             color: #fb3959;
         }
@@ -93,7 +85,6 @@
             user-select: none;
         }
     </style>
-
     <script>
         let map;
 
@@ -103,7 +94,6 @@
         }
 
         function getXY(obj) {
-            console.log(map);
             let geocoder = new kakao.maps.services.Geocoder();
 
             geocoder.addressSearch(obj.addr, (result, status) => {
@@ -201,34 +191,44 @@
                 url: '<%=request.getContextPath()%>/place/get/' + $('#placeId').val(),
                 method: 'get',
                 success: (data) => {
-                    console.log(data);
                     const detail = data.detail;
                     const review = data.review;
 
-                    $('#address').val(detail.address);
-                    $('#placeName').text(data.placeName);
-                    $('#subPlaceName').text(data.placeName);
-                    $('#introduction').text(data.introduction);
-                    $('#place_like').text(`찜 \${data.placeLikeCount}`);
+                    if (detail != null) {
+                        $('#address').val(detail.address);
+                        $('#placeName').text(data.placeName);
+                        $('#subPlaceName').text(data.placeName);
+                        $('#introduction').text(data.introduction);
+                        $('#place_like').text(`찜 \${data.placeLikeCount}`);
+                    }
+
                     if (data.isLike > 0) {
                         $('#place_heart').addClass('bi bi-heart-fill').attr('style', 'color:#E14D2A;');
                     } else {
                         $('#place_heart').addClass('bi bi-heart');
                     }
 
+                    const placeImageArr = [];
                     $.each(data.placeImages, (i, img) => {
-                        $('#placeImg').appendTo(`<img class="swiper-slide" src="attach/\${img.fileName}" />`);
+                        placeImageArr.push(`<img class="swiper-slide reImg" src="/attach/placeImage/\${img.fileName}" />`);
                     });
 
-                    $('#tel').text($('#tel').text() + detail.tel);
+                    $('#placeImage').append(`
+                        <div class="swiper-wrapper">\${placeImageArr.join('')}</div>
+                        <div class="swiper-pagination"></div>
+                    `);
 
-                    if (detail.parking == null && detail.openingHours == null && detail.closingHours == null && detail.dayOff == null) {
+                    if (detail?.tel) {
+                        $('#tel').text($('#tel').text() + detail.tel);
+                    }
+
+                    if (detail?.parking == null && detail?.openingHours == null && detail?.closingHours == null && detail?.dayOff == null) {
                         $('#info').hide();
                         $('#detail').hide();
                     } else {
                         const detailArr = [];
 
-                        if (detail.openingHours) {
+                        if (detail?.openingHours) {
                             detailArr.push(`
                                 <tr class="border-bottom border-top">
                                     <td class="col-4 text-center pt-2 pb-2">시간</td>
@@ -237,7 +237,7 @@
                             `);
                         }
 
-                        if (detail.dayOff) {
+                        if (detail?.dayOff) {
                             detailArr.push(`
                                 <tr class="border-bottom border-top">
                                     <td class="col-4 text-center pt-2 pb-2">휴무</td>
@@ -246,7 +246,7 @@
                             `);
                         }
 
-                        if (detail.parking) {
+                        if (detail?.parking) {
                             detailArr.push(`
                                 <tr class="border-bottom border-top">
                                     <td class="col-4 text-center pt-2 pb-2">주차</td>
@@ -256,9 +256,11 @@
                         }
                         $('#detail_body').append(detailArr.join(''));
                     }
-                    $('#homepage').attr('href', `\${detail.contact}`);
+                    if (detail?.contact) {
+                        $('#homepage').attr('href', `\${detail.contact}`);
+                    }
 
-                    if (data.menus.length == 0) {
+                    if (data.menus?.length == 0) {
                         $('#menu').hide();
                         $('#menu_table').hide();
                     } else {
@@ -288,21 +290,18 @@
                     }
 
                     let addr = {
-                        name: data.placeName,
-                        addr: detail.address,
+                        name: data?.placeName,
+                        addr: detail?.address,
                     };
 
                     kakaoMapInit(addr);
+                    swiper();
                 },
             });
         }
 
-        function init() {
-            getPlace();
-        }
-
         function swiper() {
-            const swiper = new Swiper('.mySwiper', {
+            var swiper = new Swiper('.mySwiper', {
                 pagination: {
                     el: '.swiper-pagination',
                     clickable: true,
@@ -311,8 +310,7 @@
         }
 
         $(() => {
-            init();
-            swiper();
+            getPlace();
             copy();
         });
     </script>
@@ -330,10 +328,7 @@
             </a>
         </nav>
     </header>
-    <div class="swiper mySwiper">
-        <div id="placeImg" class="swiper-wrapper"></div>
-        <div class="swiper-pagination"></div>
-    </div>
+    <div id="placeImage" class="swiper mySwiper"></div>
     <div class="row">
         <div class="col">
             <div class="text-center mt-4">
