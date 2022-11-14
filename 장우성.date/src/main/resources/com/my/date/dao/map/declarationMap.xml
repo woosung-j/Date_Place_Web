@@ -15,6 +15,16 @@
 		where d.place_id = p.place_id and d.user_id = #{userId}
 	</select>
 
+	<select id='selectPlaceName' resultType='string'>
+		select place_name
+		from places
+		where place_id = #{placeId}
+	</select>
+	
+	<insert id='insertDeclaration'>
+		insert into declarations values(declarations_id_seq.nextval, #{placeId}, #{userId}, #{content}, 0, sysdate)
+	</insert>
+	
 	<update id="updateConfirm">
 		update declarations
 		set confirm = #{confirm}

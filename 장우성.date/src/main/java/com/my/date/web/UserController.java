@@ -1,10 +1,9 @@
 package com.my.date.web;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.my.date.service.MailSendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,19 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.my.date.domain.Place;
 import com.my.date.domain.User;
-import com.my.date.service.PlaceService;
 import com.my.date.service.UserService;
 
 @RestController
 @RequestMapping("user")
 public class UserController {
 	@Autowired private UserService userService;
-	@Autowired private PlaceService placeService;
-	
+	@Autowired private MailSendService mailSendService;
+
 	@GetMapping("login")
-	public ModelAndView login(HttpServletRequest request, ModelAndView mv) {
+ 	public ModelAndView login(HttpServletRequest request, ModelAndView mv) {
 		HttpSession session = request.getSession(false);
 
 		if(session.getAttribute("userId") != null)
@@ -72,7 +69,17 @@ public class UserController {
 
 		return mv;
 	}
-	
+
+	@GetMapping("emailCheck/{email}")
+	public String emailCheck(@PathVariable String email) {
+		return userService.checkEmail(email);
+	}
+
+	@GetMapping("emailAuthCheck/{email}")
+	public String emailAuthCheck(@PathVariable String email) {
+		return mailSendService.AuthEmailWrite(email);
+	}
+
 	@GetMapping("mypage")
 	public ModelAndView myPage(ModelAndView mv) {
 		mv.setViewName("user/mypage");
@@ -129,14 +136,35 @@ public class UserController {
 			
 		return mv;
 	}
+	
+	@GetMapping("findpassword")
+	public ModelAndView findPw(ModelAndView mv) {
+		mv.setViewName("user/findPassword");
+		
+		return mv;
+	}
+	
+	@PostMapping("findpasswordresult/{email}")
+	public int getPasswordResult(@PathVariable String email) {
+		String randomPassword = mailSendService.passwordEmailWrite(email);
 
+		return userService.fixPassword(email, randomPassword);	
+	}
+
+	@GetMapping("findpasswordresult")
+	public ModelAndView findPwResult(ModelAndView mv) {
+		mv.setViewName("user/findPasswordResult");
+		
+		return mv;
+	}
+	
 	@GetMapping("fixuser")
 	public ModelAndView fixUser(ModelAndView mv) {
 		mv.setViewName("user/fixUser");
 	
 		return mv; 
 	}
-	
+		
 	@PutMapping("fixuser")
 	public String fixUser(HttpServletRequest request,@RequestBody User updateUser, HttpSession session) {
 		HttpSession sessionCheck = request.getSession(false);
@@ -154,5 +182,24 @@ public class UserController {
 		}
         
         return "/";
+	}
+	
+	@GetMapping("removeuser")
+	public ModelAndView removeUser(ModelAndView mv) {
+		mv.setViewName("user/removeUser");
+		
+		return mv;
+	}
+	
+	@PostMapping("removeuser/{userId}")
+	public ModelAndView removeUser(@PathVariable int userId, ModelAndView mv, HttpSession session) {
+		if(userId > 0) {
+        	userService.delUser(userId);
+        	session.invalidate();
+		} 
+		
+		mv.setViewName("redirect:/");
+		
+		return mv;
 	}
 }

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.my.date.domain.Comment;
+import com.my.date.domain.CommentDto;
 import com.my.date.service.CommentService;
 
 @RestController
@@ -32,8 +32,8 @@ public class CommentController {
 		return mv;
 	}
 	
-	@GetMapping("listComment/{feedId}") 
-	public List<Comment> getComments(@PathVariable int feedId) {
+	@GetMapping("listComments/{feedId}") 
+	public List<CommentDto> getComments(@PathVariable int feedId) {
 		return commentService.getComments(feedId);
 	}
 	

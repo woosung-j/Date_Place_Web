@@ -2,23 +2,84 @@
 <!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
 	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 <mapper namespace='com.my.date.dao.map.ReviewMap'>
+	<select id='selectReviews' resultMap='reviewsMap'>
+		select  r.review_id, r.place_id, p.place_name, r.user_id, u.profile_image, u.nickname, 
+                r.content, r.star_rating, i.file_name, i.review_images_id, r.created_at
+		from reviews r
+		left join review_images i on i.review_id = r.review_id
+        left join users u on r.user_id = u.user_id
+        left join places p on r.place_id = p.place_id
+		order by review_id
+	</select>
+	
 	<select id='selectReviewsByPlaceId' resultMap='reviewsMap'>
-		select r.review_id, r.place_id, r.user_id, u.nickname, r.content, p.place_name,
-		r.star_rating, r.created_at, i.file_name, u.profile_image, i.reviewimages_id
-		from reviews r, users u, review_images i, places p
+		select  r.review_id, r.place_id, p.place_name, r.user_id, u.profile_image, u.nickname, 
+                r.content, r.star_rating, i.file_name, i.review_images_id, r.created_at
+		from reviews r
+		left join review_images i on i.review_id = r.review_id
+		left join users u on r.user_id = u.user_id
+		left join places p on r.place_id = p.place_id
 		where r.place_id = #{placeId}
-		and r.user_id = u.user_id
-		and r.review_id = i.review_id
-		and r.place_id = p.place_id
 		order by review_id
 	</select>
 
+	<select id="selectLatestReviewByPlaceId" resultType="reviewDto">
+		select *
+		from (
+			select r.review_id, r.place_id, r.user_id, r.content, r.star_rating, r.created_at, u.nickname, u.profile_image,
+				(select count(*) from reviews where place_id = #{placeId}) as review_count
+			from reviews r left join users u on r.user_id = u.user_id
+			where (review_id) in (
+				select review_id
+				from reviews
+				group by review_id
+			) and place_id = #{placeId}
+			order by review_id desc
+		)
+		where rownum = 1
+  </select>
+  
+	<select id='selectReviewsByUserId' resultMap='reviewsMap'>
+		select  r.review_id, r.place_id, p.place_name, r.user_id, u.profile_image, u.nickname, 
+                r.content, r.star_rating, i.file_name, i.review_images_id, r.created_at
+		from reviews r
+		left join review_images i on i.review_id = r.review_id
+		left join users u on r.user_id = u.user_id
+		left join places p on r.place_id = p.place_id
+		where r.user_id = #{userId}
+		order by review_id
+	</select>
+
+	<select id='selectDetailReviewByReviewId' resultMap='reviewsMap'>
+		select  r.review_id, r.place_id, p.place_name, r.user_id, u.profile_image, u.nickname, 
+                r.content, r.star_rating, i.file_name, i.review_images_id, r.created_at
+		from reviews r
+		left join review_images i on i.review_id = r.review_id
+		left join users u on r.user_id = u.user_id
+		left join places p on r.place_id = p.place_id
+		where r.review_id = #{reviewId}
+	</select>
+	
 	<select id='selectReviewAvg' resultType='string'>
-		select avg(star_rating)
+		select ROUND(avg(star_rating), 2)
 		from reviews
 		where place_id = #{placeId}
 		group by place_id
 	</select>
+	
+	<insert id='insertReview'>
+		insert into reviews values(REVIEWS_id_SEQ.nextval, #{placeId}, #{userId}, #{content}, #{starRating}, sysdate)
+	</insert>
+	
+	<delete id='deleteAdminReview'>
+		delete from reviews
+		where review_id = #{reviewId}
+	</delete>
+	
+	<delete id="deleteDetailReviewByReviewIdAndUserId">
+		delete from reviews
+		where review_id = #{reviewId} and user_id = #{userId}
+	</delete>
 	
 	<resultMap id='reviewsMap' type='ReviewDto'>
 		<id property='reviewId' column='review_id' />
@@ -30,11 +91,12 @@
 		<result property='nickname' column='nickname' />
 		<result property='profileImage' column='profile_image'/>
 		<result property='placeName' column='place_name' />
+		<result property='reviewCount' column='review_count'/>
 		<collection property='reviewImages' resultMap='reviewImageMap' />
 	</resultMap>
 	
 	<resultMap id='reviewImageMap' type='com.my.date.domain.ReviewImage'>
-		<id property='reviewImagesId' column='reviewimages_id'/>
+		<id property='reviewImagesId' column='review_images_id'/>
 		<result property='fileName' column='file_name'/>
 	</resultMap>
 </mapper>

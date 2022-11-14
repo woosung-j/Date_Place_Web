@@ -2,21 +2,23 @@ package com.my.date.domain;
 
 import java.time.LocalDate;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Detail {
 	private int detailId;
 	private int placeId;
 	private String address;
-	private int tel;
-	private int openingHours;
-	private int closingHours;
-	private String dayoff;
+	private String tel;
+	private String openingHours;
+	private String closingHours;
+	private String dayOff;
 	private String contact;
-	private String parking;
+	private int parking;
 	private LocalDate createdAt;
 	private LocalDate updatedAt;
 }
