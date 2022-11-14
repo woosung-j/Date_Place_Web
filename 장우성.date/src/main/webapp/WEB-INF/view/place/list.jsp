@@ -44,12 +44,6 @@
         }
     </style>
     <script>
-        function toggleBookmark() {
-            let bookmark = $('#bookmark');
-            if ($('#bookmark')[0].className == 'bi bi-bookmark-fill icon') bookmark.attr('class', 'bi bi-bookmark icon');
-            else bookmark.attr('class', 'bi bi-bookmark-fill icon');
-        }
-
         function listPlace(orderBy = 0) {
             $('input').not(':radio').val('');
             $('#places').empty();
@@ -64,7 +58,7 @@
                                 `<li class="row border-bottom pt-3 pb-3">
                                     <div class="img-style">
                                         <a href="<%=request.getContextPath()%>/place/place/\${place.placeId}">
-                                            <img class="img-fluid" src="\${place.placeImage.length != 0 ? place.placeImage[0].fileName : "#"}" />
+                                            <img class="img-fluid" src="\${place.placeImage.length != 0 ? '/attach/placeImage/' + place.placeImage[0].fileName : "#"}" />
                                         </a>
                                         \${place.isLike == 1 ? '<i class="heart bi-heart-fill"></i>' : '<i class="heart bi-heart"></i>'}
                                     </div>
@@ -93,6 +87,50 @@
             });
         }
 
+        function toggleBookmark() {
+            const bookmark = $('#bookmark');
+            const bookmarkNum = $('#isBookmark').val();
+
+            if (bookmarkNum == -1) return 0;
+
+            if (bookmarkNum == 0) {
+                $.ajax({
+                    url: '<%=request.getContextPath()%>/region/bookmark/add',
+                    method: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        siName: $('#si')[0].name,
+                        guName: $('#gu')[0].name,
+                    }),
+                    success: (data) => {
+                        bookmark.attr('class', 'bi bi-bookmark-fill icon');
+                        $('#isBookmark').val(data);
+                    },
+                });
+            } else {
+                $.ajax({
+                    url: '<%=request.getContextPath()%>/region/bookmark/del/' + bookmarkNum,
+                    method: 'delete',
+                    success: (data) => {
+                        bookmark.attr('class', 'bi bi-bookmark icon');
+                        $('#isBookmark').val(0);
+                    },
+                });
+            }
+        }
+
+        function isMyRegion() {
+            $.ajax({
+                url: '<%=request.getContextPath()%>/region/isMyRegion/' + $('#si')[0].name + '/' + $('#gu')[0].name,
+                type: 'get',
+                success: (data) => {
+                    if (data > 0) $('#bookmark').attr('class', 'bi bi-bookmark-fill icon');
+                    else $('#bookmark').attr('class', 'bi bi-bookmark icon');
+                    $('#isBookmark').val(data);
+                },
+            });
+        }
+
         function init() {
             $('#bookmark').click(() => {
                 toggleBookmark();
@@ -102,6 +140,7 @@
         }
         $(() => {
             init();
+            isMyRegion();
         });
     </script>
 </head>
@@ -114,6 +153,7 @@
             <h3 class="col-8 font-gamja-flower">${si} ${gu == "없음" ? "" : gu}<i id="bookmark" class="bi bi-bookmark-fill icon"></i></h3>
             <p class="col"></p>
             <p class="col"></p>
+            <input type="hidden" id="isBookmark" name="isBookmark" />
         </nav>
     </header>
     <div class="row pt-62 mt-3">
