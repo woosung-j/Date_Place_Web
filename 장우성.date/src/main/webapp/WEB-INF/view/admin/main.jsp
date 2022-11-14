@@ -112,9 +112,9 @@
 	                                    success: function Check() {	                                    	
 	                                    	setTimeout(function timerModal() {	       
 	     	                                	$('#xBtn').click(() => {
-	     	                                		location.href='admin'
+	     	                                		location.href='/admin'
 	     	                                	})
-     	                                		location.href='admin'	                                    		
+     	                                		location.href='/admin'	                                    		
 	                                    	}, 1000)
                                			}
 	                                })
@@ -141,9 +141,9 @@
                                 setTimeout(function delCheck() {	                                    	
 									setTimeout(function timerModal() {	                                    				                                    	 										
 										$('#xBtn').click(() => {
-											location.href='admin'
+											location.href='/admin'
 										})
-										location.href='admin'	                                    		
+										location.href='/admin'	                                    		
 									}, 1000)
 								}, 1000)			     	                                	
                             })
