@@ -16,5 +16,15 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	public List<Comment> selectComments(int feedId) {
 		return commentMap.selectComments(feedId); 
-	}	
+	}
+	
+	@Override
+	public int insertComment(Comment comment) {
+		return commentMap.insertComment(comment);
+	}
+	
+	@Override
+	public int updateComment(Comment comment) {
+		return commentMap.updateComment(comment);
+	}
 }
