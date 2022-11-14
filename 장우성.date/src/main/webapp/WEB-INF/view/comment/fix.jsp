@@ -101,7 +101,8 @@
 						content: $('#inputText').val()
 					}),
 					success: (data) => {
-						window.history.back()
+						let url = '<%=request.getContextPath()%>/comment';
+						location.replace(url);
 					},
 				});
 			});
