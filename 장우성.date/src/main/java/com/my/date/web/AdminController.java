@@ -135,7 +135,7 @@ public class AdminController {
         return mv;
     }
 
-    @GetMapping("menu/getMenus")
+    @GetMapping("getMenus")
     public List<Menu> getMenus() {
         return menuService.getMenus();
     }
@@ -148,6 +148,11 @@ public class AdminController {
     @PatchMapping("fixMenu")
     public int fixMenu(@RequestBody List<Menu> menu) {
     	return menuService.fixMenu(menu);
+    }
+    
+    @DeleteMapping("delMenu/{menuId}")
+    public void delMenu(@PathVariable int menuId) {
+    	menuService.delMenu(menuId);
     }
 
     @GetMapping("detail")

@@ -3,9 +3,10 @@
 	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 <mapper namespace='com.my.date.dao.map.MenuMap'>
 	<select id='selectMenus' resultType="menu">
-		select menu_id, menu_name, price
-		from menus
-		order by menu_id desc 
+		select m.menu_id, m.menu_name, m.price, m.place_id
+		from menus m, places p
+		where m.place_id = p.place_id
+		order by menu_id desc
 	</select>
 	
 	<insert id='insertMenu'>
@@ -18,4 +19,9 @@
 		set menu_name = #{menuName}, price = #{price}
 		where menu_id = #{menuId}
 	</update>
+	
+	<delete id='deleteMenu'>
+		delete from menus
+		where menu_id = #{menuId}
+	</delete>
 </mapper>

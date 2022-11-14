@@ -13,64 +13,44 @@
             html += '<td><input type="hidden" id="placeId" name="placeId" value="${placeId}" /></td>';
             html += '<td><input type="text" class="form-control" id="menuName" name="menuName" placeholder="메뉴를 입력해주세요"/></td>';
             html += '<td><input type="text" class="form-control" id="price" name="price" placeholder="가격을 입력해주세요"/></td>';
-            html += '<td><button type="button" class="btn btn-danger" onclick="tableDelete(this)" id="remove">삭제</button></td>';
+            html += '<td><button type="button" class="btn btn-danger" id="remove">삭제</button></td>';
             html += '</tr>';
 
             $('#menus').append(html);
         }
-
-        function tableDelete(obj) {
-            var tr = $(obj).parent().parent();
-
-            tr.remove();
-        }
-
-        function isVal(field) {
-            let isGood = false;
-            let errMsg;
-
-            if (!field.length) errMsg = 'fail';
-            else {
-                if (!field.val()) errMsg = '빈칸을 입력하세요.';
-                else isGood = true;
-            }
-
-            if (!isGood) {
-                $('#modalMsg').text(errMsg).css('color', 'red');
-                $('#modalBtn').hide();
-                $('#modal').modal();
-            } else {
-                $('#modalMsg').text('수정이 완료 되었습니다.');
-                $('#modalBtn').hide();
-                $('#modal').modal();
-            }
-
-            return isGood;
+        
+        function showModal(msg, isOk, menuId) {
+            $('#cancelBtn').toggle(isOk);
+            $('#okBtn').toggle(isOk);
+            $('#onClickBtn').toggle(!isOk);
+            $('#modalMsg').text(msg);
+            $('#menuIdInput').val(menuId);
+            $('#delCheckModal').modal();
         }
 
         function menuList() {
             $.ajax({
-                url: 'menu/getMenus',
-                method: 'get',
+                url: '<%=request.getContextPath()%>/admin/getMenus',
                 contentType: 'application/json',
                 success: (menus) => {
                     const menuArr = [];
 
                     if (menus.length) {
                         $.each(menus, (i, menu) => {
-                            menuArr.unshift(
+                            menuArr.push(
                                 `<tr>
-                                    <td><input type='hidden' id='menuId' name='menuId' value='\${menu.menuId}'/>\${menu.menuId}</td>
+                                    <td><input type='hidden' id='menuId' name='menuId' value='\${menu.menuId}'/>\${i+1}</td>
                                     <td><input type='text' class='form-control' id='fixMenuName' name='fixMenuName' value='\${menu.menuName}'/></td>
                                     <td><input type='text' class='form-control' id='fixPrice' name='fixPrice' value='\${menu.price}'/></td>
-                                    <td><button type='button' class='btn btn-danger' onclick='tableDelete(this)' id='remove'>삭제</button></td>
+                                    <td><button type='button' class='delBtn btn btn-danger' id='delBtn' value='\${menu.menuId}'>삭제</button></td>
                                 </tr>`
                             );
                         });
                     }
                     $('#menus').empty();
                     $('#menus').append(menuArr.join(''));
-                },
+                    init();
+                }, 
             });
         }
 
@@ -115,17 +95,31 @@
             });
             console.log(arr);
         }
-
+        
+        function delMenu(menuId) {
+       		$.ajax({
+       			url: 'delMenu/' + menuId,
+       			method: 'delete',
+       			success: (data) => {
+       					showModal('삭제가 완료되었습니다.', false);
+       					menuList();
+       			}
+       		})
+        }
+        
         function init() {
             $('#okMenuBtn').click(() => {
                 addMenu();
                 fixMenu();
             });
+            
+            $('.delBtn').on('click', function (e) {
+             	showModal('삭제하시겠습니까?', true, e.target.value);
+             });
         }
 
         $(() => {
             menuList();
-            init();
         });
     </script>
 </head>
@@ -178,21 +172,17 @@
             </div>
         </div>
     </div>
-    <div class="modal" tabindex="-1" id="modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <a href="./menu" class="close text-black">
-                        <span>&times;</span>
-                    </a>
-                </div>
-                <div class="modal-body text-center py-3">
-                    <p id="modalMsg"></p>
-                </div>
-                <div class="modal-footer">
-                    <a href="./menu" class="btn btn-primary btn-lg col-12">확인</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="modal" id="delCheckModal" tabindex="-1">
+	    <div class="modal-dialog modal-dialog-centered">
+	        <div class="modal-content mx-5">
+	            <div class="modal-body text-center py-3">
+	                <p id="modalMsg"></p>
+	                <button type="button" id="cancelBtn" class="btn btn-secondary" data-dismiss="modal">취소</button>
+	                <button type="button" onclick="delMenu($('#menuIdInput').val())" id="okBtn" class="btn btn-primary">확인</button>
+	                <button type="button" id="onClickBtn" class="btn btn-primary btn-lg col-12" data-dismiss="modal">확인</button>
+	                <input type="hidden" id="menuIdInput" name="menuIdInput" value="" />
+	            </div>
+	        </div>
+	    </div>
+	</div>
 </body>
