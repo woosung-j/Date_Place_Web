@@ -2,6 +2,7 @@ package com.my.date.service;
 
 import com.my.date.dao.PlaceDao;
 import com.my.date.domain.Place;
+import com.my.date.domain.PlaceAdminDto;
 import com.my.date.domain.PlaceDetailDto;
 import com.my.date.domain.PlaceDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,11 @@ public class PlaceServiceImpl implements PlaceService {
 	}
 
 	@Override
+	public PlaceAdminDto getAdminPlace(int placeId) {
+		return placeDao.selectAdminPlace(placeId);
+	}
+
+	@Override
 	public int addPlace(Place place) {
 		return placeDao.insertPlace(place);
 	}
@@ -47,12 +53,17 @@ public class PlaceServiceImpl implements PlaceService {
 	}
 
 	@Override
-	public void fixPlace(Place place) {
-		placeDao.updatePlace(place);
+	public int fixPlace(Place place) {
+		return placeDao.updatePlace(place);
 	}
 
 	@Override
 	public void delPlace(int placeId) {
 		placeDao.deletePlace(placeId);
+	}
+
+	@Override
+	public int delPlaceImage(int placeId) {
+		return placeDao.deletePlaceImage(placeId);
 	}
 }
