@@ -37,14 +37,17 @@ public class FeedServiceImpl implements FeedService {
 	}
 	
 	@Override
-	public int getHashtag(int feedId, String tag) {
-		List<String> tags = new ArrayList<String>();
-		tags.add(feedId, tag);
-		
-		for(String tag1 : tags) {
-			feedDao.selectHashtag(feedId, tag1);
-			System.out.println(tags);
-		}
-		return feedDao.selectHashtag(feedId, tag);
+	public int fixFeed(FeedTagDto Feed) {
+		return feedDao.updateFeed(Feed);
+	}
+	
+	@Override
+	public int fixHashtags(List<String> tags, int feedId) {
+		return feedDao.updateHashtags(tags, feedId);
+	}
+	
+	@Override
+	public int delHashtags(int feedId) {
+		return feedDao.deleteHashtags(feedId);
 	}
 }

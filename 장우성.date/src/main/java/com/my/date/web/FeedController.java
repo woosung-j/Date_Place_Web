@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.my.date.domain.Feed;
 import com.my.date.domain.FeedDto;
 import com.my.date.domain.FeedTagDto;
-import com.my.date.domain.Hashtag;
 import com.my.date.service.FeedService;
 
 @RestController
@@ -41,6 +41,13 @@ public class FeedController {
 	@GetMapping("add")
 	public ModelAndView addlist(HttpSession session, ModelAndView mv) {
 		mv.setViewName("community/addFeed");
+		return mv;
+	}
+	
+	@GetMapping("fix/{feedId}")
+	public ModelAndView fixFeed(HttpSession session, ModelAndView mv, @PathVariable int feedId) {
+		mv.addObject(feedId);
+		mv.setViewName("community/fixFeed");
 		return mv;
 	}
 		
@@ -69,4 +76,22 @@ public class FeedController {
         }
 		return isFeed; 
 	}
+	
+	@PatchMapping("fixFeed")
+	public int fixFeed(HttpServletRequest request, @RequestBody FeedTagDto feed) {
+		HttpSession session = request.getSession(false);
+        if(session == null || session.getAttribute("userId") == null) {
+            return 0;
+        }
+        int userId = (int) session.getAttribute("userId");
+        feed.setUserId(userId);
+        
+		int isFeed = feedService.fixFeed(feed);
+		if(isFeed > 0 && feed.getTags().size() > 0) {
+			feedService.delHashtags(feed.getFeedId());
+			return feedService.addHashtags(feed.getTags(), feed.getFeedId());
+		}
+		return isFeed;
+	}
+   	
 }
