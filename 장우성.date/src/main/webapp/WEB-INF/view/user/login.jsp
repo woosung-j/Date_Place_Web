@@ -53,7 +53,7 @@
                     <span class="input-group-text">
                         <i class="bi bi-person-fill"></i>
                     </span>
-                    <input type="text" name="id" class="form-control" placeholder="id" aria-label="id" aria-describedby="addon-wrapping" />
+                    <input type="text" name="id" class="form-control" value="${cookie.id.value}" placeholder="id" aria-label="id" aria-describedby="addon-wrapping"/>
                 </div>
                 <div class="input-group mt-3">
                     <span class="input-group-text">
@@ -61,9 +61,9 @@
                     </span>
                     <input type="password" name="password" class="form-control" placeholder="password" aria-label="password" aria-describedby="addon-wrapping" />
                 </div>
-                <input type="checkbox" class="mt-3" />아이디 저장
+                <input type="checkbox" name='rememberId' class="mt-3" />아이디 저장
                 <div class="text-danger">${errMsg}</div>
-                <button type="submit" class="btn btn-primary btn-lg col-12 mt-3">로그인</button>
+                <button type="submit" class="btn btn-primary btn-lg col-12 mt-3" value='로그인'>로그인</button>
             </form>
         </div>
         <div class="row pb-5 mb-3">
