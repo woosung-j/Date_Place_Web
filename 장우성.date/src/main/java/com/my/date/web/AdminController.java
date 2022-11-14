@@ -45,7 +45,34 @@ public class AdminController {
         }
         return mv;
     }
+//  
+//  @GetMapping("main")
+//  public ModelAndView main(ModelAndView mv) {
+//  	mv.setViewName("admin/main");
+//  	
+//  	return mv;
+//  }
 
+    @GetMapping("list")
+    public List<User> getUserList() {
+		return userService.getAdminUserList();
+	}
+    
+    @GetMapping("get/{userName}")
+    public User getUser(@PathVariable String userName) {    
+    	return userService.getUserByUserName(userName);
+    }
+     
+    @PutMapping("fix")
+	public void fixUser(@RequestBody User user) {
+    	userService.fixAdminUser(user);
+	}
+    
+	@PutMapping("del/{userId}")
+	public void delUser(@PathVariable int userId) {
+		userService.delUser(userId);
+	}
+    
     @GetMapping("login")
     public ModelAndView login(ModelAndView mv) {
         mv.setViewName("admin/user/login");
