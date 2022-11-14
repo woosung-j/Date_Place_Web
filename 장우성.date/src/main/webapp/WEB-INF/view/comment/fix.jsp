@@ -93,7 +93,7 @@
 			
 			$('#replyFix').click(() => {
 				$.ajax({
-					url: '<%=request.getContextPath()%>/comment/fix',
+					url: '<%=request.getContextPath()%>/comment/fix/',
 					method: 'patch',
 					contentType: 'application/json',
 					data: JSON.stringify({

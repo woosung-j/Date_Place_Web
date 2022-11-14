@@ -86,6 +86,43 @@
         }
     </style>
     <script>
+    	function showModal(msg, isOk, commentId) {
+    		$('#cancleBtn').toggle(isOk);
+    		$('#okBtn').toggle(isOk);
+    		$('#onClickBtn').toggle(!isOk);
+    		$('#modalMsg').text(msg);
+    		$('#modalMsg2').text(msg);
+    		$('#commentIdInput').val(commentId);
+    		$('#delModal').modal();
+    		$('#delCheckModal').modal();
+    	}
+    	
+    	function del() {
+    		$('.delBtn').on('click', function (e) {
+    			showModal('삭제하시겠습니까?', true, e.target.value);
+    		});
+    	}
+    	 
+    	function delBtn() {
+    		$('.delBtn').on('click', function(e) {
+    			showModal('삭제하시겠습니까?', true, e.target.value);
+    		});
+    	}
+    	
+    	function delComment(commentId) {
+    		$.ajax({
+    			url: '/comment/del/' + $('#commentId').val(),
+    			method: 'delete',
+    			success: (data) => {
+    				if(data > 0) {
+    					showModal('삭제가 완료되었습니다.', false);
+    				} else {
+    					showModal('권한이 없습니다.', false);
+    				}
+    			},
+    		});
+    	}
+    	
         function getCommentList() {			
 			$('#commentList').empty();
         	
@@ -93,11 +130,16 @@
                 url: '<%=request.getContextPath()%>/comment/listComment/' + $('#feedId').val(),
                 method: 'get',
                 contentType: 'application.json',
-                success: (commentList) => {
-                	
+                success: (commentList) => {	
                     if (commentList.length) {
                     	const list = []
                         $.each(commentList, (i, item) => {
+                        	const delbtn = []
+                        	if($('#userId').val() == item.userId) {
+                        		delbtn.push(
+                                 	`<button type="button" class="delBtn dropdown-item" id="deleteBtn">삭제</button>	`	
+                        		)
+                        	}
                             list.unshift(
                                 `<div class="card" id="card1">
                                     <div class="card-body row-11">
@@ -105,11 +147,12 @@
                                             <span class="col-5"><i class="fa-solid fa-circle-user fa-2x"></i>\${item.nickname}</span>
                                             <span class="col-5">\${item.createdAt}</span>
                                             <div class="btn-group">
+                                            	<input type="hidden" id="commentId" value="\${item.commentId}"/>
                                                 <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>
                                                 <div class="dropdown-menu">
                                                     <a href="<%=request.getContextPath()%>/comment/fix/\${item.commentId}" class="dropdown-item">수정</a>
                                                     <hr/>
-                                                    <button type="button" class="dropdown-item" data-toggle="modal" data-target="#delModal" id="delBtn">삭제</button>
+													\${delbtn.join('')}
                                                 </div>
                                             </div>
                                         </div>
@@ -119,6 +162,7 @@
                             );
                         });
     					$('#list').append(list.join(''));
+    					del();
                      }
                 },	
             });
@@ -131,15 +175,14 @@
 		function addComment() {
 			$('#replyAddBtn').click(() => {
 				$.ajax({
-					url: '<%=request.getContextPath()%>/comment/add',
+					url: '<%=request.getContextPath()%>/comment/add/' + $('#feedId').val(),
 					method: 'post',
 					contentType: 'application/json',
 					data: JSON.stringify({
-						feedId: ${feedId},
+						feedId: $('#feedId').val(),
 						content: $('#inputTextArea').val(),
 					}),
 					success: (data) => {
-						console.log(data);
 						getCommentList()
 					},
 				});
@@ -264,7 +307,7 @@
                     <div class="modal-footer" id="modalBtn">   
                         <button type="button" id="cancleBtn" class="btn btn-secondary" data-dismiss="modal">취소</button>
                         <a href="#infoModal"> 
-                        	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#infoModal" id="okBtn">확인</button>
+                        	<button type="button" class="btn btn-primary" onClick="delComment($('#commentIdInput').val())" data-toggle="modal" data-target="#infoModal" id="okBtn">확인</button>
                     	</a>
                     </div>
                 </div>
@@ -278,7 +321,8 @@
                         <p id="modalMsg2"></p>
                     </div>
                     <div class="modal-footer">    
-                        <button type="button" data-dismiss="modal" class="btn btn-primary" id="onClickBtn">확인</button>
+                        <button type="button" data-dismiss="modal" class="btn btn-primary" id="onClickBtn" onClick="location.href = document.referrer;">확인</button>
+                        <input type="hidden" id="commentIdInput" name="commentIdInput" value="" />
 					</div>
                 </div>
             </div>
