@@ -16,7 +16,7 @@
         .swiper {
             width: 250px;
             height: 250px;
-            border: 0.1rem solid;
+            
         }
         .swiper-slide {
             text-align: center;
@@ -133,7 +133,7 @@
                                 <div class="row-1 mt-5 border mx-3 rounded">
                                     <div class="col pt-2">
                                         <div class="row text-start ml-1 mr-1">
-                                            <img class="profile" src="attach/user/\${review.profileImage}'/>" />
+                                            <img class="profile" src="attach/profileImage/\${review.profileImage}"/>
                                             <p class="mt-1 ml-1">\${review.nickname}</p>
                                             <p class="mt-2 ml-1">\${setStarRating(review.starRating)}</p>
                                             <p class="mt-2 ml-1" style="font-size: 13px">\${review.createdAt}</p>

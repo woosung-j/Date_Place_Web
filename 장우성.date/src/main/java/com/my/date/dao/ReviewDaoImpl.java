@@ -54,6 +54,11 @@ public class ReviewDaoImpl implements ReviewDao{
 	}
 	
 	@Override
+	public int insertReviewImages(int reviewId, List<String> reviewImages) {
+		return reviewMap.insertReviewImages(reviewId, reviewImages);
+	}
+	
+	@Override
 	public int deleteAdminReview(int reviewId) {
 		return reviewMap.deleteAdminReview(reviewId);
 	}

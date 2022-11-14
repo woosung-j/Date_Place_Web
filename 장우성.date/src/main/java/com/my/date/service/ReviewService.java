@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.my.date.domain.Review;
 import com.my.date.domain.ReviewDto;
+import com.my.date.domain.ReviewImage;
 
 public interface ReviewService {
 	List<ReviewDto> getReviews();
@@ -14,6 +15,7 @@ public interface ReviewService {
 	ReviewDto getLatestReviewByPlaceId(int placeId);
 	double getReviewAvg(int placeId);
 	int addReview(Review review);
+	int addReviewImages(int reviewId, List<String> reviewImages);
 	int delAdminReview(int reviewId);
 	int delDetailReview(int reviewId, int userId);
 }
