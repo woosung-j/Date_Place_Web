@@ -20,7 +20,6 @@ public class AdminController {
     @Autowired private DetailService detailService;
     @Autowired private ReviewService reviewService;
     @Autowired private UserService userService;
-    @Autowired private AdminService adminService;
     
     private boolean isAdmin(HttpServletRequest request) {
         HttpSession sessionCheck = request.getSession(false);
@@ -91,24 +90,23 @@ public class AdminController {
     
     @GetMapping("list")
     public List<User> getUserList() {
-		return adminService.getUserList();
+		return userService.getAdminUserList();
 	}
     
     @GetMapping("get/{userName}")
-    public User getUser(@PathVariable String userName) {    	
-    	return adminService.getAdminUser(userName);
+    public User getUser(@PathVariable String userName) {    
+    	return userService.getUserByUserName(userName);
     }
-    
-    
+     
     @PutMapping("fix")
 	public void fixUser(@RequestBody User user) {
-		adminService.fixAdminUser(user);
+    	userService.fixAdminUser(user);
 	}
     
     
 	@PutMapping("del/{userId}")
 	public void delUser(@PathVariable int userId) {
-		adminService.delAdminUser(userId);
+		userService.delUser(userId);
 	}
     
     @GetMapping("place")

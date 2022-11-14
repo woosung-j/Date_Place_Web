@@ -84,4 +84,19 @@ public class UserServiceImpl implements UserService {
 	public String getEmail(String email) {
 		return userDao.selectEmail(email);
 	}
+
+	@Override
+	public List<User> getAdminUserList() {
+		return userDao.selectAdminUserList();
+	}
+
+	@Override
+	public void fixAdminUser(User user) {
+		userDao.updateAdminUser(user);
+	}
+
+	@Override
+	public User getUserByUserName(String userName) {
+		return userDao.selectUserByUserName(userName);
+	}
 }

@@ -16,4 +16,7 @@ public interface UserService {
 	User findId(User user);
 	String getEmail(String email);
 	int fixPassword(String email, String password);
+	User getUserByUserName(String userName);
+	List<User> getAdminUserList();
+	void fixAdminUser(User user);
 }

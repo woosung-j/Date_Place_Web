@@ -4,7 +4,6 @@
     <link rel="stylesheet" href="../../res/admin.css" />
 </head>
 <script>
-
     function isVal(field) {
         let isGood = false
         let errMsg
@@ -36,10 +35,9 @@
             url: '/admin/list',
             method: 'get',
             dataType: 'json',
-            success: userList => {
-
+            success: (userList) => {
                 if (userList.length) {
-                    const userListArr = []
+                    const userListArr = [];
 
                     $.each(userList, (i, user) => {
                         userListArr.unshift(
@@ -84,7 +82,7 @@
                         if (input != data.userName) {
                         	data = (
 									`<tr>
-										<td > 
+										<td> 
 											<input type='radio' name='userId' id='userId' value='\${data.userId}'/>
 										</td>
 										<td>\${data.userId}</td>
@@ -159,7 +157,6 @@
             if (isVal($('#userId:checked')) && isVal($('#userName')) &&
                 isVal($('#nickname')) && isVal($('#userTel')) &&
                 isVal($('#email')) && isVal($('#birthday'))) {
-
                 let user = {
                     userId: $('#userId:checked').val(),
                     userName: $('#userName').val(),
@@ -238,7 +235,6 @@
     $(() => {
         init()
     })
-
 </script>
 
 <body>
@@ -260,8 +256,7 @@
             </div>
             <div class="col mt-4">
                 <div class="col mt-4">
-                            <div id='errMsg'>
-                            </div>
+                    <div id='errMsg'></div>
                     <form>
                         <div class="row">
                             <div class="col-3">

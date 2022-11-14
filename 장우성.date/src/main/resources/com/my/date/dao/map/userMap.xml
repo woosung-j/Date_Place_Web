@@ -16,13 +16,6 @@
 		where u.id = #{id} and d.user_id is null
 	</select>
 
-	<select id="selectAdminUser" resultType="user">
-		select u.user_id, u.id, u.password, u.nickname, u.email
-		from admins a, users u left outer join delete_users d
-											   on u.user_id = d.user_id
-		where u.user_id = a.user_id and u.id = #{id} and d.user_id is null
-	</select>
-
 	<select id="selectUserById" resultType="user">
 		select user_id, id, password, nickname, email
 		from users
@@ -66,4 +59,30 @@
 		set password = #{password}
 		where email = #{email}
 	</update>
+	
+	<select id='selectAdminUserList' resultType='user'>
+		select u.user_id, u.user_name, u.nickname, u.phone_number, u.email, u.birthday
+		from users u left outer join delete_users d
+										on u.user_id = d.user_id
+										where d.user_id is null
+										order by user_id
+	</select>
+	
+	<select id='selectUserByUserName' resultType='user'>
+		select u.user_id, u.user_name, u.nickname, u.phone_number, u.email, u.birthday
+		from users u left outer join delete_users d
+		                    on u.user_id = d.user_id
+							where u.user_name like #{userName} and d.user_id is null
+	</select>
+	
+	<update id='updateAdminUser'>
+		update users
+		set user_name = #{userName,jdbcType=VARCHAR}, nickname = #{nickname,jdbcType=VARCHAR},
+			 phone_number = #{phoneNumber,jdbcType=VARCHAR}, email = #{email,jdbcType=VARCHAR}, birthday = #{birthday,jdbcType=VARCHAR}
+		where user_id = #{userId,jdbcType=NUMERIC}
+	</update>
+	
+	<insert id='deleteAdminUser'>
+		insert into delete_users values(#{userId})
+	</insert>
 </mapper>
