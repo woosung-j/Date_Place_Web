@@ -2,7 +2,7 @@ package com.my.date.dao;
 
 import java.util.List;
 
-import com.my.date.domain.CommentDto;
+import com.my.date.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
