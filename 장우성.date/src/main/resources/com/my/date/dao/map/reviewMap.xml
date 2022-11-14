@@ -23,7 +23,7 @@
 		order by review_id
 	</select>
 
-	<select id='selectSearchReviewByPlaceName' resultType='String'>
+	<select id='selectSearchReviewByPlaceName' resultType="reviewDto">
 		select  r.review_id, r.place_id, p.place_name, r.user_id, u.profile_image, u.nickname, 
                 r.content, r.star_rating, i.file_name, i.review_images_id, r.created_at
 		from reviews r

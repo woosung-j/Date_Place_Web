@@ -5,23 +5,23 @@
 </head>
 <script>
     function isVal(field) {
-        let isGood = false
-        let errMsg
+        let isGood = false;
+        let errMsg;
 
         if (!field.length) {
-            errMsg = '회원을 선택하세요.'
+            errMsg = '회원을 선택하세요.';
         } else {
             if (!field.val()) {
-                errMsg = field.attr('placeholder') + '입력하세요.'
+                errMsg = field.attr('placeholder') + '입력하세요.';
             } else {
-                isGood = true
+                isGood = true;
             }
         }
 
         if (!isGood) {
-            $('#modalMsg').text(errMsg).css('color', 'red')
-            $('#modalBtn').hide()
-            $('#modal').modal()
+            $('#modalMsg').text(errMsg);
+            $('#modalBtn').hide();
+            $('#modal').modal();
         }
 
         return isGood
@@ -68,7 +68,7 @@
 
         $('#getUserBtn').click(() => {
             if (!($('#inputName').val())) {
-                $('#modalMsg').text('회원의 이름을 입력하세요.').css('color', 'red')
+                $('#modalMsg').text('회원의 이름을 입력하세요.')
                 $('#modalBtn').hide()
                 $('#modal').modal()
             } else {
@@ -191,6 +191,7 @@
             if (isVal($('#userId:checked'))) {
                 $('#modalMsg').text('회원을 탈퇴 하시겠습니까?')
                 $('#modalBtn').show()
+                $('#modalCloseBtn').hide()
                 $('#modal').modal()
             }
         })
@@ -206,6 +207,7 @@
                 $('#modal').modal()
                 $('#modalMsg').text('삭제되었습니다.').css('color', 'black')
                 $('#modalBtn').hide()
+                $('#modalCloseBtn').show()
 
             }
             $(checkModal)
@@ -326,6 +328,9 @@
                 <div id='modalBtn' class="modal-footer">
                     <button type='button' class='btn btn-secondary' data-dismiss='modal'>아니오</button>
                     <button type='button' class='btn btn-primary' id='delUserOkBtn'>예</button>
+                </div>
+                <div id='modalCloseBtn' class="modal-footer">
+                    <button type="button" class="btn btn-secondary text-center" data-dismiss="modal">확인</button>
                 </div>
             </div>
         </div>
