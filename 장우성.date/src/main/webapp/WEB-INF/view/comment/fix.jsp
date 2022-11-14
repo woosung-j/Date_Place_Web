@@ -1,114 +1,78 @@
 <%@ page language="java" contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
 <head>
-    <jsp:include page="../include/head.jsp"></jsp:include>
-    <link rel="stylesheet" href="../../res/mobile.css" />
-    <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Noto Sans KR', sans-serif;
-        }
+	<jsp:include page="../include/head.jsp"></jsp:include>
+	<link rel="stylesheet" href="../../res/mobile.css"/>
+	<style>
+      .textarea {
+    		width: 100%;
+    		height: 150px;
+    		padding: 12px 20px;
+        	box-sizing: border-box;
+        	border-radius: 4px;
+        	font-size: 16px;
+        	resize: none;
+      }
 
-        header {
-            margin-bottom: 20px;
-        }
-
-        .bi {
-            font-size: 16px;
-        }
-
-        .icon {
-            font-size: 24px;
-        }
-
-        .pt-62 {
-            padding-top: 62px;
-        }
-
-        .list-style-none {
-            list-style: none;
-        }
-
-        .word-keep {
-            word-break: keep-all;
-        }
-
-        .font-gamja-flower {
-            font-family: 'Gamja Flower', cursive;
-            font-size: 2rem;
-        }
-
-        .textarea {
-            width: 100%;
-            height: 150px;
-            padding: 12px 20px;
-            box-sizing: border-box;
-            border-radius: 4px;
-            font-size: 16px;
-            resize: none;
-        }
-
-        .icon.main:hover {
-            color: #ff5858;
-        }
-    </style>
-    <script>
-        function isVal(field) {
-            let isGood = false;
-            let errMsg;
-
-            if (!field) {
-                errMsg = '내용을 입력해주세요.';
-            } else isGood = true;
-
-            if (!isGood) {
-                $('#modalMsg').text(errMsg);
-                $('#addCancleBtn').hide();
-                $('#addOkBtn').hide();
-                $('#replyFix').hide();
-                $('#modal').modal();
-            }
-            return isGood;
-        }
-
-        function fixComment() {
-            $('#replyFixBtn').click(() => {
-                if (isVal($('#inputText').val())) {
-                    $('#modalMsg').text('수정하시겠습니까?');
-                    $('#addCancleBtn').show();
-                    $('#replyFix').show();
-                    $('#modal').modal();
-                }
-            });
-
-            $('#addOkBtn').click(() => {
-                $('#modalMsg2').text('수정되었습니다.');
-                $('#addCancleBtn').hide();
-                $('#replyFix').show();
-                $('#modal').modal();
-            });
-
-            $('#replyFix').click(() => {
-                $.ajax({
-                    url: '<%=request.getContextPath()%>/comment/fix',
-                    method: 'patch',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        commentId: $('#commentId').val(),
-                        content: $('#inputText').val(),
-                    }),
-                    success: (data) => {
-                        window.history.back();
-                    },
-                });
-            });
-        }
-        $(fixComment);
-    </script>
-    <body>
-        <div class="container">
+      .icon.main:hover {
+        	color: #ff5858;
+      }
+	</style>
+	<script>
+		function isVal(field) {
+			let isGood = false;
+			let errMsg;
+			
+			if(!field) {
+				errMsg = '내용을 입력해주세요.';
+			} else isGood = true;
+			
+			if(!isGood) {
+				$('#modalMsg').text(errMsg);
+				$('#addCancleBtn').hide();
+				$('#addOkBtn').hide();
+				$('#replyFix').hide();
+				$('#modal').modal();
+			}
+			return isGood;
+		}
+		
+		function fixComment() {
+			$('#replyFixBtn').click(() => {
+				if(isVal($('#inputText').val())) {
+					$('#modalMsg').text('수정하시겠습니까?');
+					$('#addCancleBtn').show();
+					$('#replyFix').show();
+					$('#modal').modal();
+				}
+			});
+			
+			$('#addOkBtn').click(() => {
+				$('#modalMsg2').text('수정되었습니다.');
+				$('#addCancleBtn').hide();
+				$('#replyFix').show();
+				$('#modal').modal();
+			})
+			
+			$('#replyFix').click(() => {
+				$.ajax({
+					url: '<%=request.getContextPath()%>/comment/fix',
+					method: 'patch',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						commentId: $('#commentId').val(),
+						content: $('#inputText').val()
+					}),
+					success: (data) => {
+						let url = '<%=request.getContextPath()%>/comment';
+						location.replace(url);
+					},
+				});
+			});
+		}
+		$(fixComment)
+	</script>
+	<body>
+	 	<div class="container">
             <header>
                 <nav class="row navbar bg-light text-center align-middle fixed-top">
                     <a href="javascript:window.history.back();" class="col btn"><i class="bi bi-chevron-left"></i></a>
