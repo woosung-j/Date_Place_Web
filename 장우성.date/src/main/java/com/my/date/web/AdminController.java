@@ -2,6 +2,9 @@ package com.my.date.web;
 
 import com.my.date.domain.*;
 import com.my.date.service.*;
+
+import ch.qos.logback.core.net.SyslogOutputStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -126,10 +129,11 @@ public class AdminController {
             return -1;
         }
 
+        System.out.println(place);
         place.setSiId(regionService.getSiId(si));
         place.setGuId(regionService.getGuId(gu));
         int isPlaceSuccess = placeService.addPlace(place);
-
+        System.out.println(place);
         if(place.getPlaceId() != 0 && isPlaceSuccess == 1 && files.size() > 0) {
             return placeService.addPlaceImages(place.getPlaceId(), fileNameList);
         }
@@ -239,6 +243,24 @@ public class AdminController {
         System.out.println(detail);
         detail.setPlaceId(placeId);
         return detailService.fixDetail(detail);
+    }
+    
+    @GetMapping("detail/add/{placeId}")
+    public ModelAndView detailAdd(ModelAndView mv, @PathVariable int placeId) {
+    	mv.addObject("placeId", placeId);
+        mv.setViewName("admin/detail/addDetail");
+        return mv;
+    }
+    
+    @PostMapping("detail/add/{placeId}")//add
+    public int addDetail(@PathVariable int placeId, @RequestBody Detail detail) {
+    	System.out.println(detail);
+        return detailService.addDetail(detail);
+    }
+    
+    @DeleteMapping("detail/del/{placeId}")
+    public void delDetail(@PathVariable int placeId, @RequestBody int detailId) {
+        detailService.delDetail(detailId);
     }
     
     @GetMapping("review/list")

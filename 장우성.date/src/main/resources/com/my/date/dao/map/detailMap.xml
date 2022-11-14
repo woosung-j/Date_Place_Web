@@ -13,4 +13,13 @@
 		set address = #{address}, tel = #{tel}, opening_hours = #{openingHours}, closing_hours = #{closingHours}, day_off = #{dayOff}, contact = #{contact}, parking = #{parking}, updated_at = sysdate 
 		where place_id = #{placeId}
 	</update>
+	
+	<insert id='insertDetail'>
+		insert into details values(details_id_seq.nextval, #{address}, #{tel}, #{openingHours}, #{closingHours}, #{dayOff}, #{contact}, #{parking}, sysdate, sysdate)
+	</insert>
+	
+	<delete id='deleteDetail'>
+		delete detail
+		where detail_id = #{detailId}
+	</delete>
 </mapper>

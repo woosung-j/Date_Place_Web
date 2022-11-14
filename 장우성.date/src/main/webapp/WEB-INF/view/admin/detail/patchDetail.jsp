@@ -24,7 +24,7 @@
                                     </td>
                                     <td>
                                         <br />
-                                        <input type="text" class="form-control" id="address" name="address" value="\${data.address}" onclick="PostCodeSearch()" style="width: 500px" />
+                                        <input type="text" class="form-control" id="address" name="address" value="\${data.address}" onclick="PostCodeSearch()" style="width: 700px" />
                                         <br />
                                     </td>
                                 </tr>

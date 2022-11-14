@@ -26,4 +26,8 @@ public class DetailDaoImpl implements DetailDao {
 		return detailMap.updateDetail(detail);
 	}
 	
+	@Override
+	public int deleteDetail(int detailId) {
+		return detailMap.deleteDetail(detailId);
+	}
 }

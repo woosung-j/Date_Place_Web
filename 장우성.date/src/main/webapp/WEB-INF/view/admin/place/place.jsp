@@ -40,15 +40,15 @@
                     $('#place_like_count').text(data.placeLikeCount);
                     $('#created_at').text(data.createdAt);
                     $('#updated_at').text(data.updatedAt);
-
-                    $('#address').text(detail.address);
-                    $('#tel').text(detail.tel);
-                    $('#time').text(detail.openingHours + ' - ' + detail.closingHours);
-                    $('#day_off').text(detail.dayOff);
-                    let park = detail.parking == 0 ? '주차불가' : '주차가능';
-                    $('#parking').text(park);
-                    $('#contact').text(detail.contact);
-
+					if(detail != null) {
+	                    $('#address').text(detail.address);
+	                    $('#tel').text(detail.tel);
+	                    $('#time').text(detail.openingHours + ' - ' + detail.closingHours);
+	                    $('#day_off').text(detail.dayOff);
+	                    let park = detail.parking == 0 ? '주차불가' : '주차가능';
+	                    $('#parking').text(park);
+	                    $('#contact').text(detail.contact);
+					}
                     const menuTable = $('#menu_table');
                     const menuArr = [];
 
