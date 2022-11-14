@@ -20,6 +20,11 @@ public class FeedDaoImpl implements FeedDao{
 	}
 	
 	@Override
+	public List<FeedDto> selectMyFeeds(int feedId) {
+		return feedMap.selectMyFeeds(feedId);
+	}
+	
+	@Override
 	public int insertHashtags(List<String> tags, int feedId) {
 		return feedMap.insertHashtags(tags, feedId);
 	}

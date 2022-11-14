@@ -69,4 +69,28 @@ public class FeedController {
         }
 		return isFeed; 
 	}
+	
+	@GetMapping("myfeed")
+	public ModelAndView myFeed(HttpServletRequest request, ModelAndView mv) {
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("userId") == null) {
+			mv.setViewName("redirect:/user/login");
+		} else {
+			mv.setViewName("community/myFeed");
+		}
+		return mv;
+	}
+	
+	@GetMapping("community/myFeed")
+	public List<FeedDto> getMyFeed(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("userId") == null) {
+			return null;
+		}
+		int userId = (int) session.getAttribute("userId");
+
+		List<FeedDto> dto = feedService.getMyFeeds(userId);
+		
+		return dto;
+	}
 }

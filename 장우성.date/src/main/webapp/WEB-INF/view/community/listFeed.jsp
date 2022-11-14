@@ -17,7 +17,6 @@
                             const tagList = [];
                             const likeList = [];
 
-                            console.log(item);
                             if (item.hashtag.length != 0 && item.hashtag[0]?.tag != null) {
                                 $.each(item.hashtag, (i, item) => {
                                     tagList.push(`<span class="badge badge-secondary badge-pill">\${item.tag}</span>`);

@@ -10,6 +10,7 @@ import com.my.date.domain.FeedTagDto;
 
 public interface FeedMap {
 	List<Feed> selectFeeds();
+	List<FeedDto> selectMyFeeds(int feedId);
 	FeedDto selectFeed(int feedId);
 	int insertFeed(FeedTagDto feed);
 	int insertHashtags(@Param("tags") List<String> tags, @Param("feedId") int feedId);

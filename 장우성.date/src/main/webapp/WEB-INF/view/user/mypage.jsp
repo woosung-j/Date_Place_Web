@@ -81,7 +81,7 @@
         <a href="<%=request.getContextPath()%>/review/myreview">
             <button type="button" class="btn btn-primary btn-lg col-12 mt-3">리뷰 내역</button>
         </a>
-        <a href="../community/06.html">
+        <a href="<%=request.getContextPath()%>/community/myfeed">
             <button type="button" class="btn btn-primary btn-lg col-12 mt-3">피드 내역</button>
         </a>
         <a href="<%=request.getContextPath()%>/declaration">

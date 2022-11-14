@@ -14,8 +14,9 @@
             }
 
             if (!isGood) {
-                $('#errMsg').text(errMsg).css('color', 'red');
-                $('#modalBtn').hide();
+                $('#modalMsg').text(errMsg);
+                $('#closeBtn').show();
+                $('#addOkBtn').hide();
                 $('#modal').modal();
             }
             return isGood;
@@ -23,9 +24,7 @@
 
         function init() {
             $('#uploadBtn').click(() => {
-                console.log('btnClick');
                 if (isVal($('#title')) && isVal($('#content'))) {
-                    console.log('if');
                     const tagArr = $('#hashtag').val().split(' ');
                     $.ajax({
                         url: '<%=request.getContextPath()%>/community/addFeed',
@@ -40,10 +39,12 @@
                             tags: $('#hashtag').val().split(' '),
                         }),
                         success: (data) => {
-                            console.log(data);
+                            $('#modalMsg').text('작성이 완료되었습니다.');
+                            $('#closeBtn').hide();
+                            $('#addOkBtn').show();
+                            $('#modal').modal();
                         },
                     });
-                    console.log('end');
                 }
             });
         }
@@ -93,7 +94,7 @@
         }
 
         *::placeholder {
-            font-size: 10px;
+            font-size: 13px;
         }
 
         .icon.main:hover {
@@ -132,18 +133,12 @@
             </div>
         </div>
         <div class="modal" tabindex="-1" id="modal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span>&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p id="errMsg"></p>
-                    </div>
-                    <div class="modal-footer" id="modalBtn">
-                        <button type="button" class="btn btn-primary">예</button>
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content mx-5">
+                    <div class="modal-body text-center py-3">
+                        <p id="modalMsg"></p>
+                        <a href="javascript:window.history.back();" id="addOkBtn" class="btn btn-primary">확인</a>
+                        <button type="button" id="closeBtn" class="btn btn-secondary" data-dismiss="modal">확인</button>
                     </div>
                 </div>
             </div>
@@ -152,27 +147,27 @@
         <div class="navbar">
             <ul class="navbar nav-item bg-light fixed-bottom mb-0 list-style-none">
                 <li>
-                    <a href="/" class="btn w-auto" type="button">
+                    <a href="<%=request.getContextPath()%>/" class="btn w-auto" type="button">
                         <i class="icon main bi-house-door-fill fa-3x"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="community" class="btn w-auto" type="button">
+                    <a href="<%=request.getContextPath()%>/community" class="btn w-auto" type="button">
                         <i class="icon main bi-file-earmark-text fa-3x"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="place/around" class="btn w-auto" type="button">
+                    <a href="<%=request.getContextPath()%>/place/around" class="btn w-auto" type="button">
                         <i class="icon main bi-map fa-3x"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="place/myplace" class="btn w-auto" type="button">
+                    <a href="<%=request.getContextPath()%>/place/myplace" class="btn w-auto" type="button">
                         <i class="icon main bi-heart fa-3x"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="user/login" class="btn w-auto" type="button">
+                    <a href="<%=request.getContextPath()%>/user/login" class="btn w-auto" type="button">
                         <i class="icon main bi-person-fill fa-3x"></i>
                     </a>
                 </li>
