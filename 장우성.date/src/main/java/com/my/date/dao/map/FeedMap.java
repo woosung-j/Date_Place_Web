@@ -17,4 +17,5 @@ public interface FeedMap {
 	int updateFeed(FeedTagDto Feed);
 	int updateHashtags(@Param("tags") List<String> tags, @Param("feedId") int feedId);
 	int deleteHashtags(int feedId);
+	int deleteFeed(int feedId, int userId);
 }

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,8 +40,13 @@ public class FeedController {
 	}
 	
 	@GetMapping("add")
-	public ModelAndView addlist(HttpSession session, ModelAndView mv) {
-		mv.setViewName("community/addFeed");
+	public ModelAndView addlist(HttpServletRequest request, ModelAndView mv) {
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("userId") == null) {
+			mv.setViewName("redirect:/user/login");
+		} else {
+			mv.setViewName("community/addFeed");
+		}
 		return mv;
 	}
 	
@@ -92,6 +98,17 @@ public class FeedController {
 			return feedService.addHashtags(feed.getTags(), feed.getFeedId());
 		}
 		return isFeed;
+	}
+	
+	@DeleteMapping("delFeed/{feedId}")
+	public int delFeed(HttpServletRequest request, @PathVariable int feedId) {
+		HttpSession session = request.getSession(false);
+        if(session == null || session.getAttribute("userId") == null) {
+            return 0;
+        }
+        int userId = (int) session.getAttribute("userId");
+        
+		return feedService.delFeed(feedId, userId);
 	}
    	
 	@GetMapping("myfeed")
