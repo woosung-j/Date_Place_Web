@@ -35,18 +35,11 @@
 		order by created_at
 	</select>
 	
-	<select id='selectHashtag' resultMap='feedDtoMap'>
-		select h.hashtag_id, h.feed_id, h.tag, f.feed_id
-		from hashtags h
-		left join hashtags h on f.feed_id = h.feed_id
-		where f.feed_id = #{feedId}
-	</select>
-	
 	<insert id="insertFeed" parameterType="feedTagDto">
 		<selectKey keyProperty="feedId" resultType="int" order="AFTER">
 			select feeds_id_seq.currval from dual
 		</selectKey>
-		insert into feeds values(feeds_id_seq.nextval, #{userId}, #{title}, #{content}, sysdate)
+			insert into feeds values(feeds_id_seq.nextval, #{userId}, #{title}, #{content}, sysdate)
 	</insert>
 	
 	<insert id="insertHashtags">
@@ -57,6 +50,25 @@
 				from dual
 			</foreach>) A
 	</insert>
+	
+	<delete id="deleteHashtags">
+		delete from hashtags
+		where feed_id = #{feedId}
+	</delete>
+	
+	<insert id="updateFeed">
+		update feeds
+		set title = #{title}, content = #{content}
+		where feed_id = #{feedId}
+	</insert>
+	
+	<update id="updateHashtags">
+		<foreach collection="tags" item="item" separator="UNION ALL ">
+			update hashtags
+			set tag = #{item}
+			where feed_id = #{feedId}
+		</foreach>
+	</update>
 	
 	<resultMap id='feedDtoMap' type='feedDto'>
 		<id column='feed_id' property='feedId'/>

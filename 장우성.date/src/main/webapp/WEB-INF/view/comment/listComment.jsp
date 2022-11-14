@@ -2,8 +2,8 @@
 <head>
     <jsp:include page="../include/head.jsp"></jsp:include>
     <link rel="stylesheet" href="../../res/mobile.css" />
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <style>
         html,
         body {
@@ -86,18 +86,52 @@
         }
     </style>
     <script>
-        function getCommentList() {			
-			$('#commentList').empty();
-        	
+        function showModal(msg, isOk, commentId) {
+            $('#cancleBtn').toggle(isOk);
+            $('#okBtn').toggle(isOk);
+            $('#onClickBtn').toggle(!isOk);
+            $('#modalMsg').text(msg);
+            $('#modalMsg2').text(msg);
+            $('#commentIdInput').val(commentId);
+            $('#delModal').modal();
+            $('#delCheckModal').modal();
+        }
+
+        function delBtnClickEventListener() {
+            $('.delBtn').on('click', function (e) {
+                showModal('삭제하시겠습니까?', true, e.target.value);
+            });
+        }
+
+        function delComment(commentId) {
+            $.ajax({
+                url: '/comment/del/' + $('#commentId').val(),
+                method: 'delete',
+                success: (data) => {
+                    if (data > 0) {
+                        showModal('삭제가 완료되었습니다.', false);
+                    } else {
+                        showModal('권한이 없습니다.', false);
+                    }
+                },
+            });
+        }
+
+        function getCommentList() {
+            $('#commentList').empty();
+
             $.ajax({
                 url: '<%=request.getContextPath()%>/comment/listComment/' + $('#feedId').val(),
                 method: 'get',
                 contentType: 'application.json',
                 success: (commentList) => {
-                	
                     if (commentList.length) {
-                    	const list = []
+                        const list = [];
                         $.each(commentList, (i, item) => {
+                            const delbtn = [];
+                            if ($('#userId').val() == item.userId) {
+                                delbtn.push(`<button type="button" class="delBtn dropdown-item" id="deleteBtn">삭제</button>   `);
+                            }
                             list.unshift(
                                 `<div class="card" id="card1">
                                     <div class="card-body row-11">
@@ -105,11 +139,12 @@
                                             <span class="col-5"><i class="fa-solid fa-circle-user fa-2x"></i>\${item.nickname}</span>
                                             <span class="col-5">\${item.createdAt}</span>
                                             <div class="btn-group">
+                                               <input type="hidden" id="commentId" value="\${item.commentId}"/>
                                                 <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>
                                                 <div class="dropdown-menu">
                                                     <a href="<%=request.getContextPath()%>/comment/fix/\${item.commentId}" class="dropdown-item">수정</a>
                                                     <hr/>
-                                                    <button type="button" class="dropdown-item" data-toggle="modal" data-target="#delModal" id="delBtn">삭제</button>
+                                       \${delbtn.join('')}
                                                 </div>
                                             </div>
                                         </div>
@@ -118,35 +153,34 @@
                                 </div>`
                             );
                         });
-    					$('#list').append(list.join(''));
-                     }
-                },	
+                        $('#list').append(list.join(''));
+                        delBtnClickEventListener();
+                    }
+                },
             });
         }
-        
+
         $(() => {
-			getCommentList();
+            getCommentList();
         });
-		
-		function addComment() {
-			$('#replyAddBtn').click(() => {
-				$.ajax({
-					url: '<%=request.getContextPath()%>/comment/add',
-					method: 'post',
-					contentType: 'application/json',
-					data: JSON.stringify({
-						feedId: ${feedId},
-						content: $('#inputTextArea').val(),
-					}),
-					success: (data) => {
-						console.log(data);
-						getCommentList()
-					},
-				});
-			});
-		}
-		$(addComment)
-		
+
+        function addComment() {
+            $('#replyAddBtn').click(() => {
+                $.ajax({
+                    url: '<%=request.getContextPath()%>/comment/add/' + $('#feedId').val(),
+                    method: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        feedId: $('#feedId').val(),
+                        content: $('#inputTextArea').val(),
+                    }),
+                    success: (data) => {
+                        getCommentList();
+                    },
+                });
+            });
+        }
+        $(addComment);
     </script>
 </head>
 <body>
@@ -206,19 +240,19 @@
                 <div class="community row-1 mb-5 pb-3">
                     <div class="card mx-auto" id="card2">
                         <div class="card-footer border-0 px-3 py-3">
-                        <form name="addComment" action="add" method="post" class="my-0">
-                         <input type="hidden" id="feedId" value="${feedId}"/>
-                         <input type="hidden" id="userId" value="${userId}"/>
-                            <div class="d-flex row">
-                               	<input type="hidden" id="feedId" value="${feedId}"/>
-                                <div class="form float-left col-11" >
-                                    <textarea class="form-control" style="resize: none; width: 95%;" id="inputTextArea" placeholder="내용을 입력해주세요..."></textarea>
+                            <form name="addComment" action="add" method="post" class="my-0">
+                                <input type="hidden" id="feedId" value="${feedId}" />
+                                <input type="hidden" id="userId" value="${userId}" />
+                                <div class="d-flex row">
+                                    <input type="hidden" id="feedId" value="${feedId}" />
+                                    <div class="form float-left col-11">
+                                        <textarea class="form-control" style="resize: none; width: 95%" id="inputTextArea" placeholder="내용을 입력해주세요..."></textarea>
+                                    </div>
+                                    <div class="col-1">
+                                        <button type="button" class="btn btn-primary btn-sm pt-1" id="replyAddBtn" style="height: 70px">추가</button>
+                                    </div>
                                 </div>
-                                <div class="col-1">
-                                    <button type="button" class="btn btn-primary btn-sm pt-1" id="replyAddBtn" style="height: 70px">추가</button>
-                                </div>
-                            </div>
-                          </form>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -254,18 +288,18 @@
                 </li>
             </ul>
         </div>
-			
+
         <div class="modal" id="delModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content mx-5">
                     <div class="modal-body text-center py-3">
                         <p id="modalMsg"></p>
                     </div>
-                    <div class="modal-footer" id="modalBtn">   
+                    <div class="modal-footer" id="modalBtn">
                         <button type="button" id="cancleBtn" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                        <a href="#infoModal"> 
-                        	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#infoModal" id="okBtn">확인</button>
-                    	</a>
+                        <a href="#infoModal">
+                            <button type="button" class="btn btn-primary" onClick="delComment($('#commentIdInput').val())" data-toggle="modal" data-target="#infoModal" id="okBtn">확인</button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -277,9 +311,10 @@
                     <div class="modal-body text-center py-3">
                         <p id="modalMsg2"></p>
                     </div>
-                    <div class="modal-footer">    
-                        <button type="button" data-dismiss="modal" class="btn btn-primary" id="onClickBtn">확인</button>
-					</div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-primary" id="onClickBtn" onClick="location.href = document.referrer;">확인</button>
+                        <input type="hidden" id="commentIdInput" name="commentIdInput" value="" />
+                    </div>
                 </div>
             </div>
         </div>

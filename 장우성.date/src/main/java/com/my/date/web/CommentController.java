@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,5 +67,15 @@ public class CommentController {
 	public int fixComment(@RequestBody Comment comment, HttpServletRequest request) {
 		comment.setUserId(1);
 		return commentService.fixComment(comment);	
+	}
+	
+	@DeleteMapping("del/{commentId}")
+	public int delComment(@PathVariable int commentId, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if(session == null || session.getAttribute("userId") == null) {
+			return -1;
+		}
+		int userId = (int)session.getAttribute("userId");
+		return commentService.delComment(commentId, userId);
 	}
 }
