@@ -210,16 +210,16 @@ public class AdminController {
         }
     }
 
-    @GetMapping("menu")
-    public ModelAndView menu(ModelAndView mv) {
-        mv.addObject("placeId", 3);
+    @GetMapping("menu/{placeId}")
+    public ModelAndView menu(ModelAndView mv, @PathVariable int placeId) {
+        mv.addObject("placeId", placeId);
         mv.setViewName("admin/menu/patchMenu");
         return mv;
     }
 
-    @GetMapping("getMenus")
-    public List<Menu> getMenus() {
-        return menuService.getMenus();
+    @GetMapping("getMenus/{placeId}")
+    public List<Menu> getMenus(@PathVariable int placeId) {
+        return menuService.getMenus(placeId);
     }
     
     @PostMapping("addMenu")

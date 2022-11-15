@@ -13,10 +13,15 @@
             html += '<td><input type="hidden" id="placeId" name="placeId" value="${placeId}" /></td>';
             html += '<td><input type="text" class="form-control" id="menuName" name="menuName" placeholder="메뉴를 입력해주세요"/></td>';
             html += '<td><input type="text" class="form-control" id="price" name="price" placeholder="가격을 입력해주세요"/></td>';
-            html += '<td><button type="button" class="btn btn-danger" id="remove">삭제</button></td>';
+            html += '<td><button type="button" class="btn btn-danger" onclick="tableDelete(this)" id="remove">삭제</button></td>';
             html += '</tr>';
 
             $('#menus').append(html);
+        }
+        
+        function tableDelete(obj) {
+        	var tr = $(obj).parent().parent();
+        	tr.remove();
         }
         
         function showModal(msg, isOk, menuId) {
@@ -30,11 +35,10 @@
 
         function menuList() {
             $.ajax({
-                url: '<%=request.getContextPath()%>/admin/getMenus',
+                url: '<%=request.getContextPath()%>/admin/getMenus/' + $('#placeId').val(),
                 contentType: 'application/json',
                 success: (menus) => {
                     const menuArr = [];
-
                     if (menus.length) {
                         $.each(menus, (i, menu) => {
                             menuArr.push(
@@ -49,37 +53,35 @@
                     }
                     $('#menus').empty();
                     $('#menus').append(menuArr.join(''));
-                    init();
+                    
+                    deleteBtnClickEvent()
                 }, 
             });
         }
 
         function addMenu() {
-            const arr = [];
+    		const arr = [];
             let length = $('input[name=menuName]').length;
 
             for (let i = 0; i < length; i++) {
-                arr.push({ placeId: $('#placeId').val(), menuName: $('input[name=menuName]').eq(i).val(), price: $('input[name=price]').eq(i).val() });
+                arr.push({ placeId: $('#placeId').val(), menuName: $('input[name=menuName]').eq(i).val(), price: $('input[name=price]').eq(i).val()});
             }
-
             $.ajax({
-                url: 'addMenu',
+                url: '<%=request.getContextPath()%>/admin/addMenu',
                 method: 'post',
                 contentType: 'application/json',
                 data: JSON.stringify(arr),
                 success: (data) => {
-                    if (data == arr.length) {
-                        menuList();
-                    } else {
-                        console.log('fail');
-                    }
+                		menuList();
                 },
+                error: (data, xhr) => {
+                	showModal('빈칸을 입력하세요', false)
+                }
             });
-            console.log(arr);
         }
 
         function fixMenu() {
-            const arr = [];
+    		const arr = [];
             let length = $('input[name=menuId]').length;
 
             for (let i = 0; i < length; i++) {
@@ -87,18 +89,22 @@
             }
 
             $.ajax({
-                url: 'fixMenu',
+                url: '<%=request.getContextPath()%>/admin/fixMenu',
                 method: 'patch',
                 contentType: 'application/json',
                 data: JSON.stringify(arr),
-                success: menuList(),
+                success: (data) => {
+                    menuList();
+                },
+                error: (data, xhr) => {
+                	showModal('빈칸을 입력하세요', false)
+                }
             });
-            console.log(arr);
         }
         
         function delMenu(menuId) {
        		$.ajax({
-       			url: 'delMenu/' + menuId,
+       			url: '<%=request.getContextPath()%>/admin/delMenu/' + menuId,
        			method: 'delete',
        			success: (data) => {
        					showModal('삭제가 완료되었습니다.', false);
@@ -107,18 +113,22 @@
        		})
         }
         
+        function deleteBtnClickEvent() {
+			$('.delBtn').off('click')
+            $('.delBtn').on('click', function (e) {
+             	showModal('삭제하시겠습니까?', true, e.target.value);
+            });
+        }
+        
         function init() {
             $('#okMenuBtn').click(() => {
                 addMenu();
                 fixMenu();
             });
-            
-            $('.delBtn').on('click', function (e) {
-             	showModal('삭제하시겠습니까?', true, e.target.value);
-             });
         }
 
         $(() => {
+        	init();
             menuList();
         });
     </script>
@@ -144,7 +154,7 @@
             <div class="col mt-4">
                 <div class="row">
                     <div class="col-8">
-                        <h2>그림화원 메뉴</h2>
+                        <h2>장소 메뉴 구성</h2>
                     </div>
                     <div class="col mb-3">
                         <nav class="d-flex justify-content-end mt-4">
@@ -169,6 +179,19 @@
                     <tbody id="menus"></tbody>
                 </table>
                 <input type="hidden" id="placeId" name="placeId" value="${placeId}" />
+            </div>
+        </div>
+    </div>
+    <div class='modal' tabindex='-1' id='errorModal'>
+        <div class='modal-dialog modal-dialog-centered'>
+            <div class='modal-content mx-5'>
+                <div class='modal-body text-center py-3'>
+                    <p id='errMsg'></p>
+                </div>
+                <div class='modal-footer' id='modalBtn'>
+                    <button type='button' class='btn btn-secondary' data-dismiss='modal'>아니오</button>
+                    <button type='button' class='btn btn-primary' id='delLaborerOkBtn'>예</button>
+                </div>
             </div>
         </div>
     </div>
