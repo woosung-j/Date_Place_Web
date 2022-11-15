@@ -51,21 +51,6 @@
 		function init() {
 			listPlace()
 			
-			$('#delPlaceBtn').click(() => {
-				if (isVal($('#placeId:checked'))) {
-                    $('#modalMsg').text('장소를 삭제하시겠습니까?')
-                    $('#modalBtn').show()
-                    $('#modal').modal()
-           		}
-			})
-			
-			$('#delPlaceOkBtn').click(() => {
-                                $.ajax({
-                                    url: '<%=request.getContextPath()%>/admin/place/del/' + $('#placeId:checked').val(),
-                                    method: 'delete'
-                                })			     	                                	
-                            })
-                            
            $('#delPlaceBtn').click(() => {
             if (isVal($('#placeId:checked'))) {
                 $('#modalMsg').text('장소를 삭제하시겠습니까?')
@@ -116,9 +101,9 @@
 		<div class="col mt-4">
 			<div class="row-1">
 				<nav class="d-flex mb-4" style="float: right">
-
 					<a href="<%=request.getContextPath()%>/admin/place/add" class="btn btn-primary mr-1"> <span class="label d-none d-sm-inline">장소추가</span> </a>
 					<button type="button" class="btn btn-danger" data-toggle="modal" id='delPlaceBtn'>
+
 						<span class="label d-none d-sm-inline">선택장소삭제</span>
 					</button>
 				</nav>
