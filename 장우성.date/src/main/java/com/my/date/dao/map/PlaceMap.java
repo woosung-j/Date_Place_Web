@@ -1,9 +1,6 @@
 package com.my.date.dao.map;
 
-import com.my.date.domain.Place;
-import com.my.date.domain.PlaceAdminDto;
-import com.my.date.domain.PlaceDetailDto;
-import com.my.date.domain.PlaceDto;
+import com.my.date.domain.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -20,4 +17,7 @@ public interface PlaceMap {
 	int updatePlace(Place place);
 	int deletePlace(int placeId);
 	int deletePlaceImage(int placeId);
+	MyPlace selectMyPlace(MyPlace myPlace);
+	int insertMyPlace(MyPlace myPlace);
+	int deleteMyPlace(MyPlace myPlace);
 }
