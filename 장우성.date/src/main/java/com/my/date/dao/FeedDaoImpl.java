@@ -2,7 +2,6 @@ package com.my.date.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -53,5 +52,10 @@ public class FeedDaoImpl implements FeedDao{
 	@Override
 	public int deleteHashtags(int feedId) {
 		return feedMap.deleteHashtags(feedId);
+	}
+	
+	@Override
+	public int deleteFeed(int feedId, int userId) {
+		return feedMap.deleteFeed(feedId, userId);
 	}
 }

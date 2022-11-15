@@ -3,6 +3,35 @@
     <jsp:include page="../include/head.jsp"></jsp:include>
     <link rel="stylesheet" href="../../res/mobile.css" />
     <script>
+    function showModal(msg, isOk, feedId) {
+        $('#cancelBtn').toggle(isOk);
+        $('#okBtn').toggle(isOk);
+        $('#onClickBtn').toggle(!isOk);
+        $('#modalMsg').text(msg);
+        $('#feedIdInput').val(feedId);
+        $('#delCheckModal').modal();
+    }
+    
+    function delBtnClickEventListener() {
+        $('#delFeedBtn').on('click', function (e) {
+            showModal('게시글을 삭제하시겠습니까?', true, e.target.value);
+        });
+    }
+    
+    function delFeed(feedId) {
+        $.ajax({
+            url: '<%=request.getContextPath()%>/community/delFeed/' + $('#feedId').val(),
+            method: 'delete',
+            success: (data) => {
+                if (data > 0) {
+                    showModal('삭제가 완료되었습니다.', false);
+                } else {
+                    showModal('권한이 없습니다.', false);
+                }
+            },
+        });
+    }
+    
         function detailFeed() {
             $('#detail').empty();
 
@@ -11,15 +40,29 @@
                 method: 'get',
                 contentType: 'application/json',
                 success: (feed) => {
-
+					console.log(feed)
                     if (Object.values(feed).length) {
                         const feedList = [];
                         const tagList = [];
-
+                        
+						
                         if (Object.values(feed).length) {
                             $.each(feed.hashtag, (i, feed) => {
                                 tagList.push(`<span class="badge badge-secondary badge-pill">\${feed.tag}</span>`);
                             });
+                        }
+                        
+                        const editbtn = [];
+                        if ($('#userId').val() == feed.userId) {
+                            editbtn.push(`
+                            		<button type="button" class="btn dropdown-toogle" data-toggle="dropdown">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                	</button>
+                            		<div class="dropdown-menu" id="editBtn">
+                                    <a href="" class="dropdown-item">수정</a>
+                                    <hr />
+                                    <button type="button" class="dropdown-item" data-toggle="modal" data-target="#delCheckModal" id="delFeedBtn">삭제</button>
+                                </div>`);
                         }
 
                         feedList.unshift(
@@ -30,16 +73,7 @@
                                         <span class="col-5"><i class="fas fa-user-circle fa-2x"></i>\${feed.nickname}</span>
                                         <span class="col-5">\${feed.createdAt}</span>
                                         <div class="btn-gruop">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn dropdown-toogle" data-toggle="dropdown">
-                                                    <i class="fas fa-ellipsis-h"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a href="" class="dropdown-item">수정</a>
-                                                    <hr />
-                                                    <button type="button" class="dropdown-item" data-toggle="modal" data-target="#delPost">삭제</button>
-                                                </div>
-                                            </div>
+                                                \${editbtn.join('')}
                                         </div>
                                     </div>
                                     <h6 class="card-title"><br/>\${feed.title}</h6>
@@ -58,6 +92,7 @@
                         );
 
                         $('#detail').append(feedList.join(''));
+                        delBtnClickEventListener()
                     }
                 },
             });
@@ -147,55 +182,46 @@
         <div class="col w-auto" id="detail"></div>
     </div>
     <input type="hidden" id="feedId" value="${feedId}" />
+    <input type="hidden" id="userId" value="${userId}" />
     <div class="pb-5 mb-3"></div>
     <div class="navbar">
         <ul class="navbar nav-item bg-light fixed-bottom mb-0 list-style-none">
             <li>
-                <a href="../main.html" class="btn w-auto" type="button">
-                    <i class="icon main bi-house-door-fill fa-3x"></i>
-                </a>
-            </li>
-            <li>
-                <a href="../community/01.html" class="btn w-auto" type="button">
-                    <i class="icon main bi-file-earmark-text fa-3x"></i>
-                </a>
-            </li>
-            <li>
-                <a href="../place/05.html" class="btn w-auto" type="button">
-                    <i class="icon main bi-map fa-3x"></i>
-                </a>
-            </li>
-            <li>
-                <a href="../place/06.html" class="btn w-auto" type="button">
-                    <i class="icon main bi-heart fa-3x"></i>
-                </a>
-            </li>
-            <li>
-                <a href="../user/02.html" class="btn w-auto" type="button">
-                    <i class="icon main bi-person-fill fa-3x"></i>
-                </a>
-            </li>
+                    <a href="<%=request.getContextPath()%>/" class="btn w-auto" type="button">
+                        <i class="icon main bi-house-door-fill fa-3x"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="<%=request.getContextPath()%>/community" class="btn w-auto" type="button">
+                        <i class="icon main bi-file-earmark-text fa-3x"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="<%=request.getContextPath()%>/place/around" class="btn w-auto" type="button">
+                        <i class="icon main bi-map fa-3x"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="<%=request.getContextPath()%>/place/myplace" class="btn w-auto" type="button">
+                        <i class="icon main bi-heart fa-3x"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="<%=request.getContextPath()%>/user/login" class="btn w-auto" type="button">
+                        <i class="icon main bi-person-fill fa-3x"></i>
+                    </a>
+                </li>
         </ul>
     </div>
-
-    <div class="modal" id="infoModal" tabindex="-1">
+     <div class="modal fade" id="delCheckModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content mx-5">
                 <div class="modal-body text-center py-3">
-                    <p>삭제가 완료되었습니다.</p>
-                    <a href="../community/02.html" class="btn btn-primary">확인</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="delPost" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content mx-5">
-                <div class="modal-body text-center py-3">
-                    <p>게시글을 삭제하시겠습니까?</p>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                    <a href="../community/01.html" class="btn btn-primary">확인</a>
+                    <p id="modalMsg"></p>
+                    <button type="button" id="cancelBtn" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                    <button type="button" onCLick="delFeed($('#feedIdInput').val())" id="okBtn" class="btn btn-primary">확인</button>
+                    <button type="button" id="onClickBtn" onCLick="location.href = document.referrer;" class="btn btn-primary btn-lg col-12" data-dismiss="modal">확인</button>
+                    <input type="hidden" id="feedIdInput" name="feedIdInput" value="" />
                 </div>
             </div>
         </div>
