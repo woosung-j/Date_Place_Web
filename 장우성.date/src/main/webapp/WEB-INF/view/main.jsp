@@ -96,7 +96,7 @@
         <header class="row w-auto p-1 bg-light fixed-top shadow">
             <span class="col align-middle">
                 <img />
-                <p class="text-center border">로고이미지</p>
+                <p class="text-center border"><img src="<%=request.getContextPath()%>/attach/logo.jpg"></p>
             </span>
     	</header>
     <div class="row-1 mt-68 bg-light rounded">
