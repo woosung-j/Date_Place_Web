@@ -32,7 +32,7 @@
                 console.log(data);
                 const list = [];  
             }
-        })
+        }) 
         
         $('#addBtn').click(() => {
             addDetail();
@@ -79,7 +79,7 @@
                                 <td>
                                     <label for="address" class="col-form-label">주&emsp;&emsp;소:</label>
                                 </td>
-                                <td> <input type="text" class="form-control" id="address" name="address" onclick="PostCodeSearch()" style="width: 700px" /><br /></td>
+                               <td> <input type="text" class="form-control" id="address" name="address" onclick="PostCodeSearch()" style="width: 700px" /><br /></td>
                             </tr>
                             <tr>
                                 <td>

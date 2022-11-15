@@ -18,7 +18,7 @@ public class DetailDaoImpl implements DetailDao {
 	
 	@Override
 	public int insertDetail(Detail detail) {
-		return 0; //detailMap.insertDetail(detail);
+		return detailMap.insertDetail(detail);
 	}
 	
 	@Override
