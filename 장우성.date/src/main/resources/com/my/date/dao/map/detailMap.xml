@@ -13,4 +13,14 @@
 		set address = #{address}, tel = #{tel}, opening_hours = #{openingHours}, closing_hours = #{closingHours}, day_off = #{dayOff}, contact = #{contact}, parking = #{parking}, updated_at = sysdate 
 		where place_id = #{placeId}
 	</update>
+	
+	<insert id='insertDetail'>
+		insert into details(detail_id, place_id,address, tel, opening_hours,closing_hours, day_off, contact, parking, created_at, updated_at)
+		values(details_id_seq.nextval,#{placeId}, #{address}, #{tel,jdbcType=VARCHAR}, #{openingHours,jdbcType=VARCHAR}, #{closingHours,jdbcType=VARCHAR}, #{dayOff,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, #{parking,jdbcType=VARCHAR}, sysdate, sysdate)
+	</insert>
+	
+	<delete id='deleteDetail'>
+		delete detail
+		where detail_id = #{detailId}
+	</delete>
 </mapper>

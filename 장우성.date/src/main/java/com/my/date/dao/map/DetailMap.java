@@ -6,5 +6,7 @@ import com.my.date.domain.Detail;
 
 public interface DetailMap {
 	Detail selectDetail(@Param("placeId") int placeId);
+	int insertDetail(Detail detail);
 	int updateDetail(Detail detail);
+	int deleteDetail(int detail);
 }

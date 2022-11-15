@@ -40,7 +40,7 @@
                     $('#place_like_count').text(data.placeLikeCount);
                     $('#created_at').text(data.createdAt);
                     $('#updated_at').text(data.updatedAt);
-
+                    
                     if(detail) {
                         $('#address').text(detail.address);
                         $('#tel').text(detail.tel);
