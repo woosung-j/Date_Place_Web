@@ -31,8 +31,10 @@
                 url: '<%=request.getContextPath()%>/admin/place/getDetail/' + $('#placeId').val(),
                 method: 'get',
                 success: (data) => {
+                	console.log(data)
                     const detail = data.detail;
                     const menus = data.menus;
+                    console.log(data);
                     let placegroup = data.placeGroupId == 1 ? '맛집' : data.placeGroupId == 2 ? '카페' : '놀거리';
                     $('#place_group').text(placegroup);
                     $('#introduction').text(data.introduction);
@@ -41,6 +43,7 @@
                     $('#updated_at').text(data.updatedAt);
                     
                     if(detail) {
+                    	$('#detailId').val(detail.detailId)
                         $('#address').text(detail.address);
                         $('#tel').text(detail.tel);
                         $('#time').text(detail.openingHours + ' - ' + detail.closingHours);
@@ -66,33 +69,32 @@
                         $.each(menus, (i, menu) => {
                             if (i == 0) {
                                 let placeId = $('#placeId').val()
-                                let result = (menu.price).toLocaleString('ko-KR');
                                 menuArr.push(`
                                 <tr>
                                     <td class="col-7">\${menu.menuName}</td>
-                                    <td class="col-2" id="address">\${result}원</td>
+                                    <td class="col-2" id="address">\${menu.price}원</td>
                                     <td class="col-3 align-middle" rowspan="\${menus.length}">
                                         <a href="<%=request.getContextPath()%>/admin/menu/${placeId}" class="btn btn-secondary">수정</a>
                                     </td>
                                 </tr>
                             `);
                             } else {
-                            	let result = (menu.price).toLocaleString('ko-KR');
                                 menuArr.push(`
                                 <tr>
                                     <td class="col-7">\${menu.menuName}</td>
-                                    <td class="col-2" id="address">\${result}원</td>
+                                    <td class="col-2" id="address">\${menu.price}원</td>
                                 </tr>
                             `);
                             }
                         });
                     }
-
+					
                     menuTable.append(menuArr.join(''));
+                    console.log(data);
                 },
             });
         }
-
+        
         function init() {
             getPlace();
         }
@@ -100,6 +102,17 @@
         $(() => {
             init();
         });
+        
+        function delDetail() {
+        	console.log($('#detailId').val())
+       		$.ajax({
+       			url: '<%=request.getContextPath()%>/admin/detail/del/' + $('#detailId').val(),
+       			method: 'delete',
+       			success: (data) => {
+      				$('#infoModal').modal()
+       			}
+       		})
+        }
     </script>
 </head>
 <body>
@@ -124,7 +137,7 @@
                 <div class="col-8">
                     <h2 id="placeName"></h2>
                 </div>
-            </div>
+            </div>            
             <table class="table text-center">
                 <thead>
                 <tr>
@@ -170,7 +183,7 @@
                     <td class="col-3 align-middle" rowspan="6">
                         <a href="<%=request.getContextPath()%>/admin/detail/add/${placeId}" class="btn btn-secondary">추가</a>
                         <a href="<%=request.getContextPath()%>/admin/detail/patch/${placeId}" class="btn btn-secondary">수정</a>
-                        <a href="<%=request.getContextPath()%>/admin/detail/del/${placeId}" class="btn btn-secondary">삭제</a>
+                        <button type="button" id="delCheckBtn" class="btn btn-secondary" data-toggle="modal" data-target="#delIntroModal">삭제</button>
                     </td>
                 </tr>
                 <tr>
@@ -205,6 +218,7 @@
                 <tbody id="menu_table"></tbody>
             </table>
             <input type="hidden" id="placeId" name="placeId" value="${placeId}" />
+            <input type="hidden" id="detailId" name="detailId" value="" />
         </div>
     </div>
 </div>
@@ -221,7 +235,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                <a href="#infoModal" class="btn btn-primary" data-toggle="modal" data-target="#infoModal" data-dismiss="modal">확인</a>
+                <button type="button" onclick="delDetail()" data-dismiss="modal" class="btn btn-primary" id="okBtn" class="btn btn-primary">확인</button>
+                <a></a>
             </div>
         </div>
     </div>
@@ -230,7 +245,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <a href="#" class="close text-black" data-dismiss="modal">
+            <!-- location.href = ' -->
+                <a href="<%=request.getContextPath()%>/admin/place/detail/${placeId}" class="close text-black" >
                     <span>&times;</span>
                 </a>
             </div>
@@ -238,7 +254,7 @@
                 <p>삭제가 완료되었습니다.</p>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-primary btn-lg col-12" data-dismiss="modal">확인</a>
+                <a href="<%=request.getContextPath()%>/admin/place/detail/${placeId}" class="btn btn-primary btn-lg col-12" >확인</a>
             </div>
         </div>
     </div>

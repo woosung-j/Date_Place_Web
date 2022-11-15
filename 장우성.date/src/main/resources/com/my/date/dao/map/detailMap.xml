@@ -20,7 +20,7 @@
 	</insert>
 	
 	<delete id='deleteDetail'>
-		delete detail
+		delete from details
 		where detail_id = #{detailId}
 	</delete>
 </mapper>
