@@ -6,16 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.my.date.dao.map.FeedMap;
-import com.my.date.domain.Feed;
 import com.my.date.domain.FeedDto;
 import com.my.date.domain.FeedTagDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class FeedDaoImpl implements FeedDao{
 	@Autowired private FeedMap feedMap;
 	
 	@Override
-	public List<Feed> selectFeeds() {
+	public List<FeedDto> selectFeeds() {
 		return feedMap.selectFeeds();
 	}
 	
@@ -48,7 +51,12 @@ public class FeedDaoImpl implements FeedDao{
 	public int updateHashtags(List<String> tags, int feedId) {
 		return feedMap.updateHashtags(tags, feedId);
 	}
-	
+
+	@Override
+	public int deleteFeed(int feedId, int userId) {
+		return feedMap.deleteFeed(feedId, userId);
+	}
+
 	@Override
 	public int deleteHashtags(int feedId) {
 		return feedMap.deleteHashtags(feedId);

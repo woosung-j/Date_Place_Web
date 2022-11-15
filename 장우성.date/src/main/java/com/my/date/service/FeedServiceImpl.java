@@ -17,7 +17,7 @@ public class FeedServiceImpl implements FeedService {
 	private FeedDao feedDao;
 
 	@Override
-	public List<Feed> getFeeds() {
+	public List<FeedDto> getFeeds() {
 		return feedDao.selectFeeds();
 	}
 
@@ -50,7 +50,11 @@ public class FeedServiceImpl implements FeedService {
 	public int fixHashtags(List<String> tags, int feedId) {
 		return feedDao.updateHashtags(tags, feedId);
 	}
-	
+
+	@Override
+	public int delFeed(int feedId ,int userId) {
+		return feedDao.deleteFeed(feedId, userId);
+	}
 	@Override
 	public int delHashtags(int feedId) {
 		return feedDao.deleteHashtags(feedId);

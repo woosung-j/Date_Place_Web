@@ -43,6 +43,7 @@
                             $('#closeBtn').hide();
                             $('#addOkBtn').show();
                             $('#modal').modal();
+                            location.href="<%=request.getContextPath()%>/community"
                         },
                     });
                 }
@@ -113,7 +114,7 @@
                 <p class="col"></p>
             </nav>
         </header>
-        <div class="container min-vh-100">
+        <div class="container min-vh-100 pb-5">
             <div id="mainContent">
                 <form class="col form">
                     <div class="row form-group">

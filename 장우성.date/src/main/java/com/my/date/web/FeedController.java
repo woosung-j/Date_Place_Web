@@ -20,20 +20,27 @@ import com.my.date.domain.Feed;
 import com.my.date.domain.FeedDto;
 import com.my.date.domain.FeedTagDto;
 import com.my.date.service.FeedService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @RequestMapping("community")
 public class FeedController {
 	@Autowired private FeedService feedService;
-	
+
 	@GetMapping("")
-	public ModelAndView list(HttpSession session, ModelAndView mv) {
+	public ModelAndView list(ModelAndView mv) {
 		mv.setViewName("community/listFeed");
 		return mv;
 	}
 	
 	@GetMapping("detail/{feedId}")
-	public ModelAndView detail(HttpSession session, ModelAndView mv, @PathVariable int feedId) {
+	public ModelAndView detail(ModelAndView mv, @PathVariable int feedId) {
 		mv.addObject(feedId);
 		mv.setViewName("community/detailFeed");
 		return mv;
@@ -51,14 +58,19 @@ public class FeedController {
 	}
 	
 	@GetMapping("fix/{feedId}")
-	public ModelAndView fixFeed(HttpSession session, ModelAndView mv, @PathVariable int feedId) {
-		mv.addObject(feedId);
-		mv.setViewName("community/fixFeed");
+	public ModelAndView fixFeed(HttpServletRequest request, ModelAndView mv, @PathVariable int feedId) {
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("userId") == null) {
+			mv.setViewName("redirect:/user/login");
+		} else {
+			mv.addObject(feedId);
+			mv.setViewName("community/fixFeed");
+		}
 		return mv;
 	}
-		
+
 	@GetMapping("getFeeds")
-	public List<Feed> getFeeds() {
+	public List<FeedDto> getFeeds() {
 		return feedService.getFeeds();
 	}
 	
@@ -99,15 +111,15 @@ public class FeedController {
 		}
 		return isFeed;
 	}
-	
+  
 	@DeleteMapping("delFeed/{feedId}")
 	public int delFeed(HttpServletRequest request, @PathVariable int feedId) {
 		HttpSession session = request.getSession(false);
-        if(session == null || session.getAttribute("userId") == null) {
-            return 0;
-        }
-        int userId = (int) session.getAttribute("userId");
-        
+  		if(session == null || session.getAttribute("userId") == null) {
+  			return 0;
+  		}
+   		int userId = (int) session.getAttribute("userId");
+  		  
 		return feedService.delFeed(feedId, userId);
 	}
    	
