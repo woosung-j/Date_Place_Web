@@ -31,10 +31,8 @@
                 url: '<%=request.getContextPath()%>/admin/place/getDetail/' + $('#placeId').val(),
                 method: 'get',
                 success: (data) => {
-                	console.log(data)
                     const detail = data.detail;
                     const menus = data.menus;
-                    console.log(data);
                     let placegroup = data.placeGroupId == 1 ? '맛집' : data.placeGroupId == 2 ? '카페' : '놀거리';
                     $('#place_group').text(placegroup);
                     $('#introduction').text(data.introduction);
@@ -90,7 +88,6 @@
                     }
 					
                     menuTable.append(menuArr.join(''));
-                    console.log(data);
                 },
             });
         }

@@ -29,7 +29,6 @@
                 parking: $('#parking option').val(),
             }),
             success: (data) => {
-                console.log(data);
                 const list = [];  
             }
         }) 
