@@ -57,11 +57,6 @@
 			</foreach>) A
 	</insert>
 
-	<delete id="deleteFeed">
-		delete from feeds
-		where feed_id = #{feedId}
-	</delete>
-
 	<delete id="deleteHashtags">
 		delete from hashtags
 		where feed_id = #{feedId}
