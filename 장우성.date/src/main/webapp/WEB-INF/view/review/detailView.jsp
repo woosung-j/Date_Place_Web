@@ -111,7 +111,7 @@
                     $.each(reviews, (i, review) => {
                         const reviewImgArr = [];
                         $.each(review.reviewImages, (i, reviewImage) => {
-                            reviewImgArr.push(`<img class="swiper-slide reImg" src="/attach/review/\${reviewImage.fileName}'/>"/>`);
+                            reviewImgArr.push(`<img class="swiper-slide reImg" src="/attach/reviewImages/\${reviewImage.fileName}"/>`);
                         });
 
                         const delbtn = [];

@@ -16,12 +16,17 @@
         }
 
         .img-style {
-            border: 0.1rem solid;
             position: relative;
             width: 5rem;
             height: 6rem;
         }
-
+        
+        .preImg {
+            position: relative;
+            width: 5rem;
+            height: 6rem;
+        }
+        
         .heart {
             font-size: 14px;
             position: absolute;
@@ -58,7 +63,7 @@
                                 `<li class="row border-bottom pt-3 pb-3">
                                     <div class="img-style">
                                         <a href="<%=request.getContextPath()%>/place/place/\${place.placeId}">
-                                            <img class="img-fluid" src="\${place.placeImage.length != 0 ? '/attach/placeImage/' + place.placeImage[0].fileName : "#"}" />
+                                            <img class="img-fluid preImg" src="\${place.placeImage.length != 0 ? '/attach/placeImage/' + place.placeImage[0].fileName : "#"}" />
                                         </a>
                                         \${place.isLike == 1 ? '<i class="heart bi-heart-fill"></i>' : '<i class="heart bi-heart"></i>'}
                                     </div>
@@ -150,7 +155,7 @@
         <nav class="row navbar bg-light text-center align-middle fixed-top">
             <a href="javascript:window.history.back();" class="col btn"><i class="bi bi-chevron-left"></i></a>
             <p class="col"></p>
-            <h3 class="col-8 font-gamja-flower">${si} ${gu == "없음" ? "" : gu}<i id="bookmark" class="bi bi-bookmark-fill icon"></i></h3>
+            <h3 class="col-7 font-gamja-flower">${si} ${gu == "없음" ? "" : gu}<i id="bookmark" class="bi bi-bookmark-fill icon"></i></h3>
             <p class="col"></p>
             <p class="col"></p>
             <input type="hidden" id="isBookmark" name="isBookmark" />

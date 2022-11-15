@@ -194,18 +194,20 @@
                     const detail = data.detail;
                     const review = data.review;
 
+                    $('#placeName').text(data.placeName);
+                    $('#subPlaceName').text(data.placeName);
+                    $('#introduction').text(data.introduction);
+                    $('#place_like').text(`찜 \${data.placeLikeCount}`);
+                    
                     $('#searchNaver').append(
                         `<a href="#" class="btn">
                             <i class="bi bi-search-heart mr-4"></i>
                         네이버에서 \${data.placeName} 검색
                         </a>`
                     )
+                    
                     if (detail != null) {
                         $('#address').val(detail.address);
-                        $('#placeName').text(data.placeName);
-                        $('#subPlaceName').text(data.placeName);
-                        $('#introduction').text(data.introduction);
-                        $('#place_like').text(`찜 \${data.placeLikeCount}`);
                     }
 
                     if (data.isLike > 0) {

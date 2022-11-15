@@ -13,7 +13,7 @@
         }
 
         .myReviewImg {
-            height: 3rem;
+            height: 4.5rem;
             width: 4rem;
             text-align: center;
             display: flex;
@@ -57,7 +57,7 @@
                             const reviewImgArr = [];
 
                             $.each(review.reviewImages, (i, reviewImage) => {
-                                reviewImgArr.push(`<img class="myReviewImg ml-2" src="attach/review/\${reviewImage.fileName}'/>"/>`);
+                                reviewImgArr.push(`<img class="myReviewImg ml-2" src="/attach/reviewImages/\${reviewImage.fileName}"/>`);
                             });
 
                             myReviews.unshift(
