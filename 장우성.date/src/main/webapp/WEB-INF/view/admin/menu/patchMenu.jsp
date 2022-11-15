@@ -182,19 +182,6 @@
             </div>
         </div>
     </div>
-    <div class='modal' tabindex='-1' id='errorModal'>
-        <div class='modal-dialog modal-dialog-centered'>
-            <div class='modal-content mx-5'>
-                <div class='modal-body text-center py-3'>
-                    <p id='errMsg'></p>
-                </div>
-                <div class='modal-footer' id='modalBtn'>
-                    <button type='button' class='btn btn-secondary' data-dismiss='modal'>아니오</button>
-                    <button type='button' class='btn btn-primary' id='delLaborerOkBtn'>예</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="modal" id="delCheckModal" tabindex="-1">
 	    <div class="modal-dialog modal-dialog-centered">
 	        <div class="modal-content mx-5">
