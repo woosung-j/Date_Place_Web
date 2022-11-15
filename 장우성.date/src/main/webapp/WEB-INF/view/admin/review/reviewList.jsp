@@ -67,12 +67,12 @@
                     success: (reviews) => {
                         console.log(reviews);
                         const list = [];
-
+                        
                         if (reviews.length) {
                             $.each(reviews, (i, review) => {
                                 const reviewImgArr = [];
                                 $.each(review.reviewImages, (i, reviewImage) => {
-                                    reviewImgArr.push(`<img class="reImg ml-3" src="attach/review/\${reviewImage.fileName}'/>"/>`);
+                                    reviewImgArr.push(`<img class="reImg ml-3" src="/attach/reviewImages/\${reviewImage.fileName}"/>`);
                                 });
 
                                 list.unshift(
@@ -149,7 +149,7 @@
                             const reviewImgArr = [];
 
                             $.each(review.reviewImages, (i, reviewImage) => {
-                                reviewImgArr.push(`<img class="reImg ml-3" src="attach/review/\${reviewImage.fileName}'/>"/>`);
+                                reviewImgArr.push(`<img class="reImg ml-3" src="/attach/reviewImages/\${reviewImage.fileName}"/>`);
                             });
 
                             list.unshift(

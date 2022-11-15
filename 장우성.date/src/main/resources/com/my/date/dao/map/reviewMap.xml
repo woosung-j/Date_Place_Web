@@ -23,7 +23,7 @@
 		order by review_id
 	</select>
 
-	<select id='selectSearchReviewByPlaceName' resultType="reviewDto">
+	<select id='selectSearchReviewByPlaceName' resultMap="reviewsMap">
 		select  r.review_id, r.place_id, p.place_name, r.user_id, u.profile_image, u.nickname, 
                 r.content, r.star_rating, i.file_name, i.review_images_id, r.created_at
 		from reviews r
@@ -33,7 +33,7 @@
 		where p.place_name like '%'||#{keyword}||'%' 
         and ROWNUM BETWEEN 1 AND 10
         and r.content is not null
-		order by place_id 
+		order by review_id 
 	</select>
 	
 	<select id="selectLatestReviewByPlaceId" resultType="reviewDto">
