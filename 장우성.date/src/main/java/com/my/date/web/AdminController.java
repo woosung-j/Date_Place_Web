@@ -152,7 +152,6 @@ public class AdminController {
         place.setSiId(regionService.getSiId(si));
         place.setGuId(regionService.getGuId(gu));
         int isPlaceSuccess = placeService.addPlace(place);
-        System.out.println(place);
         if(place.getPlaceId() != 0 && isPlaceSuccess == 1 && files.size() > 0) {
             return placeService.addPlaceImages(place.getPlaceId(), fileNameList);
         }
