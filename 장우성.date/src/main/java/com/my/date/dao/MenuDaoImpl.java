@@ -13,8 +13,8 @@ public class MenuDaoImpl implements MenuDao {
 	@Autowired MenuMap menuMap;
 	
 	@Override
-	public List<Menu> selectMenus() {
-		return menuMap.selectMenus();
+	public List<Menu> selectMenus(int placeId) {
+		return menuMap.selectMenus(placeId);
 	}
 	
 	@Override
