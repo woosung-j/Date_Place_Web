@@ -93,8 +93,8 @@
 	<select id="selectAdminPlace" resultMap="placeAdminMap">
 		select p.place_id, p.place_name, p.introduction, p.si_id, p.gu_id, si.si_name, gu.gu_name, p.place_group_id,
 			   pi.place_image_id, pi.file_name
-		from places p, place_images pi, si, gu
-		where p.place_id = pi.place_id and p.si_id = si.si_id and p.gu_id = gu.gu_id and p.place_id = #{placeId}
+		from si, gu, places p left join place_images pi on p.place_id = pi.place_id
+		where p.si_id = si.si_id and p.gu_id = gu.gu_id and p.place_id = #{placeId}
 	</select>
 
 	<resultMap id="placeAdminMap" type="placeAdminDto">

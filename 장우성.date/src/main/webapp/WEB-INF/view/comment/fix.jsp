@@ -1,7 +1,7 @@
 <%@ page language="java" contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
 <head>
 	<jsp:include page="../include/head.jsp"></jsp:include>
-	<link rel="stylesheet" href="../../res/mobile.css"/>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/res/mobile.css"/>
 	<style>
       .textarea {
     		width: 100%;
@@ -63,7 +63,7 @@
 						content: $('#inputText').val()
 					}),
 					success: (data) => {
-						let url = '<%=request.getContextPath()%>/comment';
+						let url = "<%=request.getContextPath()%>/community/detail/" + $("#feedId").val()
 						location.replace(url);
 					},
 				});
@@ -82,7 +82,6 @@
                     <p class="col"></p>
                 </nav>
             </header>
-            <input type="hidden" id="commentId" name="${commentId}" value="${commentId}" />
             <div class="row pt-62">
                 <form action="fix" class="d-grid col-11 mx-auto mt-4" id="fixComment">
                     <tr>
@@ -96,6 +95,8 @@
                 </form>
             </div>
             <div class="pb-5 mb-3"></div>
+            <input type="hidden" id="feedId" name="${feedId}" value="${feedId}" />
+            <input type="hidden" id="commentId" name="${commentId}" value="${commentId}" />
             <div class="navbar">
                 <ul class="navbar nav-item bg-light fixed-bottom mb-0 list-style-none">
                     <li>

@@ -16,12 +16,16 @@
                         $.each(feeds, (i, item) => {
                             const tagList = [];
                             const likeList = [];
-
+                            console.log(feeds)
                             if (item.hashtag.length != 0 && item.hashtag[0]?.tag != null) {
                                 $.each(item.hashtag, (i, item) => {
                                     tagList.push(`<span class="badge badge-secondary badge-pill">\${item.tag}</span>`);
                                 });
                             }
+
+                            const profileImage = item.profileImage != null ?
+                                `<img class="img-fluid" style="width:20px; height: 20px;" src="/attach/profileImage/\${item.profileImage}"/>` : `<i class="fas fa-user-circle fa-2x"></i>`
+
 
                             feedList.unshift(
                                 `<a href="<%=request.getContextPath()%>/community/detail/\${item.feedId}" style="color: inherit; text-decoration: none">
@@ -29,16 +33,19 @@
                                     <div class="card-header row-11">
                                         <div class="text_output">
                                             <div class="row">
-                                                <span class="col-8"><i class="fas fa-user-circle fa-2x"></i>&nbsp;\${item.nickname}</span>
-                                                <span class="col-4">\${item.createdAt}</span>
+                                                <span class="col-7">\${profileImage}&nbsp;\${item.nickname}</span>
+                                                <span class="col-5">\${item.createdAt}</span>
                                             </div>
                                             <h6 class="card-title"><br/>\${item.title}</h6>
                                             <p class="card-text">\${item.content}</p>
                                             \${tagList.join('')}
                                         </div>
                                         <hr/>
-                                        <div id="likeCnt">
-                                            <i class="fas fa-heart">&nbsp;\${item.likeCnt}</i>&nbsp;&nbsp;<i class="fas fa-comment">&nbsp;0</i>
+                                        <div class="checkLike">
+                                            <div id="likeCnt">
+                                                <i class="fas fa-heart" type="button">&nbsp;\${item.likeCnt}</i>&nbsp;&nbsp;
+                                                <i class="fas fa-comment">\${item.commentCnt}</i>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

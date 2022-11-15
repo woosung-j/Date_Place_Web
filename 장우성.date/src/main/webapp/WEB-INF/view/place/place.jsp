@@ -373,7 +373,6 @@
                 <td class="row-1 mt-5 border rounded mb-3">
                     <div class="col pt-1">
                         <div class="row text-start ml-1">
-                            <i class="icon bi-person fa-3x mb-2" style="font-size: 20px"></i>
                             <p id="review_nickname" class="mt-1 ml-1" style="font-size: 13px"></p>
                             <p id="review_starRating" class="mt-1 ml-1" style="font-size: 13px"></p>
                             <p id="review_createdAt" class="mt-1 ml-1" style="font-size: 13px"></p>
@@ -382,11 +381,6 @@
                             <p id="review_content"></p>
                         </div>
                         <div class="row reviewImg mb-2">
-                            <%--
-                            <div class="myReviewImg ml-3">리뷰이미지</div>
-                            --%> <%--
-                                    <div class="myReviewImg">리뷰이미지</div>
-                                    --%>
                         </div>
                     </div>
                 </td>

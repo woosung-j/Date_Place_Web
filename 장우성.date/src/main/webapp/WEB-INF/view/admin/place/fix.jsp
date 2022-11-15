@@ -85,6 +85,7 @@
                 url: '<%=request.getContextPath()%>/admin/place/fix/' + $('#placeId').val(),
                 method: 'get',
                 success: (data) => {
+                    console.log(data)
                     $('#placeName').val(data.placeName)
                     $('#placeGroupId').val(data.placeGroupId)
                     $('#introduction').val(data.introduction)
