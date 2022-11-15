@@ -178,7 +178,7 @@ public class AdminController {
         }
         int isPlaceSuccess = placeService.addPlace(place);
 
-        if(place.getPlaceId() != 0 && isPlaceSuccess == 1 && fileNameList.size() > 0) {
+        if(place.getPlaceId() != 0 && isPlaceSuccess == 1 && fileNameList != null && fileNameList.size() > 0) {
             return placeService.addPlaceImages(place.getPlaceId(), fileNameList);
         }
         return isPlaceSuccess;
@@ -197,7 +197,7 @@ public class AdminController {
         }
         int isPlaceSuccess = placeService.fixPlace(place);
 
-        if(place.getPlaceId() != 0 && isPlaceSuccess == 1 && fileNameList.size() > 0) {
+        if(place.getPlaceId() != 0 && isPlaceSuccess == 1 && fileNameList != null && fileNameList.size() > 0) {
             placeService.delPlaceImage(place.getPlaceId());
             return placeService.addPlaceImages(place.getPlaceId(), fileNameList);
         }

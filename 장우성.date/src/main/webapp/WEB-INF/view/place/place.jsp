@@ -194,6 +194,12 @@
                     const detail = data.detail;
                     const review = data.review;
 
+                    $('#searchNaver').append(
+                        `<a href="#" class="btn">
+                            <i class="bi bi-search-heart mr-4"></i>
+                        네이버에서 \${data.placeName} 검색
+                        </a>`
+                    )
                     if (detail != null) {
                         $('#address').val(detail.address);
                         $('#placeName').text(data.placeName);
@@ -406,11 +412,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="mt-5 border mb-3">
-                    <a href="#" class="btn">
-                        <i class="bi bi-search-heart mr-4"></i>
-                        네이버에서 그림화원 검색
-                    </a>
+                <td class="mt-5 border mb-3" id="searchNaver">
                 </td>
             </tr>
             </tbody>

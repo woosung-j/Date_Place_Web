@@ -105,7 +105,7 @@
                                     <div class="checkLike">
                                         <div id="likeCnt">
                                         	<i class="fas fa-heart" type="button">&nbsp;\${feed.likeCnt}</i>&nbsp;&nbsp;
-	                                        <i class="fas fa-comment">\${feed.commentCnt}</i>
+	                                        <i id="commentCnt" class="fas fa-comment">\${feed.commentCnt}</i>
                                         </div>
                                     </div>
                                 </div>
@@ -198,6 +198,7 @@
                     success: (data) => {
                         getComments();
                         $('#inputTextArea').val('');
+                        $('#commentCnt').text(1 + Number($('#commentCnt').text()))
                     },
                 });
             });
