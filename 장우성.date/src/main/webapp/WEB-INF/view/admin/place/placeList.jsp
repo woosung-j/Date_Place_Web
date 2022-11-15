@@ -19,8 +19,9 @@
 				$('#modal').modal();
 			}
 
-			return isGood;
+			return isGood
 		}
+		
 		function listPlace() {
 			$('input').not(':radio').val('');
 			$('#places').empty();
@@ -47,9 +48,52 @@
 				},
 			});
 		}
+		function init() {
+			listPlace()
+			
+			$('#delPlaceBtn').click(() => {
+				if (isVal($('#placeId:checked'))) {
+                    $('#modalMsg').text('장소를 삭제하시겠습니까?')
+                    $('#modalBtn').show()
+                    $('#modal').modal()
+           		}
+			})
+			
+			$('#delPlaceOkBtn').click(() => {
+                                $.ajax({
+                                    url: '<%=request.getContextPath()%>/admin/place/del/' + $('#placeId:checked').val(),
+                                    method: 'delete'
+                                })			     	                                	
+                            })
+                            
+           $('#delPlaceBtn').click(() => {
+            if (isVal($('#placeId:checked'))) {
+                $('#modalMsg').text('장소를 삭제하시겠습니까?')
+                $('#modalBtn').show()
+                $('#modal').modal()
+            }
+        })
+
+        $('#delPlaceOkBtn').click(() => {
+            $.ajax({
+                url: '<%=request.getContextPath()%>/admin/place/del/' + $('#placeId:checked').val(),
+                method: 'delete',
+                success: listPlace
+            })
+
+            function checkModal() {
+                $('#modal').modal()
+                $('#modalMsg').text('삭제되었습니다.').css('color', 'black')
+                $('#modalBtn').hide()
+
+            }
+            $(checkModal)
+        })
+		}
+		
 		$(() => {
-			listPlace();
-		});
+	        init()
+	    })		
 	</script>
 </head>
 <body>
@@ -72,13 +116,14 @@
 		<div class="col mt-4">
 			<div class="row-1">
 				<nav class="d-flex mb-4" style="float: right">
+
 					<a href="<%=request.getContextPath()%>/admin/place/add" class="btn btn-primary mr-1"> <span class="label d-none d-sm-inline">장소추가</span> </a>
-					<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delPlaceModal">
+					<button type="button" class="btn btn-danger" data-toggle="modal" id='delPlaceBtn'>
 						<span class="label d-none d-sm-inline">선택장소삭제</span>
 					</button>
 				</nav>
 				<div class="row-1">
-					<table table class="table text-center border-bottom">
+					<table class="table text-center border-bottom">
 						<thead class="" style="background-color: #7882a4; color: #d6e5fa">
 						<tr>
 							<th>선택</th>
@@ -92,39 +137,22 @@
 		</div>
 	</div>
 </div>
-<div class="modal" tabindex="-1" id="delPlaceModal">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">
-					<span>&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<p>장소를 삭제하시겠습니까?</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-				<a href="#infoModal" class="btn btn-primary" data-toggle="modal" data-target="#infoModal" data-dismiss="modal">확인</a>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="modal" tabindex="-1" id="infoModal">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">
-					<span>&times;</span>
-				</button>
-			</div>
-			<div class="modal-body text-center py-3">
-				<p>삭제가 완료되었습니다.</p>
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="btn btn-primary btn-lg col-12" data-dismiss="modal">확인</a>
-			</div>
-		</div>
-	</div>
-</div>
+<div class="modal" tabindex="-1" id="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button id='xBtn' type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id='modalMsg' class='text-center'></p>
+                </div>
+                <div id='modalBtn' class="modal-footer">
+                    <button type='button' class='btn btn-secondary' data-dismiss='modal'>아니오</button>
+                    <button type='button' class='btn btn-primary' id='delPlaceOkBtn'>예</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
