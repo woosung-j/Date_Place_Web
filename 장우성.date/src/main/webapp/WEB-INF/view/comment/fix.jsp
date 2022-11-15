@@ -29,7 +29,7 @@
 			if(!isGood) {
 				$('#modalMsg').text(errMsg);
 				$('#addCancleBtn').hide();
-				$('#addOkBtn').hide();
+				$('#addOkBtn').show();
 				$('#replyFix').hide();
 				$('#modal').modal();
 			}
