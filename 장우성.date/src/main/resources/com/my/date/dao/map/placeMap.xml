@@ -90,6 +90,23 @@
 		where p.place_id = #{placeId}
 	</select>
 
+	<select id="selectMyPlace" resultType="myPlace">
+		select *
+		from my_places
+		where user_id = #{userId} and place_id = #{placeId}
+	</select>
+
+	<insert id="insertMyPlace" parameterType="myPlace">
+		<selectKey keyProperty="myPlaceId" resultType="int" order="AFTER">
+			select myplaces_id_seq.currval from dual
+		</selectKey>
+		insert into my_places values(myplaces_id_seq.nextval, #{userId}, #{placeId})
+	</insert>
+
+	<delete id="deleteMyPlace">
+		delete from my_places where user_id = #{userId} and place_id = #{placeId}
+	</delete>
+
 	<select id="selectAdminPlace" resultMap="placeAdminMap">
 		select p.place_id, p.place_name, p.introduction, p.si_id, p.gu_id, si.si_name, gu.gu_name, p.place_group_id,
 			   pi.place_image_id, pi.file_name

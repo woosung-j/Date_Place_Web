@@ -63,7 +63,7 @@
                                 `<li class="row border-bottom pt-3 pb-3">
                                     <div class="img-style">
                                         <a href="<%=request.getContextPath()%>/place/place/\${place.placeId}">
-                                            <img class="img-fluid preImg" src="\${place.placeImage.length != 0 ? '/attach/placeImage/' + place.placeImage[0].fileName : "#"}" />
+                                            <img class="img-fluid" src="\${place.placeImage.length != 0 ? '<%=request.getContextPath()%>/attach/placeImage/' + place.placeImage[0].fileName : "#"}" />
                                         </a>
                                         \${place.isLike == 1 ? '<i class="heart bi-heart-fill"></i>' : '<i class="heart bi-heart"></i>'}
                                     </div>

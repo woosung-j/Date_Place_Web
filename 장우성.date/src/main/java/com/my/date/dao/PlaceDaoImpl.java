@@ -1,10 +1,7 @@
 package com.my.date.dao;
 
 import com.my.date.dao.map.PlaceMap;
-import com.my.date.domain.Place;
-import com.my.date.domain.PlaceAdminDto;
-import com.my.date.domain.PlaceDetailDto;
-import com.my.date.domain.PlaceDto;
+import com.my.date.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -67,5 +64,20 @@ public class PlaceDaoImpl implements PlaceDao {
 	@Override
 	public int deletePlaceImage(int placeId) {
 		return placeMap.deletePlaceImage(placeId);
+	}
+
+	@Override
+	public MyPlace selectMyPlace(MyPlace myPlace) {
+		return placeMap.selectMyPlace(myPlace);
+	}
+
+	@Override
+	public int insertMyPlace(MyPlace myPlace) {
+		return placeMap.insertMyPlace(myPlace);
+	}
+
+	@Override
+	public int deleteMyPlace(MyPlace myPlace) {
+		return placeMap.deleteMyPlace(myPlace);
 	}
 }

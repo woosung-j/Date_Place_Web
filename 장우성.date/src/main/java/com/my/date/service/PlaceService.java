@@ -1,9 +1,6 @@
 package com.my.date.service;
 
-import com.my.date.domain.Place;
-import com.my.date.domain.PlaceAdminDto;
-import com.my.date.domain.PlaceDetailDto;
-import com.my.date.domain.PlaceDto;
+import com.my.date.domain.*;
 
 import java.util.List;
 
@@ -18,4 +15,7 @@ public interface PlaceService {
 	int fixPlace(Place place);
 	void delPlace(int placeId);
 	int delPlaceImage(int placeId);
+	MyPlace getMyPlace(MyPlace myPlace);
+	int addMyPlace(MyPlace myPlace);
+	int delMyPlace(MyPlace myPlace);
 }

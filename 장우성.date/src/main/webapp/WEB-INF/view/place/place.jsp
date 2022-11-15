@@ -205,16 +205,19 @@
                         네이버에서 \${data.placeName} 검색
                         </a>`
                     )
-                    
+
+                    $('#placeName').text(data.placeName);
+                    $('#subPlaceName').text(data.placeName);
+                    $('#introduction').text(data.introduction);
+                    $('#place_like').text(`찜 \${data.placeLikeCount}`);
+                    $('#place_like').val(data.placeLikeCount)
+
                     if (detail != null) {
                         $('#address').val(detail.address);
                     }
 
-                    if (data.isLike > 0) {
-                        $('#place_heart').addClass('bi bi-heart-fill').attr('style', 'color:#E14D2A;');
-                    } else {
-                        $('#place_heart').addClass('bi bi-heart');
-                    }
+                    isLike(data?.isLike)
+                    $('#placeLikeBtn').val(data?.isLike)
 
                     const placeImageArr = [];
                     $.each(data.placeImages, (i, img) => {
@@ -309,6 +312,29 @@
             });
         }
 
+        function isLike(isLike) {
+            $('#place_heart').removeClass()
+            if (isLike > 0) {
+                $('#place_heart').addClass('bi bi-heart-fill').attr('style', 'color:#E14D2A;');
+            } else {
+                $('#place_heart').addClass('bi bi-heart');
+            }
+        }
+
+        function toggleLike() {
+            if($('#place_heart')[0].classList[1] == 'bi-heart-fill') {
+                $('#place_heart').removeClass()
+                $('#place_heart').addClass('bi bi-heart');
+                $('#place_like').text(`찜 ` + (Number($('#place_like').val()) - 1));
+                $('#place_like').val(Number($('#place_like').val()) - 1)
+            } else {
+                $('#place_heart').removeClass()
+                $('#place_heart').addClass('bi bi-heart-fill').attr('style', 'color:#E14D2A;');
+                $('#place_like').text(`찜 ` + (Number($('#place_like').val()) + 1));
+                $('#place_like').val(Number($('#place_like').val()) + 1)
+            }
+        }
+
         function swiper() {
             var swiper = new Swiper('.mySwiper', {
                 pagination: {
@@ -318,9 +344,29 @@
             });
         }
 
+        function togglePlaceLike() {
+            $.ajax({
+                url: '<%=request.getContextPath()%>/place/place/my/like',
+                method: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    placeId: $('#placeId').val()
+                }),
+                success: (data) => {
+                    if(data > 0) {
+                        toggleLike()
+                    }
+                }
+            })
+        }
+
         $(() => {
             getPlace();
             copy();
+
+            $('#placeLikeBtn').on('click', () => {
+                togglePlaceLike()
+            })
         });
     </script>
 </head>
@@ -344,17 +390,14 @@
                 <h4 id="subPlaceName" class="text-center"></h4>
             </div>
             <div id="introduction" class="text-center pl-2 pr-2 mt-6 mb-5"><br /></div>
-
             <h6 class="mt-3">
                 <i class="bi bi-clock"></i>
                 <span id="tel"> 예약/문의하기 &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; </span>
             </h6>
-
             <h6 id="menu" class="mt-5">
                 <i class="bi bi-list"></i>
                 <span>주요 메뉴</span>
             </h6>
-
             <table id="menu_table" class="tg" style="width: 100%; font-size: 15px">
                 <tbody id="menu_table_body"></tbody>
             </table>
@@ -362,15 +405,12 @@
                 <i class="bi bi-clock"></i>
                 <span>영업 안내</span>
             </h6>
-
             <table id="detail" class="tg" style="width: 100%; font-size: 15px">
                 <tbody id="detail_body"></tbody>
             </table>
-
             <a id="homepage" href="#" class="btn w-auto mt-4" type="button" style="display: block">
                 <span>홈페이지/인스타그램 보러가기</span>
             </a>
-
             <div id="map" class="col mt-5 w-auto" style="width: 120px; height: 180px; margin-bottom: 30px"></div>
         </div>
     </div>
@@ -424,10 +464,10 @@
     <div class="navbar mt-80">
         <ul class="navbar nav-item bg-light fixed-bottom mb-0 list-style-none">
             <li>
-                <a href="#" class="btn w-auto" type="button">
+                <button class="btn w-auto" type="button" id="placeLikeBtn" value="">
                     <i id="place_heart" class=""></i><br />
                     <span id="place_like">찜 0</span>
-                </a>
+                </button>
             </li>
             <li>
                 <button type="button" class="btn btn-primary btn-lg disabled" data-target="#Modal" data-toggle="modal">예약하기</button>
@@ -437,6 +477,7 @@
     </div>
 </div>
 <input type="hidden" id="placeId" name="placeId" value="${placeId}" />
+<%--<input type="hidden" id="isLike" name="isLike" value=""/>--%>
 <!-- 모달창 -->
 <div class="modal fade" id="Modal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
