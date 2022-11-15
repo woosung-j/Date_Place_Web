@@ -27,7 +27,7 @@
 <body>
     <div class="container-fluid">
         <header class="row-1">
-          <h1 class="text-center border"><img src="<%=request.getContextPath()%>/attach/logo.jpg"></h1>
+          <img src="<%=request.getContextPath()%>/attach/logo.jpg" style="width:100%; height:70px;"/>
         </header>
         <hr />
         <div class="row">

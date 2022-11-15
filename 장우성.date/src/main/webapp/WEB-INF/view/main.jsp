@@ -13,10 +13,6 @@
             padding: 25px;
             margin-left: 1.5rem;
         }
-
-		.mt-68 {
-		    margin-top: 68px;
-		}
 		
         .bi-image {
             font-size: 40px;
@@ -93,13 +89,12 @@
 </head>
 <body>
     <div class="container">
-        <header class="row w-auto p-1 bg-light fixed-top shadow">
+        <header class="row w-auto bg-light fixed-top">
             <span class="col align-middle">
-                <img />
-                <p class="text-center border"><img src="<%=request.getContextPath()%>/attach/logo.jpg"></p>
+                <img src="<%=request.getContextPath()%>/attach/logo.jpg" style="width: 100%; height: 68px;"/>
             </span>
     	</header>
-    <div class="row-1 mt-68 bg-light rounded">
+    <div class="row-1 mt-80 bg-light rounded">
         <div class="col mb-4 pt-3">
             <div>
                 <h5 class="font-weight-bold">지역선택</h5>
