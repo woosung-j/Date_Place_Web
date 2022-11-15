@@ -5,8 +5,8 @@
     <style>
         .reImg {
        		border: none;
-            height: 3rem;
-            width: 3rem;
+            height: 4.5rem;
+            width: 3.5rem;
             text-align: center;
             display: flex;
             align-items: center;
@@ -59,7 +59,7 @@
                             const delDiv = [];
 
                             $.each(review.reviewImages, (i, reviewImage) => {
-                                reviewImgArr.push(`<img class="reImg ml-3" src="attach/reviewImage/\${reviewImage.fileName}"/>`);
+                                reviewImgArr.push(`<img class="reImg mr-1" src="/attach/reviewImages/\${reviewImage.fileName}"/>`);
                             });
 
                             reviewArr.unshift(
@@ -79,7 +79,8 @@
                                                 </div>
                                                 <a href="<%=request.getContextPath()%>/review/detailview/\${review.reviewId}" style="color: inherit; text-decoration: none;">
                                                     <div class="row reviewImg mb-2">
-                                                    \${reviewImgArr.join('')}
+                                                    
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;\${reviewImgArr.join('')}
                                                     </div>
                                                     <div class="row dell text-start ml-1 mr-1"  font-size: 14px">
                                                         <p class="content" id="content">\${review.content}</p>

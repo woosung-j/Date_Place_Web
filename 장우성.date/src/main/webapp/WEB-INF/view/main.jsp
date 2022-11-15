@@ -14,6 +14,10 @@
             margin-left: 1.5rem;
         }
 
+		.mt-68 {
+		    margin-top: 68px;
+		}
+		
         .bi-image {
             font-size: 40px;
         }
@@ -94,8 +98,8 @@
                 <img />
                 <p class="text-center border">로고이미지</p>
             </span>
-    </header>
-    <div class="row-1 mt-80 bg-light mx-3 rounded">
+    	</header>
+    <div class="row-1 mt-68 bg-light rounded">
         <div class="col mb-4 pt-3">
             <div>
                 <h5 class="font-weight-bold">지역선택</h5>
@@ -103,9 +107,9 @@
             </div>
             <div id="dropdown-div"></div>
         </div>
-        <div class="row-1">
+        <div class="row-1 mb-2">
             <div class="col">
-                <h5 class="font-weight-bold mb-2">추천 장소</h5>
+                <h5 class="font-weight-bold mb-1">추천 장소</h5>
             </div>
             <div class="col">
                 <div id="imgCarousel1" class="carousel slide text-center border w-auto" style="height: 250px" data-ride="carousel" data-interval="8000">
@@ -131,7 +135,7 @@
                 </div>
             </div>
         </div>
-        <footer class="row mx-auto mt-4 mb-5">
+        <footer class="row mx-auto mt-5 mb-3">
             <p class="col text-center text-black-50" style="font-size: 12px">
                 대표전화: 010-1234-5678<br />
                 제휴/문의: today_date@gmail.com<br />
@@ -169,4 +173,5 @@
             </ul>
         </div>
     </div>
+	</div>
 </body>

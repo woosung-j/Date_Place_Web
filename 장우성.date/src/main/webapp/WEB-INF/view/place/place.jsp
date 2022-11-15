@@ -194,12 +194,13 @@
                     const detail = data.detail;
                     const review = data.review;
 
+                    $('#placeName').text(data.placeName);
+                    $('#subPlaceName').text(data.placeName);
+                    $('#introduction').text(data.introduction);
+                    $('#place_like').text(`찜 \${data.placeLikeCount}`);
+                    
                     if (detail != null) {
                         $('#address').val(detail.address);
-                        $('#placeName').text(data.placeName);
-                        $('#subPlaceName').text(data.placeName);
-                        $('#introduction').text(data.introduction);
-                        $('#place_like').text(`찜 \${data.placeLikeCount}`);
                     }
 
                     if (data.isLike > 0) {
