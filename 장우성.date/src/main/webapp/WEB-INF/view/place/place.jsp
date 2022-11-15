@@ -266,10 +266,11 @@
                     } else {
                         let menuArr = [];
                         $.each(data.menus, (i, menu) => {
+                        	let result = (menu.price).toLocaleString('ko-KR');
                             menuArr.push(`
                                 <tr class="border-bottom border-top">
                                     <td class="col-9 pt-2 pb-2">\${menu.menuName}</td>
-                                    <td>\${menu.price}</td>
+                                    <td>\${result}원</td>
                                 </tr>
                             `);
                         });

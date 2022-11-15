@@ -33,7 +33,6 @@
                 success: (data) => {
                     const detail = data.detail;
                     const menus = data.menus;
-                    console.log(data);
                     let placegroup = data.placeGroupId == 1 ? '맛집' : data.placeGroupId == 2 ? '카페' : '놀거리';
                     $('#place_group').text(placegroup);
                     $('#introduction').text(data.introduction);
@@ -67,20 +66,22 @@
                         $.each(menus, (i, menu) => {
                             if (i == 0) {
                                 let placeId = $('#placeId').val()
+                                let result = (menu.price).toLocaleString('ko-KR');
                                 menuArr.push(`
                                 <tr>
                                     <td class="col-7">\${menu.menuName}</td>
-                                    <td class="col-2" id="address">\${menu.price}원</td>
+                                    <td class="col-2" id="address">\${result}원</td>
                                     <td class="col-3 align-middle" rowspan="\${menus.length}">
                                         <a href="<%=request.getContextPath()%>/admin/menu/${placeId}" class="btn btn-secondary">수정</a>
                                     </td>
                                 </tr>
                             `);
                             } else {
+                            	let result = (menu.price).toLocaleString('ko-KR');
                                 menuArr.push(`
                                 <tr>
                                     <td class="col-7">\${menu.menuName}</td>
-                                    <td class="col-2" id="address">\${menu.price}원</td>
+                                    <td class="col-2" id="address">\${result}원</td>
                                 </tr>
                             `);
                             }
