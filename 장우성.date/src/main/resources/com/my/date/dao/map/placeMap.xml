@@ -51,12 +51,17 @@
 		update places
 		set place_name = #{placeName}, introduction = #{introduction},
 			si_id = #{siId}, gu_id = #{guId}, place_group_id = #{placeGroupId},
-			sysdate, updateAt_now
+			updated_at = sysdate
 		where place_id = #{placeId}
 	</update>
 	
 	<delete id='deletePlace'>
-		delete places
+		delete from places
+		where place_id = #{placeId}
+	</delete>
+
+	<delete id="deletePlaceImage">
+		delete from place_images
 		where place_id = #{placeId}
 	</delete>
 
@@ -84,6 +89,25 @@
 			left join place_images pi on p.place_id = pi.place_id
 		where p.place_id = #{placeId}
 	</select>
+
+	<select id="selectAdminPlace" resultMap="placeAdminMap">
+		select p.place_id, p.place_name, p.introduction, p.si_id, p.gu_id, si.si_name, gu.gu_name, p.place_group_id,
+			   pi.place_image_id, pi.file_name
+		from si, gu, places p left join place_images pi on p.place_id = pi.place_id
+		where p.si_id = si.si_id and p.gu_id = gu.gu_id and p.place_id = #{placeId}
+	</select>
+
+	<resultMap id="placeAdminMap" type="placeAdminDto">
+		<id property="placeId" column="place_id"/>
+		<result property="placeName" column="place_name"/>
+		<result property="introduction" column="introduction"/>
+		<result property="siId" column="si_id"/>
+		<result property="guId" column="gu_id"/>
+		<result property="siName" column="si_name"/>
+		<result property="guName" column="gu_name"/>
+		<result property="placeGroupId" column="place_group_id"/>
+		<collection property="placeImage" resultMap="placeImageMap"/>
+	</resultMap>
 
 	<resultMap id="placeDtoMap" type="placeDto">
 		<id property="placeId" column="place_id"/>

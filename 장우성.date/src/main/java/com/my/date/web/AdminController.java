@@ -68,6 +68,26 @@ public class AdminController {
         return mv;
     }
 
+    @GetMapping("list")
+    public List<User> getUserList() {
+		return userService.getAdminUserList();
+	}
+    
+    @GetMapping("get/{userName}")
+    public User getUser(@PathVariable String userName) {    
+    	return userService.getUserByUserName(userName);
+    }
+     
+    @PutMapping("fix")
+	public void fixUser(@RequestBody User user) {
+    	userService.fixAdminUser(user);
+	}
+    
+	@PutMapping("del/{userId}")
+	public void delUser(@PathVariable int userId) {
+		userService.delUser(userId);
+	}
+    
     @GetMapping("login")
     public ModelAndView login(ModelAndView mv) {
         mv.setViewName("admin/user/login");
@@ -125,34 +145,77 @@ public class AdminController {
         return mv;
     }
 
-    @PostMapping("place/add/{si}/{gu}")
-    public int addPlace(@RequestPart(value = "files") List<MultipartFile> files, @RequestPart(value = "key") Place place, @PathVariable("si") String si, @PathVariable("gu") String gu) {
-        System.out.println(place);
+    @GetMapping("place/patch/{placeId}")
+    public ModelAndView placeFix(ModelAndView mv, @PathVariable int placeId) {
+        mv.addObject("placeId", placeId);
+        mv.setViewName("admin/place/fix");
+        return mv;
+    }
+
+    @GetMapping("place/fix/{placeId}")
+    public PlaceAdminDto getPlace(@PathVariable int placeId) {
+        return placeService.getAdminPlace(placeId);
+    }
+    
+    @DeleteMapping("place/del/{placeId}")
+	public void delPlace(@PathVariable int placeId) {
+		placeService.delPlace(placeId);
+	}
+
+    private List<String> multiFileUpload(List<MultipartFile> files) {
         List<String> fileNameList = new ArrayList<String>();
 
         try {
             for(MultipartFile file : files) {
+                String originalFileName = file.getOriginalFilename();
                 String savedFileName = "";
                 String uploadPath = attachPath + "/placeImage/";
-                String originalFileName = file.getOriginalFilename();
 
-                UUID uuid = UUID.randomUUID();
-                savedFileName = uuid.toString() + "_" + originalFileName;
+                if(!originalFileName.equals("")) {
+                    UUID uuid = UUID.randomUUID();
+                    savedFileName = uuid.toString() + "_" + originalFileName;
 
-                File file1 = new File(uploadPath + savedFileName);
-                file.transferTo(file1);
+                    File file1 = new File(uploadPath + savedFileName);
+                    file.transferTo(file1);
 
-                fileNameList.add(savedFileName);
+                    fileNameList.add(savedFileName);
+                }
             }
         } catch(Exception e) {
-            return -1;
+            return null;
         }
+        return fileNameList;
+    }
 
-        System.out.println(place);
+    @PostMapping("place/add/{si}/{gu}")
+    public int addPlace(@RequestPart(value = "files") List<MultipartFile> files, @RequestPart(value = "key") Place place, @PathVariable("si") String si, @PathVariable("gu") String gu) {
+        List<String> fileNameList = multiFileUpload(files);
+
+        if(si.equals("경기")) {
+            place.setSiId(regionService.getSiId(gu));
+            place.setGuId(regionService.getGuId("없음"));
+        } else {
+            place.setSiId(regionService.getSiId(si));
+            place.setGuId(regionService.getGuId(gu));
+        }
+        int isPlaceSuccess = placeService.addPlace(place);
+
+        if(place.getPlaceId() != 0 && isPlaceSuccess == 1 && fileNameList.size() > 0) {
+            return placeService.addPlaceImages(place.getPlaceId(), fileNameList);
+        }
+        return isPlaceSuccess;
+    }
+
+    @PostMapping("place/fix/{si}/{gu}")
+    public int fixPlace(@RequestPart(value = "files") List<MultipartFile> files, @RequestPart(value = "key") Place place, @PathVariable("si") String si, @PathVariable("gu") String gu) {
+        List<String> fileNameList = multiFileUpload(files);
+
         place.setSiId(regionService.getSiId(si));
         place.setGuId(regionService.getGuId(gu));
-        int isPlaceSuccess = placeService.addPlace(place);
-        if(place.getPlaceId() != 0 && isPlaceSuccess == 1 && files.size() > 0) {
+        int isPlaceSuccess = placeService.fixPlace(place);
+
+        if(place.getPlaceId() != 0 && isPlaceSuccess == 1 && fileNameList.size() > 0) {
+            placeService.delPlaceImage(place.getPlaceId());
             return placeService.addPlaceImages(place.getPlaceId(), fileNameList);
         }
         return isPlaceSuccess;
@@ -212,16 +275,16 @@ public class AdminController {
         }
     }
 
-    @GetMapping("menu")
-    public ModelAndView menu(ModelAndView mv) {
-        mv.addObject("placeId", 3);
+    @GetMapping("menu/{placeId}")
+    public ModelAndView menu(ModelAndView mv, @PathVariable int placeId) {
+        mv.addObject("placeId", placeId);
         mv.setViewName("admin/menu/patchMenu");
         return mv;
     }
 
-    @GetMapping("menu/getMenus")
-    public List<Menu> getMenus() {
-        return menuService.getMenus();
+    @GetMapping("getMenus/{placeId}")
+    public List<Menu> getMenus(@PathVariable int placeId) {
+        return menuService.getMenus(placeId);
     }
     
     @PostMapping("addMenu")
@@ -231,7 +294,18 @@ public class AdminController {
     
     @PatchMapping("fixMenu")
     public int fixMenu(@RequestBody List<Menu> menu) {
-        return menuService.fixMenu(menu);
+    	return menuService.fixMenu(menu);
+    }
+    
+    @DeleteMapping("delMenu/{menuId}")
+    public void delMenu(@PathVariable int menuId) {
+    	menuService.delMenu(menuId);
+    }
+
+    @GetMapping("detail")
+    public ModelAndView detail(ModelAndView mv) {
+        mv.setViewName("admin/detail/patchDetail");
+        return mv;
     }
     
     @GetMapping("review")

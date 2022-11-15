@@ -17,10 +17,15 @@ public class FeedServiceImpl implements FeedService {
 	private FeedDao feedDao;
 
 	@Override
-	public List<Feed> getFeeds() {
+	public List<FeedDto> getFeeds() {
 		return feedDao.selectFeeds();
 	}
 
+	@Override
+	public List<FeedDto> getMyFeeds(int feedId) {
+		return feedDao.selectMyFeeds(feedId);
+	}
+	
 	@Override
 	public FeedDto getFeed(int feedId) {
 		return feedDao.selectFeed(feedId);
@@ -37,14 +42,22 @@ public class FeedServiceImpl implements FeedService {
 	}
 	
 	@Override
-	public int getHashtag(int feedId, String tag) {
-		List<String> tags = new ArrayList<String>();
-		tags.add(feedId, tag);
-		
-		for(String tag1 : tags) {
-			feedDao.selectHashtag(feedId, tag1);
-			System.out.println(tags);
-		}
-		return feedDao.selectHashtag(feedId, tag);
+	public int fixFeed(FeedTagDto Feed) {
+		return feedDao.updateFeed(Feed);
+	}
+	
+	@Override
+	public int fixHashtags(List<String> tags, int feedId) {
+		return feedDao.updateHashtags(tags, feedId);
+	}
+
+	@Override
+	public int delHashtags(int feedId) {
+		return feedDao.deleteHashtags(feedId);
+	}
+	
+	@Override
+	public int delFeed(int feedId ,int userId) {
+		return feedDao.deleteFeed(feedId, userId);
 	}
 }

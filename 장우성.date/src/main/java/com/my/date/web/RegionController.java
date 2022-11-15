@@ -1,11 +1,10 @@
 package com.my.date.web;
 
+import com.my.date.domain.Region;
 import com.my.date.domain.RegionDto;
 import com.my.date.service.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,5 +31,46 @@ public class RegionController {
         int userId = (int) session.getAttribute("userId");
 
         return regionService.getMyRegions(userId);
+    }
+
+    @GetMapping("isMyRegion/{siName}/{guName}")
+    public int isMyRegion(HttpServletRequest request, @PathVariable String siName, @PathVariable String guName) {
+        HttpSession session = request.getSession(false);
+        if(session == null || session.getAttribute("userId") == null) {
+            return -1;
+        }
+        int userId = (int) session.getAttribute("userId");
+
+        Region region = regionService.getMyRegionByUserIdAndSiAndGu(userId, siName, guName);
+        if(region == null) {
+            return 0;
+        } else {
+            return region.getMyRegionId();
+        }
+    }
+
+    @PostMapping("bookmark/add")
+    public int addBookmark(HttpServletRequest request, @RequestBody RegionDto region) {
+        HttpSession session = request.getSession(false);
+        if(session == null || session.getAttribute("userId") == null) {
+            return -1;
+        }
+
+        region.setSiId(regionService.getSiId(region.getSiName()));
+        region.setGuId(regionService.getGuId(region.getGuName()));
+        region.setUserId((int)session.getAttribute("userId"));
+        regionService.addBookmark(region);
+
+        return region.getMyRegionId();
+    }
+
+    @DeleteMapping("bookmark/del/{bookmarkId}")
+    public int delBookmark(HttpServletRequest request, @PathVariable int bookmarkId) {
+        HttpSession session = request.getSession(false);
+        if(session == null || session.getAttribute("userId") == null) {
+            return -1;
+        }
+
+        return regionService.delBookmark(bookmarkId);
     }
 }

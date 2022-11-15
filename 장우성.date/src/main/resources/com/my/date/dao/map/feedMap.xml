@@ -3,38 +3,49 @@
 	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 <mapper namespace='com.my.date.dao.map.FeedMap'>
 	<select id='selectFeeds' resultMap='feedDtoMap'>
-		select f.feed_id, f.user_id, f.title, f.content, f.created_at, u.nickname, h.tag, h.hashtag_id, l.feed_like_id,
-		(select count(*) from feed_likes l where l.feed_id = f.feed_id) as like_cnt
+		select f.feed_id, f.user_id, f.title, f.content, f.created_at, u.profile_image, u.nickname, h.tag, h.hashtag_id, l.feed_like_id,
+			(select count(*) from feed_likes l where l.feed_id = f.feed_id) as like_cnt,
+			(select count(*) from comments c where c.feed_id = f.feed_id) as comment_cnt
 		from feeds f
-		left join users u on f.user_id = u.user_id
-		left join hashtags h on f.feed_id = h.feed_id
-		left join feed_likes l on l.feed_id = f.feed_id
+			left join users u on f.user_id = u.user_id
+			left join hashtags h on f.feed_id = h.feed_id
+			left join feed_likes l on l.feed_id = f.feed_id
+			left join comments c on c.feed_id = f.feed_id
 		order by created_at
 	</select>
-	
+
 	<select id='selectFeed' resultMap='feedDtoMap'>
 		select f.feed_id, f.user_id, f.title, f.content, f.created_at, u.nickname, h.tag, h.hashtag_id,
-		(select count(*) from feed_likes l where l.feed_id = #{feedId}) as like_cnt,
-        (select feed_like_id from feed_likes l where l.feed_id = #{feedId} and l.user_id = #{userId}) as is_like
+			(select count(*) from comments c where c.feed_id = f.feed_id) as comment_cnt,
+			(select count(*) from feed_likes l where l.feed_id = #{feedId}) as like_cnt,
+			(select feed_like_id from feed_likes l where l.feed_id = #{feedId} and l.user_id = #{userId}) as is_like
 		from feeds f
-		left join users u on f.user_id = u.user_id
-		left join hashtags h on f.feed_id = h.feed_id
-		left join feed_likes l on l.feed_id = f.feed_id
+			left join users u on f.user_id = u.user_id
+			left join hashtags h on f.feed_id = h.feed_id
+			left join feed_likes l on l.feed_id = f.feed_id
+			left join comments c on c.feed_id = f.feed_id
 		where f.feed_id = #{feedId}
 	</select>
-	
-	<select id='selectHashtag' resultMap='feedDtoMap'>
-		select h.hashtag_id, h.feed_id, h.tag, f.feed_id
-		from hashtags h
-		left join hashtags h on f.feed_id = h.feed_id
-		where f.feed_id = #{feedId}
+
+	<select id='selectMyFeeds' resultMap='feedDtoMap'>
+		select f.feed_id, f.user_id, f.title, f.content, f.created_at, u.nickname, h.tag, h.hashtag_id, l.feed_like_id,
+			(select count(*) from comments c where c.feed_id = f.feed_id) as comment_cnt,
+			(select count(*) from feed_likes l where l.feed_id = f.feed_id) as like_cnt,
+			(select feed_like_id from feed_likes l where l.feed_id = #{feedId} and l.user_id = #{userId}) as is_like
+		from feeds f
+			left join users u on f.user_id = u.user_id
+			left join hashtags h on f.feed_id = h.feed_id
+			left join feed_likes l on l.feed_id = f.feed_id
+			left join comments c on c.feed_id = f.feed_id
+		where f.user_id = #{userId}
+		order by created_at
 	</select>
 	
 	<insert id="insertFeed" parameterType="feedTagDto">
 		<selectKey keyProperty="feedId" resultType="int" order="AFTER">
 			select feeds_id_seq.currval from dual
 		</selectKey>
-		insert into feeds values(feeds_id_seq.nextval, #{userId}, #{title}, #{content}, sysdate)
+			insert into feeds values(feeds_id_seq.nextval, #{userId}, #{title}, #{content}, sysdate)
 	</insert>
 	
 	<insert id="insertHashtags">
@@ -45,6 +56,30 @@
 				from dual
 			</foreach>) A
 	</insert>
+
+	<delete id="deleteHashtags">
+		delete from hashtags
+		where feed_id = #{feedId}
+	</delete>
+	
+	<insert id="updateFeed">
+		update feeds
+		set title = #{title}, content = #{content}
+		where feed_id = #{feedId}
+	</insert>
+	
+	<update id="updateHashtags">
+		<foreach collection="tags" item="item" separator="UNION ALL ">
+			update hashtags
+			set tag = #{item}
+			where feed_id = #{feedId}
+		</foreach>
+	</update>
+  
+	<delete id="deleteFeed">
+		delete from feeds
+		where feed_id = #{feedId}
+	</delete>
 	
 	<resultMap id='feedDtoMap' type='feedDto'>
 		<id column='feed_id' property='feedId'/>
@@ -53,8 +88,11 @@
 		<result column='content' property='content'/>
 		<result column='created_at' property='createdAt'/>
 		<result column='nickname' property='nickname'/>
+		<result column='profile_image' property='profileImage'/>
 		<result column='feedlike_id' property='feedLikeId'/>
 		<result column='like_cnt' property='likeCnt'/>
+		<result column='comment_id' property='commentId'/>
+		<result column='comment_cnt' property='commentCnt'/>
 		<collection property='hashtag' resultMap='hashtagMap'/>
 	</resultMap>
 	
