@@ -210,8 +210,13 @@ public class AdminController {
     public int fixPlace(@RequestPart(value = "files") List<MultipartFile> files, @RequestPart(value = "key") Place place, @PathVariable("si") String si, @PathVariable("gu") String gu) {
         List<String> fileNameList = multiFileUpload(files);
 
-        place.setSiId(regionService.getSiId(si));
-        place.setGuId(regionService.getGuId(gu));
+        if(si.equals("경기")) {
+            place.setSiId(regionService.getSiId(gu));
+            place.setGuId(regionService.getGuId("없음"));
+        } else {
+            place.setSiId(regionService.getSiId(si));
+            place.setGuId(regionService.getGuId(gu));
+        }
         int isPlaceSuccess = placeService.fixPlace(place);
 
         if(place.getPlaceId() != 0 && isPlaceSuccess == 1 && fileNameList.size() > 0) {
