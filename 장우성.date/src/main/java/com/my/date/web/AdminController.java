@@ -134,6 +134,11 @@ public class AdminController {
     public PlaceAdminDto getPlace(@PathVariable int placeId) {
         return placeService.getAdminPlace(placeId);
     }
+    
+    @DeleteMapping("place/del/{placeId}")
+	public void delPlace(@PathVariable int placeId) {
+		placeService.delPlace(placeId);
+	}
 
     private List<String> multiFileUpload(List<MultipartFile> files) {
         List<String> fileNameList = new ArrayList<String>();
