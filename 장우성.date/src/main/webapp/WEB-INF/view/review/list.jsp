@@ -124,7 +124,7 @@
     <div class="container">
         <header style="padding-top: 80px">
             <nav class="row navbar bg-light text-center align-middle fixed-top">
-                <a href="javascript:window.history.back();" class="col btn"><i class="bi bi-chevron-left"></i></a>
+                <a href="<%=request.getContextPath()%>/place/place/${placeId}" class="col btn"><i class="bi bi-chevron-left"></i></a>
                 <p class="col"></p>
                 <h3 class="col-6 font-gamja-flower">리뷰보기</h3>
                 <p class="col"></p>
