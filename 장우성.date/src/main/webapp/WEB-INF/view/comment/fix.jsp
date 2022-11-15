@@ -29,7 +29,7 @@
 			if(!isGood) {
 				$('#modalMsg').text(errMsg);
 				$('#addCancleBtn').hide();
-				$('#addOkBtn').show();
+				$('#addOkBtn').hide();
 				$('#replyFix').hide();
 				$('#modal').modal();
 			}
@@ -41,6 +41,7 @@
 				if(isVal($('#inputText').val())) {
 					$('#modalMsg').text('수정하시겠습니까?');
 					$('#addCancleBtn').show();
+					$('#addOkBtn').show();
 					$('#replyFix').show();
 					$('#modal').modal();
 				}
