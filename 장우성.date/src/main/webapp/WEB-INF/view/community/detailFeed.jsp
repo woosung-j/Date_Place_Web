@@ -211,8 +211,6 @@
                     if (data > 0) {
                         showModal('삭제가 완료되었습니다.', false);
                         getComments();
-                    } else {
-                        showModal('권한이 없습니다.', false);
                     }
                 },
             });
