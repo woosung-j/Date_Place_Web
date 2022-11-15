@@ -1,5 +1,22 @@
 package com.my.date.web;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.my.date.domain.Feed;
 import com.my.date.domain.FeedDto;
 import com.my.date.domain.FeedTagDto;
 import com.my.date.service.FeedService;
@@ -30,7 +47,7 @@ public class FeedController {
 	}
 	
 	@GetMapping("add")
-	public ModelAndView addList(HttpServletRequest request, ModelAndView mv) {
+	public ModelAndView addlist(HttpServletRequest request, ModelAndView mv) {
 		HttpSession session = request.getSession(false);
 		if (session == null || session.getAttribute("userId") == null) {
 			mv.setViewName("redirect:/user/login");
@@ -94,18 +111,18 @@ public class FeedController {
 		}
 		return isFeed;
 	}
-
+  
 	@DeleteMapping("delFeed/{feedId}")
 	public int delFeed(HttpServletRequest request, @PathVariable int feedId) {
 		HttpSession session = request.getSession(false);
-		if(session == null || session.getAttribute("userId") == null) {
-			return 0;
-		}
-		int userId = (int) session.getAttribute("userId");
-
+  		if(session == null || session.getAttribute("userId") == null) {
+  			return 0;
+  		}
+   		int userId = (int) session.getAttribute("userId");
+  		  
 		return feedService.delFeed(feedId, userId);
 	}
-
+   	
 	@GetMapping("myfeed")
 	public ModelAndView myFeed(HttpServletRequest request, ModelAndView mv) {
 		HttpSession session = request.getSession(false);

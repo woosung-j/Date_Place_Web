@@ -59,4 +59,9 @@ public class FeedServiceImpl implements FeedService {
 	public int delHashtags(int feedId) {
 		return feedDao.deleteHashtags(feedId);
 	}
+	
+	@Override
+	public int delFeed(int feedId ,int userId) {
+		return feedDao.deleteFeed(feedId, userId);
+	}
 }

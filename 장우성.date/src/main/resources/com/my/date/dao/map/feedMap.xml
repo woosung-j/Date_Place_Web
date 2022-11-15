@@ -80,7 +80,12 @@
 			where feed_id = #{feedId}
 		</foreach>
 	</update>
-
+  
+	<delete id="deleteFeed">
+		delete from feeds
+		where feed_id = #{feedId}
+	</delete>
+	
 	<resultMap id='feedDtoMap' type='feedDto'>
 		<id column='feed_id' property='feedId'/>
 		<result column='user_id' property='userId'/>

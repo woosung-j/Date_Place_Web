@@ -15,4 +15,5 @@ public interface FeedService {
 	int fixHashtags(List<String> tags, int feedId);
 	int delFeed(int feedId, int userId);
 	int delHashtags(int feedId);
+	int delFeed(int feedId, int userId);
 }

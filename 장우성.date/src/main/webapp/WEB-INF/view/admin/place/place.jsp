@@ -50,30 +50,42 @@
                         $('#parking').text(park);
                         $('#contact').text(detail.contact);
                     }
+                    
                     const menuTable = $('#menu_table');
                     const menuArr = [];
-
-                    $.each(menus, (i, menu) => {
-                        if (i == 0) {
-                            let placeId = $('#placeId').val()
-                            menuArr.push(`
+					
+                    if(menus.length == 0) {
+                        menuArr.push(`
+                            <tr>
+                                <td class="col-9"></td>
+                                <td class="col-3 align-middle">
+                                    <a href="<%=request.getContextPath()%>/admin/menu/${placeId}" class="btn btn-secondary">수정</a>
+                                </td>
+                            </tr>
+                        `)
+                    } else {
+                        $.each(menus, (i, menu) => {
+                            if (i == 0) {
+                                let placeId = $('#placeId').val()
+                                menuArr.push(`
                                 <tr>
                                     <td class="col-7">\${menu.menuName}</td>
-                                    <td class="col-2" id="address">\${menu.price}</td>
+                                    <td class="col-2" id="address">\${menu.price}원</td>
                                     <td class="col-3 align-middle" rowspan="\${menus.length}">
                                         <a href="<%=request.getContextPath()%>/admin/menu/${placeId}" class="btn btn-secondary">수정</a>
                                     </td>
                                 </tr>
                             `);
-                        } else {
-                            menuArr.push(`
+                            } else {
+                                menuArr.push(`
                                 <tr>
                                     <td class="col-7">\${menu.menuName}</td>
-                                    <td class="col-2" id="address">\${menu.price}</td>
+                                    <td class="col-2" id="address">\${menu.price}원</td>
                                 </tr>
                             `);
-                        }
-                    });
+                            }
+                        });
+                    }
 
                     menuTable.append(menuArr.join(''));
                 },

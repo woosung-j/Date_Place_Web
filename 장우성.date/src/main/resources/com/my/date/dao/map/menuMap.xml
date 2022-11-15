@@ -3,10 +3,10 @@
 	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 <mapper namespace='com.my.date.dao.map.MenuMap'>
 	<select id='selectMenus' resultType="menu">
-		select m.menu_id, m.menu_name, m.price, m.place_id
-		from menus m, places p
-		where m.place_id = p.place_id
-		order by menu_id desc
+		select menu_id, place_id, menu_name, price
+		from menus
+		where place_id = #{placeId}
+		order by menu_id 
 	</select>
 	
 	<insert id='insertMenu'>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.my.date.dao.ReviewDao;
 import com.my.date.domain.Review;
 import com.my.date.domain.ReviewDto;
+import com.my.date.domain.ReviewImage;
 
 @Service
 public class ReviewServiceImpl implements ReviewService{
@@ -53,6 +54,11 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public int addReview(Review review) {
 		return reviewDao.insertReview(review);
+	}
+	
+	@Override
+	public int addReviewImages(int reviewId, List<String> reviewImages) {
+		return reviewDao.insertReviewImages(reviewId, reviewImages);
 	}
 	
 	@Override

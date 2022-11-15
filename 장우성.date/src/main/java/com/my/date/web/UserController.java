@@ -58,9 +58,7 @@ public class UserController {
 				Cookie cookie = new Cookie("id", user.getId());
 				cookie.setMaxAge(60 * 60 * 24 * 10);
 				response.addCookie(cookie);
-
-				
-			
+			}
 				if(user != null) {
 					session.setAttribute("userId", user.getUserId());
 					session.setAttribute("id", user.getId());
@@ -68,7 +66,6 @@ public class UserController {
 					session.setAttribute("email", user.getEmail());
 					session.setMaxInactiveInterval(86400);
 				}
-			}
 			
 			mv.setViewName("redirect:/");
 		} else {

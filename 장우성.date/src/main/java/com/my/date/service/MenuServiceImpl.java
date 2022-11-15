@@ -13,8 +13,8 @@ public class MenuServiceImpl implements MenuService {
 	@Autowired private MenuDao menuDao;
 	
 	@Override
-	public List<Menu> getMenus() {
-		return menuDao.selectMenus();
+	public List<Menu> getMenus(int placeId) {
+		return menuDao.selectMenus(placeId);
 	}
 	
 	@Override

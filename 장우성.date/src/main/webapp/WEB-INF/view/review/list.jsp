@@ -4,9 +4,9 @@
     <link rel="stylesheet" href="../../res/mobile.css" />
     <style>
         .reImg {
+       		border: none;
             height: 3rem;
             width: 3rem;
-            border: 0.1rem solid;
             text-align: center;
             display: flex;
             align-items: center;
@@ -25,7 +25,6 @@
         }
 
         .profile {
-            border: 0.1rem solid;
             border-radius: 50%;
             height: 2rem;
             width: 2rem;
@@ -60,7 +59,7 @@
                             const delDiv = [];
 
                             $.each(review.reviewImages, (i, reviewImage) => {
-                                reviewImgArr.push(`<img class="reImg ml-3" src="attach/review/\${reviewImage.fileName}'/>"/>`);
+                                reviewImgArr.push(`<img class="reImg ml-3" src="attach/reviewImage/\${reviewImage.fileName}"/>`);
                             });
 
                             reviewArr.unshift(
@@ -69,7 +68,7 @@
                                         <div class="row-1 border rounded mb-2">
                                             <div class="col pt-2">
                                                 <div class="row text-start ml-1 mr-1">
-                                                    <img class="profile" src="attach/user/\${review.profileImage}'/>"/>
+                                                    <img class="profile" src="attach/profileImage/\${review.profileImage}"/>
                                                     <p class="mt-1 ml-1">\${review.nickname}</p>
                                                     <p class="mt-1 ml-1 star-rating">
                                                         <div class="stars">
@@ -98,13 +97,13 @@
                             success: (data) => {
                                 $('#reviewInfo').append(
                                     '<p class="text-center"><strong>' +
-                                    `\${reviews[0].placeName}` +
-                                    '<span style="color: #fb3959">★ ' +
-                                    `\${data}` +
-                                    '</span></strong><br/>' +
-                                    '<span style="color: #fb3959">' +
-                                    `\${reviews.length}` +
-                                    '</span> 개의 리뷰가 있어요.<br /></p>'
+                                        `\${reviews[0].placeName}` +
+                                        '<span style="color: #fb3959">★ ' +
+                                        `\${data}` +
+                                        '</span></strong><br/>' +
+                                        '<span style="color: #fb3959">' +
+                                        `\${reviews.length}` +
+                                        '</span> 개의 리뷰가 있어요.<br /></p>'
                                 );
                             },
                         });

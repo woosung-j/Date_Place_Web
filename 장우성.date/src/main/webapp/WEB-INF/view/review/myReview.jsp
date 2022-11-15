@@ -15,7 +15,6 @@
         .myReviewImg {
             height: 3rem;
             width: 4rem;
-            border: 0.1rem solid;
             text-align: center;
             display: flex;
             align-items: center;
@@ -24,7 +23,6 @@
         }
 
         .profile {
-            border: 0.1rem solid;
             border-radius: 50%;
             height: 2rem;
             width: 2rem;

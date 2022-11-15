@@ -30,7 +30,7 @@
 
                     if (data.length) {
                         $.each(data, (i, item) => {
-                            list.unshift(
+                            list.push(
                                 `<div type="button" class="row accordion text-center border-bottom mx-1 py-3" style="font-size: 14px" id="acco\${item.declareId}" data-toggle="collapse" data-target="#coll\${item.declareId}" aria-expanded="true" aria-controls="coll\${item.declareId}">
                                     <div class="col">\${item.declareId}</div>
                                     <div class="col">\${item.placeName}</div>

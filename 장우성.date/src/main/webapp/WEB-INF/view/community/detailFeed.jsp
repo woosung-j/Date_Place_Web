@@ -42,7 +42,6 @@
                 method: 'get',
                 contentType: 'application/json',
                 success: (feed) => {
-                    console.log(feed)
                     if (Object.values(feed).length) {
                         const feedList = [];
                         const tagList = [];
@@ -70,6 +69,19 @@
                                     <button type="button" class="dropdown-item" id="delFeedBtn" value="\${feed.feedId}" data-toggle="modal" data-target="#delPost">삭제</button>
                                 </div>
                             `);
+                        }
+                        
+                        const editbtn = [];
+                        if ($('#userId').val() == feed.userId) {
+                            editbtn.push(`
+                            		<button type="button" class="btn dropdown-toogle" data-toggle="dropdown">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                	</button>
+                            		<div class="dropdown-menu" id="editBtn">
+                                    <a href="" class="dropdown-item">수정</a>
+                                    <hr />
+                                    <button type="button" class="dropdown-item" data-toggle="modal" data-target="#delCheckModal" id="delFeedBtn">삭제</button>
+                                </div>`);
                         }
 
                         feedList.unshift(`
@@ -101,7 +113,6 @@
                         `);
 
                         $('#detail').append(feedList.join(''));
-
                         delBtnClickEventListener()
                     }
                 },
@@ -296,57 +307,4 @@
         </div>
     </div>
 </div>
-
-<!-- <div class="modal" id="infoModal" tabindex="-1">
-<div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content mx-5">
-        <div class="modal-body text-center py-3">
-            <p>삭제가 완료되었습니다.</p>
-            <button onClick="" class="btn btn-primary">확인</button>
-        </div>
-    </div>
-</div>
-</div>
-
-<div class="modal fade" id="delPost" tabindex="-1">
-<div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content mx-5">
-        <div class="modal-body text-center py-3">
-            <p>게시글을 삭제하시겠습니까?</p>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-            <button class="btn btn-primary" data-toggle="modal" data-target="#infoModal" data-dismiss="modal">확인</button>
-        </div>
-    </div>
-</div>
-</div>
-
-<div class="modal" id="delModal" tabindex="-1">
-<div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content mx-5">
-        <div class="modal-body text-center py-3">
-            <p id="modalMsg"></p>
-        </div>
-        <div class="modal-footer" id="modalBtn">
-            <button type="button" id="cancleBtn" class="btn btn-secondary" data-dismiss="modal">취소</button>
-            <a href="#infoModal2">
-                <button type="button" class="btn btn-primary" onClick="delComment($('#commentIdInput').val())" data-toggle="modal" data-target="#infoModal2" id="okBtn">확인</button>
-            </a>
-        </div>
-    </div>
-</div>
-</div>
-
-<div class="modal" id="infoModal2" tabindex="-1" id="delCheckModal">
-<div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content mx-5">
-        <div class="modal-body text-center py-3">
-            <p id="modalMsg2"></p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" data-dismiss="modal" class="btn btn-primary" id="onClickBtn">확인</button>
-            <input type="hidden" id="commentIdInput" name="commentIdInput" value="" />
-        </div>
-    </div>
-</div>
-</div> -->
 </body>

@@ -15,4 +15,5 @@ public interface FeedDao {
 	int updateHashtags(List<String> tags, int feedId);
 	int deleteFeed(int feedId, int userId);
 	int deleteHashtags(int feedId);
+	int deleteFeed(int feedId, int userId);
 }
