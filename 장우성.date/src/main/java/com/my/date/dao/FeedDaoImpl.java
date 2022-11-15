@@ -1,10 +1,5 @@
 package com.my.date.dao;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import com.my.date.dao.map.FeedMap;
 import com.my.date.domain.FeedDto;
 import com.my.date.domain.FeedTagDto;
@@ -50,11 +45,6 @@ public class FeedDaoImpl implements FeedDao{
 	@Override
 	public int updateHashtags(List<String> tags, int feedId) {
 		return feedMap.updateHashtags(tags, feedId);
-	}
-
-	@Override
-	public int deleteFeed(int feedId, int userId) {
-		return feedMap.deleteFeed(feedId, userId);
 	}
 
 	@Override
