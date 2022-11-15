@@ -57,6 +57,8 @@
                                 </div>`
                             );
                         });
+                    } else {
+                        list.push(`<div type="button" class="row text-center border-bottom mx-1 py-3" style="font-size: 14px"><div class="col">등록된 신고가 없습니다.</div></div>`)
                     }
                     $('#list').empty();
                     $('#list').append(list.join(''));
