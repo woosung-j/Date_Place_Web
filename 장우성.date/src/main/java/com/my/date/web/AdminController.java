@@ -361,4 +361,36 @@ public class AdminController {
     public List<ReviewDto> search(@PathVariable String keyword) {
         return reviewService.getSearchReviewByPlaceName(keyword);
     }
+
+    @GetMapping("/logo")
+    public ModelAndView logo(ModelAndView mv) {
+        mv.setViewName("admin/logo/logo");
+        return mv;
+    }
+
+    @PostMapping("/logo/upload")
+    public int logoUpload(@RequestPart(value = "files") List<MultipartFile> files, HttpServletRequest request) {
+        if(isAdmin(request) == false) {
+            return -1;
+        }
+
+        try {
+            for(MultipartFile file : files) {
+                String originalFileName = file.getOriginalFilename();
+                String savedFileName = "logo.jpg";
+                String uploadPath = attachPath + "/";
+
+                if(!originalFileName.equals("")) {
+                    File file1 = new File(uploadPath + savedFileName);
+                    file.transferTo(file1);
+                } else {
+                    return 0;
+                }
+            }
+        } catch(Exception e) {
+            return 0;
+        }
+
+        return 1;
+    }
 }
