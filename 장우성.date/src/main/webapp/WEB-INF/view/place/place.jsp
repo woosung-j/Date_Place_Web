@@ -269,7 +269,7 @@
                             menuArr.push(`
                                 <tr class="border-bottom border-top">
                                     <td class="col-9 pt-2 pb-2">\${menu.menuName}</td>
-                                    <td>\${menu.price}</td>
+                                    <td>\${menu.price}원</td>
                                 </tr>
                             `);
                         });
