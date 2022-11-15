@@ -15,7 +15,7 @@
 <body>
     <div class="container">
         <header class="row-1 w-auto p-1 fixed-top">
-            <h1 class="text-center border">로고이미지</h1>
+            <img src="<%=request.getContextPath()%>/attach/logo.jpg" style="width:100%; height:70px;"/>
             <hr />
         </header>
         <div id="centerPosition" class="row-2 pt-5">
