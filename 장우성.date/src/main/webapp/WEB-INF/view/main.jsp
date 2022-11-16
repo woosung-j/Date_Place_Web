@@ -23,8 +23,9 @@
 	}
 	
 	img {
-		max-width: 100%;
-		height: auto;
+		width: 100%;
+		height: 100%;
+       	object-fit: cover;	
      }
  </style>
 <script>
@@ -119,7 +120,7 @@
             </div>
             <div id="dropdown-div"></div>
         </div>
-        <div class="row-1 mb-4">
+        <div class="row-1 mb-2">
             <div class="col">
                 <h5 class="font-weight-bold mb-1">추천 장소</h5>
             </div>
@@ -135,7 +136,7 @@
             </div>
         </div>
         <footer class="row mx-auto mt-5 mb-5">
-            <p class="col text-center text-black-50 mt-4" style="font-size: 12px">
+            <p class="col text-center text-black-50" style="font-size: 12px">
                 대표전화: 010-1234-5678<br />
                 제휴/문의: today_date@gmail.com<br />
                 서울특별시 관악구 신림로 340<br />
