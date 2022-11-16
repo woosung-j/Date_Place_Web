@@ -45,7 +45,6 @@
         sigu.forEach((row) => {
             dropdown.push(`<div class="row text-left">`)
             row.forEach((col) => {
-                console.log(col);
 
                 if(col.gu == null) {
                     dropdown.push(`
@@ -91,13 +90,10 @@
             url: '<%=request.getContextPath()%>place/recommand',
             method: 'get',
             success: (data) => {
-                console.log(data)
                 if(data) {
                     $('#recommendPlace').attr("href", `<%=request.getContextPath()%>/place/place/\${data.placeId}`)
                     $('#recommendPlace').append(`<img src="/attach/placeImage/\${data.fileName}" />`)
                 }
-
-
             }
         })
     }
@@ -123,7 +119,7 @@
             </div>
             <div id="dropdown-div"></div>
         </div>
-        <div class="row-1 mb-2">
+        <div class="row-1 mb-4">
             <div class="col">
                 <h5 class="font-weight-bold mb-1">추천 장소</h5>
             </div>
@@ -134,25 +130,12 @@
                         <div class="carousel-item active">
                             <a href="#"><img /></a>
                         </div>
-                        <div class="carousel-item">
-                            <a href="#"><img /></a>
-                        </div>
                     </div>
-                    <a href="#imgCarousel1" class="carousel-control-prev" data-slide="prev">
-                        <span class="carousel-control-prev-icon"></span>
-                    </a>
-                    <a href="#imgCarousel1" class="carousel-control-next" data-slide="next">
-                        <span class="carousel-control-next-icon"></span>
-                    </a>
-                    <ol class="carousel-indicators mx-auto">
-                        <li data-target="#imgCarousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#imgCarousel" data-slide-to="1"></li>
-                    </ol>
                 </div>
             </div>
         </div>
         <footer class="row mx-auto mt-5 mb-5">
-            <p class="col text-center text-black-50" style="font-size: 12px">
+            <p class="col text-center text-black-50 mt-4" style="font-size: 12px">
                 대표전화: 010-1234-5678<br />
                 제휴/문의: today_date@gmail.com<br />
                 서울특별시 관악구 신림로 340<br />
