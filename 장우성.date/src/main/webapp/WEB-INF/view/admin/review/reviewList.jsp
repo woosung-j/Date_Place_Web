@@ -61,11 +61,17 @@
 
         function search() {
             $('#btn_search').click(() => {
+            	if(!($('#word').val())) {
+            		$('#modalMsg').text("장소명을 입력하세요.");
+     	            $('#cancelBtn').hide();
+     	            $('#okBtn').hide();
+     	            $('#onClickBtn').show();
+     	            $('#delCheckModal').modal();
+            	} else 
                 $.ajax({
                     url: '/admin/search/' + $('#word').val(),
                     method: 'get',
                     success: (reviews) => {
-                        console.log(reviews);
                         const list = [];
                         
                         if (reviews.length) {
@@ -115,7 +121,7 @@
         function showModal(msg, isOk, reviewId) {
             $('#cancelBtn').toggle(isOk);
             $('#okBtn').toggle(isOk);
-            $('#onClickBtn').toggle(!isOk);
+            $('#onClickBtn').toggle(!isOk)
             $('#modalMsg').text(msg);
             $('#reviewIdInput').val(reviewId);
             $('#delCheckModal').modal();
@@ -128,7 +134,6 @@
                 success: (reviews) => {
                     if (reviews > 0) {
                         showModal('삭제가 완료되었습니다.', false);
-                        listReviews();
                     } else {
                         showModal('삭제를 실패했습니다.', false);
                     }
@@ -190,7 +195,7 @@
                             );
                         });
                     } else {
-                        list.push(`<div class="card-body border mb-2 text-center">등록된 리뷰가 없습니다.</div>`)
+                        list.push(`<div class="card-body border ml-1 mb-2 text-center">등록된 리뷰가 없습니다.</div>`)
                     }
                     $('#reviews').empty();
                     $('#reviews').append(list.join(''));
@@ -270,7 +275,7 @@
                 <div class="modal-footer">
                     <button type="button" id="cancelBtn" class="btn btn-secondary" data-dismiss="modal">취소</button>
                     <button type="button" onCLick="delReview($('#reviewIdInput').val())" id="okBtn" class="btn btn-primary">확인</button>
-                    <button type="button" id="onClickBtn" class="btn btn-primary btn-lg col-12" data-dismiss="modal">확인</button>
+                    <button onCLick="location.reload()" type="button" id="onClickBtn" class="btn btn-primary btn-lg col-12" data-dismiss="modal">확인</button>
                     <input type="hidden" id="reviewIdInput" name="reviewIdInput" value="" />
                 </div>
             </div>
