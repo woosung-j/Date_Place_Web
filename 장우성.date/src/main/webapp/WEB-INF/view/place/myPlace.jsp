@@ -54,11 +54,10 @@
                 url: '<%=request.getContextPath()%>/place/place/my',
                 method: 'get',
                 success: (data) => {
-                    console.log(data);
                     const arr = [];
                     if (data.length) {
                         data.forEach((place) => {
-                            let imgSrc = place.placeImage?.length != 0 ? '<%=request.getContextPath()%>/attach/placeImage/' + place.placeImage[0].fileName : "#";
+                            let imgSrc = place.placeImage?.length != 0 ? '<%=request.getContextPath()%>/attach/placeImage/' + place.placeImage[0].fileName : '#';
                             arr.push(
                                 `<li class="row border-bottom pt-3 pb-3">
                                     <div class="img-style">
@@ -87,13 +86,13 @@
                             </li>
                         `);
                     }
-                }
-            })
+                },
+            });
         }
 
         $(() => {
-            init()
-        })
+            init();
+        });
     </script>
 </head>
 <body>

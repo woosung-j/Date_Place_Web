@@ -16,7 +16,6 @@
         .swiper {
             width: 250px;
             height: 250px;
-            
         }
         .swiper-slide {
             text-align: center;
@@ -43,7 +42,7 @@
         .fa-star.fill {
             color: #fb3959;
         }
-        
+
         .profile {
             border-radius: 50%;
             height: 2rem;
@@ -120,9 +119,8 @@
                             reviewImgArr.push(`<img class="swiper-slide reImg" src="/attach/reviewImages/\${reviewImage.fileName}"/>`);
                         });
 
-                        const profileImage = review.profileImage != null ?
-                                `<img class="profile" src="/attach/profileImage/\${review.profileImage}"/>` : `<i class="fas fa-user-circle fa-2x"></i>`
-                                
+                        const profileImage = review.profileImage != null ? `<img class="profile" src="/attach/profileImage/\${review.profileImage}"/>` : `<i class="fas fa-user-circle fa-2x"></i>`;
+
                         const delbtn = [];
                         if ($('#userId').val() == review.userId) {
                             delbtn.push(`<button class="delBtn mr-3" type="button" id="deleteBtn"  data-toggle="modal" data-target="#deleteModal" style="border:none; background:none;">삭제</button>`);
@@ -134,7 +132,7 @@
                                 <a href="javascript:window.history.back();" class="col-2 btn"><i class="bi bi-chevron-left"></i> </a>
                                 <h3 class="col-7 font-gamja-flower">리뷰상세</h3>
                                 <p class="col mt-1">\${delbtn.join('')}</p>
-                                
+
                             </nav>
                         </header>
                             <div class="pb-5 mb-3">
@@ -202,7 +200,6 @@
         </li>
     </ul>
 </div>
-<!-- 모달창 -->
 <div class="modal fade" id="delCheckModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content mx-5">

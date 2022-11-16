@@ -60,9 +60,8 @@
                                 reviewImgArr.push(`<img class="myReviewImg ml-2" src="/attach/reviewImages/\${reviewImage.fileName}"/>`);
                             });
 
-                            const profileImage = review.profileImage != null ?
-                                    `<img class="profile" src="/attach/profileImage/\${review.profileImage}"/>` : `<i class="fas fa-user-circle fa-2x"></i>`
-                                    
+                            const profileImage = review.profileImage != null ? `<img class="profile" src="/attach/profileImage/\${review.profileImage}"/>` : `<i class="fas fa-user-circle fa-2x"></i>`;
+
                             myReviews.unshift(
                                 `<table class="col mb-3">
                                     <thead>
@@ -76,7 +75,7 @@
                                                            <div class="stars">
                                                                \${setStarRating(review.starRating)}
                                                            </div>
-                                                       </p>   
+                                                       </p>
                                                     <p class="mt-1 ml-1" style="font-size: 13px">\${review.createdAt}</p>
                                                     <p class="mt-2 ml-5" style="font-size: 11px">\${review.placeName}</p>
                                                 </div>
@@ -84,7 +83,7 @@
                                                     <p>\${review.content}</p>
                                                 </div>
                                                     <div class="row reviewImg mb-2">
-                                                        \${reviewImgArr.join('')} 
+                                                        \${reviewImgArr.join('')}
                                                     </div>
                                                 </div>
                                             </td>
@@ -118,45 +117,45 @@
     </script>
 </head>
 <body>
-    <div class="container">
-        <header style="padding-bottom: 100px">
-            <nav class="row navbar bg-light text-center align-middle fixed-top">
-                <a href="javascript:window.history.back();" class="col btn"><i class="bi bi-chevron-left"></i></a>
-                <p class="col"></p>
-                <h3 class="col-6 font-gamja-flower">나의 리뷰</h3>
-                <p class="col"></p>
-                <p class="col"></p>
-            </nav>
-        </header>
-        <div class="pb-5 mb-3" id="myReviews"></div>
-        <div class="navbar">
-           <ul class="navbar nav-item bg-light fixed-bottom mb-0 list-style-none">
-                <li>
-                    <a href="<%=request.getContextPath()%>/" class="btn w-auto" type="button">
-                        <i class="icon main bi-house-door-fill fa-3x"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="<%=request.getContextPath()%>/community" class="btn w-auto" type="button">
-                        <i class="icon main bi-file-earmark-text fa-3x"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="<%=request.getContextPath()%>/place/around" class="btn w-auto" type="button">
-                        <i class="icon main bi-map fa-3x"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="<%=request.getContextPath()%>/place/myplace" class="btn w-auto" type="button">
-                        <i class="icon main bi-heart fa-3x"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="<%=request.getContextPath()%>/user/login" class="btn w-auto" type="button">
-                        <i class="icon main bi-person-fill fa-3x"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
+<div class="container">
+    <header style="padding-bottom: 100px">
+        <nav class="row navbar bg-light text-center align-middle fixed-top">
+            <a href="javascript:window.history.back();" class="col btn"><i class="bi bi-chevron-left"></i></a>
+            <p class="col"></p>
+            <h3 class="col-6 font-gamja-flower">나의 리뷰</h3>
+            <p class="col"></p>
+            <p class="col"></p>
+        </nav>
+    </header>
+    <div class="pb-5 mb-3" id="myReviews"></div>
+    <div class="navbar">
+        <ul class="navbar nav-item bg-light fixed-bottom mb-0 list-style-none">
+            <li>
+                <a href="<%=request.getContextPath()%>/" class="btn w-auto" type="button">
+                    <i class="icon main bi-house-door-fill fa-3x"></i>
+                </a>
+            </li>
+            <li>
+                <a href="<%=request.getContextPath()%>/community" class="btn w-auto" type="button">
+                    <i class="icon main bi-file-earmark-text fa-3x"></i>
+                </a>
+            </li>
+            <li>
+                <a href="<%=request.getContextPath()%>/place/around" class="btn w-auto" type="button">
+                    <i class="icon main bi-map fa-3x"></i>
+                </a>
+            </li>
+            <li>
+                <a href="<%=request.getContextPath()%>/place/myplace" class="btn w-auto" type="button">
+                    <i class="icon main bi-heart fa-3x"></i>
+                </a>
+            </li>
+            <li>
+                <a href="<%=request.getContextPath()%>/user/login" class="btn w-auto" type="button">
+                    <i class="icon main bi-person-fill fa-3x"></i>
+                </a>
+            </li>
+        </ul>
     </div>
+</div>
 </body>

@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="../../res/mobile.css" />
     <style>
         .reImg {
-       		border: none;
+            border: none;
             height: 4.5rem;
             width: 3.5rem;
             text-align: center;
@@ -58,9 +58,8 @@
                             const reviewImgArr = [];
                             const delDiv = [];
 
-                            const profileImage = review.profileImage != null ?
-                                    `<img class="profile" src="/attach/profileImage/\${review.profileImage}"/>` : `<i class="fas fa-user-circle fa-2x"></i>`
-                                    
+                            const profileImage = review.profileImage != null ? `<img class="profile" src="/attach/profileImage/\${review.profileImage}"/>` : `<i class="fas fa-user-circle fa-2x"></i>`;
+
                             $.each(review.reviewImages, (i, reviewImage) => {
                                 reviewImgArr.push(`<img class="reImg mr-1" src="/attach/reviewImages/\${reviewImage.fileName}"/>`);
                             });
@@ -82,7 +81,7 @@
                                                 </div>
                                                 <a href="<%=request.getContextPath()%>/review/detailview/\${review.reviewId}" style="color: inherit; text-decoration: none;">
                                                     <div class="row reviewImg mb-2">
-                                                    
+
                                                     &nbsp;&nbsp;&nbsp;&nbsp;\${reviewImgArr.join('')}
                                                     </div>
                                                     <div class="row dell text-start ml-1 mr-1"  font-size: 14px">
@@ -101,13 +100,13 @@
                             success: (data) => {
                                 $('#reviewInfo').append(
                                     '<p class="text-center"><strong>' +
-                                        `\${reviews[0].placeName}` +
-                                        '<span style="color: #fb3959">★ ' +
-                                        `\${data}` +
-                                        '</span></strong><br/>' +
-                                        '<span style="color: #fb3959">' +
-                                        `\${reviews.length}` +
-                                        '</span> 개의 리뷰가 있어요.<br /></p>'
+                                    `\${reviews[0].placeName}` +
+                                    '<span style="color: #fb3959">★ ' +
+                                    `\${data}` +
+                                    '</span></strong><br/>' +
+                                    '<span style="color: #fb3959">' +
+                                    `\${reviews.length}` +
+                                    '</span> 개의 리뷰가 있어요.<br /></p>'
                                 );
                             },
                         });
@@ -125,36 +124,36 @@
     </script>
 </head>
 <body>
-    <div class="container">
-        <header style="padding-top: 80px">
-            <nav class="row navbar bg-light text-center align-middle fixed-top">
-                <a href="<%=request.getContextPath()%>/place/place/${placeId}" class="col btn"><i class="bi bi-chevron-left"></i></a>
-                <p class="col"></p>
-                <h3 class="col-6 font-gamja-flower">리뷰보기</h3>
-                <p class="col"></p>
-                <p class="col"></p>
-            </nav>
-        </header>
-        <div class="row-1 mx-3"></div>
-        <table class="table">
-            <thead>
-                <tr id="reviewInfo"></tr>
-            </thead>
-            <tbody id="reviews"></tbody>
-        </table>
-        <input type="hidden" id="placeId" value="${placeId}" />
-        <footer style="padding-top: 100px">
-            <nav class="row navbar fixed-bottom text-center justify-content-center bg-light">
-                <% int userId = 0; if(session.getAttribute("userId") != null) userId = (int) session.getAttribute("userId"); if(userId > 0) { %>
-                <a type="button" class="col-12 btn w-100 font-gamja-flower" href="<%=request.getContextPath()%>/review/add/${placeId}" style="display: block">
-                    다녀온 리뷰 쓰기 <i class="bi bi-pencil-square"></i>
-                </a>
-                <% } else { %>
-                <a type="button" class="col-12 btn w-100 font-gamja-flower" href="<%=request.getContextPath()%>/user/login" style="display: block">
-                    로그인 <i class="bi bi-door-open" style="font-size: 20px"></i>
-                </a>
-                <% } %>
-            </nav>
-        </footer>
-    </div>
+<div class="container">
+    <header style="padding-top: 80px">
+        <nav class="row navbar bg-light text-center align-middle fixed-top">
+            <a href="<%=request.getContextPath()%>/place/place/${placeId}" class="col btn"><i class="bi bi-chevron-left"></i></a>
+            <p class="col"></p>
+            <h3 class="col-6 font-gamja-flower">리뷰보기</h3>
+            <p class="col"></p>
+            <p class="col"></p>
+        </nav>
+    </header>
+    <div class="row-1 mx-3"></div>
+    <table class="table">
+        <thead>
+        <tr id="reviewInfo"></tr>
+        </thead>
+        <tbody id="reviews"></tbody>
+    </table>
+    <input type="hidden" id="placeId" value="${placeId}" />
+    <footer style="padding-top: 100px">
+        <nav class="row navbar fixed-bottom text-center justify-content-center bg-light">
+            <% int userId = 0; if(session.getAttribute("userId") != null) userId = (int) session.getAttribute("userId"); if(userId > 0) { %>
+            <a type="button" class="col-12 btn w-100 font-gamja-flower" href="<%=request.getContextPath()%>/review/add/${placeId}" style="display: block">
+                다녀온 리뷰 쓰기 <i class="bi bi-pencil-square"></i>
+            </a>
+            <% } else { %>
+            <a type="button" class="col-12 btn w-100 font-gamja-flower" href="<%=request.getContextPath()%>/user/login" style="display: block">
+                로그인 <i class="bi bi-door-open" style="font-size: 20px"></i>
+            </a>
+            <% } %>
+        </nav>
+    </footer>
+</div>
 </body>

@@ -32,7 +32,7 @@
         .icon.main:hover {
             color: #ff5858;
         }
-        
+
         .profile {
             border-radius: 50%;
             height: 2rem;
@@ -48,7 +48,6 @@
                 method: 'get',
                 contentType: 'application/json',
                 success: (feed) => {
-                	console.log(feed)
                     if (Object.values(feed).length) {
                         const feedList = [];
                         const tagList = [];
@@ -57,14 +56,14 @@
                         if (feed.hashtag.length != 0 && feed.hashtag[0]?.tag != null) {
                             $.each(feed.hashtag, (i, item) => {
                                 tagList.push(`<span class="badge badge-secondary badge-pill">\${item.tag}</span>`);
-                            })
+                            });
                         }
 
                         const profileImage =
                             feed.profileImage != null
                                 ? `<img class="img-fluid profile" style="width:20px; height: 20px;" src="/attach/profileImage/\${feed.profileImage}"/>`
                                 : `<i class="fas fa-user-circle fa-2x"></i>`;
-                                
+
                         if ($('#userId').val() == feed.userId) {
                             btnList.push(`
                                 <button type="button" class="btn dropdown-toogle" data-toggle="dropdown">
@@ -77,7 +76,7 @@
                                 </div>
                             `);
                         }
-                        
+
                         const editbtn = [];
                         if ($('#userId').val() == feed.userId) {
                             editbtn.push(`
@@ -120,7 +119,7 @@
                         `);
 
                         $('#detail').append(feedList.join(''));
-                        delBtnClickEventListener()
+                        delBtnClickEventListener();
                     }
                 },
             });
@@ -139,7 +138,7 @@
                 success: (data) => {
                     if (data > 0) {
                         showModal('삭제가 완료되었습니다.', false);
-                        location.href = "<%=request.getContextPath()%>/community"
+                        location.href = '<%=request.getContextPath()%>/community';
                     } else {
                         showModal('권한이 없습니다.', false);
                     }
@@ -159,9 +158,11 @@
                         const list = [];
                         $.each(commentList, (i, item) => {
                             const btnList = [];
-                            const profileImage = item.profileImage != null ?
-                                    `<img class="img-fluid profile" style="width:20px; height: 20px;" src="/attach/profileImage/\${item.profileImage}"/>` : `<i class="fas fa-user-circle fa-2x"></i>`
-                                    
+                            const profileImage =
+                                item.profileImage != null
+                                    ? `<img class="img-fluid profile" style="width:20px; height: 20px;" src="/attach/profileImage/\${item.profileImage}"/>`
+                                    : `<i class="fas fa-user-circle fa-2x"></i>`;
+
                             if ($('#userId').val() == item.userId) {
                                 btnList.push(`
                                     <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>
@@ -193,32 +194,32 @@
                     }
                 },
             });
-        }       
-        
+        }
+
         function addComment() {
             $('#replyAddBtn').click(() => {
-            	if($('#inputTextArea').val() == null || $('#inputTextArea').val() == '') {
-            		$('#inputTextArea').val(' ');
-            	}
+                if ($('#inputTextArea').val() == null || $('#inputTextArea').val() == '') {
+                    $('#inputTextArea').val(' ');
+                }
                 $.ajax({
                     url: '<%=request.getContextPath()%>/comment/add',
                     method: 'post',
                     contentType: 'application/json',
                     data: JSON.stringify({
-                    	commentId: '${commentId}',
-                    	userId: '${userId}',
+                        commentId: '${commentId}',
+                        userId: '${userId}',
                         feedId: $('#feedId').val(),
                         content: $('#inputTextArea').val(),
                     }),
                     success: (data) => {
-                            getComments();
-                            $('#inputTextArea').val('');
-                            $('#commentCnt').text(1 + Number($('#commentCnt').text()))  
-                     	},
-                	});
-            	});
-        	}
-	
+                        getComments();
+                        $('#inputTextArea').val('');
+                        $('#commentCnt').text(1 + Number($('#commentCnt').text()));
+                    },
+                });
+            });
+        }
+
         function delComment() {
             $.ajax({
                 url: '<%=request.getContextPath()%>/comment/del/' + $('#commentId').val(),

@@ -4,10 +4,10 @@
     <link rel="stylesheet" href="../../../res/admin.css" />
     <script>
         function tableCreate() {
-            var html = ' ';
-            var menuName = $('#menuName').val();
-            var price = $('#price').val();
-            var remove = $('remove').val();
+            let html = ' ';
+            let menuName = $('#menuName').val();
+            let price = $('#price').val();
+            let remove = $('remove').val();
 
             html += '<tr>';
             html += '<td><input type="hidden" id="placeId" name="placeId" value="${placeId}" /></td>';
@@ -18,12 +18,12 @@
 
             $('#menus').append(html);
         }
-        
+
         function tableDelete(obj) {
-        	var tr = $(obj).parent().parent();
-        	tr.remove();
+            let tr = $(obj).parent().parent();
+            tr.remove();
         }
-        
+
         function showModal(msg, isOk, menuId) {
             $('#cancelBtn').toggle(isOk);
             $('#okBtn').toggle(isOk);
@@ -53,18 +53,18 @@
                     }
                     $('#menus').empty();
                     $('#menus').append(menuArr.join(''));
-                    
-                    deleteBtnClickEvent()
-                }, 
+
+                    deleteBtnClickEvent();
+                },
             });
         }
 
         function addMenu() {
-    		const arr = [];
+            const arr = [];
             let length = $('input[name=menuName]').length;
 
             for (let i = 0; i < length; i++) {
-                arr.push({ placeId: $('#placeId').val(), menuName: $('input[name=menuName]').eq(i).val(), price: $('input[name=price]').eq(i).val()});
+                arr.push({ placeId: $('#placeId').val(), menuName: $('input[name=menuName]').eq(i).val(), price: $('input[name=price]').eq(i).val() });
             }
             $.ajax({
                 url: '<%=request.getContextPath()%>/admin/addMenu',
@@ -72,17 +72,17 @@
                 contentType: 'application/json',
                 data: JSON.stringify(arr),
                 success: (data) => {
-                    let url = `<%=request.getContextPath()%>/admin/place/detail/` + $('#placeId').val()
+                    let url = `<%=request.getContextPath()%>/admin/place/detail/` + $('#placeId').val();
                     location.href = url;
                 },
                 error: (data, xhr) => {
-                	showModal('빈칸을 입력하세요', false)
-                }
+                    showModal('빈칸을 입력하세요', false);
+                },
             });
         }
 
         function fixMenu() {
-    		const arr = [];
+            const arr = [];
             let length = $('input[name=menuId]').length;
 
             for (let i = 0; i < length; i++) {
@@ -98,29 +98,29 @@
                     menuList();
                 },
                 error: (data, xhr) => {
-                	showModal('빈칸을 입력하세요', false)
-                }
+                    showModal('빈칸을 입력하세요', false);
+                },
             });
         }
-        
+
         function delMenu(menuId) {
-       		$.ajax({
-       			url: '<%=request.getContextPath()%>/admin/delMenu/' + menuId,
-       			method: 'delete',
-       			success: (data) => {
-       					showModal('삭제가 완료되었습니다.', false);
-       					menuList();
-       			}
-       		})
-        }
-        
-        function deleteBtnClickEvent() {
-			$('.delBtn').off('click')
-            $('.delBtn').on('click', function (e) {
-             	showModal('삭제하시겠습니까?', true, e.target.value);
+            $.ajax({
+                url: '<%=request.getContextPath()%>/admin/delMenu/' + menuId,
+                method: 'delete',
+                success: (data) => {
+                    showModal('삭제가 완료되었습니다.', false);
+                    menuList();
+                },
             });
         }
-        
+
+        function deleteBtnClickEvent() {
+            $('.delBtn').off('click');
+            $('.delBtn').on('click', function (e) {
+                showModal('삭제하시겠습니까?', true, e.target.value);
+            });
+        }
+
         function init() {
             $('#okMenuBtn').click(() => {
                 addMenu();
@@ -129,71 +129,71 @@
         }
 
         $(() => {
-        	init();
+            init();
             menuList();
         });
     </script>
 </head>
 
 <body>
-    <div class="container-fluid">
-        <header class="row-1">
-            <img src="<%=request.getContextPath()%>/attach/logo_admin.jpg" style="width:100%; height:70px;"/>
-        </header>
-        <hr />
-        <div class="row">
-            <div class="col-2">
-                <ul class="text-center">
-                    <li><a href="<%=request.getContextPath()%>/admin/">회원 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/declare">신고 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/review">리뷰 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/place">장소 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/logo">로고 추가</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/logout">로그아웃</a></li>
-                </ul>
-            </div>
-            <div class="col mt-4">
-                <div class="row">
-                    <div class="col-8">
-                        <h2>장소 메뉴 구성</h2>
-                    </div>
-                    <div class="col mb-3">
-                        <nav class="d-flex justify-content-end mt-4">
-                            <button type="button" class="btn btn-info mr-2" id="okMenuBtn" data-toggle="modal" data-target="#addMenuOkModal">
-                                <span class="label">완료</span>
-                            </button>
-                            <button type="button" class="btn btn-info mr-2" onclick="tableCreate()">
-                                <span class="label">추가</span>
-                            </button>
-                        </nav>
-                    </div>
+<div class="container-fluid">
+    <header class="row-1">
+        <img src="<%=request.getContextPath()%>/attach/logo_admin.jpg" style="width: 100%; height: 70px" />
+    </header>
+    <hr />
+    <div class="row">
+        <div class="col-2">
+            <ul class="text-center">
+                <li><a href="<%=request.getContextPath()%>/admin/">회원 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/declare">신고 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/review">리뷰 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/place">장소 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/logo">로고 추가</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/logout">로그아웃</a></li>
+            </ul>
+        </div>
+        <div class="col mt-4">
+            <div class="row">
+                <div class="col-8">
+                    <h2>장소 메뉴 구성</h2>
                 </div>
-                <table class="table text-center">
-                    <thead class="thead-light">
-                        <tr>
-                            <th>No</th>
-                            <th>메뉴</th>
-                            <th class="col-2">가격</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="menus"></tbody>
-                </table>
-                <input type="hidden" id="placeId" name="placeId" value="${placeId}" />
+                <div class="col mb-3">
+                    <nav class="d-flex justify-content-end mt-4">
+                        <button type="button" class="btn btn-info mr-2" id="okMenuBtn" data-toggle="modal" data-target="#addMenuOkModal">
+                            <span class="label">완료</span>
+                        </button>
+                        <button type="button" class="btn btn-info mr-2" onclick="tableCreate()">
+                            <span class="label">추가</span>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+            <table class="table text-center">
+                <thead class="thead-light">
+                <tr>
+                    <th>No</th>
+                    <th>메뉴</th>
+                    <th class="col-2">가격</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="menus"></tbody>
+            </table>
+            <input type="hidden" id="placeId" name="placeId" value="${placeId}" />
+        </div>
+    </div>
+</div>
+<div class="modal" id="delCheckModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content mx-5">
+            <div class="modal-body text-center py-3">
+                <p id="modalMsg"></p>
+                <button type="button" id="cancelBtn" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                <button type="button" onclick="delMenu($('#menuIdInput').val())" id="okBtn" class="btn btn-primary">확인</button>
+                <button type="button" id="onClickBtn" class="btn btn-primary btn-lg col-12" data-dismiss="modal">확인</button>
+                <input type="hidden" id="menuIdInput" name="menuIdInput" value="" />
             </div>
         </div>
     </div>
-    <div class="modal" id="delCheckModal" tabindex="-1">
-	    <div class="modal-dialog modal-dialog-centered">
-	        <div class="modal-content mx-5">
-	            <div class="modal-body text-center py-3">
-	                <p id="modalMsg"></p>
-	                <button type="button" id="cancelBtn" class="btn btn-secondary" data-dismiss="modal">취소</button>
-	                <button type="button" onclick="delMenu($('#menuIdInput').val())" id="okBtn" class="btn btn-primary">확인</button>
-	                <button type="button" id="onClickBtn" class="btn btn-primary btn-lg col-12" data-dismiss="modal">확인</button>
-	                <input type="hidden" id="menuIdInput" name="menuIdInput" value="" />
-	            </div>
-	        </div>
-	    </div>
-	</div>
+</div>
 </body>

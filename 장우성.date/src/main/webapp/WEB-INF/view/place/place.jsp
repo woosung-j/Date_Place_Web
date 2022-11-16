@@ -84,7 +84,7 @@
             -webkit-user-select: none;
             user-select: none;
         }
-        
+
         .profile {
             border-radius: 50%;
             height: 2rem;
@@ -155,12 +155,8 @@
 
             navigator.clipboard
                 .writeText(content)
-                .then(() => {
-                    console.log('Text copied to clipboard...');
-                })
-                .catch((err) => {
-                    console.log('Something went wrong', err);
-                });
+                .then(() => {})
+                .catch((err) => {});
         }
         // 커스텀 오버레이를 닫기 위해 호출되는 함수입니다
         function closeOverlay() {
@@ -196,8 +192,7 @@
                 url: '<%=request.getContextPath()%>/place/get/' + $('#placeId').val(),
                 method: 'get',
                 success: (data) => {
-                    console.log(data)
-                    getSigu(data.siId, data.guId)
+                    getSigu(data.siId, data.guId);
                     const detail = data.detail;
                     const review = data.review;
 
@@ -213,14 +208,14 @@
                     $('#subPlaceName').text(data.placeName);
                     $('#introduction').text(data.introduction);
                     $('#place_like').text(`찜 \${data.placeLikeCount}`);
-                    $('#place_like').val(data.placeLikeCount)
+                    $('#place_like').val(data.placeLikeCount);
 
                     if (detail != null) {
                         $('#address').val(detail.address);
                     }
 
-                    isLike(data?.isLike)
-                    $('#placeLikeBtn').val(data?.isLike)
+                    isLike(data?.isLike);
+                    $('#placeLikeBtn').val(data?.isLike);
 
                     const placeImageArr = [];
                     $.each(data.placeImages, (i, img) => {
@@ -280,7 +275,7 @@
                     } else {
                         let menuArr = [];
                         $.each(data.menus, (i, menu) => {
-                        	let result = (menu.price).toLocaleString('ko-KR');
+                            let result = menu.price.toLocaleString('ko-KR');
                             menuArr.push(`
                                 <tr class="border-bottom border-top">
                                     <td class="col-9 pt-2 pb-2">\${menu.menuName}</td>
@@ -295,12 +290,11 @@
                     let reviewHeader = $('#review_header');
                     reviewHeader.text(`다녀온 유저 리뷰 \n \${review?.reviewCount != null ? review.reviewCount : '0'}개의 리뷰가 있어요.`);
                     reviewHeader.html(reviewHeader.html().replace(/\n/g, '<br>'));
-                    const profileImage = review?.profileImage != null ?
-                            `<img class="profile" src="/attach/profileImage/\${review.profileImage}"/>` : `<i class="fas fa-user-circle fa-2x"></i>`
+                    const profileImage = review?.profileImage != null ? `<img class="profile" src="/attach/profileImage/\${review.profileImage}"/>` : `<i class="fas fa-user-circle fa-2x"></i>`;
                     if (review == null) {
                         $('#review_thead').hide();
                     } else {
-                    	  $('#profileImg').append(profileImage)
+                        $('#profileImg').append(profileImage);
                         $('#review_nickname').text(`\${review.nickname}`);
                         $('#review_starRating').html(`\${setStarRating(review.starRating)}`);
                         $('#review_createdAt').text(`\${review.createdAt}`);
@@ -319,7 +313,7 @@
         }
 
         function isLike(isLike) {
-            $('#place_heart').removeClass()
+            $('#place_heart').removeClass();
             if (isLike > 0) {
                 $('#place_heart').addClass('bi bi-heart-fill').attr('style', 'color:#E14D2A;');
             } else {
@@ -332,24 +326,24 @@
                 url: `<%=request.getContextPath()%>/region/sigu/\${siId}/\${guId}`,
                 method: 'get',
                 success: (data) => {
-                    $('#siName').val(data.siName)
-                    $('#guName').val(data.guName)
-                    backBtnClick()
-                }
-            })
+                    $('#siName').val(data.siName);
+                    $('#guName').val(data.guName);
+                    backBtnClick();
+                },
+            });
         }
 
         function toggleLike() {
-            if($('#place_heart')[0].classList[1] == 'bi-heart-fill') {
-                $('#place_heart').removeClass()
+            if ($('#place_heart')[0].classList[1] == 'bi-heart-fill') {
+                $('#place_heart').removeClass();
                 $('#place_heart').addClass('bi bi-heart');
                 $('#place_like').text(`찜 ` + (Number($('#place_like').val()) - 1));
-                $('#place_like').val(Number($('#place_like').val()) - 1)
+                $('#place_like').val(Number($('#place_like').val()) - 1);
             } else {
-                $('#place_heart').removeClass()
+                $('#place_heart').removeClass();
                 $('#place_heart').addClass('bi bi-heart-fill').attr('style', 'color:#E14D2A;');
                 $('#place_like').text(`찜 ` + (Number($('#place_like').val()) + 1));
-                $('#place_like').val(Number($('#place_like').val()) + 1)
+                $('#place_like').val(Number($('#place_like').val()) + 1);
             }
         }
 
@@ -368,27 +362,27 @@
                 method: 'post',
                 contentType: 'application/json',
                 data: JSON.stringify({
-                    placeId: $('#placeId').val()
+                    placeId: $('#placeId').val(),
                 }),
                 success: (data) => {
-                    if(data > 0) {
-                        toggleLike()
+                    if (data > 0) {
+                        toggleLike();
                     }
-                }
-            })
+                },
+            });
         }
 
         function backBtnClick() {
-            const url = `<%=request.getContextPath()%>/place/list?si=` + $('#siName').val() + `&gu=` + $('#guName').val()
-            $('#backBtn').attr("href", url)
+            const url = `<%=request.getContextPath()%>/place/list?si=` + $('#siName').val() + `&gu=` + $('#guName').val();
+            $('#backBtn').attr('href', url);
         }
 
         $(() => {
             getPlace();
             copy();
             $('#placeLikeBtn').on('click', () => {
-                togglePlaceLike()
-            })
+                togglePlaceLike();
+            });
         });
     </script>
 </head>
@@ -444,7 +438,7 @@
                 <td class="row-1 mt-5 border rounded mb-3">
                     <div class="col pt-1">
                         <div class="row text-start">
-                        	<p id="profileImg" class="ml-2"></p>
+                            <p id="profileImg" class="ml-2"></p>
                             <p id="review_nickname" class="mt-1 ml-1" style="font-size: 13px"></p>
                             <p id="review_starRating" class="mt-1 ml-1" style="font-size: 13px"></p>
                             <p id="review_createdAt" class="mt-1 ml-1" style="font-size: 13px"></p>
@@ -452,8 +446,7 @@
                         <div class="row text-start ml-1 mr-1 mb-2" style="font-size: 14px">
                             <p id="review_content"></p>
                         </div>
-                        <div class="row reviewImg mb-2">
-                        </div>
+                        <div class="row reviewImg mb-2"></div>
                     </div>
                 </td>
             </tr>
@@ -498,14 +491,14 @@
 <input type="hidden" id="placeId" name="placeId" value="${placeId}" />
 <input type="hidden" id="siName" name="siName" />
 <input type="hidden" id="guName" name="guName" />
-<%--<input type="hidden" id="isLike" name="isLike" value=""/>--%>
+<%--<input type="hidden" id="isLike" name="isLike" value="" />--%>
 <!-- 모달창 -->
 <div class="modal fade" id="Modal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content mx-5">
             <div class="modal-body text-center py-3">
-
-                <p>예약/문의하고 싶어요!<br /></p><p id="placeModal"/>
+                <p>예약/문의하고 싶어요!<br /></p>
+                <p id="placeModal" />
 
                 <a href="#infoModal" class="btn btn-primary" data-toggle="modal" data-target="#infoModal" data-dismiss="modal">전화하기</a>
             </div>
