@@ -114,7 +114,7 @@
     </div>
     <hr class="mt-1" />
     <div class="row-1 pb-5 mb-3">
-        <a href="../place/06.html">
+        <a href="<%=request.getContextPath()%>/place/myplace">
             <button type="button" class="btn btn-primary btn-lg col-12 mt-3">찜</button>
         </a>
         <a href="<%=request.getContextPath()%>/region/myregion">
