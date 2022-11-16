@@ -39,10 +39,8 @@
                             tags: $('#hashtag').val().split(' '),
                         }),
                         success: (data) => {
-                            $('#modalMsg').text('작성이 완료되었습니다.');
                             $('#closeBtn').hide();
                             $('#addOkBtn').show();
-                            $('#modal').modal();
                             location.href="<%=request.getContextPath()%>/community"
                         },
                     });
