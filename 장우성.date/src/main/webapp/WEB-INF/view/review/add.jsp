@@ -184,7 +184,6 @@
                 -상품과 관계없는 내용은 삭제 및 비공개 처리될 수 있습니다.<br />
             </p>
         </div>
-        <input type="hidden" id="placeId" value="${placeId}" />
         <footer style="padding-top: 100px">
             <nav class="row navbar fixed-bottom text-center justify-content-center bg-light">
                 <button type="button" id="addReviewBtn" class="btn col-12 btn w-100 font-gamja-flower" id="successBtn" data-toggle="modal" data-target="#infoModal">작성완료</button>

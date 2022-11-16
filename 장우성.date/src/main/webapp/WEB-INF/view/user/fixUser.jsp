@@ -68,7 +68,7 @@
         function fixUser() {
             if (isValidate()) {
                 $.ajax({
-                    url: 'fixuser',
+                    url: '<%=request.getContextPath()%>/user/fixuser',
                     method: 'put',
                     contentType: 'application/json',
                     data: JSON.stringify({
@@ -169,7 +169,7 @@
         <div class="modal-content mx-5">
             <div id="modalMsg" class="modal-body text-center py-3">
                 <p>수정이 완료 되었습니다.</p>
-                <a href="/" class="btn btn-primary"> 확인 </a>
+                <a href="<%=request.getContextPath()%>/" class="btn btn-primary"> 확인 </a>
             </div>
         </div>
     </div>

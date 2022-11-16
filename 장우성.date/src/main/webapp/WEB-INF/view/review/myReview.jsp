@@ -44,7 +44,7 @@
 
         function getReviews() {
             $.ajax({
-                url: 'review/myReview',
+                url: '<%=request.getContextPath()%>/review/review/myReview',
                 method: 'get',
                 contentType: 'application/json',
                 success: (reviews) => {

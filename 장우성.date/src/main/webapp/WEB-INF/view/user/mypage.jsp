@@ -72,7 +72,7 @@
                 method: 'get',
                 success: (data) => {
                     if (data) {
-                        $('#profile').append(`<img id="profileImg" src="/attach/profileImage/\${data}"/>`);
+                        $('#profile').append(`<img id="profileImg" src="<%=request.getContextPath()%>/attach/profileImage/\${data}"/>`);
                     } else {
                         $('#profile').append(`<i class="bi bi-person-circle" style='font-size:110px'></i>`);
                     }
@@ -87,7 +87,7 @@
             });
 
             $('#fixUserBtn').click(() => {
-                location.href = 'user/fixUser';
+                location.href = '<%=request.getContextPath()%>/user/fixUser';
             });
         });
     </script>
@@ -129,7 +129,7 @@
         <a href="<%=request.getContextPath()%>/declaration">
             <button type="button" class="btn btn-primary btn-lg col-12 mt-3">신고 내역</button>
         </a>
-        <a href="logout">
+        <a href="<%=request.getContextPath()%>/user/logout">
             <button type="button" class="btn btn-primary btn-lg col-12 mt-3">로그 아웃</button>
         </a>
     </div>

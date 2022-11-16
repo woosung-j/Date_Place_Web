@@ -41,7 +41,7 @@
                 <p>${id}</p>
             </div>
             <h5 class="info mt-3">${errMsg1} ${infoMsg2}</h5>
-            <a href="login" type="button" class="btn btn-primary btn-lg col-12 mt-3">로그인</a>
+            <a href="<%=request.getContextPath()%>/user/login" type="button" class="btn btn-primary btn-lg col-12 mt-3">로그인</a>
         </form>
     </div>
     <div class="navbar">

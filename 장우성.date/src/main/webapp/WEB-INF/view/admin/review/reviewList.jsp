@@ -69,7 +69,7 @@
      	            $('#delCheckModal').modal();
             	} else 
                 $.ajax({
-                    url: '/admin/search/' + $('#word').val(),
+                    url: '<%=request.getContextPath()%>/admin/search/' + $('#word').val(),
                     method: 'get',
                     success: (reviews) => {
                         const list = [];
@@ -129,7 +129,7 @@
 
         function delReview(reviewId) {
             $.ajax({
-                url: 'del/' + reviewId,
+                url: '<%=request.getContextPath()%>/admin/review/del/' + reviewId,
                 method: 'delete',
                 success: (reviews) => {
                     if (reviews > 0) {
@@ -143,7 +143,7 @@
 
         function listReviews() {
             $.ajax({
-                url: 'review/list',
+                url: '<%=request.getContextPath()%>/admin/review/list',
                 method: 'get',
                 contentType: 'application/json',
                 success: (reviews) => {

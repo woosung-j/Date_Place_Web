@@ -37,7 +37,7 @@
         </nav>
     </header>
     <div class="row pt-62">
-        <form action="findidresult" method="post" class="d-grid col-11 mx-auto">
+        <form action="<%=request.getContextPath()%>/user/findidresult" method="post" class="d-grid col-11 mx-auto">
             <div class="input-group">
                     <span class="input-group-text">
                         <i class="bi bi-person-fill"></i>

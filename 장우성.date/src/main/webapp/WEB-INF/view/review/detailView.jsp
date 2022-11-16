@@ -94,7 +94,7 @@
 
     function delDetailReview(reviewId) {
         $.ajax({
-            url: '/review/del/' + $('#reviewId').val(),
+            url: '<%=request.getContextPath()%>/review/del/' + $('#reviewId').val(),
             method: 'delete',
             success: (data) => {
                 if (data > 0) {
@@ -108,7 +108,7 @@
 
     function detailReview() {
         $.ajax({
-            url: '/review/detailView/' + $('#reviewId').val(),
+            url: '<%=request.getContextPath()%>/review/detailView/' + $('#reviewId').val(),
             method: 'get',
             success: (reviews) => {
                 if (reviews.length) {

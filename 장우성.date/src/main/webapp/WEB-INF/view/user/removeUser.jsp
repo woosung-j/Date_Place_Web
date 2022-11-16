@@ -25,7 +25,7 @@
             $('#delUserBtn').click(() => {
                 if (isVal($('#delIdCheck:checked'))) {
                     $.ajax({
-                        url: 'removeuser/' + $('#delIdCheck').val(),
+                        url: '<%=request.getContextPath()%>/user/removeuser/' + $('#delIdCheck').val(),
                         method: 'post',
                         contentType: 'application/json',
                         success: function remove() {
@@ -123,7 +123,7 @@
         <div class="modal-content mx-5">
             <div class="modal-body text-center py-3">
                 <p class="modalMsg">회원 탈퇴가<br />완료 되었습니다.</p>
-                <a id="okBtn" href="/" class="btn btn-primary btn-lg col-12">예</a>
+                <a id="okBtn" href="<%=request.getContextPath()%>/" class="btn btn-primary btn-lg col-12">예</a>
             </div>
         </div>
     </div>

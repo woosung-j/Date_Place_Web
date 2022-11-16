@@ -37,7 +37,7 @@
                     $('#errMsg').show();
                 } else {
                     $.ajax({
-                        url: 'findpasswordresult/' + $('#email').val(),
+                        url: '<%=request.getContextPath()%>/user/findpasswordresult/' + $('#email').val(),
                         method: 'post',
                         contentType: 'application/json',
                         data: JSON.stringify({
@@ -50,7 +50,7 @@
 
                                 return 0;
                             } else {
-                                location.href = 'findpasswordresult';
+                                location.href = '<%=request.getContextPath()%>/user/findpasswordresult';
                             }
                         },
                     });

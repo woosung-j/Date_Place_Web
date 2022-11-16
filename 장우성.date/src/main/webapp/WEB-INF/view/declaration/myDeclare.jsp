@@ -24,7 +24,7 @@
 
         function delDeclare(declareId) {
             $.ajax({
-                url: 'declaration/del/' + declareId,
+                url: '<%=request.getContextPath()%>/declaration/del/' + declareId,
                 method: 'delete',
                 success: (data) => {
                     if (data > 0) {
@@ -38,7 +38,7 @@
         }
         function getList() {
             $.ajax({
-                url: 'declaration/list',
+                url: '<%=request.getContextPath()%>/declaration/list',
                 method: 'get',
                 contentType: 'application/json',
                 success: (data) => {

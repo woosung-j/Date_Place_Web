@@ -48,7 +48,7 @@
         </nav>
     </header>
     <div class="row pt-62">
-        <form action="login" method="post" class="d-grid col-11 mx-auto">
+        <form action="<%=request.getContextPath()%>/user/login" method="post" class="d-grid col-11 mx-auto">
             <div class="input-group">
                     <span class="input-group-text">
                         <i class="bi bi-person-fill"></i>
@@ -68,8 +68,8 @@
     </div>
     <div class="row pb-5 mb-3">
         <div class="col text-center overflow-auto word-keep mt-3">
-            <a href="findid">아이디 찾기</a> | <a href="findpassword">비밀번호 찾기</a> |
-            <a href="signup">회원가입</a>
+            <a href="<%=request.getContextPath()%>/user/findid">아이디 찾기</a> | <a href="<%=request.getContextPath()%>/user/findpassword">비밀번호 찾기</a> |
+            <a href="<%=request.getContextPath()%>/user/signup">회원가입</a>
         </div>
     </div>
 </div>

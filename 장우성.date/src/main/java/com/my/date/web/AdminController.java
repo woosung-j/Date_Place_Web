@@ -336,7 +336,7 @@ public class AdminController {
         return reviewService.getReviews();
     }
 
-    @DeleteMapping("del/{reviewId}")
+    @DeleteMapping("review/del/{reviewId}")
     public int delAdminReview(HttpSession session, @PathVariable int reviewId) {
         if(!SessionUtil.getIsAdmin(session)) return -1;
         return reviewService.delAdminReview(reviewId);

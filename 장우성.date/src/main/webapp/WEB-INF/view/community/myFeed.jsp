@@ -41,7 +41,7 @@
 
         function myFeeds() {
             $.ajax({
-                url: 'community/myFeed',
+                url: '<%=request.getContextPath()%>/community/community/myFeed',
                 method: 'get',
                 contentType: 'application/json',
                 success: (feeds) => {
