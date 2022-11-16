@@ -165,7 +165,7 @@
 
                             if ($('#userId').val() == item.userId) {
                                 btnList.push(`
-                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>
+                                    <button type="button" class="btn dropdown" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>
                                     <div class="dropdown-menu">
                                         <a href="<%=request.getContextPath()%>/comment/fix/\${$('#feedId').val()}/\${item.commentId}" class="dropdown-item">수정</a>
                                         <hr/>
