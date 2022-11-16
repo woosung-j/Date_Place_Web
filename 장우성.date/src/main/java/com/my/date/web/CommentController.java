@@ -43,7 +43,12 @@ public class CommentController {
 	
 	@PatchMapping("fix")
 	public int fixComment(@RequestBody Comment comment, HttpServletRequest request) {
-		comment.setUserId(1);
+		HttpSession session = request.getSession(false);
+		if(session == null || session.getAttribute("userId") == null) {
+			return -1;
+		}
+		int userId = (int)session.getAttribute("userId");
+		comment.setUserId(userId);
 		return commentService.fixComment(comment);	
 	}
 	
