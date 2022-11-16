@@ -43,7 +43,7 @@
 <body>
     <div class="container-fluid">
         <header class="row-1">
-            <img src="<%=request.getContextPath()%>/attach/logo.jpg" style="width:100%; height:70px;"/>
+            <img src="<%=request.getContextPath()%>/attach/logo_admin.jpg" style="width:100%; height:70px;"/>
         </header>
         <hr />
         <div class="row">

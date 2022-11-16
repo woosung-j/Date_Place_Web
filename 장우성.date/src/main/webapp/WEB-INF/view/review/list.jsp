@@ -68,7 +68,7 @@
                                         <div class="row-1 border rounded mb-2">
                                             <div class="col pt-2">
                                                 <div class="row text-start ml-1 mr-1">
-                                                    <img class="profile" src="attach/profileImage/\${review.profileImage}"/>
+                                                    <img class="profile" src="/attach/profileImage/\${review.profileImage}"/>
                                                     <p class="mt-1 ml-1">\${review.nickname}</p>
                                                     <p class="mt-1 ml-1 star-rating">
                                                         <div class="stars">

@@ -67,7 +67,7 @@
                                             <td class="row-1 mt-5 border rounded mb-3">
                                                 <div class="col pt-1">
                                                 <div class="row text-start">
-                                                    <img class="profile" src="attach/user/\${review.profileImage}'/>"/>
+                                                    <img class="profile ml-1" src="/attach/profileImage/\${review.profileImage}"/>
                                                     <p class="mt-1 ml-1" style="font-size: 13px">\${review.nickname}</p>
                                                        <p class="mt-1 ml-1 star-rating">
                                                            <div class="stars">

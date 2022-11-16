@@ -32,6 +32,10 @@
         .icon.main:hover {
             color: #ff5858;
         }
+        
+        .profile {
+            border-radius: 50%;
+        }
     </style>
     <script>
         function getFeed() {
@@ -42,6 +46,7 @@
                 method: 'get',
                 contentType: 'application/json',
                 success: (feed) => {
+                	console.log(feed)
                     if (Object.values(feed).length) {
                         const feedList = [];
                         const tagList = [];
@@ -55,9 +60,9 @@
 
                         const profileImage =
                             feed.profileImage != null
-                                ? `<img class="img-fluid" style="width:20px; height: 20px;" src="/attach/profileImage/\${feed.profileImage}"/>`
+                                ? `<img class="img-fluid profile" style="width:20px; height: 20px;" src="/attach/profileImage/\${feed.profileImage}"/>`
                                 : `<i class="fas fa-user-circle fa-2x"></i>`;
-
+                                
                         if ($('#userId').val() == feed.userId) {
                             btnList.push(`
                                 <button type="button" class="btn dropdown-toogle" data-toggle="dropdown">

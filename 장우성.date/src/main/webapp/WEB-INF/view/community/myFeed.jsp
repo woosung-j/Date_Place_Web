@@ -65,7 +65,7 @@
                                     <div class="card-header row-11">
                                         <div class="text_output">
                                             <div class="row">
-                                               <img class="profile ml-3" src="attach/user/\${feed.profileImage}'/>"/>
+                                               <img class="profile ml-3" src="/attach/profileImage/\${item.profileImage}"/>
                                                <span class="col-5">\${feed.nickname}</span>
                                                <span class="col-5">\${feed.createdAt}</span>
                                             </div>
