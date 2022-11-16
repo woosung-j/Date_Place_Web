@@ -110,7 +110,6 @@
                     <tr>
                         <td>
                             <select id="placeGroupId" name="placeGroupId" style="width: 100%; height: 2.5rem">
-                                <option value="empty">장소 구분</option>
                                 <option value="1">맛집</option>
                                 <option value="2">카페</option>
                                 <option value="3">놀거리</option>

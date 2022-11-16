@@ -8,6 +8,7 @@ public interface PlaceDao {
 	List<Place> selectPlaces();
 	List<PlaceDto> selectPlacesBySiNameAndGuName(String siName, String guName, int userId);
 	List<PlaceDto> selectPlacesBySiNameAndGuNameAndOrderBy(String siName, String guName, int userId, int orderBy);
+	List<PlaceDto> selectPlacesByUserId(int userId);
 	PlaceDetailDto selectPlaceByPlaceId(int placeId, int userId);
 	PlaceDetailDto selectAdminPlaceByPlaceId(int placeId);
 	PlaceAdminDto selectAdminPlace(int placeId);

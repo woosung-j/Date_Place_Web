@@ -9,6 +9,7 @@ public interface PlaceMap {
 	List<Place> selectPlaces();
 	List<PlaceDto> selectPlacesBySiNameAndGuName(@Param("siName") String siName, @Param("guName") String guName, @Param("userId") int userId);
 	List<PlaceDto> selectPlacesBySiNameAndGuNameAndOrderBy(@Param("siName") String siName, @Param("guName") String guName, @Param("userId") int userId, @Param("orderBy") int orderBy);
+	List<PlaceDto> selectPlacesByUserId(int userId);
 	PlaceDetailDto selectPlaceByPlaceId(@Param("placeId") int placeId, @Param("userId") int userId);
 	PlaceDetailDto selectAdminPlaceByPlaceId(int placeId);
 	PlaceAdminDto selectAdminPlace(int placeId);

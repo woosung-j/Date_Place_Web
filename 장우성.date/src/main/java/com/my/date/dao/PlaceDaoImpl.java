@@ -27,6 +27,11 @@ public class PlaceDaoImpl implements PlaceDao {
 	}
 
 	@Override
+	public List<PlaceDto> selectPlacesByUserId(int userId) {
+		return placeMap.selectPlacesByUserId(userId);
+	}
+
+	@Override
 	public PlaceDetailDto selectPlaceByPlaceId(int placeId, int userId) {
 		return placeMap.selectPlaceByPlaceId(placeId, userId);
 	}

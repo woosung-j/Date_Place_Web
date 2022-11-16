@@ -7,6 +7,7 @@ import java.util.List;
 public interface PlaceService {
 	List<Place> getPlaces();
 	List<PlaceDto> getPlacesBySiNameAndGuName(String siName, String guName, int userId, int orderBy);
+	List<PlaceDto> getPlacesByUserId(int userId);
 	PlaceDetailDto getPlaceByPlaceId(int placeId, int userId);
 	PlaceDetailDto getAdminPlaceByPlaceId(int placeId);
 	PlaceAdminDto getAdminPlace(int placeId);
