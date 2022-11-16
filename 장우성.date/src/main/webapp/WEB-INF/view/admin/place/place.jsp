@@ -79,11 +79,11 @@
                                 `);
                             } else {
                                 menuArr.push(`
-                                <tr>
-                                    <td class="col-7">\${menu.menuName}</td>
-                                    <td class="col-2" id="address">\${result}원</td>
-                                </tr>
-                            `);
+                                    <tr>
+                                        <td class="col-7">\${menu.menuName}</td>
+                                        <td class="col-2" id="address">\${result}원</td>
+                                    </tr>
+                                `);
                             }
                         });
                     }
