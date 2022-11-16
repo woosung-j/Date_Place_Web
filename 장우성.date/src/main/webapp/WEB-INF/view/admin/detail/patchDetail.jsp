@@ -11,7 +11,6 @@
                 method: 'get',
                 contentType: 'application/json',
                 success: (data) => {
-                    console.log(data);
                     const list = [];
 
                     if (data) {
@@ -121,65 +120,62 @@
                     contact: $('#contact').val(),
                     parking: $('#parking option:selected').val(),
                 }),
-                success: (data) => {
-                    console.log(data);
-                    const list = [];
-                },
+                success: (data) => {},
             });
         }
     </script>
 </head>
 <body>
-    <div class="container-fluid">
-        <header class="row-1">
-            <img src="<%=request.getContextPath()%>/attach/logo_admin.jpg" style="width:100%; height:70px;"/>
-        </header>
-        <hr />
-        <div class="row">
-            <div class="col-2">
-                <ul class="text-center">
-                    <li><a href="<%=request.getContextPath()%>/admin/">회원 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/declare">신고 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/review">리뷰 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/place">장소 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/logo">로고 추가</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/logout">로그아웃</a></li>
-                </ul>
-            </div>
-            <div class="col mt-4">
-                <div class="row">
-                    <div class="col-8">
-                        <h1>장소 소개 수정</h1>
-                    </div>
-                    <div class="col mb-3">
-                        <input type="hidden" id="placeId" name="placeId" value="${placeId}" />
-                        <nav class="d-flex justify-content-end mt-4">
-                            <button onclick="fixDetail()" type="button" class="btn btn-primary col-3" data-toggle="modal" data-target="#submitModal">
-                                <span class="label">완료</span>
-                            </button>
-                        </nav>
-                    </div>
+<div class="container-fluid">
+    <header class="row-1">
+        <img src="<%=request.getContextPath()%>/attach/logo_admin.jpg" style="width: 100%; height: 70px" />
+    </header>
+    <hr />
+    <div class="row">
+        <div class="col-2">
+            <ul class="text-center">
+                <li><a href="<%=request.getContextPath()%>/admin/">회원 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/declare">신고 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/review">리뷰 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/place">장소 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/logo">로고 추가</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/logout">로그아웃</a></li>
+            </ul>
+        </div>
+        <div class="col mt-4">
+            <div class="row">
+                <div class="col-8">
+                    <h1>장소 소개 수정</h1>
                 </div>
-                <hr />
-                <table class="table-borderless">
-                    <tbody id="details"></tbody>
-                </table>
+                <div class="col mb-3">
+                    <input type="hidden" id="placeId" name="placeId" value="${placeId}" />
+                    <nav class="d-flex justify-content-end mt-4">
+                        <button onclick="fixDetail()" type="button" class="btn btn-primary col-3" data-toggle="modal" data-target="#submitModal">
+                            <span class="label">완료</span>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+            <hr />
+            <table class="table-borderless">
+                <tbody id="details"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal" tabindex="-1" id="submitModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="<%=request.getContextPath()%>/admin/place/detail/${placeId}" class="close text-black"> <span>&times;</span> </a>
+            </div>
+            <div class="modal-body text-center py-3">
+                <p>완료되었습니다.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="<%=request.getContextPath()%>/admin/place/detail/${placeId}" class="btn btn-primary btn-lg col-12">확인</a>
             </div>
         </div>
     </div>
-    <div class="modal" tabindex="-1" id="submitModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <a href="<%=request.getContextPath()%>/admin/place/detail/${placeId}" class="close text-black"> <span>&times;</span> </a>
-                </div>
-                <div class="modal-body text-center py-3">
-                    <p>완료되었습니다.</p>
-                </div>
-                <div class="modal-footer">
-                    <a href="<%=request.getContextPath()%>/admin/place/detail/${placeId}" class="btn btn-primary btn-lg col-12">확인</a>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 </body>

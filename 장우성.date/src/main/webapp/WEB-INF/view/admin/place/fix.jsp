@@ -15,7 +15,6 @@
     <script>
         let areaSelectMaker = function (target) {
             if (target == null || $(target).length == 0) {
-                console.warn('Unkwon Area Tag');
                 return;
             }
 
@@ -75,8 +74,7 @@
                 processData: false,
                 contentType: false,
                 data: formData,
-                success: (data) => {
-                },
+                success: (data) => {},
             });
         }
 
@@ -85,17 +83,17 @@
                 url: '<%=request.getContextPath()%>/admin/place/fix/' + $('#placeId').val(),
                 method: 'get',
                 success: (data) => {
-                    console.log(data)
-                    $('#placeName').val(data.placeName)
-                    $('#placeGroupId').val(data.placeGroupId)
-                    $('#introduction').val(data.introduction)
-                }
-            })
+                    console.log(data);
+                    $('#placeName').val(data.placeName);
+                    $('#placeGroupId').val(data.placeGroupId);
+                    $('#introduction').val(data.introduction);
+                },
+            });
         }
 
         $(() => {
             areaSelectMaker('select[name=si]');
-            init()
+            init();
 
             $('#fixBtn').click(() => {
                 fix();
@@ -103,82 +101,82 @@
         });
     </script>
 </head>
-    <body>
-    <div class="container-fluid">
-        <header class="row-1">
-            <img src="<%=request.getContextPath()%>/attach/logo_admin.jpg" style="width:100%; height:70px;"/>
-        </header>
-        <hr />
-        <div class="row">
-            <div class="col-2">
-                <ul class="text-center">
-                    <li><a href="<%=request.getContextPath()%>/admin/">회원 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/declare">신고 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/review">리뷰 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/place">장소 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/logo">로고 추가</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/logout">로그아웃</a></li>
-                </ul>
-                <input type="hidden" id="placeId" name="${placeId}" value="${placeId}"/>
+<body>
+<div class="container-fluid">
+    <header class="row-1">
+        <img src="<%=request.getContextPath()%>/attach/logo_admin.jpg" style="width: 100%; height: 70px" />
+    </header>
+    <hr />
+    <div class="row">
+        <div class="col-2">
+            <ul class="text-center">
+                <li><a href="<%=request.getContextPath()%>/admin/">회원 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/declare">신고 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/review">리뷰 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/place">장소 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/logo">로고 추가</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/logout">로그아웃</a></li>
+            </ul>
+            <input type="hidden" id="placeId" name="${placeId}" value="${placeId}" />
+        </div>
+        <div class="col">
+            <form enctype="multipart/form-data" id="form" method="post" action="<%=request.getContextPath()%>/admin/place/add">
+                <div class="row d-flex justify-content-between">
+                    <div class="ml-3">
+                        <h1>장소수정</h1>
+                    </div>
+                    <div>
+                        <button type="button" id="fixBtn" class="btn btn-secondary mr-4" data-toggle="modal" data-target="#enter">완료</button>
+                    </div>
+                </div>
+                <table class="table text-justify-all">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <select id="placeGroupId" name="placeGroupId" style="width: 100%; height: 2.5rem">
+                                <option value="empty">장소 구분</option>
+                                <option value="1">맛집</option>
+                                <option value="2">카페</option>
+                                <option value="3">놀거리</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input id="placeName" name="placeName" type="text" style="width: 59%; height: 2.5rem" placeholder="장소이름을 입력해주세요" />
+                            <select id="si" name="si" id="city1" style="width: 20%; height: 2.5rem"></select>
+                            <select id="gu" name="gu" id="district1" style="width: 20%; height: 2.5rem"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <textarea id="introduction" name="introduction" style="width: 100%; height: 40rem" placeholder="장소소개말을 입력해주세요"></textarea>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pl-2 pb-4">
+                    <input type="file" id="files" name="files" multiple />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal" tabindex="-1" id="enter">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="<%=request.getContextPath()%>/admin/place" class="close text-black">
+                    <span>&times;</span>
+                </a>
             </div>
-            <div class="col">
-                <form enctype="multipart/form-data" id="form" method="post" action="<%=request.getContextPath()%>/admin/place/add">
-                    <div class="row d-flex justify-content-between">
-                        <div class="ml-3">
-                            <h1>장소수정</h1>
-                        </div>
-                        <div>
-                            <button type="button" id="fixBtn" class="btn btn-secondary mr-4" data-toggle="modal" data-target="#enter">완료</button>
-                        </div>
-                    </div>
-                    <table class="table text-justify-all">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <select id="placeGroupId" name="placeGroupId" style="width: 100%; height: 2.5rem">
-                                        <option value="empty">장소 구분</option>
-                                        <option value="1">맛집</option>
-                                        <option value="2">카페</option>
-                                        <option value="3">놀거리</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input id="placeName" name="placeName" type="text" style="width: 59%; height: 2.5rem" placeholder="장소이름을 입력해주세요" />
-                                    <select id="si" name="si" id="city1" style="width: 20%; height: 2.5rem"></select>
-                                    <select id="gu" name="gu" id="district1" style="width: 20%; height: 2.5rem"></select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                  <textarea id="introduction" name="introduction" style="width: 100%; height: 40rem" placeholder="장소소개말을 입력해주세요"></textarea>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="pl-2 pb-4">
-                      <input type="file" id="files" name="files" multiple />
-                    </div>
-                </form>
+            <div class="modal-body text-center py-3">
+                <p>완료 되었습니다.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="<%=request.getContextPath()%>/admin/place" class="btn btn-primary btn-lg col-12">확인</a>
             </div>
         </div>
     </div>
-    <div class="modal" tabindex="-1" id="enter">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <a href="<%=request.getContextPath()%>/admin/place" class="close text-black">
-                        <span>&times;</span>
-                    </a>
-                </div>
-                <div class="modal-body text-center py-3">
-                    <p>완료 되었습니다.</p>
-                </div>
-                <div class="modal-footer">
-                    <a href="<%=request.getContextPath()%>/admin/place" class="btn btn-primary btn-lg col-12">확인</a>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 </body>

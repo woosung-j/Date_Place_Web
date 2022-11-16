@@ -27,7 +27,6 @@
                 url: 'declaration/del/' + declareId,
                 method: 'delete',
                 success: (data) => {
-                    console.log(data);
                     if (data > 0) {
                         showModal('삭제가 완료되었습니다.', false);
                         getList();
@@ -75,8 +74,7 @@
                         });
                         $('#list').append(list.join(''));
                     } else {
-                        const html =
-                            `<div id="declare" class="col-12 w-auto">
+                        const html = `<div id="declare" class="col-12 w-auto">
                                 <div class="card mb-3">
                                     <div class="card-header row-12 px-0">
                                         <span class="col overflow-hidden">

@@ -3,29 +3,28 @@
     <jsp:include page="../../include/head.jsp"></jsp:include>
     <link rel="stylesheet" href="../../../res/admin.css" />
     <script>
-	    function isVal(field) {
-	        let isGood = false;
-	        let errMsg;
-	       
+        function isVal(field) {
+            let isGood = false;
+            let errMsg;
+
             if (!field.val()) {
                 errMsg = field.attr('placeholder');
             } else {
                 isGood = true;
-	        }
-	
-	        if (!isGood) {
-	            $('#modalMsg').text(errMsg);
-	            $('#modalCloseBtn').show();
-	            $('#modalOkBtn').hide();
-	            $('#modal').modal();
-	        }
-	
-	        return isGood
-	    }
-    
+            }
+
+            if (!isGood) {
+                $('#modalMsg').text(errMsg);
+                $('#modalCloseBtn').show();
+                $('#modalOkBtn').hide();
+                $('#modal').modal();
+            }
+
+            return isGood;
+        }
+
         let areaSelectMaker = function (target) {
             if (target == null || $(target).length == 0) {
-                console.warn('Unkwon Area Tag');
                 return;
             }
 
@@ -40,16 +39,13 @@
                     let a1 = $(target).eq(z);
                     let a2 = a1.next();
 
-                    //초기화
                     init(a1, true);
 
-                    //권역 기본 생성
                     let areaKeys1 = Object.keys(area);
                     areaKeys1.forEach(function (City) {
                         a1.append('<option value=' + City + '>' + City + '</option>');
                     });
 
-                    //변경 이벤트
                     $(a1).on('change', function () {
                         init($(this), false);
                         let City = $(this).val();
@@ -84,8 +80,7 @@
                 processData: false,
                 contentType: false,
                 data: formData,
-                success: (data) => {
-                },
+                success: (data) => {},
             });
         }
 
@@ -93,29 +88,28 @@
             areaSelectMaker('select[name=si]');
 
             $('#addBtn').click(() => {
-            	if(isVal($('#placeGroupId')) && isVal($('#placeName')) && isVal($('#si')) && isVal($('#gu'))
-            		&& isVal($('#introduction'))) {
-            		$('#modalMsg').text("장소를 등록하겠습니다.");
-     	            $('#modalCloseBtn').hide();
-     	            $('#modalOkBtn').show();
-     	            $('#modal').modal();
-            		add();
-            	} else if(!($('#placeGroupId').val())) {
-            		$('#modalMsg').text("장소구분을 선택하세요");
-     	            $('#modalCloseBtn').show();
-     	            $('#modalOkBtn').hide();
-     	            $('#modal').modal();
-            	} else if(!($('#si').val())) {
-            		$('#modalMsg').text("시를 선택하세요");
-     	            $('#modalCloseBtn').show();
-     	            $('#modalOkBtn').hide();
-     	            $('#modal').modal();
-            	} else if(!($('#gu').val())){
-            		$('#modalMsg').text("구를 선택하세요");
-     	            $('#modalCloseBtn').show();
-     	            $('#modalOkBtn').hide();
-     	            $('#modal').modal();
-            	}
+                if (isVal($('#placeGroupId')) && isVal($('#placeName')) && isVal($('#si')) && isVal($('#gu')) && isVal($('#introduction'))) {
+                    $('#modalMsg').text('장소를 등록하겠습니다.');
+                    $('#modalCloseBtn').hide();
+                    $('#modalOkBtn').show();
+                    $('#modal').modal();
+                    add();
+                } else if (!$('#placeGroupId').val()) {
+                    $('#modalMsg').text('장소구분을 선택하세요');
+                    $('#modalCloseBtn').show();
+                    $('#modalOkBtn').hide();
+                    $('#modal').modal();
+                } else if (!$('#si').val()) {
+                    $('#modalMsg').text('시를 선택하세요');
+                    $('#modalCloseBtn').show();
+                    $('#modalOkBtn').hide();
+                    $('#modal').modal();
+                } else if (!$('#gu').val()) {
+                    $('#modalMsg').text('구를 선택하세요');
+                    $('#modalCloseBtn').show();
+                    $('#modalOkBtn').hide();
+                    $('#modal').modal();
+                }
             });
         });
     </script>
@@ -123,7 +117,7 @@
 <body>
 <div class="container-fluid">
     <header class="row-1">
-        <img src="<%=request.getContextPath()%>/attach/logo_admin.jpg" style="width:100%; height:70px;"/>
+        <img src="<%=request.getContextPath()%>/attach/logo_admin.jpg" style="width: 100%; height: 70px" />
     </header>
     <hr />
     <div class="row">
@@ -184,18 +178,18 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button id='xBtn' type="button" class="close" data-dismiss="modal">
+                <button id="xBtn" type="button" class="close" data-dismiss="modal">
                     <span>&times;</span>
                 </button>
             </div>
             <div class="modal-body text-center py-3">
-                <p id='modalMsg' class='text-center'></p>
+                <p id="modalMsg" class="text-center"></p>
             </div>
             <div id="modalOkBtn" class="modal-footer">
                 <a href="<%=request.getContextPath()%>/admin/place" class="btn btn-primary btn-lg col-12">확인</a>
             </div>
-            <div id='modalCloseBtn' class="modal-footer">
-				<button type="button" class="btn btn-secondary text-center" data-dismiss="modal">확인</button>
+            <div id="modalCloseBtn" class="modal-footer">
+                <button type="button" class="btn btn-secondary text-center" data-dismiss="modal">확인</button>
             </div>
         </div>
     </div>

@@ -94,7 +94,6 @@
                     method: 'get',
                     contentType: 'application/text',
                     success: (data) => {
-                        console.log(data);
                         if (data == 0) showModal('이미 사용중인 아이디입니다.', 'red');
                         else {
                             showModal('사용 가능한 아이디입니다.');
@@ -127,7 +126,6 @@
                 url: 'emailAuthCheck/' + email,
                 method: 'get',
                 success: (data) => {
-                    console.log(data);
                     code = data;
                     auth.isEmail = true;
                 },

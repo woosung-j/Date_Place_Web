@@ -15,7 +15,7 @@
                 contentType: false,
                 data: formData,
                 success: (data) => {
-                    location.reload()
+                    location.reload();
                 },
             });
         }
@@ -31,7 +31,7 @@
                 contentType: false,
                 data: formData,
                 success: (data) => {
-                    location.reload()
+                    location.reload();
                 },
             });
         }

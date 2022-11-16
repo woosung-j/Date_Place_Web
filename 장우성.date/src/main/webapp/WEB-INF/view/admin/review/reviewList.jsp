@@ -65,9 +65,8 @@
                     url: '/admin/search/' + $('#word').val(),
                     method: 'get',
                     success: (reviews) => {
-                        console.log(reviews);
                         const list = [];
-                        
+
                         if (reviews.length) {
                             $.each(reviews, (i, review) => {
                                 const reviewImgArr = [];
@@ -77,7 +76,7 @@
 
                                 list.unshift(
                                     `<div class="card-body border mb-2">
-                                        <button type="button" id="deleteBtn" class="btn btn-danger deleteBtn" style="float: right" 
+                                        <button type="button" id="deleteBtn" class="btn btn-danger deleteBtn" style="float: right"
                                                  data-toggle="modal" value="\${review.reviewId}">삭제</button>
                                         <div class="row text-start ml-1 mr-1">
                                             <img class="profile" src="attach/user/\${review.profileImage}'/>"/>
@@ -91,7 +90,7 @@
                                             <p class="mt-1 ml-4">장소: \${review.placeName}</p>
                                             </div>
                                             <div class="row reviewImg mb-2">
-                                                \${reviewImgArr.join('')} 
+                                                \${reviewImgArr.join('')}
                                             </div>
                                             <p class="col card-text mt-3">\${review.content}</p>
                                         </div>
@@ -99,7 +98,7 @@
                                 );
                             });
                         } else {
-                            list.push(`<div class="card-body border mb-2 text-center">등록된 리뷰가 없습니다.</div>`)
+                            list.push(`<div class="card-body border mb-2 text-center">등록된 리뷰가 없습니다.</div>`);
                         }
                         $('#searchReviews').empty();
                         $('#searchReviews').append(list.join(''));
@@ -165,7 +164,7 @@
                                        <div class="col mx-1">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <button type="button" id="deleteBtn" class="btn btn-danger deleteBtn" style="float: right" 
+                                                    <button type="button" id="deleteBtn" class="btn btn-danger deleteBtn" style="float: right"
                                                         data-toggle="modal" value="\${review.reviewId}">삭제</button>
                                                     <div class="row text-start ml-1 mr-1">
                                                         <img class="profile" src="attach/user/\${review.profileImage}'/>"/>
@@ -179,7 +178,7 @@
                                                         <p class="mt-1 ml-4">장소: \${review.placeName}</p>
                                                     </div>
                                                     <div class="row reviewImg mb-2">
-                                                        \${reviewImgArr.join('')} 
+                                                        \${reviewImgArr.join('')}
                                                     </div>
                                                     <p class="col card-text mt-3">\${review.content}</p>
                                                 </div>
@@ -190,7 +189,7 @@
                             );
                         });
                     } else {
-                        list.push(`<div class="card-body border mb-2 text-center">등록된 리뷰가 없습니다.</div>`)
+                        list.push(`<div class="card-body border mb-2 text-center">등록된 리뷰가 없습니다.</div>`);
                     }
                     $('#reviews').empty();
                     $('#reviews').append(list.join(''));
@@ -211,285 +210,69 @@
     </script>
 </head>
 <body>
-    <div class="container-fluid">
-        <header class="row-1">
-            <img src="<%=request.getContextPath()%>/attach/logo_admin.jpg" style="width:100%; height:70px;"/>
-        </header>
-        <hr />
-        <div class="row">
-            <div class="col-2">
-                <ul class="text-center">
-                    <li><a href="<%=request.getContextPath()%>/admin/">회원 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/declare">신고 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/review">리뷰 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/place">장소 조회</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/logo">로고 추가</a></li>
-                    <li><a href="<%=request.getContextPath()%>/admin/logout">로그아웃</a></li>
-                </ul>
+<div class="container-fluid">
+    <header class="row-1">
+        <img src="<%=request.getContextPath()%>/attach/logo_admin.jpg" style="width: 100%; height: 70px" />
+    </header>
+    <hr />
+    <div class="row">
+        <div class="col-2">
+            <ul class="text-center">
+                <li><a href="<%=request.getContextPath()%>/admin/">회원 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/declare">신고 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/review">리뷰 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/place">장소 조회</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/logo">로고 추가</a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/logout">로그아웃</a></li>
+            </ul>
+        </div>
+        <div class="col mt-2">
+            <div class="row">
+                <div class="col-5">
+                    <h3 class="ml-2 mt-4">리뷰 조회</h3>
+                </div>
+                <div class="col-7">
+                    <nav class="d-flex justify-content-end mt-4 mb-3">
+                        <div class="d-flex col-5">
+                            <input type="text" class="form-control mr-2" id="word" name="placeName" placeholder="장소명" />
+                            <button type="button" id="btn_search" class="btn btn-info col-3 mr-2 label text-center">조회</button>
+                        </div>
+                    </nav>
+                </div>
             </div>
-            <div class="col mt-2">
-                <div class="row">
-                    <div class="col-5">
-                        <h3 class="ml-2 mt-4">리뷰 조회</h3>
-                    </div>
-                    <div class="col-7">
-                        <nav class="d-flex justify-content-end mt-4 mb-3">
-                            <div class="d-flex col-5">
-                                <input type="text" class="form-control mr-2" id="word" name="placeName" placeholder="장소명" />
-                                <button type="button" id="btn_search" class="btn btn-info col-3 mr-2 label text-center">조회</button>
-                            </div>
-                        </nav>
-                    </div>
-                </div>
-                <div id="searchReviews">
-                    <table class="table mx-1">
-                        <thead style="background-color: #7882a4; color: #d6e5fa">
-                            <tr>
-                                <th class="col-4 text-center">No.</th>
-                                <th class="col-4 text-center">장소</th>
-                                <th class="col-4 text-center">등록일</th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div id="reviews" class="mb-5 pb-5"></div>
-                </div>
+            <div id="searchReviews">
+                <table class="table mx-1">
+                    <thead style="background-color: #7882a4; color: #d6e5fa">
+                    <tr>
+                        <th class="col-4 text-center">No.</th>
+                        <th class="col-4 text-center">장소</th>
+                        <th class="col-4 text-center">등록일</th>
+                    </tr>
+                    </thead>
+                </table>
+                <div id="reviews" class="mb-5 pb-5"></div>
             </div>
         </div>
     </div>
-    <div class="modal fade" tabindex="-1" id="delCheckModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span>&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p id="modalMsg"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="cancelBtn" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                    <button type="button" onCLick="delReview($('#reviewIdInput').val())" id="okBtn" class="btn btn-primary">확인</button>
-                    <button type="button" id="onClickBtn" class="btn btn-primary btn-lg col-12" data-dismiss="modal">확인</button>
-                    <input type="hidden" id="reviewIdInput" name="reviewIdInput" value="" />
-                </div>
+</div>
+<div class="modal fade" tabindex="-1" id="delCheckModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="modalMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancelBtn" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                <button type="button" onCLick="delReview($('#reviewIdInput').val())" id="okBtn" class="btn btn-primary">확인</button>
+                <button type="button" id="onClickBtn" class="btn btn-primary btn-lg col-12" data-dismiss="modal">확인</button>
+                <input type="hidden" id="reviewIdInput" name="reviewIdInput" value="" />
             </div>
         </div>
     </div>
+</div>
 </body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

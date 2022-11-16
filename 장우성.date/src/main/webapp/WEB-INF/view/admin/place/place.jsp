@@ -39,9 +39,9 @@
                     $('#place_like_count').text(data.placeLikeCount);
                     $('#created_at').text(data.createdAt);
                     $('#updated_at').text(data.updatedAt);
-                    
-                    if(detail) {
-                    	$('#detailId').val(detail.detailId)
+
+                    if (detail) {
+                        $('#detailId').val(detail.detailId);
                         $('#address').text(detail.address);
                         $('#tel').text(detail.tel);
                         $('#time').text(detail.openingHours + ' - ' + detail.closingHours);
@@ -50,11 +50,11 @@
                         $('#parking').text(park);
                         $('#contact').text(detail.contact);
                     }
-                    
+
                     const menuTable = $('#menu_table');
                     const menuArr = [];
-					
-                    if(menus.length == 0) {
+
+                    if (menus.length == 0) {
                         menuArr.push(`
                             <tr>
                                 <td class="col-9"></td>
@@ -62,11 +62,11 @@
                                     <a href="<%=request.getContextPath()%>/admin/menu/${placeId}" class="btn btn-secondary">수정</a>
                                 </td>
                             </tr>
-                        `)
+                        `);
                     } else {
                         $.each(menus, (i, menu) => {
                             if (i == 0) {
-                                let placeId = $('#placeId').val()
+                                let placeId = $('#placeId').val();
                                 menuArr.push(`
                                 <tr>
                                     <td class="col-7">\${menu.menuName}</td>
@@ -86,12 +86,12 @@
                             }
                         });
                     }
-					
+
                     menuTable.append(menuArr.join(''));
                 },
             });
         }
-        
+
         function init() {
             getPlace();
         }
@@ -99,23 +99,22 @@
         $(() => {
             init();
         });
-        
+
         function delDetail() {
-        	console.log($('#detailId').val())
-       		$.ajax({
-       			url: '<%=request.getContextPath()%>/admin/detail/del/' + $('#detailId').val(),
-       			method: 'delete',
-       			success: (data) => {
-      				$('#infoModal').modal()
-       			}
-       		})
+            $.ajax({
+                url: '<%=request.getContextPath()%>/admin/detail/del/' + $('#detailId').val(),
+                method: 'delete',
+                success: (data) => {
+                    $('#infoModal').modal();
+                },
+            });
         }
     </script>
 </head>
 <body>
 <div class="container-fluid">
     <header class="row-1">
-        <img src="<%=request.getContextPath()%>/attach/logo_admin.jpg" style="width:100%; height:70px;"/>
+        <img src="<%=request.getContextPath()%>/attach/logo_admin.jpg" style="width: 100%; height: 70px" />
     </header>
     <hr />
     <div class="row">
@@ -134,7 +133,7 @@
                 <div class="col-8">
                     <h2 id="placeName"></h2>
                 </div>
-            </div>            
+            </div>
             <table class="table text-center">
                 <thead>
                 <tr>
@@ -242,8 +241,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <!-- location.href = ' -->
-                <a href="<%=request.getContextPath()%>/admin/place/detail/${placeId}" class="close text-black" >
+                <a href="<%=request.getContextPath()%>/admin/place/detail/${placeId}" class="close text-black">
                     <span>&times;</span>
                 </a>
             </div>
@@ -251,7 +249,7 @@
                 <p>삭제가 완료되었습니다.</p>
             </div>
             <div class="modal-footer">
-                <a href="<%=request.getContextPath()%>/admin/place/detail/${placeId}" class="btn btn-primary btn-lg col-12" >확인</a>
+                <a href="<%=request.getContextPath()%>/admin/place/detail/${placeId}" class="btn btn-primary btn-lg col-12">확인</a>
             </div>
         </div>
     </div>

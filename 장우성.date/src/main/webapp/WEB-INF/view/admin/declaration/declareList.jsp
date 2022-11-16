@@ -14,7 +14,7 @@
                 method: 'patch',
                 contentType: 'application/text',
                 success: (data) => {
-                    getDeclareList()
+                    getDeclareList();
                 },
             });
         }
@@ -25,7 +25,6 @@
                 method: 'get',
                 contentType: 'application/json',
                 success: (data) => {
-                    console.log(data)
                     const list = [];
 
                     if (data.length) {
@@ -58,7 +57,7 @@
                             );
                         });
                     } else {
-                        list.push(`<div type="button" class="row text-center border-bottom mx-1 py-3" style="font-size: 14px"><div class="col">등록된 신고가 없습니다.</div></div>`)
+                        list.push(`<div type="button" class="row text-center border-bottom mx-1 py-3" style="font-size: 14px"><div class="col">등록된 신고가 없습니다.</div></div>`);
                     }
                     $('#list').empty();
                     $('#list').append(list.join(''));
@@ -74,7 +73,7 @@
 <body>
 <div class="container-fluid">
     <header class="row-1">
-        <img src="<%=request.getContextPath()%>/attach/logo_admin.jpg" style="width:100%; height:70px;"/>
+        <img src="<%=request.getContextPath()%>/attach/logo_admin.jpg" style="width: 100%; height: 70px" />
     </header>
     <hr />
     <div class="row">
