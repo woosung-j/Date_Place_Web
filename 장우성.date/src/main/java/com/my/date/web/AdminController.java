@@ -335,10 +335,8 @@ public class AdminController {
     @DeleteMapping("detail/del/{detailId}")
     public void delDetail(HttpSession session, @PathVariable int detailId) {
     	if(!SessionUtil.getIsAdmin(session)) {
-    		System.out.println();
     		return ;
-    		} 
-    		System.out.print(detailId);
+    		}
     		detailService.delDetail(detailId);
     }
 
