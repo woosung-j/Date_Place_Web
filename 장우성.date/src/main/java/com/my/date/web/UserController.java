@@ -1,11 +1,15 @@
 package com.my.date.web;
 
+import java.io.File;
+import java.util.UUID;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,7 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.my.date.domain.User;
@@ -24,6 +30,7 @@ import com.my.date.service.UserService;
 @RestController
 @RequestMapping("user")
 public class UserController {
+	@Value("${attachPath}") private String attachPath;
 	@Autowired private UserService userService;
 	@Autowired private MailSendService mailSendService;
 
@@ -58,9 +65,7 @@ public class UserController {
 				Cookie cookie = new Cookie("id", user.getId());
 				cookie.setMaxAge(60 * 60 * 24 * 10);
 				response.addCookie(cookie);
-
-				
-			
+			}						
 				if(user != null) {
 					session.setAttribute("userId", user.getUserId());
 					session.setAttribute("id", user.getId());
@@ -68,7 +73,6 @@ public class UserController {
 					session.setAttribute("email", user.getEmail());
 					session.setMaxInactiveInterval(86400);
 				}
-			}
 			
 			mv.setViewName("redirect:/");
 		} else {
@@ -103,6 +107,51 @@ public class UserController {
 		
 		return mv;
 	}
+	
+//	@PostMapping("mypage")
+//	public void myPage(String profileName) {
+//		userService.fixProfileImg(profileName);
+//	}
+	
+	@GetMapping("uploadProfile")
+	public String getProfileImage(HttpServletRequest request) {
+		HttpSession sessionCheck = request.getSession(false);
+        
+		if(sessionCheck == null || sessionCheck.getAttribute("userId") == null) {
+            return null;            
+        }
+        
+        int userId = (int) sessionCheck.getAttribute("userId");
+        
+        return userService.getUserProfileImage(userId);
+	}
+	
+	@PostMapping("uploadProfile")
+    public int myPage(@RequestPart(value = "files") MultipartFile file, HttpServletRequest request) {
+    	HttpSession sessionCheck = request.getSession(false);
+        
+		if(sessionCheck == null || sessionCheck.getAttribute("userId") == null) {
+            return 0;            
+        }
+        
+        int userId = (int) sessionCheck.getAttribute("userId");
+
+		String originalFileName = "";
+		String savedFileName = "";
+        try {
+            String uploadPath = attachPath + "/profileImage/";
+             originalFileName = file.getOriginalFilename();
+            if(!originalFileName.equals("")) {
+            	UUID uuid = UUID.randomUUID();
+                savedFileName = uuid.toString() + "_" + originalFileName;
+                File file1 = new File(uploadPath + savedFileName);
+                file.transferTo(file1);
+            }        } catch(Exception e) {
+        	return -1;
+        }
+        
+        return userService.fixProfileImage(savedFileName, userId);
+    }
 
 	@GetMapping("signup")
 	public ModelAndView signUp(ModelAndView mv) {

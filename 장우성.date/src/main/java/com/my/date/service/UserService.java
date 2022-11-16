@@ -17,6 +17,8 @@ public interface UserService {
 	String getEmail(String email);
 	int fixPassword(String email, String password);
 	User getUserByUserName(String userName);
+	String getUserProfileImage(int userId);
 	List<User> getAdminUserList();
 	void fixAdminUser(User user);
+	int fixProfileImage(String profileImage, int userId);
 }
