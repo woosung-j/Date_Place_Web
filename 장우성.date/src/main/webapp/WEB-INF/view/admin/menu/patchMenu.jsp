@@ -72,7 +72,8 @@
                 contentType: 'application/json',
                 data: JSON.stringify(arr),
                 success: (data) => {
-                		menuList();
+                    let url = `<%=request.getContextPath()%>/admin/place/detail/` + $('#placeId').val()
+                    location.href = url;
                 },
                 error: (data, xhr) => {
                 	showModal('빈칸을 입력하세요', false)
