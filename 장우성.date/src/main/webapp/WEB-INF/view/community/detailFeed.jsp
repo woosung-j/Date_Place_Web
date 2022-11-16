@@ -193,27 +193,33 @@
                     }
                 },
             });
-        }
-
+        }       
+        
         function addComment() {
             $('#replyAddBtn').click(() => {
+            	if($('#inputTextArea').val() == null || $('#inputTextArea').val() == '') {
+            		$('#inputTextArea').val(' ');
+            	}
+            	
                 $.ajax({
                     url: '<%=request.getContextPath()%>/comment/add',
                     method: 'post',
                     contentType: 'application/json',
                     data: JSON.stringify({
+                    	commentId: '${commentId}',
+                    	userId: '${userId}',
                         feedId: $('#feedId').val(),
                         content: $('#inputTextArea').val(),
                     }),
                     success: (data) => {
-                        getComments();
-                        $('#inputTextArea').val('');
-                        $('#commentCnt').text(1 + Number($('#commentCnt').text()))
+                            getComments();
+                            $('#inputTextArea').val('');
+                            $('#commentCnt').text(1 + Number($('#commentCnt').text()))  
                     },
                 });
             });
         }
-
+	
         function delComment() {
             $.ajax({
                 url: '<%=request.getContextPath()%>/comment/del/' + $('#commentId').val(),
