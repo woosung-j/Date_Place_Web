@@ -294,7 +294,7 @@
                     let reviewHeader = $('#review_header');
                     reviewHeader.text(`다녀온 유저 리뷰 \n \${review?.reviewCount != null ? review.reviewCount : '0'}개의 리뷰가 있어요.`);
                     reviewHeader.html(reviewHeader.html().replace(/\n/g, '<br>'));
-                    const profileImage = review.profileImage != null ?
+                    const profileImage = review?.profileImage != null ?
                             `<img class="profile" src="/attach/profileImage/\${review.profileImage}"/>` : `<i class="fas fa-user-circle fa-2x"></i>`
                     if (review == null) {
                         $('#review_thead').hide();
