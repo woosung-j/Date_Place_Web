@@ -96,7 +96,7 @@
                                 <td>
                                     <label for="closignHours" class="col-form-label">마감 시각:</label>
                                 </td>
-                                <td><input type="text" id="closignHours" class="form-control" style="width: 700px" /><br /></td>
+                                <td><input type="text" id="closingHours" class="form-control" style="width: 700px" /><br /></td>
                             </tr>
                             <tr>
                                 <td>
