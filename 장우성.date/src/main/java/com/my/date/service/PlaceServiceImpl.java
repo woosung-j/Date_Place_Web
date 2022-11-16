@@ -78,4 +78,9 @@ public class PlaceServiceImpl implements PlaceService {
 	public int delMyPlace(MyPlace myPlace) {
 		return placeDao.deleteMyPlace(myPlace);
 	}
+
+	@Override
+	public RecommendPlaceDto getRecommendPlace() {
+		return placeDao.selectRecommendPlace();
+	}
 }

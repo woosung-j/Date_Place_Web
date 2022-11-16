@@ -18,4 +18,5 @@ public interface PlaceService {
 	MyPlace getMyPlace(MyPlace myPlace);
 	int addMyPlace(MyPlace myPlace);
 	int delMyPlace(MyPlace myPlace);
+	RecommendPlaceDto getRecommendPlace();
 }

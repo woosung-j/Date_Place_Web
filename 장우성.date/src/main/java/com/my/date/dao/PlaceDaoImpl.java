@@ -80,4 +80,9 @@ public class PlaceDaoImpl implements PlaceDao {
 	public int deleteMyPlace(MyPlace myPlace) {
 		return placeMap.deleteMyPlace(myPlace);
 	}
+
+	@Override
+	public RecommendPlaceDto selectRecommendPlace() {
+		return placeMap.selectRecommendPlace();
+	}
 }
