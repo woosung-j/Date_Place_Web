@@ -3,6 +3,26 @@
     <jsp:include page="../../include/head.jsp"></jsp:include>
     <link rel="stylesheet" href="../../../res/admin.css" />
     <script>
+	    function isVal(field) {
+	        let isGood = false;
+	        let errMsg;
+	       
+            if (!field.val()) {
+                errMsg = field.attr('placeholder');
+            } else {
+                isGood = true;
+	        }
+	
+	        if (!isGood) {
+	            $('#modalMsg').text(errMsg);
+	            $('#modalCloseBtn').show();
+	            $('#modalOkBtn').hide();
+	            $('#modal').modal();
+	        }
+	
+	        return isGood
+	    }
+    
         let areaSelectMaker = function (target) {
             if (target == null || $(target).length == 0) {
                 console.warn('Unkwon Area Tag');
@@ -73,7 +93,29 @@
             areaSelectMaker('select[name=si]');
 
             $('#addBtn').click(() => {
-                add();
+            	if(isVal($('#placeGroupId')) && isVal($('#placeName')) && isVal($('#si')) && isVal($('#gu'))
+            		&& isVal($('#introduction'))) {
+            		$('#modalMsg').text("장소를 등록하겠습니다.");
+     	            $('#modalCloseBtn').hide();
+     	            $('#modalOkBtn').show();
+     	            $('#modal').modal();
+            		add();
+            	} else if(!($('#placeGroupId').val())) {
+            		$('#modalMsg').text("장소구분을 선택하세요");
+     	            $('#modalCloseBtn').show();
+     	            $('#modalOkBtn').hide();
+     	            $('#modal').modal();
+            	} else if(!($('#si').val())) {
+            		$('#modalMsg').text("시를 선택하세요");
+     	            $('#modalCloseBtn').show();
+     	            $('#modalOkBtn').hide();
+     	            $('#modal').modal();
+            	} else if(!($('#gu').val())){
+            		$('#modalMsg').text("구를 선택하세요");
+     	            $('#modalCloseBtn').show();
+     	            $('#modalOkBtn').hide();
+     	            $('#modal').modal();
+            	}
             });
         });
     </script>
@@ -110,7 +152,7 @@
                     <tr>
                         <td>
                             <select id="placeGroupId" name="placeGroupId" style="width: 100%; height: 2.5rem">
-                                <option value="empty">장소 구분</option>
+                                <option value="">장소 구분</option>
                                 <option value="1">맛집</option>
                                 <option value="2">카페</option>
                                 <option value="3">놀거리</option>
@@ -142,15 +184,18 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <a href="<%=request.getContextPath()%>/admin/place" class="close text-black">
+                <button id='xBtn' type="button" class="close" data-dismiss="modal">
                     <span>&times;</span>
-                </a>
+                </button>
             </div>
             <div class="modal-body text-center py-3">
-                <p>완료 되었습니다.</p>
+                <p id='modalMsg' class='text-center'></p>
             </div>
-            <div class="modal-footer">
+            <div id="modalOkBtn" class="modal-footer">
                 <a href="<%=request.getContextPath()%>/admin/place" class="btn btn-primary btn-lg col-12">확인</a>
+            </div>
+            <div id='modalCloseBtn' class="modal-footer">
+				<button type="button" class="btn btn-secondary text-center" data-dismiss="modal">확인</button>
             </div>
         </div>
     </div>

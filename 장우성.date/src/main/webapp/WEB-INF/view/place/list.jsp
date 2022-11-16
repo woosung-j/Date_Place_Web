@@ -11,10 +11,6 @@
             background-color: #ff5858;
         }
 
-        .heart_list {
-            display: flex;
-        }
-        
         .img-style {
             position: relative;
             width: 5rem;
@@ -25,13 +21,6 @@
             position: absolute;
             width: 5rem;
             height: 6rem;
-        }
-        
-        .heart {
-            font-size: 14px;
-            position: absolute;
-            top: 80%;
-            left: 80%;
         }
 
         a {
@@ -65,7 +54,6 @@
                                         <a href="<%=request.getContextPath()%>/place/place/\${place.placeId}">
                                             <img class="img-fluid" src="\${place.placeImage.length != 0 ? '<%=request.getContextPath()%>/attach/placeImage/' + place.placeImage[0].fileName : "#"}" />
                                         </a>
-                                        \${place.isLike == 1 ? '<i class="heart bi-heart-fill"></i>' : '<i class="heart bi-heart"></i>'}
                                     </div>
                                     <div class="col-8">
                                         <a href="<%=request.getContextPath()%>/place/place/\${place.placeId}">

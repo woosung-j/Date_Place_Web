@@ -138,23 +138,14 @@
                 <p class="col"></p>
             </nav>
         </header>
-        <table class="tg">
+        <table class="tg col-12">
             <thead>
                 <tr>
-                    <td class="tg-0lax">
-                        <h5 class="col text-start" style="font-size: 18px">
-                            다녀온 후기를<br />
-                            사진으로 남겨주세요!<br />
+                    <td class="tg-0lax  text-center">
+                        <h5 class="col" style="font-size:17px; color:#ff5858;">
+                            다녀온 후기를 사진으로 남겨주세요♡<br />
+                            
                         </h5>
-                    </td>
-                    <td class="tg-0lax" rowspan="2">
-                        <div class="row mb-2">
-                            <div class="row exImg ml-3">예시이미지</div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="tg-0lax">
                         <p class="col" style="font-size: 14px">
                             자세한 리뷰는<br />
                             구매를 고민하는 분들에게<br />
