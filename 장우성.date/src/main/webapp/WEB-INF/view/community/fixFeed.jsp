@@ -91,7 +91,7 @@
             $('#updateBtn').click(() => {
                 if (isVal($('#title')) && isVal($('#content'))) {
                     const tagArr = $('#hashtag').val().split(' ');
-                    $('#modalMsg').text('수정 하시겠습니까?');
+                    $('#modalMsg').text('수정 하시겠습니까?').css("text-align", "center");
                     $('#modalBtn').show();
                     $('#modal').modal();
 
@@ -127,7 +127,7 @@
         </nav>
     </header>
     <div class="container min-vh-100">
-        <div id="mainContent">
+        <div id="mainContent" class="mb-5">
             <form class="col form" id="fixFeed">
                 <div class="row form-group">
                     <input id="title" type="text" class="form-control" placeholder="제목을 입력하세요" maxlength="20" name="제목" />
