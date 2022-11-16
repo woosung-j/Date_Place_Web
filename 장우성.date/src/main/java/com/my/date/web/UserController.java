@@ -107,12 +107,7 @@ public class UserController {
 		
 		return mv;
 	}
-	
-//	@PostMapping("mypage")
-//	public void myPage(String profileName) {
-//		userService.fixProfileImg(profileName);
-//	}
-	
+
 	@GetMapping("uploadProfile")
 	public String getProfileImage(HttpServletRequest request) {
 		HttpSession sessionCheck = request.getSession(false);
