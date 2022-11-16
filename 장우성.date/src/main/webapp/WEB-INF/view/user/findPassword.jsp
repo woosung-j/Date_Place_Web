@@ -1,63 +1,67 @@
 <%@ page language='java' contentType='text/html; charset=UTF-8' pageEncoding='UTF-8'%>
 <head>
-    <jsp:include page="../include/head.jsp"></jsp:include>
-    <link rel="stylesheet" href="../../res/mobile.css" />
-    <style>
-        .circle-icon {
-            background: whitesmoke;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 2.5rem;
-            padding: 25px;
-            margin-left: 1.5rem;
-        }
+<jsp:include page="../include/head.jsp"></jsp:include>
+<link rel="stylesheet" href="../../res/mobile.css" />
+<style>
+    .circle-icon {
+        background: whitesmoke;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 2.5rem;
+        padding: 25px;
+        margin-left: 1.5rem;
+    }
 
-        .bi-image {
-            font-size: 40px;
-        }
+    .bi-image {
+        font-size: 40px;
+    }
 
-        .icon.main:hover {
-            color: #ff5858;
-        }
-    </style>
-    <script>
-        function emailCheck() {
-            var emailCheck = false;
-            var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+    .icon.main:hover {
+        color: #ff5858;
+    }
+    
+    h4 {
+    	white-space: nowrap;
+   	}
+</style>
+<script>
+    function emailCheck() {
+        var emailCheck = false;
+        var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
 
-            $('#emailSendBtn').click(() => {
-                if (!getMail.test($('#email').val())) {
-                    $('#errMsg').text('이메일 형식으로 입력하세요.').css('color', 'red');
-                    $('#errMsg').show();
-                } else {
-                    $.ajax({
-                        url: 'findpasswordresult/' + $('#email').val(),
-                        method: 'post',
-                        contentType: 'application/json',
-                        data: JSON.stringify({
-                            email: $('#email').val(),
-                        }),
-                        success: (data) => {
-                            if (data === 0) {
-                                $('#errMsg').text('등록된 이메일이 아닙니다.').css('color', 'red');
-                                $('#errMsg').show();
+        $('#emailSendBtn').click(() => {
+            if (!getMail.test($('#email').val())) {
+                $('#errMsg').text('이메일 형식으로 입력하세요.').css('color', 'red');
+                $('#errMsg').show();
+            } else {
+                $.ajax({
+                    url: 'findpasswordresult/' + $('#email').val(),
+                    method: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        email: $('#email').val(),
+                    }),
+                    success: (data) => {
+                        if (data === 0) {
+                            $('#errMsg').text('등록된 이메일이 아닙니다.').css('color', 'red');
+                            $('#errMsg').show();
 
-                                return 0;
-                            } else {
-                                location.href = 'findpasswordresult';
-                            }
-                        },
-                    });
-                }
-            });
-        }
-
-        $(() => {
-            emailCheck();
+                            return 0;
+                        } else {
+                            location.href = 'findpasswordresult';
+                        }
+                    },
+                });
+            }
         });
-    </script>
+    }
+
+    $(() => {
+        emailCheck();
+    });
+</script>
 </head>
 <body>
     <div class="container">

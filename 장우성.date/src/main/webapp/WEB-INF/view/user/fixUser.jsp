@@ -32,6 +32,10 @@
         .icon.main:hover {
             color: #ff5858;
         }
+        
+        h4 {
+        	white-space: nowrap;
+       	}
 
         input[type='date']::before {
             content: attr(data-placeholder);
@@ -98,8 +102,7 @@
                 <a href="javascript:window.history.back();" class="col btn">
                     <i class="bi bi-chevron-left"></i>
                 </a>
-                <p class="col"></p>
-                <h3 class="col-6 font-gamja-flower">회원 프로필 수정</h3>
+                <h4 class="col-6 font-gamja-flower ml-2 text-center">회원 프로필 수정</h4>
                 <p class="col"></p>
                 <p class="col"></p>
             </nav>

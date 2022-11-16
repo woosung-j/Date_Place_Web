@@ -1,27 +1,31 @@
 <%@ page language='java' contentType='text/html; charset=UTF-8' pageEncoding='UTF-8'%>
 <head>
-    <jsp:include page="../include/head.jsp"></jsp:include>
-    <link rel="stylesheet" href="../../res/mobile.css" />
-    <style>
-        .circle-icon {
-            background: whitesmoke;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 2.5rem;
-            padding: 25px;
-            margin-left: 1.5rem;
-        }
+<jsp:include page="../include/head.jsp"></jsp:include>
+<link rel="stylesheet" href="../../res/mobile.css" />
+<style>
+    .circle-icon {
+        background: whitesmoke;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 2.5rem;
+        padding: 25px;
+        margin-left: 1.5rem;
+    }
 
-        .bi-image {
-            font-size: 40px;
-        }
+    .bi-image {
+        font-size: 40px;
+    }
 
-        .icon.main:hover {
-            color: #ff5858;
-        }
-    </style>
+    .icon.main:hover {
+        color: #ff5858;
+    }
+    
+    h4 {
+    	white-space: nowrap;
+   	}
+</style>
 </head>
 <body>
     <div class="container">
@@ -31,7 +35,7 @@
                     <i class="bi bi-chevron-left"></i>
                 </a>
                 <p class="col"></p>
-                <h3 class="col-6 font-gamja-flower">비밀번호 찾기</h3>
+                <h4 class="col-6 font-gamja-flower">비밀번호 찾기</h4>
                 <p class="col"></p>
                 <p class="col"></p>
             </nav>

@@ -3,6 +3,7 @@ package com.my.date.web;
 import com.my.date.domain.MyPlace;
 import com.my.date.domain.PlaceDetailDto;
 import com.my.date.domain.PlaceDto;
+import com.my.date.domain.RecommendPlaceDto;
 import com.my.date.service.PlaceService;
 import com.my.date.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,5 +79,10 @@ public class PlaceController {
         else{
             return placeService.delMyPlace(myPlace);
         }
+    }
+
+    @GetMapping("recommand")
+    public RecommendPlaceDto getRecommendPlace() {
+        return placeService.getRecommendPlace();
     }
 }

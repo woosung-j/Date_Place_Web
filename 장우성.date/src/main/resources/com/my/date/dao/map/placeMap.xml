@@ -114,6 +114,12 @@
 		where p.si_id = si.si_id and p.gu_id = gu.gu_id and p.place_id = #{placeId}
 	</select>
 
+	<select id="selectRecommendPlace" resultType="recommendPlaceDto">
+		select p.place_id, pi.file_name
+		from (select * from places order by place_id desc) p left join place_images pi on p.place_id = pi.place_id
+		where rownum = 1
+	</select>
+
 	<resultMap id="placeAdminMap" type="placeAdminDto">
 		<id property="placeId" column="place_id"/>
 		<result property="placeName" column="place_name"/>

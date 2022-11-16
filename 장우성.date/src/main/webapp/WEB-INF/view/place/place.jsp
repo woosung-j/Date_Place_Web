@@ -294,9 +294,12 @@
                     let reviewHeader = $('#review_header');
                     reviewHeader.text(`다녀온 유저 리뷰 \n \${review?.reviewCount != null ? review.reviewCount : '0'}개의 리뷰가 있어요.`);
                     reviewHeader.html(reviewHeader.html().replace(/\n/g, '<br>'));
+                    const profileImage = review.profileImage != null ?
+                            `<img class="profile" src="/attach/profileImage/\${review.profileImage}"/>` : `<i class="fas fa-user-circle fa-2x"></i>`
                     if (review == null) {
                         $('#review_thead').hide();
                     } else {
+                    	  $('#profileImg').append(profileImage)
                         $('#review_nickname').text(`\${review.nickname}`);
                         $('#review_starRating').html(`\${setStarRating(review.starRating)}`);
                         $('#review_createdAt').text(`\${review.createdAt}`);
@@ -423,7 +426,8 @@
             <tr>
                 <td class="row-1 mt-5 border rounded mb-3">
                     <div class="col pt-1">
-                        <div class="row text-start ml-1">
+                        <div class="row text-start">
+                        	<p id="profileImg" class="ml-2"></p>
                             <p id="review_nickname" class="mt-1 ml-1" style="font-size: 13px"></p>
                             <p id="review_starRating" class="mt-1 ml-1" style="font-size: 13px"></p>
                             <p id="review_createdAt" class="mt-1 ml-1" style="font-size: 13px"></p>

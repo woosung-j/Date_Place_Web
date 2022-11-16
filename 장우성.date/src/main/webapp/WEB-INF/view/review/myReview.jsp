@@ -60,6 +60,9 @@
                                 reviewImgArr.push(`<img class="myReviewImg ml-2" src="/attach/reviewImages/\${reviewImage.fileName}"/>`);
                             });
 
+                            const profileImage = review.profileImage != null ?
+                                    `<img class="profile" src="/attach/profileImage/\${review.profileImage}"/>` : `<i class="fas fa-user-circle fa-2x"></i>`
+                                    
                             myReviews.unshift(
                                 `<table class="col mb-3">
                                     <thead>
@@ -67,7 +70,7 @@
                                             <td class="row-1 mt-5 border rounded mb-3">
                                                 <div class="col pt-1">
                                                 <div class="row text-start">
-                                                    <img class="profile ml-1" src="/attach/profileImage/\${review.profileImage}"/>
+                                                	&nbsp;\${profileImage}
                                                     <p class="mt-1 ml-1" style="font-size: 13px">\${review.nickname}</p>
                                                        <p class="mt-1 ml-1 star-rating">
                                                            <div class="stars">

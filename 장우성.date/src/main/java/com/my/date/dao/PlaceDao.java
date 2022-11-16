@@ -19,4 +19,5 @@ public interface PlaceDao {
 	MyPlace selectMyPlace(MyPlace myPlace);
 	int insertMyPlace(MyPlace myPlace);
 	int deleteMyPlace(MyPlace myPlace);
+	RecommendPlaceDto selectRecommendPlace();
 }
