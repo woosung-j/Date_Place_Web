@@ -65,12 +65,13 @@
                         `);
                     } else {
                         $.each(menus, (i, menu) => {
+                            let result = menu.price.toLocaleString('ko-KR');
                             if (i == 0) {
                                 let placeId = $('#placeId').val();
                                 menuArr.push(`
                                 <tr>
                                     <td class="col-7">\${menu.menuName}</td>
-                                    <td class="col-2" id="address">\${menu.price}원</td>
+                                    <td class="col-2" id="address">\${result}원</td>
                                     <td class="col-3 align-middle" rowspan="\${menus.length}">
                                         <a href="<%=request.getContextPath()%>/admin/menu/${placeId}" class="btn btn-secondary">수정</a>
                                     </td>
@@ -80,7 +81,7 @@
                                 menuArr.push(`
                                 <tr>
                                     <td class="col-7">\${menu.menuName}</td>
-                                    <td class="col-2" id="address">\${menu.price}원</td>
+                                    <td class="col-2" id="address">\${result}원</td>
                                 </tr>
                             `);
                             }
