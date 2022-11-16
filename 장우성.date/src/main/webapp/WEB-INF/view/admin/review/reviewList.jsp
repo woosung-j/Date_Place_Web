@@ -86,7 +86,6 @@
                                         <button type="button" id="deleteBtn" class="btn btn-danger deleteBtn" style="float: right"
                                                  data-toggle="modal" value="\${review.reviewId}">삭제</button>
                                         <div class="row text-start ml-1 mr-1">
-                                            <img class="profile" src="attach/user/\${review.profileImage}'/>"/>
                                             <p class="mt-1 ml-2">\${review.nickname}</p>
                                             <p class="mt-1 ml-2" style="color: #fb3959">
                                                 <div class="stars">
