@@ -32,6 +32,10 @@
         .icon.main:hover {
             color: #ff5858;
         }
+
+        h3 {
+            white-space: nowrap;
+        }
     </style>
     <script>
         function listPlace(orderBy = 0) {

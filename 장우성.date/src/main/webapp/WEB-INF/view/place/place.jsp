@@ -90,6 +90,12 @@
             height: 2rem;
             width: 2rem;
         }
+
+        h4 {
+            white-space: nowrap;
+            overflow: hidden;
+            text-align: center;
+        }
     </style>
     <script>
         let map;
@@ -258,11 +264,11 @@
                             `);
                         }
 
-                        if (detail?.parking) {
+                        if (detail != null) {
                             detailArr.push(`
                                 <tr class="border-bottom border-top">
                                     <td class="col-4 text-center pt-2 pb-2">주차</td>
-                                    <td id="parking" class="text-center">\${data.detail.parking == 0 ? "불가능" : "가능"}</td>
+                                    <td id="parking" class="text-center">\${detail.parking == 0 ? "불가능" : "가능"}</td>
                                 </tr>
                             `);
                         }
@@ -394,9 +400,7 @@
     <header>
         <nav class="row navbar white text-center align-middle px-0">
             <a id="backBtn" href="" class="col btn"><i class="bi bi-chevron-left"></i></a>
-            <p class="col"></p>
-            <h4 id="placeName" class="col-6 font-gamja-flower"></h4>
-            <p class="col"></p>
+            <h4 id="placeName" class="col-9 font-gamja-flower"></h4>
             <a href="#" class="col btn">
                 <i class="bi bi-share-fill"></i>
             </a>
