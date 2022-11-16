@@ -35,6 +35,8 @@
         
         .profile {
             border-radius: 50%;
+            height: 2rem;
+            width: 2rem;
         }
     </style>
     <script>
