@@ -203,6 +203,7 @@
                     $('#placeName').text(data.placeName);
                     $('#subPlaceName').text(data.placeName);
                     $('#introduction').text(data.introduction);
+                    $('#placeModal').text(data.placeName);
                     $('#place_like').text(`찜 \${data.placeLikeCount}`);
                     
                     $('#searchNaver').append(
@@ -491,7 +492,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content mx-5">
             <div class="modal-body text-center py-3">
-                <p>예약/문의하고 싶어요!<br />그림화원</p>
+                <p>예약/문의하고 싶어요!<br /></p><p id="placeModal"/>
                 <a href="#infoModal" class="btn btn-primary" data-toggle="modal" data-target="#infoModal" data-dismiss="modal">전화하기</a>
             </div>
         </div>
