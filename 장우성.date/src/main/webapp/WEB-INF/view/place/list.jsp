@@ -3,10 +3,6 @@
     <jsp:include page="../include/head.jsp"></jsp:include>
     <link rel="stylesheet" href="../../res/mobile.css" />
     <style>
-        .font-gamja-flower {
-            font-family: 'Gamja Flower', cursive;
-            font-size: 1.7rem;
-        }
         .mint {
             background-color: #ff5858;
         }
@@ -17,8 +13,8 @@
             height: 6rem;
         }
 
-        .preImg {
-            position: relative;
+        .img-fluid {
+            position: absolute;
             width: 5rem;
             height: 6rem;
         }
@@ -48,11 +44,18 @@
                     if (placeList.length) {
                         places = [];
                         placeList.forEach((place) => {
+                            const imgArr = []
+                            if(place.placeImage.length > 0) {
+                                let url = "<%=request.getContextPath()%>/attach/placeImage/" + place.placeImage[0].fileName
+                                imgArr.push(`<img class="img-fluid" src="\${url}" />`)
+                            } else {
+                                imgArr.push(`<div class="img-fluid"></div>`)
+                            }
                             places.push(
                                 `<li class="row border-bottom pt-3 pb-3">
                                     <div class="img-style">
                                         <a href="<%=request.getContextPath()%>/place/place/\${place.placeId}">
-                                            <img class="img-fluid" src="\${place.placeImage.length != 0 ? '<%=request.getContextPath()%>/attach/placeImage/' + place.placeImage[0].fileName : "#"}" />
+                                            \${imgArr.join('')}
                                         </a>
                                     </div>
                                     <div class="col-8">

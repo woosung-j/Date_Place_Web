@@ -1,14 +1,13 @@
 package com.my.date.service;
 
-import java.util.Random;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.util.Random;
 
 @Component
 public class MailSendService {
@@ -20,7 +19,6 @@ public class MailSendService {
 	public void makeRandomNumber() {
 		Random r = new Random();
 		int checkNum = r.nextInt(899999) + 100000;
-		System.out.println("인증번호 : " + checkNum);
 		authNumber = checkNum;
 	}
 	
@@ -40,7 +38,6 @@ public class MailSendService {
 		for (int i = 0; i < 10; i++) {
 			idx = (int) (charSet.length * Math.random());
 			str += charSet[idx];
-			System.out.println("임시 비밀번호 : " + tmpPassword);
 			tmpPassword = str;
 		}
 	}

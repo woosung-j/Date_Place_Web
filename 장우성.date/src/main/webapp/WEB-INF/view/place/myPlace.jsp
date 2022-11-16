@@ -7,9 +7,6 @@
             font-family: 'Gamja Flower', cursive;
             font-size: 1.7rem;
         }
-        .mint {
-            background-color: #ff5858;
-        }
 
         .heart_list {
             display: flex;
@@ -21,17 +18,10 @@
             height: 6rem;
         }
 
-        .preImg {
-            position: relative;
+        .img-fluid {
+            position: absolute;
             width: 5rem;
             height: 6rem;
-        }
-
-        .heart {
-            font-size: 14px;
-            position: absolute;
-            top: 80%;
-            left: 80%;
         }
 
         a {
@@ -57,12 +47,18 @@
                     const arr = [];
                     if (data.length) {
                         data.forEach((place) => {
-                            let imgSrc = place.placeImage?.length != 0 ? '<%=request.getContextPath()%>/attach/placeImage/' + place.placeImage[0].fileName : '#';
+                            const imgArr = []
+                            if(place.placeImage.length > 0) {
+                                let url = "<%=request.getContextPath()%>/attach/placeImage/" + place.placeImage[0].fileName
+                                imgArr.push(`<img class="img-fluid" src="\${url}" />`)
+                            } else {
+                                imgArr.push(`<div class="img-fluid"></div>`)
+                            }
                             arr.push(
                                 `<li class="row border-bottom pt-3 pb-3">
                                     <div class="img-style">
                                         <a href="<%=request.getContextPath()%>/place/place/\${place.placeId}">
-                                            <img class="img-fluid" src=\${imgSrc}/>
+                                            \${imgArr.join('')}
                                         </a>
                                     </div>
                                     <div class="col-8">

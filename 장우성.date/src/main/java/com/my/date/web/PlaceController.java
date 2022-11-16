@@ -20,7 +20,7 @@ public class PlaceController {
     @Autowired PlaceService placeService;
     @Autowired ReviewService reviewService;
 
-    @GetMapping("/list")
+    @GetMapping("list")
     public ModelAndView main(@RequestParam("si") String si, @RequestParam("gu") String gu , ModelAndView mv) {
         mv.addObject("si", si);
         mv.addObject("gu", gu);
@@ -28,7 +28,13 @@ public class PlaceController {
         return mv;
     }
 
-    @GetMapping("/list/{si}/{gu}/{orderBy}")
+    @GetMapping("around")
+    public ModelAndView getMap(ModelAndView mv) {
+        mv.setViewName("place/around");
+        return mv;
+    }
+
+    @GetMapping("list/{si}/{gu}/{orderBy}")
     public List<PlaceDto> getPlaces(HttpServletRequest request, @PathVariable String si, @PathVariable String gu, @PathVariable int orderBy) {
         if(si == null || gu == null) {
             return null;
@@ -43,7 +49,7 @@ public class PlaceController {
         return placeService.getPlacesBySiNameAndGuName(si, gu, userId, orderBy);
     }
 
-    @GetMapping("/place/{placeId}")
+    @GetMapping("place/{placeId}")
     public ModelAndView place(@PathVariable int placeId, ModelAndView mv) {
         mv.addObject("placeId", placeId);
         mv.setViewName("place/place");

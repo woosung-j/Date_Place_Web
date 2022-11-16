@@ -217,15 +217,18 @@
                     isLike(data?.isLike);
                     $('#placeLikeBtn').val(data?.isLike);
 
-                    const placeImageArr = [];
-                    $.each(data.placeImages, (i, img) => {
-                        placeImageArr.push(`<img class="swiper-slide reImg" src="/attach/placeImage/\${img.fileName}" />`);
-                    });
+                    if(data.placeImages.length != 0) {
+                        const placeImageArr = [];
+                        $.each(data.placeImages, (i, img) => {
+                            placeImageArr.push(`<img class="swiper-slide reImg" src="/attach/placeImage/\${img.fileName}" />`);
+                        });
 
-                    $('#placeImage').append(`
-                        <div class="swiper-wrapper">\${placeImageArr.join('')}</div>
-                        <div class="swiper-pagination"></div>
-                    `);
+                        $('#placeImage').append(`
+                            <div class="swiper-wrapper">\${placeImageArr.join('')}</div>
+                            <div class="swiper-pagination"></div>
+                        `);
+                    }
+
 
                     if (detail?.tel) {
                         $('#tel').text($('#tel').text() + detail.tel);
