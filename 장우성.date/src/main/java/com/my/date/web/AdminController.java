@@ -332,10 +332,14 @@ public class AdminController {
         return detailService.addDetail(detail);
     }
 
-    @DeleteMapping("detail/del/{placeId}")
-    public void delDetail(HttpSession session, @PathVariable int placeId, @RequestBody int detailId) {
-        if(!SessionUtil.getIsAdmin(session)) return ;
-        detailService.delDetail(detailId);
+    @DeleteMapping("detail/del/{detailId}")
+    public void delDetail(HttpSession session, @PathVariable int detailId) {
+    	if(!SessionUtil.getIsAdmin(session)) {
+    		System.out.println();
+    		return ;
+    		} 
+    		System.out.print(detailId);
+    		detailService.delDetail(detailId);
     }
 
     @GetMapping("review/list")
