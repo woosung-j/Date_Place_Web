@@ -44,12 +44,12 @@
                     if (placeList.length) {
                         places = [];
                         placeList.forEach((place) => {
-                            const imgArr = []
-                            if(place.placeImage.length > 0) {
-                                let url = "<%=request.getContextPath()%>/attach/placeImage/" + place.placeImage[0].fileName
-                                imgArr.push(`<img class="img-fluid" src="\${url}" />`)
+                            const imgArr = [];
+                            if (place.placeImage.length > 0) {
+                                let url = '<%=request.getContextPath()%>/attach/placeImage/' + place.placeImage[0].fileName;
+                                imgArr.push(`<img class="img-fluid" src="\${url}" />`);
                             } else {
-                                imgArr.push(`<div class="img-fluid"></div>`)
+                                imgArr.push(`<div class="img-fluid"></div>`);
                             }
                             places.push(
                                 `<li class="row border-bottom pt-3 pb-3">
@@ -141,58 +141,58 @@
     </script>
 </head>
 <body>
-<div class="container">
-    <header>
-        <nav class="row navbar bg-light text-center align-middle fixed-top">
-            <a href="<%=request.getContextPath()%>/" class="col btn"><i class="bi bi-chevron-left"></i></a>
-            <p class="col"></p>
-            <h3 class="col-7 font-gamja-flower">${si} ${gu == "없음" ? "" : gu}<i id="bookmark" class="bi bi-bookmark-fill icon"></i></h3>
-            <p class="col"></p>
-            <p class="col"></p>
-            <input type="hidden" id="isBookmark" name="isBookmark" />
-        </nav>
-    </header>
-    <div class="row pt-62 mt-3">
-        <nav class="navbar nav-item bg-light text-center align-middle flex-fill">
-            <button type="button" onclick="listPlace(0)" class="btn flex-fill mr-4 text-white mint">전체</button>
-            <button type="button" onclick="listPlace(1)" class="btn flex-fill mr-4 text-white mint">맛집</button>
-            <button type="button" onclick="listPlace(2)" class="btn flex-fill mr-4 text-white mint">카페</button>
-            <button type="button" onclick="listPlace(3)" class="btn flex-fill text-white mint">놀거리</button>
-        </nav>
+    <div class="container">
+        <header>
+            <nav class="row navbar bg-light text-center align-middle fixed-top">
+                <a href="<%=request.getContextPath()%>/" class="col btn"><i class="bi bi-chevron-left"></i></a>
+                <p class="col"></p>
+                <h3 class="col-7 font-gamja-flower">${si} ${gu == "없음" ? "" : gu}<i id="bookmark" class="bi bi-bookmark-fill icon"></i></h3>
+                <p class="col"></p>
+                <p class="col"></p>
+                <input type="hidden" id="isBookmark" name="isBookmark" />
+            </nav>
+        </header>
+        <div class="row pt-62 mt-3">
+            <nav class="navbar nav-item bg-light text-center align-middle flex-fill">
+                <button type="button" onclick="listPlace(0)" class="btn flex-fill mr-4 text-white mint">전체</button>
+                <button type="button" onclick="listPlace(1)" class="btn flex-fill mr-4 text-white mint">맛집</button>
+                <button type="button" onclick="listPlace(2)" class="btn flex-fill mr-4 text-white mint">카페</button>
+                <button type="button" onclick="listPlace(3)" class="btn flex-fill text-white mint">놀거리</button>
+            </nav>
+        </div>
+        <div class="container heart_list px-0 pb-5 mb-3">
+            <ul id="places" class="box col list-unstyled mt-2 border-top"></ul>
+        </div>
+        <input type="hidden" id="si" name="${si}" value="${si}" />
+        <input type="hidden" id="gu" name="${gu}" value="${gu}" />
+        <div class="navbar">
+            <ul class="navbar nav-item bg-light fixed-bottom mb-0 list-style-none">
+                <li>
+                    <a href="<%=request.getContextPath()%>/" class="btn w-auto" type="button">
+                        <i class="icon main bi-house-door-fill fa-3x"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="<%=request.getContextPath()%>/community" class="btn w-auto" type="button">
+                        <i class="icon main bi-file-earmark-text fa-3x"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="<%=request.getContextPath()%>/place/around" class="btn w-auto" type="button">
+                        <i class="icon main bi-map fa-3x"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="<%=request.getContextPath()%>/place/myplace" class="btn w-auto" type="button">
+                        <i class="icon main bi-heart fa-3x"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="<%=request.getContextPath()%>/user/login" class="btn w-auto" type="button">
+                        <i class="icon main bi-person-fill fa-3x"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="container heart_list px-0 pb-5 mb-3">
-        <ul id="places" class="box col list-unstyled mt-2 border-top"></ul>
-    </div>
-    <input type="hidden" id="si" name="${si}" value="${si}" />
-    <input type="hidden" id="gu" name="${gu}" value="${gu}" />
-    <div class="navbar">
-        <ul class="navbar nav-item bg-light fixed-bottom mb-0 list-style-none">
-            <li>
-                <a href="<%=request.getContextPath()%>/" class="btn w-auto" type="button">
-                    <i class="icon main bi-house-door-fill fa-3x"></i>
-                </a>
-            </li>
-            <li>
-                <a href="<%=request.getContextPath()%>/community" class="btn w-auto" type="button">
-                    <i class="icon main bi-file-earmark-text fa-3x"></i>
-                </a>
-            </li>
-            <li>
-                <a href="<%=request.getContextPath()%>/place/around" class="btn w-auto" type="button">
-                    <i class="icon main bi-map fa-3x"></i>
-                </a>
-            </li>
-            <li>
-                <a href="<%=request.getContextPath()%>/place/myplace" class="btn w-auto" type="button">
-                    <i class="icon main bi-heart fa-3x"></i>
-                </a>
-            </li>
-            <li>
-                <a href="<%=request.getContextPath()%>/user/login" class="btn w-auto" type="button">
-                    <i class="icon main bi-person-fill fa-3x"></i>
-                </a>
-            </li>
-        </ul>
-    </div>
-</div>
 </body>
