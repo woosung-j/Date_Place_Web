@@ -22,7 +22,6 @@ public class CommentController {
 		return commentService.getComments(feedId);
 	}
 	
-	//추가
 	@PostMapping("add")
 	public int addComment(@RequestBody Comment comment, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
@@ -34,7 +33,6 @@ public class CommentController {
 		return commentService.addComment(comment);
 	}
 	
-	//수정
 	@GetMapping("fix/{feedId}/{commentId}")
 	public ModelAndView fix(ModelAndView mv, @PathVariable int feedId, @PathVariable int commentId) {
 		mv.addObject("feedId", feedId);

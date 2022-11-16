@@ -24,4 +24,5 @@ public class CommentDto {
 	@JsonFormat(pattern="yyyy-MM-dd", timezone="Asia/Seoul")
 	private LocalDate createdAt;
 	private String nickname;
+	private String profileImage;
 }
