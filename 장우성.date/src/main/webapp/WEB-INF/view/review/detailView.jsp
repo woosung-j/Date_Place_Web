@@ -43,6 +43,12 @@
         .fa-star.fill {
             color: #fb3959;
         }
+        
+        .profile {
+            border-radius: 50%;
+            height: 2rem;
+            width: 2rem;
+        }
     </style>
 </head>
 <script>
@@ -114,6 +120,9 @@
                             reviewImgArr.push(`<img class="swiper-slide reImg" src="/attach/reviewImages/\${reviewImage.fileName}"/>`);
                         });
 
+                        const profileImage = review.profileImage != null ?
+                                `<img class="profile" src="/attach/profileImage/\${review.profileImage}"/>` : `<i class="fas fa-user-circle fa-2x"></i>`
+                                
                         const delbtn = [];
                         if ($('#userId').val() == review.userId) {
                             delbtn.push(`<button class="delBtn mr-3" type="button" id="deleteBtn"  data-toggle="modal" data-target="#deleteModal" style="border:none; background:none;">삭제</button>`);
@@ -122,18 +131,17 @@
                         reviewArr.push(
                             `<header style="padding-top: 62px">
                             <nav class="row navbar bg-light text-center align-middle fixed-top" id="delbtn">
-                                <a href="javascript:window.history.back();" class="col btn"><i class="bi bi-chevron-left"></i> </a>
-                                <p class="col"></p>
-                                <h3 class="col-6 font-gamja-flower">리뷰상세</h3>
-                                <p class="col"></p>
-                                \${delbtn.join('')} 
+                                <a href="javascript:window.history.back();" class="col-2 btn"><i class="bi bi-chevron-left"></i> </a>
+                                <h3 class="col-7 font-gamja-flower">리뷰상세</h3>
+                                <p class="col mt-1">\${delbtn.join('')}</p>
+                                
                             </nav>
                         </header>
                             <div class="pb-5 mb-3">
                                 <div class="row-1 mt-5 border mx-3 rounded">
                                     <div class="col pt-2">
                                         <div class="row text-start ml-1 mr-1">
-                                            <img class="profile" src="/attach/profileImage/\${review.profileImage}"/>
+                                            \${profileImage}
                                             <p class="mt-1 ml-1">\${review.nickname}</p>
                                             <p class="mt-2 ml-1">\${setStarRating(review.starRating)}</p>
                                             <p class="mt-2 ml-1" style="font-size: 13px">\${review.createdAt}</p>
