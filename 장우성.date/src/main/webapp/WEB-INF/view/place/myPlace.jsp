@@ -20,9 +20,9 @@
             width: 5rem;
             height: 6rem;
         }
-
-        .preImg {
-            position: relative;
+        
+        .img-fluid {
+            position: absolute;
             width: 5rem;
             height: 6rem;
         }
