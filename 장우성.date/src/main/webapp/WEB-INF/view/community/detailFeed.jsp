@@ -200,7 +200,6 @@
             	if($('#inputTextArea').val() == null || $('#inputTextArea').val() == '') {
             		$('#inputTextArea').val(' ');
             	}
-            	
                 $.ajax({
                     url: '<%=request.getContextPath()%>/comment/add',
                     method: 'post',
@@ -215,10 +214,10 @@
                             getComments();
                             $('#inputTextArea').val('');
                             $('#commentCnt').text(1 + Number($('#commentCnt').text()))  
-                    },
-                });
-            });
-        }
+                     	},
+                	});
+            	});
+        	}
 	
         function delComment() {
             $.ajax({
