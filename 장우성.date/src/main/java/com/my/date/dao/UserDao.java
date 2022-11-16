@@ -17,6 +17,8 @@ public interface UserDao {
 	int updatePassword(String email, String password);
 	List<User> selectAdminUserList();
 	User selectUserByUserName(String userName);
+	String selectProfileImageByUserId(int userId);
 	void updateAdminUser(User user);
 	void deleteAdminUser(int userId);
+	int updateProfileImage(String profileImage, int userId);
 }

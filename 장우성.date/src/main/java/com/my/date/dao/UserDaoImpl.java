@@ -74,6 +74,11 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public String selectProfileImageByUserId(int userId) {
+		return userMap.selectProfileImageByUserId(userId);
+	}
+
+	@Override
 	public void deleteAdminUser(int userId) {
 		userMap.deleteAdminUser(userId);
 	}
@@ -81,5 +86,10 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User selectUserByUserName(String userName) {
 		return userMap.selectUserByUserName(userName);
+	}
+	
+	@Override
+	public int updateProfileImage(String profileImage, int userId) {
+		return userMap.updateProfileImage(profileImage, userId);
 	}
 }

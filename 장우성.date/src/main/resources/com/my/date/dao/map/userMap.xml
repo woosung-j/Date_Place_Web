@@ -4,7 +4,7 @@
 <mapper namespace='com.my.date.dao.map.UserMap'>
 	<select id='selectUsers' resultType='user'>
 		select user_id, id, password, user_name, phone_number,
-			   nickname, user_profile, birthday, created_at, updated_at
+			   nickname, profile_image, birthday, created_at, updated_at
 		from users
 		where order by user_id
 	</select>
@@ -56,6 +56,12 @@
 		from users
 		where email = #{email}
 	</select>
+	
+	<select id="selectProfileImageByUserId" resultType="string">
+		select profile_image
+		from users
+		where user_id = #{userId}
+	</select>
 
 	<insert id='deleteUser'>
 		insert into delete_users values(#{userId})
@@ -92,4 +98,10 @@
 	<insert id='deleteAdminUser'>
 		insert into delete_users values(#{userId})
 	</insert>
+	
+	<update id='updateProfileImage'>
+		update users
+		set profile_image = #{profileImage}
+		where user_id = #{userId}
+	</update>
 </mapper>

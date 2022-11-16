@@ -96,7 +96,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public String getUserProfileImage(int userId) {
+		return userDao.selectProfileImageByUserId(userId);
+	}
+
+	@Override
 	public User getUserByUserName(String userName) {
 		return userDao.selectUserByUserName(userName);
+	}
+	
+	@Override
+	public int fixProfileImage(String profileImage, int userId) {
+		return userDao.updateProfileImage(profileImage, userId);
 	}
 }
