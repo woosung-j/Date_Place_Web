@@ -8,6 +8,11 @@
 		where r.si_id = si.si_id and r.gu_id = gu.gu_id and user_id = #{userId}
 	</select>
 
+	<select id="selectSiNameAndGuName" resultType="regionDto">
+		select (select si_name from si where si_id = #{siId}) as siName, (select gu_name from gu where gu_id = #{guId}) as guName
+		from dual
+	</select>
+
 	<select id="selectSiId" resultType="int">
 		select si_id
 		from si

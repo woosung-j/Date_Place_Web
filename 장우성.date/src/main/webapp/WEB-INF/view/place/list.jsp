@@ -153,7 +153,7 @@
 <div class="container">
     <header>
         <nav class="row navbar bg-light text-center align-middle fixed-top">
-            <a href="javascript:window.history.back();" class="col btn"><i class="bi bi-chevron-left"></i></a>
+            <a href="<%=request.getContextPath()%>/" class="col btn"><i class="bi bi-chevron-left"></i></a>
             <p class="col"></p>
             <h3 class="col-7 font-gamja-flower">${si} ${gu == "없음" ? "" : gu}<i id="bookmark" class="bi bi-bookmark-fill icon"></i></h3>
             <p class="col"></p>

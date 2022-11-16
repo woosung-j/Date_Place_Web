@@ -14,6 +14,8 @@ public class PlaceDetailDto {
     private int placeId;
     private String placeName;
     private String introduction;
+    private int siId;
+    private int guId;
     private int views;
     private int placeGroupId;
     private LocalDate createdAt;

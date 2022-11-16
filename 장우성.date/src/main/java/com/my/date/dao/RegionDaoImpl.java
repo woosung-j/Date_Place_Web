@@ -41,4 +41,9 @@ public class RegionDaoImpl implements RegionDao {
     public int deleteBookmark(int bookmarkId) {
         return regionMap.deleteBookmark(bookmarkId);
     }
+
+    @Override
+    public RegionDto selectSiNameAndGuName(int siId, int guId) {
+        return regionMap.selectSiNameAndGuName(siId, guId);
+    }
 }

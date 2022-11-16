@@ -197,6 +197,8 @@
                 url: '<%=request.getContextPath()%>/place/get/' + $('#placeId').val(),
                 method: 'get',
                 success: (data) => {
+                    console.log(data)
+                    getSigu(data.siId, data.guId)
                     const detail = data.detail;
                     const review = data.review;
 
@@ -332,6 +334,18 @@
             }
         }
 
+        function getSigu(siId, guId) {
+            $.ajax({
+                url: `<%=request.getContextPath()%>/region/sigu/\${siId}/\${guId}`,
+                method: 'get',
+                success: (data) => {
+                    $('#siName').val(data.siName)
+                    $('#guName').val(data.guName)
+                    backBtnClick()
+                }
+            })
+        }
+
         function toggleLike() {
             if($('#place_heart')[0].classList[1] == 'bi-heart-fill') {
                 $('#place_heart').removeClass()
@@ -371,10 +385,14 @@
             })
         }
 
+        function backBtnClick() {
+            const url = `<%=request.getContextPath()%>/place/list?si=` + $('#siName').val() + `&gu=` + $('#guName').val()
+            $('#backBtn').attr("href", url)
+        }
+
         $(() => {
             getPlace();
             copy();
-
             $('#placeLikeBtn').on('click', () => {
                 togglePlaceLike()
             })
@@ -385,7 +403,7 @@
 <div class="container">
     <header>
         <nav class="row navbar white text-center align-middle px-0">
-            <a href="javascript:window.history.back();" class="col btn"><i class="bi bi-chevron-left"></i></a>
+            <a id="backBtn" href="" class="col btn"><i class="bi bi-chevron-left"></i></a>
             <p class="col"></p>
             <h4 id="placeName" class="col-6 font-gamja-flower"></h4>
             <p class="col"></p>
@@ -489,6 +507,8 @@
     </div>
 </div>
 <input type="hidden" id="placeId" name="placeId" value="${placeId}" />
+<input type="hidden" id="siName" name="siName" />
+<input type="hidden" id="guName" name="guName" />
 <%--<input type="hidden" id="isLike" name="isLike" value=""/>--%>
 <!-- 모달창 -->
 <div class="modal fade" id="Modal" tabindex="-1">

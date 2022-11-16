@@ -41,4 +41,9 @@ public class RegionServiceImpl implements RegionService {
     public int delBookmark(int bookmarkId) {
         return regionDao.deleteBookmark(bookmarkId);
     }
+
+    @Override
+    public RegionDto getSiNameAndGuName(int siId, int guId) {
+        return regionDao.selectSiNameAndGuName(siId, guId);
+    }
 }

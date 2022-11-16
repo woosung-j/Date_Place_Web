@@ -22,6 +22,11 @@ public class RegionController {
         return mv;
     }
 
+    @GetMapping("sigu/{siId}/{guId}")
+    public RegionDto getSiNameAndGuName(@PathVariable("siId") int siId, @PathVariable("guId") int guId) {
+        return regionService.getSiNameAndGuName(siId, guId);
+    }
+
     @GetMapping("myRegionList")
     public List<RegionDto> getMyRegions(HttpServletRequest request) {
         HttpSession session = request.getSession(false);

@@ -13,4 +13,5 @@ public interface RegionMap {
     Region selectMyRegionByUserIdAndSiAndGu(@Param("userId") int userId, @Param("siName") String siName, @Param("guName") String guName);
     int insertBookmark(RegionDto regionDto);
     int deleteBookmark(int bookmarkId);
+    RegionDto selectSiNameAndGuName(@Param("siId") int siId, @Param("guId") int guId);
 }
