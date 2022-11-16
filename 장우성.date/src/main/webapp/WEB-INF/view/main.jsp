@@ -116,7 +116,7 @@
         <div class="col mb-4 pt-3">
             <div>
                 <h5 class="font-weight-bold">지역선택</h5>
-                <hr />
+                <hr style="border-color: #ff5858"/>
             </div>
             <div id="dropdown-div"></div>
         </div>
