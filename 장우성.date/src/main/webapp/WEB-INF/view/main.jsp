@@ -81,9 +81,25 @@
             setDropdown()
         }
 
+        function getRecommend() {
+            $.ajax({
+                url: '<%=request.getContextPath()%>place/recommand',
+                method: 'get',
+                success: (data) => {
+                    console.log(data)
+                    if(data) {
+                        $('#recommendPlace').attr("href", `<%=request.getContextPath()%>/place/place/\${data.placeId}`)
+                        $('#recommendPlace').append(`<img src="/attach/placeImage/\${data.fileName}" />`)
+                    }
+
+
+                }
+            })
+        }
+
         $(() => {
             init()
-
+            getRecommend()
         })
     </script>
 </head>
@@ -109,7 +125,7 @@
             <div class="col">
                 <div id="imgCarousel1" class="carousel slide text-center border w-auto" style="height: 250px" data-ride="carousel" data-interval="8000">
                     <div class="carousel-inner">
-                        <a href="./place/02.html" style="color: black"><p>장소이미지</p></a>
+                        <a id="recommendPlace" href="" style="color: black"></a>
                         <div class="carousel-item active">
                             <a href="#"><img /></a>
                         </div>

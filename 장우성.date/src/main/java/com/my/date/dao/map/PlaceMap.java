@@ -20,4 +20,5 @@ public interface PlaceMap {
 	MyPlace selectMyPlace(MyPlace myPlace);
 	int insertMyPlace(MyPlace myPlace);
 	int deleteMyPlace(MyPlace myPlace);
+	RecommendPlaceDto selectRecommendPlace();
 }
