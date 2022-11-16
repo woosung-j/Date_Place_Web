@@ -133,7 +133,6 @@
                                     </div><hr class='mt-2'>
                                     <div class='infoFooter mt-3'>
                                         <a href="javascript:void(0);" id="copy_btn" onclick="copy()" type="button" class='btn btn-white' style="color:grey"><i class="bi bi-paperclip"></i>주소 복사</a>
-                                        <a href="javascript:void(0);" type="button" class='btn btn-white' style="color:grey"><i class="bi bi-share"></i>공유하기</a>
                                     </div>
                                 </div>
                             </div>`;
@@ -207,13 +206,7 @@
                     $('#introduction').text(data.introduction);
                     $('#placeModal').text(data.placeName);
                     $('#place_like').text(`찜 \${data.placeLikeCount}`);
-                    
-                    $('#searchNaver').append(
-                        `<a href="#" class="btn">
-                            <i class="bi bi-search-heart mr-4"></i>
-                        네이버에서 \${data.placeName} 검색
-                        </a>`
-                    )
+
                     $('#reservationName').val(data.placeName);
 
                     $('#placeName').text(data.placeName);
@@ -278,7 +271,7 @@
                         $('#detail_body').append(detailArr.join(''));
                     }
                     if (detail?.contact) {
-                        $('#homepage').attr('href', `\${detail.contact}`);
+                        $('#homepage').attr('href', `http://\${detail.contact}`);
                     }
 
                     if (data.menus?.length == 0) {
@@ -481,10 +474,6 @@
                         <i class="bi bi-exclamation-octagon mr-4"></i>
                         잘못된 장소 신고
                     </a>
-                </td>
-            </tr>
-            <tr>
-                <td class="mt-5 border mb-3" id="searchNaver">
                 </td>
             </tr>
             </tbody>

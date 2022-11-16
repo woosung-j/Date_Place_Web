@@ -25,6 +25,11 @@ public class PlaceServiceImpl implements PlaceService {
 	}
 
 	@Override
+	public List<PlaceDto> getPlacesByUserId(int userId) {
+		return placeDao.selectPlacesByUserId(userId);
+	}
+
+	@Override
 	public PlaceDetailDto getPlaceByPlaceId(int placeId, int userId) {
 		return placeDao.selectPlaceByPlaceId(placeId, userId);
 	}
@@ -68,7 +73,6 @@ public class PlaceServiceImpl implements PlaceService {
 	public MyPlace getMyPlace(MyPlace myPlace) {
 		return placeDao.selectMyPlace(myPlace);
 	}
-
 	@Override
 	public int addMyPlace(MyPlace myPlace) {
 		return placeDao.insertMyPlace(myPlace);
