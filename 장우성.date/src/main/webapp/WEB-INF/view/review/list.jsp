@@ -58,6 +58,9 @@
                             const reviewImgArr = [];
                             const delDiv = [];
 
+                            const profileImage = review.profileImage != null ?
+                                    `<img class="profile" src="/attach/profileImage/\${review.profileImage}"/>` : `<i class="fas fa-user-circle fa-2x"></i>`
+                                    
                             $.each(review.reviewImages, (i, reviewImage) => {
                                 reviewImgArr.push(`<img class="reImg mr-1" src="/attach/reviewImages/\${reviewImage.fileName}"/>`);
                             });
@@ -68,7 +71,7 @@
                                         <div class="row-1 border rounded mb-2">
                                             <div class="col pt-2">
                                                 <div class="row text-start ml-1 mr-1">
-                                                    <img class="profile" src="/attach/profileImage/\${review.profileImage}"/>
+                                                    \${profileImage}
                                                     <p class="mt-1 ml-1">\${review.nickname}</p>
                                                     <p class="mt-1 ml-1 star-rating">
                                                         <div class="stars">
