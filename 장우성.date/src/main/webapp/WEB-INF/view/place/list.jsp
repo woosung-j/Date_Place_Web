@@ -11,10 +11,6 @@
             background-color: #ff5858;
         }
 
-        .heart_list {
-            display: flex;
-        }
-        
         .img-style {
             position: relative;
             width: 5rem;
@@ -25,13 +21,6 @@
             position: relative;
             width: 5rem;
             height: 6rem;
-        }
-        
-        .heart {
-            font-size: 14px;
-            position: absolute;
-            top: 80%;
-            left: 80%;
         }
 
         a {
