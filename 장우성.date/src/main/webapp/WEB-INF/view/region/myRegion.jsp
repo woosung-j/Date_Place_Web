@@ -19,7 +19,7 @@
                             list.push(`
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <a href="<%=request.getContextPath()%>/place/\${item.siName}/\${item.guName != "없음" ? item.guName : "없음"}" class="text-dark"><u>\${item.siName} \${item.guName != "없음" ? item.guName : ""}</u></a>
+                                        <a href="<%=request.getContextPath()%>/place/list?si=\${item.siName}&gu=\${item.guName != "없음" ? item.guName : "없음"}" class="text-dark"><u>\${item.siName} \${item.guName != "없음" ? item.guName : ""}</u></a>
                                         <i class="bi bi-bookmark-fill icon"></i>
                                     </div>
                                 </div>
