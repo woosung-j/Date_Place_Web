@@ -4,9 +4,9 @@
     <link rel="stylesheet" href="../../res/mobile.css" />
     <style>
         .reImg {
-            height: 3rem;
-            width: 3rem;
-            border: 0.1rem solid;
+       		border: none;
+            height: 4.5rem;
+            width: 3.5rem;
             text-align: center;
             display: flex;
             align-items: center;
@@ -25,7 +25,6 @@
         }
 
         .profile {
-            border: 0.1rem solid;
             border-radius: 50%;
             height: 2rem;
             width: 2rem;
@@ -60,7 +59,7 @@
                             const delDiv = [];
 
                             $.each(review.reviewImages, (i, reviewImage) => {
-                                reviewImgArr.push(`<img class="reImg ml-3" src="attach/review/\${reviewImage.fileName}'/>"/>`);
+                                reviewImgArr.push(`<img class="reImg mr-1" src="/attach/reviewImages/\${reviewImage.fileName}"/>`);
                             });
 
                             reviewArr.unshift(
@@ -69,7 +68,7 @@
                                         <div class="row-1 border rounded mb-2">
                                             <div class="col pt-2">
                                                 <div class="row text-start ml-1 mr-1">
-                                                    <img class="profile" src="attach/user/\${review.profileImage}'/>"/>
+                                                    <img class="profile" src="attach/profileImage/\${review.profileImage}"/>
                                                     <p class="mt-1 ml-1">\${review.nickname}</p>
                                                     <p class="mt-1 ml-1 star-rating">
                                                         <div class="stars">
@@ -80,7 +79,8 @@
                                                 </div>
                                                 <a href="<%=request.getContextPath()%>/review/detailview/\${review.reviewId}" style="color: inherit; text-decoration: none;">
                                                     <div class="row reviewImg mb-2">
-                                                    \${reviewImgArr.join('')}
+                                                    
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;\${reviewImgArr.join('')}
                                                     </div>
                                                     <div class="row dell text-start ml-1 mr-1"  font-size: 14px">
                                                         <p class="content" id="content">\${review.content}</p>
@@ -98,13 +98,13 @@
                             success: (data) => {
                                 $('#reviewInfo').append(
                                     '<p class="text-center"><strong>' +
-                                    `\${reviews[0].placeName}` +
-                                    '<span style="color: #fb3959">★ ' +
-                                    `\${data}` +
-                                    '</span></strong><br/>' +
-                                    '<span style="color: #fb3959">' +
-                                    `\${reviews.length}` +
-                                    '</span> 개의 리뷰가 있어요.<br /></p>'
+                                        `\${reviews[0].placeName}` +
+                                        '<span style="color: #fb3959">★ ' +
+                                        `\${data}` +
+                                        '</span></strong><br/>' +
+                                        '<span style="color: #fb3959">' +
+                                        `\${reviews.length}` +
+                                        '</span> 개의 리뷰가 있어요.<br /></p>'
                                 );
                             },
                         });
@@ -125,7 +125,7 @@
     <div class="container">
         <header style="padding-top: 80px">
             <nav class="row navbar bg-light text-center align-middle fixed-top">
-                <a href="javascript:window.history.back();" class="col btn"><i class="bi bi-chevron-left"></i></a>
+                <a href="<%=request.getContextPath()%>/place/place/${placeId}" class="col btn"><i class="bi bi-chevron-left"></i></a>
                 <p class="col"></p>
                 <h3 class="col-6 font-gamja-flower">리뷰보기</h3>
                 <p class="col"></p>

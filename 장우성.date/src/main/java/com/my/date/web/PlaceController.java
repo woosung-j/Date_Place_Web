@@ -1,6 +1,6 @@
 package com.my.date.web;
 
-import com.my.date.domain.Place;
+import com.my.date.domain.MyPlace;
 import com.my.date.domain.PlaceDetailDto;
 import com.my.date.domain.PlaceDto;
 import com.my.date.service.PlaceService;
@@ -61,5 +61,22 @@ public class PlaceController {
         place.setReview(reviewService.getLatestReviewByPlaceId(placeId));
 
         return place;
+    }
+
+    @PostMapping("place/my/like")
+    public int toggleMyPlace(HttpServletRequest request, @RequestBody MyPlace myPlace) {
+        int userId = 0;
+        HttpSession session = request.getSession(false);
+        if(session == null || session.getAttribute("userId") == null) {
+            return -1;
+        }
+        userId = (int) session.getAttribute("userId");
+
+        myPlace.setUserId(userId);
+        if(placeService.getMyPlace(myPlace) == null)
+            return placeService.addMyPlace(myPlace);
+        else{
+            return placeService.delMyPlace(myPlace);
+        }
     }
 }

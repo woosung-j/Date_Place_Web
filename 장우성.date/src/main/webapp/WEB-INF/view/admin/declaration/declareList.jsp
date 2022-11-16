@@ -30,7 +30,7 @@
 
                     if (data.length) {
                         $.each(data, (i, item) => {
-                            list.unshift(
+                            list.push(
                                 `<div type="button" class="row accordion text-center border-bottom mx-1 py-3" style="font-size: 14px" id="acco\${item.declareId}" data-toggle="collapse" data-target="#coll\${item.declareId}" aria-expanded="true" aria-controls="coll\${item.declareId}">
                                     <div class="col">\${item.declareId}</div>
                                     <div class="col">\${item.placeName}</div>
@@ -57,6 +57,8 @@
                                 </div>`
                             );
                         });
+                    } else {
+                        list.push(`<div type="button" class="row text-center border-bottom mx-1 py-3" style="font-size: 14px"><div class="col">등록된 신고가 없습니다.</div></div>`)
                     }
                     $('#list').empty();
                     $('#list').append(list.join(''));
@@ -72,7 +74,7 @@
 <body>
 <div class="container-fluid">
     <header class="row-1">
-        <h1 class="text-center border">로고이미지</h1>
+        <img src="<%=request.getContextPath()%>/attach/logo.jpg" style="width:100%; height:70px;"/>
     </header>
     <hr />
     <div class="row">

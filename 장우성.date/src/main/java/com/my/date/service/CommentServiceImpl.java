@@ -27,4 +27,9 @@ public class CommentServiceImpl implements CommentService {
 	public int fixComment(Comment comment) {
 		return commentDao.updateComment(comment);
 	}
+	
+	@Override
+	public int delComment(int commentId, int userId) {
+		return commentDao.deleteComment(commentId, userId);
+	}
 }

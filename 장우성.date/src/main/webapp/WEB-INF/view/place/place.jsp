@@ -7,13 +7,6 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1ae0f4d8a7c4511de8de27cd0e165da0&libraries=services,clusterer,drawing"></script>
     <style>
-        .img-style {
-            border: 0.1rem;
-            border-style: solid;
-            width: 50rem;
-            height: 10rem;
-        }
-
         .border {
             margin-top: 13rem;
             top: 50%;
@@ -51,10 +44,16 @@
             font-size: 15px;
         }
 
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .swiper {
             width: auto;
             height: 250px;
-            border: 0.1rem solid;
         }
 
         .swiper-slide {
@@ -74,13 +73,6 @@
             align-items: center;
         }
 
-        .swiper-slide img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
         .fill {
             color: #fb3959;
         }
@@ -93,7 +85,6 @@
             user-select: none;
         }
     </style>
-
     <script>
         let map;
 
@@ -103,7 +94,6 @@
         }
 
         function getXY(obj) {
-            console.log(map);
             let geocoder = new kakao.maps.services.Geocoder();
 
             geocoder.addressSearch(obj.addr, (result, status) => {
@@ -201,34 +191,55 @@
                 url: '<%=request.getContextPath()%>/place/get/' + $('#placeId').val(),
                 method: 'get',
                 success: (data) => {
-                    console.log(data);
                     const detail = data.detail;
                     const review = data.review;
 
-                    $('#address').val(detail.address);
                     $('#placeName').text(data.placeName);
                     $('#subPlaceName').text(data.placeName);
                     $('#introduction').text(data.introduction);
                     $('#place_like').text(`찜 \${data.placeLikeCount}`);
-                    if (data.isLike > 0) {
-                        $('#place_heart').addClass('bi bi-heart-fill').attr('style', 'color:#E14D2A;');
-                    } else {
-                        $('#place_heart').addClass('bi bi-heart');
+                    
+                    $('#searchNaver').append(
+                        `<a href="#" class="btn">
+                            <i class="bi bi-search-heart mr-4"></i>
+                        네이버에서 \${data.placeName} 검색
+                        </a>`
+                    )
+
+                    $('#placeName').text(data.placeName);
+                    $('#subPlaceName').text(data.placeName);
+                    $('#introduction').text(data.introduction);
+                    $('#place_like').text(`찜 \${data.placeLikeCount}`);
+                    $('#place_like').val(data.placeLikeCount)
+
+                    if (detail != null) {
+                        $('#address').val(detail.address);
                     }
 
+                    isLike(data?.isLike)
+                    $('#placeLikeBtn').val(data?.isLike)
+
+                    const placeImageArr = [];
                     $.each(data.placeImages, (i, img) => {
-                        $('#placeImg').appendTo(`<img class="swiper-slide" src="attach/\${img.fileName}" />`);
+                        placeImageArr.push(`<img class="swiper-slide reImg" src="/attach/placeImage/\${img.fileName}" />`);
                     });
 
-                    $('#tel').text($('#tel').text() + detail.tel);
+                    $('#placeImage').append(`
+                        <div class="swiper-wrapper">\${placeImageArr.join('')}</div>
+                        <div class="swiper-pagination"></div>
+                    `);
 
-                    if (detail.parking == null && detail.openingHours == null && detail.closingHours == null && detail.dayOff == null) {
+                    if (detail?.tel) {
+                        $('#tel').text($('#tel').text() + detail.tel);
+                    }
+
+                    if (detail?.parking == null && detail?.openingHours == null && detail?.closingHours == null && detail?.dayOff == null) {
                         $('#info').hide();
                         $('#detail').hide();
                     } else {
                         const detailArr = [];
 
-                        if (detail.openingHours) {
+                        if (detail?.openingHours) {
                             detailArr.push(`
                                 <tr class="border-bottom border-top">
                                     <td class="col-4 text-center pt-2 pb-2">시간</td>
@@ -237,7 +248,7 @@
                             `);
                         }
 
-                        if (detail.dayOff) {
+                        if (detail?.dayOff) {
                             detailArr.push(`
                                 <tr class="border-bottom border-top">
                                     <td class="col-4 text-center pt-2 pb-2">휴무</td>
@@ -246,7 +257,7 @@
                             `);
                         }
 
-                        if (detail.parking) {
+                        if (detail?.parking) {
                             detailArr.push(`
                                 <tr class="border-bottom border-top">
                                     <td class="col-4 text-center pt-2 pb-2">주차</td>
@@ -256,18 +267,21 @@
                         }
                         $('#detail_body').append(detailArr.join(''));
                     }
-                    $('#homepage').attr('href', `\${detail.contact}`);
+                    if (detail?.contact) {
+                        $('#homepage').attr('href', `\${detail.contact}`);
+                    }
 
-                    if (data.menus.length == 0) {
+                    if (data.menus?.length == 0) {
                         $('#menu').hide();
                         $('#menu_table').hide();
                     } else {
                         let menuArr = [];
                         $.each(data.menus, (i, menu) => {
+                        	let result = (menu.price).toLocaleString('ko-KR');
                             menuArr.push(`
                                 <tr class="border-bottom border-top">
                                     <td class="col-9 pt-2 pb-2">\${menu.menuName}</td>
-                                    <td>\${menu.price}</td>
+                                    <td>\${result}원</td>
                                 </tr>
                             `);
                         });
@@ -288,21 +302,41 @@
                     }
 
                     let addr = {
-                        name: data.placeName,
-                        addr: detail.address,
+                        name: data?.placeName,
+                        addr: detail?.address,
                     };
 
                     kakaoMapInit(addr);
+                    swiper();
                 },
             });
         }
 
-        function init() {
-            getPlace();
+        function isLike(isLike) {
+            $('#place_heart').removeClass()
+            if (isLike > 0) {
+                $('#place_heart').addClass('bi bi-heart-fill').attr('style', 'color:#E14D2A;');
+            } else {
+                $('#place_heart').addClass('bi bi-heart');
+            }
+        }
+
+        function toggleLike() {
+            if($('#place_heart')[0].classList[1] == 'bi-heart-fill') {
+                $('#place_heart').removeClass()
+                $('#place_heart').addClass('bi bi-heart');
+                $('#place_like').text(`찜 ` + (Number($('#place_like').val()) - 1));
+                $('#place_like').val(Number($('#place_like').val()) - 1)
+            } else {
+                $('#place_heart').removeClass()
+                $('#place_heart').addClass('bi bi-heart-fill').attr('style', 'color:#E14D2A;');
+                $('#place_like').text(`찜 ` + (Number($('#place_like').val()) + 1));
+                $('#place_like').val(Number($('#place_like').val()) + 1)
+            }
         }
 
         function swiper() {
-            const swiper = new Swiper('.mySwiper', {
+            var swiper = new Swiper('.mySwiper', {
                 pagination: {
                     el: '.swiper-pagination',
                     clickable: true,
@@ -310,10 +344,29 @@
             });
         }
 
+        function togglePlaceLike() {
+            $.ajax({
+                url: '<%=request.getContextPath()%>/place/place/my/like',
+                method: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    placeId: $('#placeId').val()
+                }),
+                success: (data) => {
+                    if(data > 0) {
+                        toggleLike()
+                    }
+                }
+            })
+        }
+
         $(() => {
-            init();
-            swiper();
+            getPlace();
             copy();
+
+            $('#placeLikeBtn').on('click', () => {
+                togglePlaceLike()
+            })
         });
     </script>
 </head>
@@ -330,27 +383,21 @@
             </a>
         </nav>
     </header>
-    <div class="swiper mySwiper">
-        <div id="placeImg" class="swiper-wrapper"></div>
-        <div class="swiper-pagination"></div>
-    </div>
+    <div id="placeImage" class="swiper mySwiper"></div>
     <div class="row">
         <div class="col">
             <div class="text-center mt-4">
                 <h4 id="subPlaceName" class="text-center"></h4>
             </div>
             <div id="introduction" class="text-center pl-2 pr-2 mt-6 mb-5"><br /></div>
-
             <h6 class="mt-3">
                 <i class="bi bi-clock"></i>
                 <span id="tel"> 예약/문의하기 &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; </span>
             </h6>
-
             <h6 id="menu" class="mt-5">
                 <i class="bi bi-list"></i>
                 <span>주요 메뉴</span>
             </h6>
-
             <table id="menu_table" class="tg" style="width: 100%; font-size: 15px">
                 <tbody id="menu_table_body"></tbody>
             </table>
@@ -358,15 +405,12 @@
                 <i class="bi bi-clock"></i>
                 <span>영업 안내</span>
             </h6>
-
             <table id="detail" class="tg" style="width: 100%; font-size: 15px">
                 <tbody id="detail_body"></tbody>
             </table>
-
             <a id="homepage" href="#" class="btn w-auto mt-4" type="button" style="display: block">
                 <span>홈페이지/인스타그램 보러가기</span>
             </a>
-
             <div id="map" class="col mt-5 w-auto" style="width: 120px; height: 180px; margin-bottom: 30px"></div>
         </div>
     </div>
@@ -378,7 +422,6 @@
                 <td class="row-1 mt-5 border rounded mb-3">
                     <div class="col pt-1">
                         <div class="row text-start ml-1">
-                            <i class="icon bi-person fa-3x mb-2" style="font-size: 20px"></i>
                             <p id="review_nickname" class="mt-1 ml-1" style="font-size: 13px"></p>
                             <p id="review_starRating" class="mt-1 ml-1" style="font-size: 13px"></p>
                             <p id="review_createdAt" class="mt-1 ml-1" style="font-size: 13px"></p>
@@ -387,11 +430,6 @@
                             <p id="review_content"></p>
                         </div>
                         <div class="row reviewImg mb-2">
-                            <%--
-                            <div class="myReviewImg ml-3">리뷰이미지</div>
-                            --%> <%--
-                                    <div class="myReviewImg">리뷰이미지</div>
-                                    --%>
                         </div>
                     </div>
                 </td>
@@ -416,11 +454,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="mt-5 border mb-3">
-                    <a href="#" class="btn">
-                        <i class="bi bi-search-heart mr-4"></i>
-                        네이버에서 그림화원 검색
-                    </a>
+                <td class="mt-5 border mb-3" id="searchNaver">
                 </td>
             </tr>
             </tbody>
@@ -430,10 +464,10 @@
     <div class="navbar mt-80">
         <ul class="navbar nav-item bg-light fixed-bottom mb-0 list-style-none">
             <li>
-                <a href="#" class="btn w-auto" type="button">
+                <button class="btn w-auto" type="button" id="placeLikeBtn" value="">
                     <i id="place_heart" class=""></i><br />
                     <span id="place_like">찜 0</span>
-                </a>
+                </button>
             </li>
             <li>
                 <button type="button" class="btn btn-primary btn-lg disabled" data-target="#Modal" data-toggle="modal">예약하기</button>
@@ -443,6 +477,7 @@
     </div>
 </div>
 <input type="hidden" id="placeId" name="placeId" value="${placeId}" />
+<%--<input type="hidden" id="isLike" name="isLike" value=""/>--%>
 <!-- 모달창 -->
 <div class="modal fade" id="Modal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">

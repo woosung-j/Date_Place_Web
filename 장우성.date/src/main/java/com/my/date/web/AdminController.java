@@ -1,19 +1,30 @@
 package com.my.date.web;
 
-import com.my.date.domain.*;
-import com.my.date.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import com.my.date.domain.*;
+import com.my.date.service.*;
+import com.my.date.util.SessionUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("admin")
@@ -26,50 +37,123 @@ public class AdminController {
     @Autowired private DetailService detailService;
     @Autowired private ReviewService reviewService;
     @Autowired private UserService userService;
-    
-    private boolean isAdmin(HttpServletRequest request) {
-        HttpSession sessionCheck = request.getSession(false);
-        if(sessionCheck == null || sessionCheck.getAttribute("isAdmin") == null) {
-            return false;
-        }
 
-        return (boolean) sessionCheck.getAttribute("isAdmin");
-    }
-    
-    @GetMapping("")
-    public ModelAndView main(HttpServletRequest request, ModelAndView mv) {
-        if(isAdmin(request) == true) {
-            mv.setViewName("admin/main");
-        } else {
+    private void setView(HttpSession session, ModelAndView mv, String viewName) {
+        if(!SessionUtil.getIsAdmin(session)) {
             mv.setViewName("redirect:/admin/login");
+        } else {
+            mv.setViewName(viewName);
         }
+    }
+
+    @GetMapping("")
+    public ModelAndView main(HttpSession session, ModelAndView mv) {
+        setView(session, mv, "admin/main");
         return mv;
     }
 
-    @GetMapping("list")
-    public List<User> getUserList() {
-		return userService.getAdminUserList();
-	}
-    
-    @GetMapping("get/{userName}")
-    public User getUser(@PathVariable String userName) {    
-    	return userService.getUserByUserName(userName);
-    }
-     
-    @PutMapping("fix")
-	public void fixUser(@RequestBody User user) {
-    	userService.fixAdminUser(user);
-	}
-    
-	@PutMapping("del/{userId}")
-	public void delUser(@PathVariable int userId) {
-		userService.delUser(userId);
-	}
-    
     @GetMapping("login")
     public ModelAndView login(ModelAndView mv) {
         mv.setViewName("admin/user/login");
         return mv;
+    }
+
+    @GetMapping("logout")
+    public ModelAndView logout(HttpSession session, ModelAndView mv) {
+        session.invalidate();
+        mv.setViewName("redirect:/admin/login");
+        return mv;
+    }
+
+    @GetMapping("place")
+    public ModelAndView placeList(HttpSession session, ModelAndView mv) {
+        setView(session, mv, "admin/place/placeList");
+        return mv;
+    }
+
+    @GetMapping("place/add")
+    public ModelAndView placeAdd(HttpSession session, ModelAndView mv) {
+        setView(session, mv, "admin/place/add");
+        return mv;
+    }
+
+    @GetMapping("place/patch/{placeId}")
+    public ModelAndView placeFix(HttpSession session, ModelAndView mv, @PathVariable int placeId) {
+        setView(session, mv, "admin/place/fix");
+        mv.addObject("placeId", placeId);
+        return mv;
+    }
+
+    @GetMapping("detail/add/{placeId}")
+    public ModelAndView detailAdd(HttpSession session, ModelAndView mv, @PathVariable int placeId) {
+        setView(session, mv, "admin/detail/addDetail");
+        mv.addObject("placeId", placeId);
+        return mv;
+    }
+    @GetMapping("/place/detail/{placeId}")
+    public ModelAndView place(HttpSession session, ModelAndView mv, @PathVariable int placeId) {
+        setView(session, mv, "admin/place/place");
+        mv.addObject("placeId", placeId);
+        return mv;
+    }
+    @GetMapping("declare")
+    public ModelAndView declare(HttpSession session, ModelAndView mv) {
+        setView(session, mv, "admin/declaration/declareList");
+        return mv;
+    }
+    @GetMapping("menu/{placeId}")
+    public ModelAndView menu(HttpSession session, ModelAndView mv, @PathVariable int placeId) {
+        setView(session, mv, "admin/menu/patchMenu");
+        mv.addObject("placeId", placeId);
+        return mv;
+    }
+    @GetMapping("detail")
+    public ModelAndView detail(HttpSession session, ModelAndView mv) {
+        setView(session, mv, "admin/detail/patchDetail");
+        return mv;
+    }
+
+    @GetMapping("review")
+    public ModelAndView review(HttpSession session, ModelAndView mv) {
+        setView(session, mv, "admin/review/reviewList");
+        return mv;
+    }
+
+    @GetMapping("detail/patch/{placeId}")
+    public ModelAndView detail(HttpSession session, ModelAndView mv, @PathVariable int placeId) {
+        setView(session, mv, "admin/detail/patchDetail");
+        mv.addObject("placeId", placeId);
+        return mv;
+    }
+
+    @GetMapping("/logo")
+    public ModelAndView logo(HttpSession session, ModelAndView mv) {
+        setView(session, mv, "admin/logo/logo");
+        return mv;
+    }
+
+    @GetMapping("list")
+    public List<User> getUserList(HttpSession session) {
+        if(!SessionUtil.getIsAdmin(session)) return null;
+        return userService.getAdminUserList();
+    }
+
+    @GetMapping("get/{userName}")
+    public User getUser(HttpSession session, @PathVariable String userName) {
+        if(!SessionUtil.getIsAdmin(session)) return null;
+        return userService.getUserByUserName(userName);
+    }
+
+    @PutMapping("fix")
+    public void fixUser(HttpSession session, @RequestBody User user) {
+        if(!SessionUtil.getIsAdmin(session)) return ;
+        userService.fixAdminUser(user);
+    }
+
+    @PutMapping("del/{userId}")
+    public void delUser(HttpSession session, @PathVariable int userId) {
+        if(!SessionUtil.getIsAdmin(session)) return ;
+        userService.delUser(userId);
     }
 
     @PostMapping("login")
@@ -100,187 +184,198 @@ public class AdminController {
         return mv;
     }
 
-    @GetMapping("logout")
-    public ModelAndView logout(HttpSession session, ModelAndView mv) {
-        session.invalidate();
-        mv.setViewName("redirect:/admin/login");
-        return mv;
+    @GetMapping("place/fix/{placeId}")
+    public PlaceAdminDto getPlace(HttpSession session, @PathVariable int placeId) {
+        if(!SessionUtil.getIsAdmin(session)) return null;
+        return placeService.getAdminPlace(placeId);
     }
 
-    @GetMapping("place")
-    public ModelAndView placeList(HttpServletRequest request, ModelAndView mv) {
-        if(isAdmin(request) == true) {
-            mv.setViewName("admin/place/placeList");
-        } else {
-            mv.setViewName("redirect:/admin/login");
-        }
-        return mv;
+    @DeleteMapping("place/del/{placeId}")
+    public void delPlace(HttpSession session, @PathVariable int placeId) {
+        if(!SessionUtil.getIsAdmin(session)) return ;
+        placeService.delPlace(placeId);
     }
 
-    @GetMapping("place/add")
-    public ModelAndView placeAdd(ModelAndView mv) {
-        mv.setViewName("admin/place/add");
-        return mv;
-    }
-
-    @PostMapping("place/add/{si}/{gu}")
-    public int addPlace(@RequestPart(value = "files") List<MultipartFile> files, @RequestPart(value = "key") Place place, @PathVariable("si") String si, @PathVariable("gu") String gu) {
-        System.out.println(place);
+    private List<String> multiFileUpload(List<MultipartFile> files) {
         List<String> fileNameList = new ArrayList<String>();
 
         try {
             for(MultipartFile file : files) {
+                String originalFileName = file.getOriginalFilename();
                 String savedFileName = "";
                 String uploadPath = attachPath + "/placeImage/";
-                String originalFileName = file.getOriginalFilename();
 
-                UUID uuid = UUID.randomUUID();
-                savedFileName = uuid.toString() + "_" + originalFileName;
+                if(!originalFileName.equals("")) {
+                    UUID uuid = UUID.randomUUID();
+                    savedFileName = uuid.toString() + "_" + originalFileName;
 
-                File file1 = new File(uploadPath + savedFileName);
-                file.transferTo(file1);
+                    File file1 = new File(uploadPath + savedFileName);
+                    file.transferTo(file1);
 
-                fileNameList.add(savedFileName);
+                    fileNameList.add(savedFileName);
+                }
             }
         } catch(Exception e) {
-            return -1;
+            return null;
         }
+        return fileNameList;
+    }
 
-        place.setSiId(regionService.getSiId(si));
-        place.setGuId(regionService.getGuId(gu));
+    @PostMapping("place/add/{si}/{gu}")
+    public int addPlace(HttpSession session, @RequestPart(value = "files") List<MultipartFile> files, @RequestPart(value = "key") Place place, @PathVariable("si") String si, @PathVariable("gu") String gu) {
+        if(!SessionUtil.getIsAdmin(session)) return -1;
+        List<String> fileNameList = multiFileUpload(files);
+
+        if(si.equals("경기")) {
+            place.setSiId(regionService.getSiId(gu));
+            place.setGuId(regionService.getGuId("없음"));
+        } else {
+            place.setSiId(regionService.getSiId(si));
+            place.setGuId(regionService.getGuId(gu));
+        }
         int isPlaceSuccess = placeService.addPlace(place);
 
-        if(place.getPlaceId() != 0 && isPlaceSuccess == 1 && files.size() > 0) {
+        if(place.getPlaceId() != 0 && isPlaceSuccess == 1 && fileNameList != null && fileNameList.size() > 0) {
+            return placeService.addPlaceImages(place.getPlaceId(), fileNameList);
+        }
+        return isPlaceSuccess;
+    }
+
+    @PostMapping("place/fix/{si}/{gu}")
+    public int fixPlace(HttpSession session, @RequestPart(value = "files") List<MultipartFile> files, @RequestPart(value = "key") Place place, @PathVariable("si") String si, @PathVariable("gu") String gu) {
+        if(!SessionUtil.getIsAdmin(session)) return -1;
+        List<String> fileNameList = multiFileUpload(files);
+
+        if(si.equals("경기")) {
+            place.setSiId(regionService.getSiId(gu));
+            place.setGuId(regionService.getGuId("없음"));
+        } else {
+            place.setSiId(regionService.getSiId(si));
+            place.setGuId(regionService.getGuId(gu));
+        }
+        int isPlaceSuccess = placeService.fixPlace(place);
+
+        if(place.getPlaceId() != 0 && isPlaceSuccess == 1 && fileNameList != null && fileNameList.size() > 0) {
+            placeService.delPlaceImage(place.getPlaceId());
             return placeService.addPlaceImages(place.getPlaceId(), fileNameList);
         }
         return isPlaceSuccess;
     }
 
     @GetMapping("place/getPlaceList")
-    public List<Place> getPlaces(HttpServletRequest request) {
-        if(isAdmin(request) == true) {
-            return placeService.getPlaces();
-        } else {
-            return null;
-        }
+    public List<Place> getPlaces(HttpSession session) {
+        if(!SessionUtil.getIsAdmin(session)) return null;
+        return placeService.getPlaces();
     }
 
-    @GetMapping("/place/detail/{placeId}")
-    public ModelAndView place(HttpServletRequest request, ModelAndView mv, @PathVariable int placeId) {
-        if(isAdmin(request) == true) {
-            mv.addObject("placeId", placeId);
-            mv.setViewName("admin/place/place");
-        } else {
-            mv.setViewName("redirect:/admin/login");
-        }
-        return mv;
-    }
 
     @GetMapping("/place/getDetail/{placeId}")
-    public PlaceDetailDto getPlaceDetail(HttpServletRequest request, @PathVariable int placeId) {
-        if(isAdmin(request) == true) {
-            return placeService.getAdminPlaceByPlaceId(placeId);
-        } else {
-            return null;
-        }
-    }
-    
-    @GetMapping("declare")
-    public ModelAndView declare(ModelAndView mv) {
-        mv.setViewName("admin/declaration/declareList");
-
-        return mv;
+    public PlaceDetailDto getPlaceDetail(HttpSession session, @PathVariable int placeId) {
+        if(!SessionUtil.getIsAdmin(session)) return null;
+        return placeService.getAdminPlaceByPlaceId(placeId);
     }
 
     @GetMapping("declare/list")
-    public List<Declaration> declareList(HttpServletRequest request) {
-        if(isAdmin(request) == true) {
-            return declarationService.getDeclareList();
-        } else {
-            return null;
-        }
+    public List<Declaration> declareList(HttpSession session) {
+        if(!SessionUtil.getIsAdmin(session)) return null;
+        return declarationService.getDeclareList();
     }
 
     @PatchMapping("declare/toggleconfirm/{declareId}/{confirm}")
-    public int toggleConfirm(HttpServletRequest request, @PathVariable int declareId, @PathVariable int confirm) {
-        if(isAdmin(request) == true) {
-            return declarationService.fixConfirm(declareId, confirm);
-        } else {
-            return 0;
-        }
+    public int toggleConfirm(HttpSession session, @PathVariable int declareId, @PathVariable int confirm) {
+        if(!SessionUtil.getIsAdmin(session)) return -1;
+        return declarationService.fixConfirm(declareId, confirm);
     }
 
-    @GetMapping("menu")
-    public ModelAndView menu(ModelAndView mv) {
-        mv.addObject("placeId", 3);
-        mv.setViewName("admin/menu/patchMenu");
-        return mv;
+
+    @GetMapping("getMenus/{placeId}")
+    public List<Menu> getMenus(HttpSession session, @PathVariable int placeId) {
+        if(!SessionUtil.getIsAdmin(session)) return null;
+        return menuService.getMenus(placeId);
     }
 
-    @GetMapping("menu/getMenus")
-    public List<Menu> getMenus() {
-        return menuService.getMenus();
-    }
-    
     @PostMapping("addMenu")
-    public int addMenu(@RequestBody List<Menu> menu) {
+    public int addMenu(HttpSession session, @RequestBody List<Menu> menu) {
+        if(!SessionUtil.getIsAdmin(session)) return -1;
         return menuService.addMenu(menu);
     }
-    
+
     @PatchMapping("fixMenu")
-    public int fixMenu(@RequestBody List<Menu> menu) {
+    public int fixMenu(HttpSession session, @RequestBody List<Menu> menu) {
+        if(!SessionUtil.getIsAdmin(session)) return -1;
         return menuService.fixMenu(menu);
     }
-    
-    @GetMapping("review")
-    public ModelAndView review(HttpServletRequest request, ModelAndView mv) {
-        if(isAdmin(request) == true) {
-            mv.setViewName("admin/review/reviewList");
-        } else {
-            mv.setViewName("redirect:/admin/login");
-        }
-        return mv;
-    }
 
-    @GetMapping("detail/patch/{placeId}")
-    public ModelAndView detail(ModelAndView mv, @PathVariable int placeId) {
-        mv.addObject("placeId", placeId);
-        mv.setViewName("admin/detail/patchDetail");
-        return mv;
+    @DeleteMapping("delMenu/{menuId}")
+    public void delMenu(HttpSession session, @PathVariable int menuId) {
+        if(!SessionUtil.getIsAdmin(session)) return ;
+        menuService.delMenu(menuId);
     }
 
     @GetMapping("detail/getDetail/{placeId}")
-    public Detail getDetail(@PathVariable int placeId) {
+    public Detail getDetail(HttpSession session, @PathVariable int placeId) {
+        if(!SessionUtil.getIsAdmin(session)) return null;
         return detailService.getDetail(placeId);
     }
 
     @PatchMapping("detail/patch/{placeId}")
-    public int updateDetail(@PathVariable int placeId, @RequestBody Detail detail) {
-        System.out.println(detail);
+    public int updateDetail(HttpSession session, @PathVariable int placeId, @RequestBody Detail detail) {
+        if(!SessionUtil.getIsAdmin(session)) return -1;
         detail.setPlaceId(placeId);
         return detailService.fixDetail(detail);
     }
-    
-    @GetMapping("review/list")
-    public List<ReviewDto> getReviews(HttpServletRequest request) {
-        if(isAdmin(request) == true) {
-            return reviewService.getReviews();
-        } else {
-            return null;
-        }
+
+    @PostMapping("detail/add/{placeId}")//add
+    public int addDetail(HttpSession session, @PathVariable int placeId, @RequestBody Detail detail) {
+        if(!SessionUtil.getIsAdmin(session)) return -1;
+        detail.setPlaceId(placeId);
+        return detailService.addDetail(detail);
     }
-    
+
+    @DeleteMapping("detail/del/{placeId}")
+    public void delDetail(HttpSession session, @PathVariable int placeId, @RequestBody int detailId) {
+        if(!SessionUtil.getIsAdmin(session)) return ;
+        detailService.delDetail(detailId);
+    }
+
+    @GetMapping("review/list")
+    public List<ReviewDto> getReviews(HttpSession session) {
+        if(!SessionUtil.getIsAdmin(session)) return null;
+        return reviewService.getReviews();
+    }
+
     @DeleteMapping("del/{reviewId}")
-    public int delAdminReview(HttpServletRequest request, @PathVariable int reviewId) {
-        if(isAdmin(request) == true) {
-            return reviewService.delAdminReview(reviewId);
-        } else {
+    public int delAdminReview(HttpSession session, @PathVariable int reviewId) {
+        if(!SessionUtil.getIsAdmin(session)) return -1;
+        return reviewService.delAdminReview(reviewId);
+    }
+
+    @GetMapping("search/{keyword}")
+    public List<ReviewDto> search(HttpSession session, @PathVariable String keyword) {
+        if(!SessionUtil.getIsAdmin(session)) return null;
+        return reviewService.getSearchReviewByPlaceName(keyword);
+    }
+
+    @PostMapping("/logo/upload")
+    public int logoUpload(HttpSession session, @RequestPart(value = "files") List<MultipartFile> files) {
+        if(!SessionUtil.getIsAdmin(session)) return -1;
+
+        try {
+            for(MultipartFile file : files) {
+                String originalFileName = file.getOriginalFilename();
+                String savedFileName = "logo.jpg";
+                String uploadPath = attachPath + "/";
+
+                if(!originalFileName.equals("")) {
+                    File file1 = new File(uploadPath + savedFileName);
+                    file.transferTo(file1);
+                } else {
+                    return 0;
+                }
+            }
+        } catch(Exception e) {
             return 0;
         }
-    }
-    
-    @GetMapping("search/{keyword}")
-    public List<ReviewDto> search(@PathVariable String keyword) {
-        return reviewService.getSearchReviewByPlaceName(keyword);
+        return 1;
     }
 }

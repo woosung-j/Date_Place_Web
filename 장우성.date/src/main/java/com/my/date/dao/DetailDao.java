@@ -6,4 +6,5 @@ public interface DetailDao {
 	Detail selectDetail(int placeId);
 	int insertDetail(Detail detail);
 	int updateDetail(Detail detail);
+	int deleteDetail(int detailId);
 }

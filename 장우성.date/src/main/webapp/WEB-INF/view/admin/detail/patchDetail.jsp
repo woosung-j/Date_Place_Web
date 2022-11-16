@@ -24,7 +24,7 @@
                                     </td>
                                     <td>
                                         <br />
-                                        <input type="text" class="form-control" id="address" name="address" value="\${data.address}" onclick="PostCodeSearch()" style="width: 500px" />
+                                        <input type="text" class="form-control" id="address" name="address" value="\${data.address}" onclick="PostCodeSearch()" style="width: 700px" />
                                         <br />
                                     </td>
                                 </tr>
@@ -132,7 +132,7 @@
 <body>
     <div class="container-fluid">
         <header class="row-1">
-            <h1 class="text-center border">로고이미지</h1>
+            <img src="<%=request.getContextPath()%>/attach/logo.jpg" style="width:100%; height:70px;"/>
         </header>
         <hr />
         <div class="row">

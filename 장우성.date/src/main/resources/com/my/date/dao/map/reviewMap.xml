@@ -23,6 +23,19 @@
 		order by review_id
 	</select>
 
+	<select id='selectSearchReviewByPlaceName' resultMap="reviewsMap">
+		select  r.review_id, r.place_id, p.place_name, r.user_id, u.profile_image, u.nickname, 
+                r.content, r.star_rating, i.file_name, i.review_images_id, r.created_at
+		from reviews r
+		left join review_images i on i.review_id = r.review_id
+		left join users u on r.user_id = u.user_id
+		left join places p on r.place_id = p.place_id
+		where p.place_name like '%'||#{keyword}||'%' 
+        and ROWNUM BETWEEN 1 AND 10
+        and r.content is not null
+		order by review_id 
+	</select>
+	
 	<select id="selectLatestReviewByPlaceId" resultType="reviewDto">
 		select *
 		from (
@@ -37,7 +50,7 @@
 			order by review_id desc
 		)
 		where rownum = 1
-  </select>
+	</select>
   
 	<select id='selectReviewsByUserId' resultMap='reviewsMap'>
 		select  r.review_id, r.place_id, p.place_name, r.user_id, u.profile_image, u.nickname, 
@@ -67,8 +80,20 @@
 		group by place_id
 	</select>
 	
-	<insert id='insertReview'>
-		insert into reviews values(REVIEWS_id_SEQ.nextval, #{placeId}, #{userId}, #{content}, #{starRating}, sysdate)
+	<insert id='insertReview' parameterType="review">
+		<selectKey keyProperty="reviewId" resultType="int" order="AFTER">
+			select reviews_id_seq.currval from dual
+		</selectKey>
+		insert into reviews values(reviews_id_seq.nextval, #{placeId}, #{userId}, #{content}, #{starRating}, sysdate)
+	</insert>
+	
+	<insert id="insertReviewImages">
+		insert into review_images(review_images_id, review_id, file_name)
+		select reviewimages_id_seq.nextval, A.* from (
+		    <foreach collection="reviewImages" item="item" separator="UNION ALL ">
+				select #{reviewId} as review_id, #{item} as file_name
+				from dual
+			</foreach>) A
 	</insert>
 	
 	<delete id='deleteAdminReview'>

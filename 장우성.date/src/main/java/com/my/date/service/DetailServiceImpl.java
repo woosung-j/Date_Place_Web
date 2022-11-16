@@ -22,4 +22,8 @@ public class DetailServiceImpl implements DetailService{
 	public int fixDetail(Detail detail) {
 		return detailDao.updateDetail(detail);
 	}
+	@Override
+	public void delDetail(int detailId) {
+		detailDao.deleteDetail(detailId);
+	}
 }

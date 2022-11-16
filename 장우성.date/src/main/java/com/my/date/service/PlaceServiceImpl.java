@@ -1,9 +1,7 @@
 package com.my.date.service;
 
 import com.my.date.dao.PlaceDao;
-import com.my.date.domain.Place;
-import com.my.date.domain.PlaceDetailDto;
-import com.my.date.domain.PlaceDto;
+import com.my.date.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +35,11 @@ public class PlaceServiceImpl implements PlaceService {
 	}
 
 	@Override
+	public PlaceAdminDto getAdminPlace(int placeId) {
+		return placeDao.selectAdminPlace(placeId);
+	}
+
+	@Override
 	public int addPlace(Place place) {
 		return placeDao.insertPlace(place);
 	}
@@ -47,12 +50,32 @@ public class PlaceServiceImpl implements PlaceService {
 	}
 
 	@Override
-	public void fixPlace(Place place) {
-		placeDao.updatePlace(place);
+	public int fixPlace(Place place) {
+		return placeDao.updatePlace(place);
 	}
 
 	@Override
 	public void delPlace(int placeId) {
 		placeDao.deletePlace(placeId);
+	}
+
+	@Override
+	public int delPlaceImage(int placeId) {
+		return placeDao.deletePlaceImage(placeId);
+	}
+
+	@Override
+	public MyPlace getMyPlace(MyPlace myPlace) {
+		return placeDao.selectMyPlace(myPlace);
+	}
+
+	@Override
+	public int addMyPlace(MyPlace myPlace) {
+		return placeDao.insertMyPlace(myPlace);
+	}
+
+	@Override
+	public int delMyPlace(MyPlace myPlace) {
+		return placeDao.deleteMyPlace(myPlace);
 	}
 }
