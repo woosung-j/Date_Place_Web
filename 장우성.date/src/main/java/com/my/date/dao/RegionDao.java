@@ -12,4 +12,5 @@ public interface RegionDao {
     Region selectMyRegionByUserIdAndSiAndGu(int userId, String siName, String guName);
     int insertBookmark(RegionDto regionDto);
     int deleteBookmark(int bookmarkId);
+    RegionDto selectSiNameAndGuName(int siId, int guId);
 }

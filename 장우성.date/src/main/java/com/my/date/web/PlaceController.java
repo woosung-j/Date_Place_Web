@@ -64,6 +64,24 @@ public class PlaceController {
         return place;
     }
 
+    @GetMapping("myplace")
+    public ModelAndView myPlace(ModelAndView mv) {
+        mv.setViewName("place/myPlace");
+        return mv;
+    }
+
+    @GetMapping("place/my")
+    public List<PlaceDto> getMyPlaces(HttpServletRequest request) {
+        int userId = 0;
+        HttpSession session = request.getSession(false);
+        if(session == null || session.getAttribute("userId") == null) {
+            return null;
+        }
+        userId = (int) session.getAttribute("userId");
+
+        return placeService.getPlacesByUserId(userId);
+    }
+
     @PostMapping("place/my/like")
     public int toggleMyPlace(HttpServletRequest request, @RequestBody MyPlace myPlace) {
         int userId = 0;

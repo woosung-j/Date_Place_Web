@@ -12,4 +12,5 @@ public interface RegionService {
     Region getMyRegionByUserIdAndSiAndGu(int userId, String siName, String guName);
     int addBookmark(RegionDto regionDto);
     int delBookmark(int bookmarkId);
+    RegionDto getSiNameAndGuName(int siId, int guId);
 }

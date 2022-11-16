@@ -133,7 +133,6 @@
                                     </div><hr class='mt-2'>
                                     <div class='infoFooter mt-3'>
                                         <a href="javascript:void(0);" id="copy_btn" onclick="copy()" type="button" class='btn btn-white' style="color:grey"><i class="bi bi-paperclip"></i>주소 복사</a>
-                                        <a href="javascript:void(0);" type="button" class='btn btn-white' style="color:grey"><i class="bi bi-share"></i>공유하기</a>
                                     </div>
                                 </div>
                             </div>`;
@@ -197,6 +196,8 @@
                 url: '<%=request.getContextPath()%>/place/get/' + $('#placeId').val(),
                 method: 'get',
                 success: (data) => {
+                    console.log(data)
+                    getSigu(data.siId, data.guId)
                     const detail = data.detail;
                     const review = data.review;
 
@@ -205,13 +206,7 @@
                     $('#introduction').text(data.introduction);
                     $('#placeModal').text(data.placeName);
                     $('#place_like').text(`찜 \${data.placeLikeCount}`);
-                    
-                    $('#searchNaver').append(
-                        `<a href="#" class="btn">
-                            <i class="bi bi-search-heart mr-4"></i>
-                        네이버에서 \${data.placeName} 검색
-                        </a>`
-                    )
+
                     $('#reservationName').val(data.placeName);
 
                     $('#placeName').text(data.placeName);
@@ -276,7 +271,7 @@
                         $('#detail_body').append(detailArr.join(''));
                     }
                     if (detail?.contact) {
-                        $('#homepage').attr('href', `\${detail.contact}`);
+                        $('#homepage').attr('href', `http://\${detail.contact}`);
                     }
 
                     if (data.menus?.length == 0) {
@@ -332,6 +327,18 @@
             }
         }
 
+        function getSigu(siId, guId) {
+            $.ajax({
+                url: `<%=request.getContextPath()%>/region/sigu/\${siId}/\${guId}`,
+                method: 'get',
+                success: (data) => {
+                    $('#siName').val(data.siName)
+                    $('#guName').val(data.guName)
+                    backBtnClick()
+                }
+            })
+        }
+
         function toggleLike() {
             if($('#place_heart')[0].classList[1] == 'bi-heart-fill') {
                 $('#place_heart').removeClass()
@@ -371,10 +378,14 @@
             })
         }
 
+        function backBtnClick() {
+            const url = `<%=request.getContextPath()%>/place/list?si=` + $('#siName').val() + `&gu=` + $('#guName').val()
+            $('#backBtn').attr("href", url)
+        }
+
         $(() => {
             getPlace();
             copy();
-
             $('#placeLikeBtn').on('click', () => {
                 togglePlaceLike()
             })
@@ -385,7 +396,7 @@
 <div class="container">
     <header>
         <nav class="row navbar white text-center align-middle px-0">
-            <a href="javascript:window.history.back();" class="col btn"><i class="bi bi-chevron-left"></i></a>
+            <a id="backBtn" href="" class="col btn"><i class="bi bi-chevron-left"></i></a>
             <p class="col"></p>
             <h4 id="placeName" class="col-6 font-gamja-flower"></h4>
             <p class="col"></p>
@@ -465,10 +476,6 @@
                     </a>
                 </td>
             </tr>
-            <tr>
-                <td class="mt-5 border mb-3" id="searchNaver">
-                </td>
-            </tr>
             </tbody>
         </table>
     </div>
@@ -489,6 +496,8 @@
     </div>
 </div>
 <input type="hidden" id="placeId" name="placeId" value="${placeId}" />
+<input type="hidden" id="siName" name="siName" />
+<input type="hidden" id="guName" name="guName" />
 <%--<input type="hidden" id="isLike" name="isLike" value=""/>--%>
 <!-- 모달창 -->
 <div class="modal fade" id="Modal" tabindex="-1">
