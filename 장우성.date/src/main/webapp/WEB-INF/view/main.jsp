@@ -92,8 +92,8 @@
             method: 'get',
             success: (data) => {
                 if(data) {
+                    $('#recommendImg').append(`<img src="/attach/placeImage/\${data.fileName}" />`)
                     $('#recommendPlace').attr("href", `<%=request.getContextPath()%>/place/place/\${data.placeId}`)
-                    $('#recommendPlace').append(`<img src="/attach/placeImage/\${data.fileName}" />`)
                 }
             }
         })
@@ -127,10 +127,9 @@
             <div class="col">
                 <div id="imgCarousel1" class="carousel slide text-center border w-auto" style="height: 250px" data-ride="carousel" data-interval="8000">
                     <div class="carousel-inner">
-                        <a id="recommendPlace" href="" style="color: black"></a>
-                        <div class="carousel-item active">
-                            <a href="#"><img /></a>
-                        </div>
+                        <a id="recommendPlace" href="" style="color: black">
+                            <div id="recommendImg" class="carousel-item active"></div>
+                        </a>
                     </div>
                 </div>
             </div>
