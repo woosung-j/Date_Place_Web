@@ -89,21 +89,6 @@
                     $('#placeName').val(data.placeName)
                     $('#placeGroupId').val(data.placeGroupId)
                     $('#introduction').val(data.introduction)
-                    // $('#si').val(data.siName)
-                    // $('#gu').val(data.guName)
-
-                    // const imgArr = []
-
-                    // if(data.placeImage.length > 0) {
-                    //     $.each(data.placeImage, (i, image) => {
-                    //         imgArr.push(
-                    //             `div class="img-style"><img class="img-fluid" />장소이미지</div>`
-                    //         )
-                    //     })
-                    // }
-                    // <div class="img-style"><img class="img-fluid" />장소이미지</div>
-                    // <div class="img-style"><img class="img-fluid" />장소이미지</div>
-                    // <div class="img-style"><img class="img-fluid" />장소이미지</div>
                 }
             })
         }
@@ -121,7 +106,7 @@
     <body>
     <div class="container-fluid">
         <header class="row-1">
-            <img src="<%=request.getContextPath()%>/attach/logo.jpg" style="width:100%; height:70px;"/>
+            <img src="<%=request.getContextPath()%>/attach/logo_admin.jpg" style="width:100%; height:70px;"/>
         </header>
         <hr />
         <div class="row">

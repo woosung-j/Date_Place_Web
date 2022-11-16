@@ -84,6 +84,12 @@
             -webkit-user-select: none;
             user-select: none;
         }
+        
+        .profile {
+            border-radius: 50%;
+            height: 1.5rem;
+            width: 1.5rem;
+        }
     </style>
     <script>
         let map;
@@ -295,6 +301,7 @@
                     if (review == null) {
                         $('#review_thead').hide();
                     } else {
+                    	$('.profile').attr("src", `/attach/profileImage/\${review.profileImage}`)
                         $('#review_nickname').text(`\${review.nickname}`);
                         $('#review_starRating').html(`\${setStarRating(review.starRating)}`);
                         $('#review_createdAt').text(`\${review.createdAt}`);
@@ -421,7 +428,8 @@
             <tr>
                 <td class="row-1 mt-5 border rounded mb-3">
                     <div class="col pt-1">
-                        <div class="row text-start ml-1">
+                        <div class="row text-start">
+                        	<img class="profile ml-1"/>
                             <p id="review_nickname" class="mt-1 ml-1" style="font-size: 13px"></p>
                             <p id="review_starRating" class="mt-1 ml-1" style="font-size: 13px"></p>
                             <p id="review_createdAt" class="mt-1 ml-1" style="font-size: 13px"></p>
