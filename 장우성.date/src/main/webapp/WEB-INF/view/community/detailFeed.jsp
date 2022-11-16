@@ -157,6 +157,9 @@
                         const list = [];
                         $.each(commentList, (i, item) => {
                             const btnList = [];
+                            const profileImage = item.profileImage != null ?
+                                    `<img class="img-fluid profile" style="width:20px; height: 20px;" src="/attach/profileImage/\${item.profileImage}"/>` : `<i class="fas fa-user-circle fa-2x"></i>`
+                                    
                             if ($('#userId').val() == item.userId) {
                                 btnList.push(`
                                     <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></button>
@@ -171,7 +174,7 @@
                                 `<div class="card" id="card1">
                                     <div class="card-body row-11">
                                         <div class="row">
-                                            <span class="col-5"><i class="fa-solid fa-circle-user fa-2x"></i>\${item.nickname}</span>
+                                            <span class="col-5">\${profileImage}&nbsp;\${item.nickname}</span>
                                             <span class="col-5">\${item.createdAt}</span>
                                             <div class="btn-group col-2">
                                                 <input type="hidden" id="commentId" value="\${item.commentId}"/>
