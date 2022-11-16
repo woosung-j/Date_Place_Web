@@ -1,30 +1,20 @@
 package com.my.date.web;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import com.my.date.domain.*;
 import com.my.date.service.*;
 import com.my.date.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("admin")
@@ -366,6 +356,29 @@ public class AdminController {
             for(MultipartFile file : files) {
                 String originalFileName = file.getOriginalFilename();
                 String savedFileName = "logo.jpg";
+                String uploadPath = attachPath + "/";
+
+                if(!originalFileName.equals("")) {
+                    File file1 = new File(uploadPath + savedFileName);
+                    file.transferTo(file1);
+                } else {
+                    return 0;
+                }
+            }
+        } catch(Exception e) {
+            return 0;
+        }
+        return 1;
+    }
+
+    @PostMapping("/logo/admin/upload")
+    public int logoAdminUpload(HttpSession session, @RequestPart(value = "files2") List<MultipartFile> files) {
+        if(!SessionUtil.getIsAdmin(session)) return -1;
+
+        try {
+            for(MultipartFile file : files) {
+                String originalFileName = file.getOriginalFilename();
+                String savedFileName = "logo_admin.jpg";
                 String uploadPath = attachPath + "/";
 
                 if(!originalFileName.equals("")) {
