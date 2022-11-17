@@ -2,6 +2,35 @@
 <head>
     <jsp:include page="../include/head.jsp"></jsp:include>
     <link rel="stylesheet" href="../../res/mobile.css" />
+    <style>
+        #top {
+            margin-top: 80px;
+        }
+
+        .write {
+            position: fixed;
+            right: 5%;
+            bottom: 15%;
+        }
+
+        .badge {
+            margin-right: 10px;
+        }
+
+        .text_output {
+            margin-bottom: 10px;
+        }
+
+        .icon.main:hover {
+            color: #ff5858;
+        }
+        
+        .profile {
+            border-radius: 50%;
+            height: 1.5rem;
+            width: 1.5rem;
+        }
+    </style>
     <script>
         function feedList() {
             $('#feedList').empty();
@@ -24,7 +53,7 @@
 
                             const profileImage =
                                 item.profileImage != null
-                                    ? `<img class="img-fluid" style="width:20px; height: 20px;" src="/attach/profileImage/\${item.profileImage}"/>`
+                                    ? `<img class="profile" src="/attach/profileImage/\${item.profileImage}"/>`
                                     : `<i class="fas fa-user-circle fa-2x"></i>`;
 
                             feedList.unshift(
@@ -64,29 +93,6 @@
             feedList();
         });
     </script>
-    <style>
-        #top {
-            margin-top: 80px;
-        }
-
-        .write {
-            position: fixed;
-            right: 5%;
-            bottom: 15%;
-        }
-
-        .badge {
-            margin-right: 10px;
-        }
-
-        .text_output {
-            margin-bottom: 10px;
-        }
-
-        .icon.main:hover {
-            color: #ff5858;
-        }
-    </style>
 </head>
 <body>
 <div class="container">

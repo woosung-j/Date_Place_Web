@@ -28,7 +28,7 @@
 	</select>
 
 	<select id='selectMyFeeds' resultMap='feedDtoMap'>
-		select f.feed_id, f.user_id, f.title, f.content, f.created_at, u.nickname, h.tag, h.hashtag_id, l.feed_like_id,
+		select f.feed_id, f.user_id, f.title, f.content, f.created_at, u.profile_image, u.nickname, h.tag, h.hashtag_id, l.feed_like_id,
 			(select count(*) from comments c where c.feed_id = f.feed_id) as comment_cnt,
 			(select count(*) from feed_likes l where l.feed_id = f.feed_id) as like_cnt,
 			(select feed_like_id from feed_likes l where l.feed_id = #{feedId} and l.user_id = #{userId}) as is_like
