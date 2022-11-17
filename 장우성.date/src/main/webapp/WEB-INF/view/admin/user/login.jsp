@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="container">
-    <header class="row-1 w-auto p-1 fixed-top">
+    <header class="row-1 w-auto fixed-top">
         <img src="<%=request.getContextPath()%>/attach/logo_admin.jpg" style="width: 100%; height: 70px" />
         <hr />
     </header>
