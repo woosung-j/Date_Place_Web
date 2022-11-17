@@ -20,6 +20,12 @@
             color: black;
             text-decoration: none !important;
         }
+        
+        .profile {
+            border-radius: 50%;
+            height: 1.5rem;
+            width: 1.5rem;
+        }
     </style>
     <script>
         function checkWish() {
@@ -59,15 +65,19 @@
                                 });
                             }
 
-                            const profileImage = feed.profileImage != null ? '/attach/profileImage/' + feed.profileImage : '';
+                            const profileImage =
+                                feed.profileImage != null
+                                    ? `<img class="img-fluid profile mx-2" src="/attach/profileImage/\${feed.profileImage}"/>`
+                                    : `<i class="fas fa-user-circle fa-2x"></i>`;
+                                    
                             myFeeds.unshift(
                                 `<div class="col w-auto">
                                     <div class="card mb-4">
                                         <div class="card-header row-11">
                                             <div class="text_output">
                                                 <div class="row">
-                                                   <img class="profile ml-3" src="\${profileImage}"/>
-                                                   <span class="col-5">\${feed.nickname}</span>
+                                                   \${profileImage}
+                                                   <span class="col-5 pl-0">\${feed.nickname}</span>
                                                    <span class="col-5">\${feed.createdAt}</span>
                                                 </div>
                                                 <a href="<%=request.getContextPath()%>/community/detail/\${feed.feedId}">
