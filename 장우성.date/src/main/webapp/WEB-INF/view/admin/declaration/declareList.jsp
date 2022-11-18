@@ -41,7 +41,7 @@
                                             <div class="card">
                                                 <div class="card-body">
                                                     <h5 class="card-title">\${item.placeName}</h5>
-                                                    <p class="card-text">주소 : \${item.address}</p>
+                                                    <p class="card-text">주소 : \${item.address == null ? "" : item.address}</p>
                                                     <p class="card-text">신고자 아이디: \${item.id}</p>
                                                     <p class="card-text">날짜 : \${item.createdAt}</p>
                                                     <br />
