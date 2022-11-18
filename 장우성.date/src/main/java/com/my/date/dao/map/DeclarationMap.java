@@ -1,15 +1,15 @@
 package com.my.date.dao.map;
 
-import com.my.date.domain.Declaration;
-import com.my.date.domain.MyDeclarationDto;
-import com.my.date.domain.Review;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import com.my.date.domain.Declaration;
+import com.my.date.domain.DeclarationAdminDto;
+import com.my.date.domain.MyDeclarationDto;
 
 public interface DeclarationMap {
-    List<Declaration> selectDeclarations();
+    List<DeclarationAdminDto> selectDeclarations();
     List<MyDeclarationDto> selectDeclarationsByUserId(int userId);
     int insertDeclaration(Declaration declaration);
     String selectPlaceName(int placeId);

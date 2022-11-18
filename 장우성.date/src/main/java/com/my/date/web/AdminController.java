@@ -266,7 +266,7 @@ public class AdminController {
     }
 
     @GetMapping("declare/list")
-    public List<Declaration> declareList(HttpSession session) {
+    public List<DeclarationAdminDto> declareList(HttpSession session) {
         if(!SessionUtil.getIsAdmin(session)) return null;
         return declarationService.getDeclareList();
     }

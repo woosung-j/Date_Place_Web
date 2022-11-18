@@ -4,8 +4,9 @@
 <mapper namespace='com.my.date.dao.map.DeclarationMap'>
 	<select id='selectDeclarations' resultType="declarationAdminDto">
 		select d.declare_id, d.place_id, d.user_id, d.content, d.confirm, d.created_at, u.id, p.place_name, details.address
-		from declarations d, users u, places p, details
-		where d.user_id = u.user_id and d.place_id = p.place_id and d.place_id = details.place_id
+		from declarations d left join users u on d.user_id = u.user_id
+							left join places p on d.place_id = p.place_id
+							left join details on d.place_id = details.place_id
 		order by created_at desc
 	</select>
 

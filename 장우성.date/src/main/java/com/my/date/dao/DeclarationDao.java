@@ -1,12 +1,13 @@
 package com.my.date.dao;
 
-import com.my.date.domain.Declaration;
-import com.my.date.domain.MyDeclarationDto;
-
 import java.util.List;
 
+import com.my.date.domain.Declaration;
+import com.my.date.domain.DeclarationAdminDto;
+import com.my.date.domain.MyDeclarationDto;
+
 public interface DeclarationDao {
-    List<Declaration> selectDeclarations();
+    List<DeclarationAdminDto> selectDeclarations();
     List<MyDeclarationDto> selectDeclarationsByUserId(int userId);
     int insertDeclaration(Declaration declaration);
     String selectPlaceName(int placeId);

@@ -1,19 +1,21 @@
 package com.my.date.dao;
 
-import com.my.date.dao.map.DeclarationMap;
-import com.my.date.domain.Declaration;
-import com.my.date.domain.MyDeclarationDto;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.my.date.dao.map.DeclarationMap;
+import com.my.date.domain.Declaration;
+import com.my.date.domain.DeclarationAdminDto;
+import com.my.date.domain.MyDeclarationDto;
 
 @Repository
 public class DeclarationDaoImpl implements DeclarationDao {
     @Autowired private DeclarationMap declarationMap;
 
     @Override
-    public List<Declaration> selectDeclarations() {
+    public List<DeclarationAdminDto> selectDeclarations() {
         return declarationMap.selectDeclarations();
     }
 

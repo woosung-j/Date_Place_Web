@@ -1,19 +1,21 @@
 package com.my.date.service;
 
-import com.my.date.dao.DeclarationDao;
-import com.my.date.domain.Declaration;
-import com.my.date.domain.MyDeclarationDto;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.my.date.dao.DeclarationDao;
+import com.my.date.domain.Declaration;
+import com.my.date.domain.DeclarationAdminDto;
+import com.my.date.domain.MyDeclarationDto;
 
 @Service
 public class DeclarationServiceImpl implements DeclarationService {
     @Autowired DeclarationDao declarationDao;
 
     @Override
-    public List<Declaration> getDeclareList() {
+    public List<DeclarationAdminDto> getDeclareList() {
         return declarationDao.selectDeclarations();
     }
 
