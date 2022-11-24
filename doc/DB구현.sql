@@ -27,8 +27,8 @@ create table date2.gu(
 
 -- place_group
 create table date2.place_group(
-    placegroup_id number(10) constraint placegroup_id_pk primary key,
-    placegroup_name varchar2(30) constraint placegroup_name_uk unique
+    place_group_id number(10) constraint placegroup_id_pk primary key,
+    place_group_name varchar2(30) constraint placegroup_name_uk unique
                                  constraint placegroup_name_nn not null
 );
 
@@ -42,7 +42,7 @@ create table date2.users(
     user_name varchar2(40) constraint users_username_nn not null,
     phone_number varchar2(12) constraint users_phonenumber_nn not null,
     nickname varchar2(18) constraint users_nickname_nn not null,
-    profile_image varchar2(30),
+    profile_image varchar2(200),
     birthday date,
     created_at date,
     updated_at date
@@ -71,7 +71,7 @@ create table date2.places(
     place_id number(10) constraint places_id_pk primary key,
     si_id number(10) constraint palces_siid_fk references date2.si(si_id), 
     gu_id number(10) constraint palces_guid_fk references date2.gu(gu_id),
-    placegroup_id number(10) constraint places_placegroupid_fk references date2.place_group(placegroup_id) , --constratnts
+    place_group_id number(10) constraint places_placegroupid_fk references date2.place_group(place_group_id) , --constratnts
     place_name varchar2(60) constraint places_placename_nn not null,
     introduction varchar2(600) constraint places_introduction_nn not null,
     views number(10),
@@ -81,9 +81,9 @@ create table date2.places(
 
 -- place_images
 create table date2.place_images(
-    placeimage_id number(10) constraint placeimages_id_pk primary key,
-    place_id number(10) constraint placeimages_placeid_fk references date2.places(place_id),
-    file_name varchar2(100) constraint placeimages_filename_nn not null
+    place_image_id number(10) constraint placeimages_id_pk primary key,
+    place_id number(10) constraint placeimages_placeid_fk references date2.places(place_id) on delete set null,
+    file_name varchar2(200) constraint placeimages_filename_nn not null
 );
 
 -- details
@@ -94,7 +94,7 @@ create table date2.details (
 	tel varchar2(12),
 	opening_hours varchar2(6),
 	closing_hours varchar2(6),
-	dayoff varchar2(100),
+	day_off varchar2(100),
 	contact varchar2(50),
 	parking number(1),
 	created_at date,
@@ -112,7 +112,7 @@ create table date2.menus(
 -- declarations
 create table date2.declarations(
 	declare_id number(10) constraint declarations_id_pk primary key,
-    place_id number(10) constraint declarations_placeid_fk references date2.places(place_id),
+    place_id number(10) constraint declarations_placeid_fk references date2.places(place_id) on delete set null,
     user_id number(10) constraint declarations_userid_fk references date2.users(user_id),
 	content varchar2(1000) constraint declarations_content_nn not null,
 	confirm number(1) constraint declarations_confirm_nn not null,
@@ -138,9 +138,9 @@ create table date2.reviews (
 
 -- review_images
 create table date2.review_images(
-    reviewimages_id number(10) constraint reviewimages_id_pk primary key,
-    review_id number(10) constraint reviewimages_reviewid_fk references date2.reviews(review_id),
-    file_name varchar2(100) constraint reviewimage_filename_nn not null
+    review_images_id number(10) constraint reviewimages_id_pk primary key,
+    review_id number(10) constraint reviewimages_reviewid_fk references date2.reviews(review_id) on delete set null,
+    file_name varchar2(200) constraint reviewimage_filename_nn not null
 );
 
 -- feeds
@@ -170,14 +170,14 @@ create table date2.hashtags (
 
 -- feed_likes
 create table date2.feed_likes (
-    feedlike_id number(10) constraint feedlikes_id_pk primary key,
+    feed_like_id number(10) constraint feedlikes_id_pk primary key,
     feed_id number(10) constraint feedlikes_feedid_fk references date2.feeds(feed_id) on delete cascade,
     user_id number(10) constraint feedlikes_userid_fk references date2.users(user_id)                       
 );
 
 -- comment_likes
 create table date2.comment_likes (
-	commentlike_id number(10) constraint commentlikes_id_pk primary key,
+	comment_like_id number(10) constraint commentlikes_id_pk primary key,
 	comment_id number(10) constraint commentlikes_commentid_fk references date2.comments(comment_id) on delete cascade,
     user_id number(10) constraint commentlikes_userid_fk references date2.users(user_id)
 );
@@ -313,22 +313,26 @@ create sequence date2.commentlikes_id_seq
 
 -- insert --
 -- users
-insert into date2.users values(date2.users_id_seq.nextval, 'user', 'a@b.com', 'user', 'ìµœí•œì„', '01075463543', 'í•œì„', 'img1.jpg', '1998-01-02', sysdate, sysdate);
-insert into date2.users values(date2.users_id_seq.nextval, 'user2', 'a@c.com', 'user2', 'í•œì•„ë¦„', '01042345342', 'ì•„ë¦„', 'img2.jpg', '1999-04-03', sysdate, sysdate);
-insert into date2.users values(date2.users_id_seq.nextval, 'user3', 'a@d.com', 'user3', 'ê¹€ì„ ìš°', '01025545242', 'ì„ ìš°', 'img3.jpg', '1989-03-04', sysdate, sysdate);
-insert into date2.users values(date2.users_id_seq.nextval, 'user4', 'a@e.com', 'user4', 'ê¹€ìŠ¹ì¼', '01025545242', 'ìŠ¹ì¼', 'img4.jpg', '1989-03-04', sysdate, sysdate);
-insert into date2.users values(date2.users_id_seq.nextval, 'user5', 'a@f.com', 'user5', 'ì´ìŠ¹ì›', '01025545242', 'ìŠ¹ì›', 'img5.jpg', '1989-03-04', sysdate, sysdate);
+insert into date2.users values(date2.users_id_seq.nextval, 'user', 'w24j12lk3@gmail.com', 'user', 'ÃÖÇÑ¼®', '01075463543', 'ÇÑ¼®', null, '1998-01-02', sysdate, sysdate);
+insert into date2.users values(date2.users_id_seq.nextval, 'user2', 'c234hkl2@gmail.com', 'user2', 'ÇÑ¾Æ¸§', '01042345342', '¾Æ¸§', null, '1999-04-03', sysdate, sysdate);
+insert into date2.users values(date2.users_id_seq.nextval, 'user3', 'ggcccc1@gmail.com', 'user3', '±è¼±¿ì', '01025545242', '¼±¿ì', null, '1989-03-04', sysdate, sysdate);
+insert into date2.users values(date2.users_id_seq.nextval, 'user4', 'g1ddh3k2@gmail.com', 'user4', '±è½ÂÀÏ', '01025545242', '½ÂÀÏ', null, '1989-03-04', sysdate, sysdate);
+insert into date2.users values(date2.users_id_seq.nextval, 'user5', 'wch2k43@gmail.com', 'user5', 'ÀÌ½Â¿ø', '01025545242', '½Â¿ø', null, '1989-03-04', sysdate, sysdate);
+insert into date2.users values(date2.users_id_seq.nextval, 'user6', 'j4kj234kl@gmail.com', 'user6', 'ÀÌ½Â¿ø', '01025545242', '½Â¿ø', null, '1989-03-04', sysdate, sysdate);
 
 -- admins
 insert all
-    into date2.users values(date2.users_id_seq.nextval, 'admin', 'a@g.com', 'admin', 'ê²½ì„œ', '01036457459', 'adm1', 'img5.jpg', '1997-08-05', sysdate, sysdate)
+    into date2.users values(date2.users_id_seq.nextval, 'admin', 'nkjkl43212@gmail.com', 'admin', '°æ¼­', '01036457459', 'adm1', null, '1997-08-05', sysdate, sysdate)
     into date2.admins values(date2.users_id_seq.currval)
     select * from dual;
 insert all
-    into date2.users values(date2.users_id_seq.nextval, 'admin2', 'a@h.com', 'admin2', 'ê¹€í˜„ì„±', '01047543534', 'adm2', 'img7.jpg', '1996-02-04', sysdate, sysdate)
+    into date2.users values(date2.users_id_seq.nextval, 'admin2', 'hklj3213@gmail.com', 'admin2', '±èÇö¼º', '01047543534', 'adm2', null, '1996-02-04', sysdate, sysdate)
     into date2.admins values(date2.users_id_seq.currval)
     select * from dual;
 
+-- delete_users
+insert into date2.delete_users values(5);
+insert into date2.delete_users values(6);
 
 commit;
 
